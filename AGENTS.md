@@ -24,6 +24,6 @@ Project detail pages should surface practical context (role, client, period, del
 
 Use supplied editorial composites as distinct storytelling chapters rather than repeating them as ordinary cards. Keep embedded text artwork legible, but recreate navigation, service labels, and conversion copy as responsive HTML.
 
-Keep the supplied creative showreel as a refined editorial transition immediately before the budget estimator; preserve its full framing and avoid aggressive cropping.
+Keep the supplied creative showreel inside the arched portrait frame of the "Behind the Dream" section, replacing the static portrait rather than creating a separate video chapter.
 
 Public web pricing should suit small and medium clients in Ialomița: accessible but not bargain-basement, with clear deliverables and recurring costs separated from the initial build estimate.

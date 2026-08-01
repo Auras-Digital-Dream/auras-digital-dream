@@ -324,13 +324,8 @@ export function App() {
       </section>
 
       <section className="behind" id="behind">
-        <div className="behind-portrait" data-reveal data-parallax="0.035"><div className="portrait-frame"><img src="/portfolio/auras-trend-vault/bdb50b55c_WhatsAppImage2026-07-02at1128453.jpg" alt="Aura Dobre, fondatoarea Aura's Digital Dream" /></div><span className="portrait-orbit" aria-hidden="true">STRATEGIE · CREATIVITATE · EMPATIE ·</span></div>
+        <div className="behind-portrait" data-reveal data-parallax="0.035"><div className="portrait-frame portrait-video"><video autoPlay muted loop playsInline preload="metadata" aria-label="Aura Dobre — showreel personal"><source src="/video/aura-creative-showreel.mp4" type="video/mp4" /></video><span className="portrait-film-label" aria-hidden="true">MOTION PORTRAIT / 01</span></div><span className="portrait-orbit" aria-hidden="true">STRATEGIE · CREATIVITATE · EMPATIE ·</span></div>
         <div className="behind-copy" data-reveal><p className="section-kicker">Behind the Dream</p><h2>Un studio digital cu o perspectivă <em>personală.</em></h2><p>În spatele fiecărui proiect sunt eu, Aura. Îmi place să unesc gândirea strategică, sensibilitatea vizuală și tehnologia, astfel încât fiecare brand să se simtă autentic — nu construit după un șablon.</p><p>Ascult înainte să desenez, caut ideea care merită păstrată și construiesc fiecare experiență cu grijă pentru detalii, ritm și emoție.</p><button className="button ink" onClick={() => scrollToId("contact")}>Povestește-mi ideea ta <ArrowRight size={18} /></button></div>
-      </section>
-
-      <section className="video-editorial" aria-label="Showreel Aura's Digital Dream">
-        <div className="video-editorial-heading" data-reveal><div><p className="section-kicker">Motion study</p><h2>O poveste care continuă <em>în mișcare.</em></h2></div><p>Un scurt moment vizual înainte de a transforma inspirația într-un proiect concret.</p></div>
-        <div className="video-frame" data-reveal data-parallax="0.025"><span className="video-corner corner-one" aria-hidden="true" /><span className="video-corner corner-two" aria-hidden="true" /><video autoPlay muted loop playsInline controls preload="metadata" aria-label="Showreel creativ Aura's Digital Dream"><source src="/video/aura-creative-showreel.mp4" type="video/mp4" />Browserul tău nu poate reda acest videoclip.</video><span className="video-index" aria-hidden="true">FILM / 01</span></div>
       </section>
 
       <section className="section estimator" id="estimator">
