@@ -30,6 +30,12 @@ const supplementalPortfolioAssets = {
     "/portfolio/selectii-cromatice/warm-orange-dusty-yellow.jpeg",
     "/portfolio/selectii-cromatice/warm-white-cool-blue.jpeg",
   ],
+  "auras-trend-vault": [
+    "/portfolio/auras-trend-vault/editorial-2026/editorial-black-white.jpeg",
+    "/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.jpeg",
+    "/portfolio/auras-trend-vault/editorial-2026/editorial-city-motion.jpeg",
+    "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg",
+  ],
 };
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/1e4525e49_WhatsAppImage2026-07-02at090649.jpeg",
@@ -59,7 +65,7 @@ const projects = [
   { slug: "carti-de-vizita", title: "Cărți de Vizită — Design Corporate & Personal", category: ["Branding"], image: "/portfolio/carti-de-vizita/3cd5b72d3_adiecoo1.png", description: "Cărți de vizită digitale cu cod QR și print, create într-un stil modern și memorabil." },
   { slug: "adi-ecoo-2009-sa", title: "ADI ECOO 2009 S.A. — Branding, Grafică, Social Media & Website", category: ["Marketing", "Branding", "Web"], image: "/portfolio/adi-ecoo-2009-sa/71bf13109_IMG-20250618-WA0053.jpg", description: "Proiect complet de comunicare pentru colectarea corectă a deșeurilor în județul Ialomița." },
   { slug: "campanie-social-media-luxe", title: "Campanie Social Media — Bijuterii de Lux", category: ["Marketing"], image: "/assets/bijuterii.png", description: "Campanie editorială pentru o maison de bijuterii fine, cu fotografie și storytelling premium." },
-  { slug: "auras-trend-vault", title: "Aura's Trend Vault — Platformă Web, Blog, AI & Fotografie Editorială", category: ["Web"], image: "/assets/trend-vault.jpg", description: "Platformă web completă, blog editorial și experiențe AI create de la zero." },
+  { slug: "auras-trend-vault", title: "Aura's Trend Vault — Platformă Web, Blog, AI & Fotografie Editorială", category: ["Web"], image: "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg", description: "Platformă web completă, blog editorial și experiențe AI create de la zero." },
   { slug: "magazine-online-e-commerce", title: "Magazine Online E-Commerce — Web Design, Dezvoltare & Fotografie", category: ["Web"], image: "/assets/ecommerce.jpg", description: "Magazine online complete, cu design, plăți, curieri, fotografie de produs și optimizare SEO." },
   { slug: "invitatii-nunti-botezuri-evenimente", title: "Invitații Nunți, Botezuri & Evenimente", category: ["Grafică"], image: "/assets/invitatii.png", description: "Invitații premium personalizate, cu accente botanice, caligrafie și finisaje rafinate." },
   { slug: "documente-corporatiste-licenta", title: "Documente Corporatiste & Lucrare de Licență", category: ["Documente"], image: "/assets/documente.png", description: "Rapoarte, broșuri, prezentări și documente academice cu structură clară și design profesionist." },
@@ -68,6 +74,9 @@ const projects = [
 ];
 
 const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe"];
+const featuredCardAssets = {
+  "auras-trend-vault": "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg",
+};
 
 const services = [
   { icon: Megaphone, title: "Marketing & Strategie Digitală", copy: "Strategii care transformă vizibilitatea în rezultate concrete.", list: ["Consultanță și strategie", "Social media & content", "Meta / Google Ads", "Branding & poziționare"] },
@@ -335,7 +344,7 @@ export function App() {
 
       <section className="section portfolio" id="portofoliu">
         <div className="portfolio-heading"><div><p className="section-kicker">Selecție curatorială</p><h2>Proiecte care spun o <em>poveste.</em></h2></div><p>O selecție de identități, experiențe web și campanii în care strategia și estetica lucrează împreună.</p></div>
-        <div className="featured-projects">{featured.map((project, index) => <a className="featured-project" data-reveal data-parallax={index % 2 ? "0.025" : "-0.02"} href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="featured-visual"><img src={detailHeroAssets[project.slug] || project.image} alt={project.title} /><span className="featured-index">0{index + 1}</span><span className="featured-open">Descoperă proiectul <ArrowRight size={18} /></span></div><div className="featured-copy"><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p><span className="text-link">Vezi studiul de caz <ArrowRight size={17} /></span></div></a>)}</div>
+        <div className="featured-projects">{featured.map((project, index) => <a className="featured-project" data-reveal data-parallax={index % 2 ? "0.025" : "-0.02"} href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="featured-visual"><img src={featuredCardAssets[project.slug] || detailHeroAssets[project.slug] || project.image} alt={project.title} /><span className="featured-index">0{index + 1}</span><span className="featured-open">Descoperă proiectul <ArrowRight size={18} /></span></div><div className="featured-copy"><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p><span className="text-link">Vezi studiul de caz <ArrowRight size={17} /></span></div></a>)}</div>
         <div className="archive-head"><div><p className="section-kicker">Arhivă</p><h2>Explorează toate <em>creațiile.</em></h2></div><span>{filtered.length.toString().padStart(2, "0")} proiecte</span></div>
         <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Moodboard", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
         <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
