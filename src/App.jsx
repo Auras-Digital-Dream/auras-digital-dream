@@ -223,8 +223,8 @@ export function App() {
         <div className="story-stage">
           <div className="story-visuals" aria-hidden="true">
             <figure className="story-image story-cutout scene-one"><img src="/portfolio/lumina-botanica/8be8eec80_generated_image.png" alt="" /></figure>
-            <figure className="story-image story-cutout scene-two"><img src="/portfolio/arta-digitala-materiale-grafice/4cf0976b6_generated_image.png" alt="" /></figure>
-            <figure className="story-image story-cutout scene-three"><img src="/portfolio/luxury-hair-by-aura/fc437490b_generated_image.png" alt="" /></figure>
+            <figure className="story-image story-cutout scene-two"><img src="/portfolio/auras-trend-vault/84ce9f083_WhatsAppImage2026-07-01at120708.jpg" alt="" /></figure>
+            <figure className="story-image story-cutout scene-three"><img src="/portfolio/campanie-social-media-luxe/150a726d7_generated_image.png" alt="" /></figure>
             <div className="story-sculpture">
               <span className="petal p1" /><span className="petal p2" /><span className="petal p3" /><span className="petal p4" /><span className="petal p5" /><span className="petal p6" />
               <i className="orbit o1" /><i className="orbit o2" /><i className="orbit o3" /><b className="sculpture-core" />
