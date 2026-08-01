@@ -26,4 +26,6 @@ Use supplied editorial composites as distinct storytelling chapters rather than 
 
 Keep the supplied creative showreel inside the arched portrait frame of the "Behind the Dream" section, replacing the static portrait rather than creating a separate video chapter.
 
+The estimator must state prominently that prices are suggestive and vary with complexity, volume, urgency, and revisions. Academic services must be framed only as lawful editorial support, formatting, bibliography, and presentation assistance; never advertise ready-to-submit academic work.
+
 Public web pricing should suit small and medium clients in Ialomița: accessible but not bargain-basement, with clear deliverables and recurring costs separated from the initial build estimate.

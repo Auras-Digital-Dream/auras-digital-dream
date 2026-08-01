@@ -69,6 +69,14 @@ const priceItems = [
   { title: "Site de prezentare (5–8 pagini)", price: 1750, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
   { title: "Site de prezentare premium", price: 2950, copy: "Design avansat, animații, strategie de conținut și experiență personalizată." },
   { title: "Magazin online standard", price: 4200, copy: "Catalog, coș, plăți, curier, configurare inițială și instruire." },
+  { title: "Asistență editorială pentru lucrare de licență", price: 1000, copy: "Structurare, tehnoredactare, formatare, bibliografie și prezentare. Conținutul original este furnizat și asumat de student." },
+  { title: "Logo design", price: 300, copy: "Concept de logo, variante cromatice și fișiere pregătite pentru web." },
+  { title: "Brand design / identitate vizuală", price: 500, copy: "Logo, paletă cromatică, fonturi și direcție vizuală de bază." },
+  { title: "Întocmire și tehnoredactare documente", price: 30, unit: "/ pagină", copy: "Formatare, structurare și aranjare vizuală; tariful final depinde de complexitate." },
+  { title: "Pachet social media — 6 vizualuri", price: 450, copy: "Șase postări sau story-uri coerente vizual, adaptate brandului." },
+  { title: "Poster, flyer sau invitație", price: 150, copy: "O direcție vizuală personalizată și fișiere pentru digital sau tipar." },
+  { title: "Prezentare profesională — până la 10 slide-uri", price: 400, copy: "Structură clară, design coerent și pregătire pentru prezentare sau PDF." },
+  { title: "Carte de vizită", price: 180, copy: "Design față-verso, variantă digitală și fișier pregătit pentru tipar." },
 ];
 
 const testimonials = [
@@ -329,8 +337,8 @@ export function App() {
       </section>
 
       <section className="section estimator" id="estimator">
-        <p className="section-kicker">Estimator de cost</p><h2>Estimează-ți <em>bugetul.</em></h2><p className="section-lead">Selectează serviciile de care ai nevoie și primește o estimare instantanee. Prețurile sunt orientative, afișate ca „de la”.</p>
-        <div className="estimator-grid"><div className="price-list">{priceItems.map((item) => <button className={selectedPrices.includes(item.price) ? "selected" : ""} key={item.title} onClick={() => togglePrice(item.price)}><span className="price-check"><Check size={18} /></span><span><b>{item.title}</b><small>{item.copy}</small></span><strong>de la {item.price.toLocaleString("ro-RO")} RON</strong></button>)}</div><aside className="summary"><h3>Sumar estimare</h3><p>{selectedPrices.length ? `${selectedPrices.length} servicii selectate` : "Selectează serviciile dorite."}</p><div><span>Total estimativ</span><strong>{total.toLocaleString("ro-RO")} RON</strong></div><small className="estimate-note">Preț orientativ. Domeniul, hostingul și serviciile recurente se stabilesc separat.</small><a className="button primary" href={`https://wa.me/40762509423?text=${encodeURIComponent(`Salut! Aș dori o ofertă. Total estimat: ${total} RON`)}`}><WhatsappLogo size={20} /> Cere ofertă</a></aside></div>
+        <p className="section-kicker">Estimator de cost</p><h2>Estimează-ți <em>bugetul.</em></h2><p className="section-lead">Selectează serviciile de care ai nevoie și primește o estimare instantanee. Toate prețurile sunt sugestive, afișate „de la” și pot varia în funcție de complexitate, volum și termenul de livrare.</p>
+        <div className="estimator-grid"><div className="price-list">{priceItems.map((item) => <button className={selectedPrices.includes(item.price) ? "selected" : ""} key={item.title} onClick={() => togglePrice(item.price)}><span className="price-check"><Check size={18} /></span><span><b>{item.title}</b><small>{item.copy}</small></span><strong>de la {item.price.toLocaleString("ro-RO")} RON {item.unit && <em>{item.unit}</em>}</strong></button>)}</div><aside className="summary"><span className="summary-label">Estimare orientativă</span><h3>Sumar estimare</h3><p>{selectedPrices.length ? `${selectedPrices.length} servicii selectate` : "Selectează serviciile dorite."}</p><div><span>Total minim estimativ</span><strong>{total.toLocaleString("ro-RO")} RON</strong></div><small className="estimate-note">Sumele sunt sugestive. Oferta finală se stabilește după brief, în funcție de complexitate, număr de pagini sau livrabile, urgență și revizii. Domeniul, hostingul, tiparul și serviciile recurente se calculează separat.</small><a className="button primary" href={`https://wa.me/40762509423?text=${encodeURIComponent(`Salut! Aș dori o ofertă personalizată. Total minim estimat: ${total} RON`)}`}><WhatsappLogo size={20} /> Cere ofertă</a></aside></div>
       </section>
 
       <section className="section dark" id="proces">
