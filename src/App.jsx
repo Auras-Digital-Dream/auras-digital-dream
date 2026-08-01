@@ -22,17 +22,17 @@ import { useScrollExperience } from "./useScrollExperience";
 
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const detailHeroAssets = {
-  "verde-bean": "/portfolio/verde-bean/730b9953c_WhatsAppImage2026-07-02at090603.jpeg",
-  "lumina-botanica": "/portfolio/lumina-botanica/69944db3b_WhatsAppImage2026-07-02at090156.jpg",
+  "verde-bean": "/portfolio/verde-bean/a2f94eaa5_generated_image.png",
+  "lumina-botanica": "/portfolio/lumina-botanica/86fb1c9db_WhatsAppImage2026-07-02at0903461.jpg",
   "lupul-and-brici": "/portfolio/lupul-and-brici/2f028c963_generated_image.png",
-  "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/31d17cea7_generated_image.png",
-  "real-estate-co": "/portfolio/real-estate-co/9e3247426_generated_image.png",
+  "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/7c76798b9_WhatsAppImage2026-07-02at1127331.jpg",
+  "real-estate-co": "/portfolio/real-estate-co/108986171_t9kRKzypm30.png",
   "carti-de-vizita": "/portfolio/carti-de-vizita/4c8202a7a_aurasdigitaldream1.png",
   "adi-ecoo-2009-sa": "/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.png",
   "campanie-social-media-luxe": "/portfolio/campanie-social-media-luxe/65714e254_generated_image.png",
   "auras-trend-vault": "/portfolio/auras-trend-vault/84ce9f083_WhatsAppImage2026-07-01at120708.jpg",
   "magazine-online-e-commerce": "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg",
-  "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/cbb2fbd88_Daiana.png",
+  "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png",
   "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
   "arta-digitala-materiale-grafice": "/portfolio/arta-digitala-materiale-grafice/4cf0976b6_generated_image.png",
   "logo-design": "/portfolio/logo-design/4403fa619_generated_image.png",
@@ -84,6 +84,7 @@ function ProjectDetail({ project, details }) {
   const assets = portfolioAssets[project.slug] || [];
   const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
   const videos = assets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
+  const heroImage = detailHeroAssets[project.slug] || images[0] || project.image;
 
   return (
     <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
@@ -99,7 +100,7 @@ function ProjectDetail({ project, details }) {
           <h1>{project.title}</h1>
           <p>Client: {details.client}</p>
         </div>
-        <div className="detail-hero-visual" data-parallax="0.08"><img src={detailHeroAssets[project.slug] || images[0] || project.image} alt={project.title} /></div>
+        <div className="detail-hero-visual" data-parallax="0.08"><img className="detail-hero-backdrop" src={heroImage} alt="" aria-hidden="true" /><img className="detail-hero-main" src={heroImage} alt={project.title} /></div>
       </section>
 
       <section className="detail-content">

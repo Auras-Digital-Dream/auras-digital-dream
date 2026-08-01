@@ -15,3 +15,5 @@ Storytelling must be genuinely scroll-driven, not limited to entrance reveals: u
 The hero flower should feel alive through continuous cinematic motion and refraction, not behave like a static background. Prefer refined organic 3D sculpture forms (light, petals, glass, orbital curves) over hard geometric objects such as cubes.
 
 Story-scene portfolio imagery should read as elegant cutouts or floating compositions, with high-resolution source assets and organically feathered transparency. Avoid visible rectangular cards, borders, hard frames, or obvious carousel containers.
+
+Portfolio detail heroes must show the selected artwork in full. Use the strongest available landscape source where possible; for square or portrait artwork, preserve the complete image with `object-fit: contain` over a subtle blurred backdrop rather than cropping it.
