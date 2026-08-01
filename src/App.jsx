@@ -182,7 +182,7 @@ export function App() {
   const [formStatus, setFormStatus] = useState("idle");
   const filtered = useMemo(() => filter === "Toate" ? projects : projects.filter((p) => p.category.includes(filter)), [filter]);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
-  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Prețuri", "estimator"], ["Contact", "contact"]];
+  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Amazon Picks", "amazon-picks"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
   const detailSlug = currentPath.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
   const detailProject = projects.find((project) => project.slug === detailSlug);
@@ -370,6 +370,35 @@ export function App() {
       <section className="behind" id="behind">
         <div className="behind-portrait" data-reveal data-parallax="0.035"><div className="portrait-frame portrait-video"><video autoPlay muted loop playsInline preload="metadata" aria-label="Aura Dobre — showreel personal"><source src="/video/aura-creative-showreel.mp4" type="video/mp4" /></video><span className="portrait-film-label" aria-hidden="true">MOTION PORTRAIT / 01</span></div><span className="portrait-orbit" aria-hidden="true">STRATEGIE · CREATIVITATE · EMPATIE ·</span></div>
         <div className="behind-copy" data-reveal><p className="section-kicker">Behind the Dream</p><h2>Un studio digital cu o perspectivă <em>personală.</em></h2><p>În spatele fiecărui proiect sunt eu, Aura. Îmi place să unesc gândirea strategică, sensibilitatea vizuală și tehnologia, astfel încât fiecare brand să se simtă autentic — nu construit după un șablon.</p><p>Ascult înainte să desenez, caut ideea care merită păstrată și construiesc fiecare experiență cu grijă pentru detalii, ritm și emoție.</p><button className="button ink" onClick={() => scrollToId("contact")}>Povestește-mi ideea ta <ArrowRight size={18} /></button></div>
+      </section>
+
+      <section className="amazon-world" id="amazon-picks">
+        <div className="amazon-world-glow" aria-hidden="true" />
+        <div className="amazon-world-copy" data-reveal>
+          <p className="section-kicker">Aura's curated world</p>
+          <h2>Descoperiri alese cu grijă. <em>Povești scrise de mine.</em></h2>
+          <p>Două vitrine pentru două comunități — selecții de fashion, beauty, lifestyle și inspirație creativă pentru UK și USA, alături de universul meu de autor.</p>
+          <div className="amazon-market-links" aria-label="Storefronturi Amazon">
+            <a className="amazon-market" href="https://amzn.eu/d/0bGKmBLR" target="_blank" rel="sponsored noopener noreferrer">
+              <span><b>UK</b><small>Amazon.co.uk</small></span><strong>Shop my favourites</strong><ArrowRight size={19} />
+            </a>
+            <a className="amazon-market" href="https://a.co/d/0gsNh4wn" target="_blank" rel="sponsored noopener noreferrer">
+              <span><b>US</b><small>Amazon.com</small></span><strong>Shop my favourites</strong><ArrowRight size={19} />
+            </a>
+          </div>
+          <small className="affiliate-disclosure">Linkuri afiliate. As an Amazon Associate I earn from qualifying purchases.</small>
+        </div>
+
+        <div className="author-showcase" data-reveal data-parallax="0.025">
+          <span className="author-orbit" aria-hidden="true">AURA DOBRE · AUTHOR · STORIES ·</span>
+          <a className="book-cover book-clock" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Descoperă cărțile semnate de Aura Dobre">
+            <img src="/assets/amazon/clockmakers-curse.jpg" alt="Coperta The Clockmaker's Curse" />
+          </a>
+          <a className="book-cover book-lunaria" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Vezi pagina de autor Aura Dobre pe Amazon">
+            <img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Coperta Lunaria's Secret Treasure in the Enchanted Forest" />
+          </a>
+          <a className="author-link" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer"><span>Author spotlight</span><strong>Aura Dobre</strong><small>Explorează cărțile mele <ArrowRight size={16} /></small></a>
+        </div>
       </section>
 
       <section className="section estimator" id="estimator">
