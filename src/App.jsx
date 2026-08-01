@@ -23,36 +23,36 @@ import { useScrollExperience } from "./useScrollExperience";
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/1e4525e49_WhatsAppImage2026-07-02at090649.jpeg",
-  "lumina-botanica": "/portfolio/lumina-botanica/86fb1c9db_WhatsAppImage2026-07-02at0903461.jpg",
+  "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg",
   "lupul-and-brici": "/portfolio/lupul-and-brici/2f028c963_generated_image.png",
   "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/7c76798b9_WhatsAppImage2026-07-02at1127331.jpg",
-  "real-estate-co": "/portfolio/real-estate-co/108986171_t9kRKzypm30.png",
-  "carti-de-vizita": "/portfolio/carti-de-vizita/4c8202a7a_aurasdigitaldream1.png",
-  "adi-ecoo-2009-sa": "/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.png",
+  "real-estate-co": "/portfolio/real-estate-co/ae9c7cdde_realestate.png",
+  "carti-de-vizita": "/portfolio/carti-de-vizita/3cd5b72d3_adiecoo1.png",
+  "adi-ecoo-2009-sa": "/portfolio/adi-ecoo-2009-sa/71bf13109_IMG-20250618-WA0053.jpg",
   "campanie-social-media-luxe": "/portfolio/campanie-social-media-luxe/65714e254_generated_image.png",
   "auras-trend-vault": "/portfolio/auras-trend-vault/84ce9f083_WhatsAppImage2026-07-01at120708.jpg",
   "magazine-online-e-commerce": "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg",
   "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png",
   "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
-  "arta-digitala-materiale-grafice": "/assets/editorial/golden-portrait-clean.jpg",
-  "logo-design": "/portfolio/logo-design/4403fa619_generated_image.png",
+  "arta-digitala-materiale-grafice": "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg",
+  "logo-design": "/portfolio/logo-design/3caeb0cc1_Untitled-design.png",
 };
 
 const projects = [
   { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/assets/verde-bean.jpeg", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
-  { slug: "lumina-botanica", title: "Lumina Botanica — Identitate de Brand", category: ["Branding"], image: "/assets/lumina-botanica.jpg", description: "Branding premium pentru o linie de produse cosmetice organice și botanice." },
+  { slug: "lumina-botanica", title: "Lumina Botanica — Identitate de Brand", category: ["Branding"], image: "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg", description: "Branding premium pentru o linie de produse cosmetice organice și botanice." },
   { slug: "lupul-and-brici", title: "Lupul & Brici — Identitate de Brand", category: ["Branding", "Web"], image: "/assets/lupul-brici.png", description: "Identitate vizuală pentru un brand de îngrijire masculină, cu website de prezentare inclus." },
   { slug: "luxury-hair-by-aura", title: "Luxury Hair by Aura — Identitate de Brand", category: ["Branding"], image: "/assets/luxury-hair.png", description: "Identitate vizuală premium pentru un salon de extensii de păr din Slobozia." },
-  { slug: "real-estate-co", title: "Real Estate Co. — Identitate de Brand & Website", category: ["Branding", "Web"], image: "/assets/real-estate.png", description: "Identitate vizuală completă, materiale print și website pentru o agenție imobiliară din Anglia." },
-  { slug: "carti-de-vizita", title: "Cărți de Vizită — Design Corporate & Personal", category: ["Branding"], image: "/assets/carti-vizita.png", description: "Cărți de vizită digitale cu cod QR și print, create într-un stil modern și memorabil." },
-  { slug: "adi-ecoo-2009-sa", title: "ADI ECOO 2009 S.A. — Branding, Grafică, Social Media & Website", category: ["Marketing", "Branding", "Web"], image: "/assets/adi-ecoo.png", description: "Proiect complet de comunicare pentru colectarea corectă a deșeurilor în județul Ialomița." },
+  { slug: "real-estate-co", title: "Real Estate Co. — Identitate de Brand & Website", category: ["Branding", "Web"], image: "/portfolio/real-estate-co/ae9c7cdde_realestate.png", description: "Identitate vizuală completă, materiale print și website pentru o agenție imobiliară din Anglia." },
+  { slug: "carti-de-vizita", title: "Cărți de Vizită — Design Corporate & Personal", category: ["Branding"], image: "/portfolio/carti-de-vizita/3cd5b72d3_adiecoo1.png", description: "Cărți de vizită digitale cu cod QR și print, create într-un stil modern și memorabil." },
+  { slug: "adi-ecoo-2009-sa", title: "ADI ECOO 2009 S.A. — Branding, Grafică, Social Media & Website", category: ["Marketing", "Branding", "Web"], image: "/portfolio/adi-ecoo-2009-sa/71bf13109_IMG-20250618-WA0053.jpg", description: "Proiect complet de comunicare pentru colectarea corectă a deșeurilor în județul Ialomița." },
   { slug: "campanie-social-media-luxe", title: "Campanie Social Media — Bijuterii de Lux", category: ["Marketing"], image: "/assets/bijuterii.png", description: "Campanie editorială pentru o maison de bijuterii fine, cu fotografie și storytelling premium." },
   { slug: "auras-trend-vault", title: "Aura's Trend Vault — Platformă Web, Blog, AI & Fotografie Editorială", category: ["Web"], image: "/assets/trend-vault.jpg", description: "Platformă web completă, blog editorial și experiențe AI create de la zero." },
   { slug: "magazine-online-e-commerce", title: "Magazine Online E-Commerce — Web Design, Dezvoltare & Fotografie", category: ["Web"], image: "/assets/ecommerce.jpg", description: "Magazine online complete, cu design, plăți, curieri, fotografie de produs și optimizare SEO." },
   { slug: "invitatii-nunti-botezuri-evenimente", title: "Invitații Nunți, Botezuri & Evenimente", category: ["Grafică"], image: "/assets/invitatii.png", description: "Invitații premium personalizate, cu accente botanice, caligrafie și finisaje rafinate." },
   { slug: "documente-corporatiste-licenta", title: "Documente Corporatiste & Lucrare de Licență", category: ["Documente"], image: "/assets/documente.png", description: "Rapoarte, broșuri, prezentări și documente academice cu structură clară și design profesionist." },
-  { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/assets/arta-digitala.png", description: "Ilustrații, postere, compoziții abstracte și materiale grafice create într-o direcție contemporană." },
-  { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/assets/logo-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
+  { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", description: "Ilustrații, postere, compoziții abstracte și materiale grafice create într-o direcție contemporană." },
+  { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
 ];
 
 const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe"];
