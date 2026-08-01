@@ -21,6 +21,9 @@ import { projectDetails } from "./projectDetails";
 import { useScrollExperience } from "./useScrollExperience";
 
 const portfolioAssets = __PORTFOLIO_ASSETS__;
+const supplementalPortfolioAssets = {
+  "verde-bean": ["/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg"],
+};
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/1e4525e49_WhatsAppImage2026-07-02at090649.jpeg",
   "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg",
@@ -91,7 +94,10 @@ function scrollToId(id) {
 
 function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
-  const assets = portfolioAssets[project.slug] || [];
+  const assets = [...new Set([
+    ...(portfolioAssets[project.slug] || []),
+    ...(supplementalPortfolioAssets[project.slug] || []),
+  ])];
   const qualityAssets = assets.filter((asset) => !/generated_(image|video)|freepik|43d21e774/i.test(asset));
   const images = qualityAssets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
   const videos = qualityAssets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
