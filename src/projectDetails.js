@@ -1,4 +1,11 @@
 export const projectDetails = {
+  "selectii-cromatice": {
+    category: "Moodboard · Direcție vizuală", date: "August 2026", client: "Selecție personală — Aura's Digital Dream",
+    about: "O colecție de cinci direcții cromatice construite ca puncte de plecare pentru identități de brand, campanii, social media și experiențe digitale. Fiecare paletă pune în dialog culoarea, textura, lumina și atmosfera.",
+    challenge: "O combinație de culori trebuie să transmită mai mult decât armonie. Selecția trebuie să sugereze personalitate, ritm și emoție, dar să rămână suficient de flexibilă pentru aplicații digitale și materiale tipărite.",
+    solution: "Am grupat nuanțele în cinci povești vizuale distincte: olive cu blush, galben prăfuit cu albastru rece, smokey blue cu merlot, portocaliu cald cu galben solar și alb cald cu albastru calm. Imaginile, materialele și lumina arată cum poate trăi fiecare paletă dincolo de simple coduri hex.",
+    results: ["5 moodboard-uri cromatice originale", "Palete calde, reci și contrastante", "Direcții aplicabile în branding și social media", "Referințe de textură, lumină și atmosferă", "Bază vizuală pentru viitoare proiecte de identitate"]
+  },
   "verde-bean": {
     category: "Grafică", date: "Iulie 2025", client: "Brand de cafea specialty sustenabilă",
     about: "Identitate vizuală completă pentru Verde Bean, un brand de cafea specialty care pune accent pe sustenabilitate și proveniență organică. Am construit întregul sistem de brand — de la logo și paletă de culori până la ambalaje, materiale de punct de vânzare și carduri de vizită.",

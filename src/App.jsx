@@ -23,6 +23,13 @@ import { useScrollExperience } from "./useScrollExperience";
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const supplementalPortfolioAssets = {
   "verde-bean": ["/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg"],
+  "selectii-cromatice": [
+    "/portfolio/selectii-cromatice/olive-blush.jpeg",
+    "/portfolio/selectii-cromatice/dusty-yellow-cool-blue.jpeg",
+    "/portfolio/selectii-cromatice/smokey-blue-merlot-red.jpeg",
+    "/portfolio/selectii-cromatice/warm-orange-dusty-yellow.jpeg",
+    "/portfolio/selectii-cromatice/warm-white-cool-blue.jpeg",
+  ],
 };
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/1e4525e49_WhatsAppImage2026-07-02at090649.jpeg",
@@ -39,9 +46,11 @@ const detailHeroAssets = {
   "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
   "arta-digitala-materiale-grafice": "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg",
   "logo-design": "/portfolio/logo-design/3caeb0cc1_Untitled-design.png",
+  "selectii-cromatice": "/portfolio/selectii-cromatice/olive-blush.jpeg",
 };
 
 const projects = [
+  { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.jpeg", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
   { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/assets/verde-bean.jpeg", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
   { slug: "lumina-botanica", title: "Lumina Botanica — Identitate de Brand", category: ["Branding"], image: "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg", description: "Branding premium pentru o linie de produse cosmetice organice și botanice." },
   { slug: "lupul-and-brici", title: "Lupul & Brici — Identitate de Brand", category: ["Branding", "Web"], image: "/assets/lupul-brici.png", description: "Identitate vizuală pentru un brand de îngrijire masculină, cu website de prezentare inclus." },
@@ -328,7 +337,7 @@ export function App() {
         <div className="portfolio-heading"><div><p className="section-kicker">Selecție curatorială</p><h2>Proiecte care spun o <em>poveste.</em></h2></div><p>O selecție de identități, experiențe web și campanii în care strategia și estetica lucrează împreună.</p></div>
         <div className="featured-projects">{featured.map((project, index) => <a className="featured-project" data-reveal data-parallax={index % 2 ? "0.025" : "-0.02"} href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="featured-visual"><img src={detailHeroAssets[project.slug] || project.image} alt={project.title} /><span className="featured-index">0{index + 1}</span><span className="featured-open">Descoperă proiectul <ArrowRight size={18} /></span></div><div className="featured-copy"><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p><span className="text-link">Vezi studiul de caz <ArrowRight size={17} /></span></div></a>)}</div>
         <div className="archive-head"><div><p className="section-kicker">Arhivă</p><h2>Explorează toate <em>creațiile.</em></h2></div><span>{filtered.length.toString().padStart(2, "0")} proiecte</span></div>
-        <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
+        <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Moodboard", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
         <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
       </section>
 
