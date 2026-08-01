@@ -34,7 +34,7 @@ const detailHeroAssets = {
   "magazine-online-e-commerce": "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg",
   "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png",
   "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
-  "arta-digitala-materiale-grafice": "/portfolio/arta-digitala-materiale-grafice/4cf0976b6_generated_image.png",
+  "arta-digitala-materiale-grafice": "/assets/editorial/digital-art-services.jpg",
   "logo-design": "/portfolio/logo-design/4403fa619_generated_image.png",
 };
 
@@ -288,6 +288,11 @@ export function App() {
         <div className="service-grid">{services.map(({ icon: Icon, title, copy, list }) => <article className="service-card" data-reveal key={title}><Icon size={32} weight="light" /><h3>{title}</h3><p>{copy}</p><ul>{list.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul></article>)}</div>
       </section>
 
+      <section className="creative-services" aria-label="Servicii de creație digitală">
+        <div className="creative-services-copy" data-reveal><p className="section-kicker">Creative services</p><h2>De la o idee vizuală la un univers <em>coerent.</em></h2><p>Fiecare material este gândit ca parte din aceeași poveste — nu ca o piesă izolată.</p><div className="service-pill-list">{["Artă digitală", "Postere", "Broșuri", "Invitații", "Moodboard-uri", "Coperte"].map((item, index) => <span style={{ "--pill-delay": `${index * 90}ms` }} key={item}>{item}</span>)}</div></div>
+        <figure className="creative-services-visual" data-reveal data-parallax="0.035"><img src="/assets/editorial/creative-services.jpg" alt="Selecție de servicii creative și lucrare pentru ADI ECOO" /><span aria-hidden="true">06 / DIRECȚII CREATIVE</span></figure>
+      </section>
+
       <section className="section skills" id="skills">
         <p className="section-kicker">Skills & Competențe</p><h2>Instrumente <em>stăpânite.</em></h2>
         <div className="skill-columns">{[
@@ -297,12 +302,24 @@ export function App() {
         ].map(([title, rows]) => <div className="skill-card" key={title}><h3>{title}</h3>{rows.map(([name, value]) => <div className="skill" key={name}><div><span>{name}</span><b>{value}%</b></div><div className="bar"><i style={{ width: `${value}%` }} /></div></div>)}</div>)}</div>
       </section>
 
+      <section className="golden-interlude" aria-label="Artă digitală și storytelling vizual">
+        <div className="golden-image" data-parallax="0.075"><img src="/assets/editorial/golden-digital-art.jpg" alt="Portret artistic în tonuri aurii" /></div>
+        <div className="golden-shade" aria-hidden="true" />
+        <div className="golden-copy" data-reveal><p className="section-kicker">Artă care oprește scroll-ul</p><h2>Imaginea devine <em>atmosferă.</em></h2><p>Compoziții digitale construite pentru campanii, postere și povești vizuale cu personalitate.</p><button className="text-button" onClick={(event) => goToSection(event, "portofoliu")}>Descoperă selecția <ArrowRight size={20} /></button></div>
+        <span className="golden-number" aria-hidden="true">ART / 01</span>
+      </section>
+
       <section className="section portfolio" id="portofoliu">
         <div className="portfolio-heading"><div><p className="section-kicker">Selecție curatorială</p><h2>Proiecte care spun o <em>poveste.</em></h2></div><p>O selecție de identități, experiențe web și campanii în care strategia și estetica lucrează împreună.</p></div>
         <div className="featured-projects">{featured.map((project, index) => <a className="featured-project" data-reveal data-parallax={index % 2 ? "0.025" : "-0.02"} href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="featured-visual"><img src={detailHeroAssets[project.slug] || project.image} alt={project.title} /><span className="featured-index">0{index + 1}</span><span className="featured-open">Descoperă proiectul <ArrowRight size={18} /></span></div><div className="featured-copy"><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p><span className="text-link">Vezi studiul de caz <ArrowRight size={17} /></span></div></a>)}</div>
         <div className="archive-head"><div><p className="section-kicker">Arhivă</p><h2>Explorează toate <em>creațiile.</em></h2></div><span>{filtered.length.toString().padStart(2, "0")} proiecte</span></div>
         <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
         <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
+      </section>
+
+      <section className="creative-direction">
+        <div className="creative-direction-copy" data-reveal><p className="section-kicker">Creative Direction</p><h2>O privire de ansamblu asupra <em>lumii vizuale.</em></h2><p>Branding, artă digitală, campanii și materiale editoriale reunite într-o compoziție care arată amplitudinea portofoliului.</p><a className="button ink" href="/portofoliu/arta-digitala-materiale-grafice" onClick={(event) => navigateTo(event, "/portofoliu/arta-digitala-materiale-grafice")}>Vezi proiectul de artă digitală <ArrowRight size={18} /></a></div>
+        <figure className="creative-collage" data-reveal data-parallax="-0.035"><div className="collage-halo" aria-hidden="true" /><img src="/assets/editorial/creative-direction-collage.jpg" alt="Colaj cu proiecte de branding, ilustrație și comunicare vizuală" /><span className="collage-caption">Selected works · Aura's Digital Dream</span></figure>
       </section>
 
       <section className="behind" id="behind">

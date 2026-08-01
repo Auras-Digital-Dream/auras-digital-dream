@@ -22,4 +22,6 @@ Treat the portfolio as an editorial journey: lead with a curated selection of fl
 
 Project detail pages should surface practical context (role, client, period, deliverables) and end with a project-specific WhatsApp CTA. Preserve a personal "Behind the Dream" section so the portfolio communicates the creator behind the work, not only the deliverables.
 
+Use supplied editorial composites as distinct storytelling chapters rather than repeating them as ordinary cards. Keep embedded text artwork legible, but recreate navigation, service labels, and conversion copy as responsive HTML.
+
 Public web pricing should suit small and medium clients in Ialomița: accessible but not bargain-basement, with clear deliverables and recurring costs separated from the initial build estimate.
