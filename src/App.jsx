@@ -81,7 +81,7 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
-function ProjectDetail({ project, details, onNavigate }) {
+function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = portfolioAssets[project.slug] || [];
   const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
@@ -93,12 +93,12 @@ function ProjectDetail({ project, details, onNavigate }) {
     <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="detail-header">
         <a className="brand" href="/" onClick={(event) => onNavigate(event, "/")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
-        <nav><a href="/">Acasă</a><a href="/#despre">Despre</a><a href="/#servicii">Servicii</a><a href="/#portofoliu">Portofoliu</a><a href="/#contact">Contact</a></nav>
+        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/#despre" onClick={(event) => onSection(event, "despre")}>Despre</a><a href="/#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a></nav>
       </header>
 
       <section className="detail-hero">
         <div className="detail-hero-copy" data-reveal>
-          <a className="detail-back" href="/#portofoliu"><ArrowLeft size={18} /> Înapoi la portofoliu</a>
+          <a className="detail-back" href="/#portofoliu" onClick={(event) => onSection(event, "portofoliu")}><ArrowLeft size={18} /> Înapoi la portofoliu</a>
           <div className="detail-meta"><span>{details.category}</span><span>{details.date}</span></div>
           <h1>{project.title}</h1>
           <p>Client: {details.client}</p>
@@ -148,6 +148,12 @@ export function App() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
+  useEffect(() => {
+    if (currentPath !== "/" || !window.location.hash) return;
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    requestAnimationFrame(() => requestAnimationFrame(() => scrollToId(id)));
+  }, [currentPath]);
+
   function navigateTo(event, path) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
@@ -160,8 +166,19 @@ export function App() {
     else update();
   }
 
+  function goToSection(event, id) {
+    event?.preventDefault();
+    const revealSection = () => {
+      window.history.pushState({}, "", `/#${id}`);
+      setCurrentPath("/");
+      requestAnimationFrame(() => requestAnimationFrame(() => scrollToId(id)));
+    };
+    if (currentPath !== "/" && document.startViewTransition) document.startViewTransition(revealSection);
+    else revealSection();
+  }
+
   if (detailProject && projectDetails[detailSlug]) {
-    return <ProjectDetail project={detailProject} details={projectDetails[detailSlug]} onNavigate={navigateTo} />;
+    return <ProjectDetail project={detailProject} details={projectDetails[detailSlug]} onNavigate={navigateTo} onSection={goToSection} />;
   }
 
   function togglePrice(price) {
@@ -215,9 +232,9 @@ export function App() {
   return (
     <main><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="site-header">
-        <button className="brand" onClick={() => scrollToId("acasa")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></button>
+        <button className="brand" onClick={(event) => goToSection(event, "acasa")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Deschide meniul">{menuOpen ? <X /> : <List />}</button>
-        <nav className={menuOpen ? "open" : ""}>{nav.map(([label, id]) => <button key={id} onClick={() => { scrollToId(id); setMenuOpen(false); }}>{label}</button>)}</nav>
+        <nav className={menuOpen ? "open" : ""}>{nav.map(([label, id]) => <button key={id} onClick={(event) => { goToSection(event, id); setMenuOpen(false); }}>{label}</button>)}</nav>
       </header>
 
       <section className="hero" id="acasa">
