@@ -376,8 +376,8 @@ export function App() {
         <div className="amazon-world-glow" aria-hidden="true" />
         <div className="amazon-world-copy" data-reveal>
           <p className="section-kicker">Aura's curated world</p>
-          <h2>Descoperiri alese cu grijă. <em>Povești scrise de mine.</em></h2>
-          <p>Două vitrine pentru două comunități — selecții de fashion, beauty, lifestyle și inspirație creativă pentru UK și USA, alături de universul meu de autor.</p>
+          <h2>Recomandările mele. <em>Cărțile scrise de mine.</em></h2>
+          <p>Două vitrine cu recomandările mele de fashion, beauty, lifestyle și inspirație creativă pentru UK și USA, alături de cărțile pe care le-am scris și publicat.</p>
           <div className="amazon-market-links" aria-label="Storefronturi Amazon">
             <a className="amazon-market" href="https://amzn.eu/d/0bGKmBLR" target="_blank" rel="sponsored noopener noreferrer">
               <span><b>UK</b><small>Amazon.co.uk</small></span><strong>Shop my favourites</strong><ArrowRight size={19} />
@@ -397,7 +397,13 @@ export function App() {
           <a className="book-cover book-lunaria" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Vezi pagina de autor Aura Dobre pe Amazon">
             <img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Coperta Lunaria's Secret Treasure in the Enchanted Forest" />
           </a>
-          <a className="author-link" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer"><span>Author spotlight</span><strong>Aura Dobre</strong><small>Explorează cărțile mele <ArrowRight size={16} /></small></a>
+          <div className="author-link">
+            <span>Cărți scrise și publicate de mine</span><strong>Aura Dobre</strong>
+            <div className="author-store-links">
+              <a href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Cărțile mele pe Amazon <ArrowRight size={15} /></a>
+              <a href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad <ArrowRight size={15} /></a>
+            </div>
+          </div>
         </div>
       </section>
 
