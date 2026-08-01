@@ -49,6 +49,14 @@ const supplementalPortfolioAssets = {
     "/portfolio/auras-trend-vault/editorial-2026/trend-vault-motion-04.mp4",
   ],
 };
+const excludedPortfolioAssets = new Set([
+  "/portfolio/arta-digitala-materiale-grafice/76bc483af_freepik__genereazaa-o-imagine-realistica-a-unor-deseuri-din__37852.jpg",
+  "/portfolio/verde-bean/43d21e774_WhatsAppImage2026-07-02at090629.jpeg",
+  "/portfolio/verde-bean/85c614852_generated_image.png",
+  "/portfolio/verde-bean/a2f94eaa5_generated_image.png",
+  "/portfolio/verde-bean/dab706afd_generated_image.png",
+  "/portfolio/verde-bean/e0a278da9_generated_image.png",
+]);
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/verde-bean-hero-branding.jpeg",
   "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg",
@@ -128,9 +136,9 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
     ...(portfolioAssets[project.slug] || []),
     ...(supplementalPortfolioAssets[project.slug] || []),
   ])];
-  const qualityAssets = assets.filter((asset) => !/generated_(image|video)|freepik|43d21e774/i.test(asset));
-  const images = qualityAssets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
-  const videos = qualityAssets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
+  const curatedAssets = assets.filter((asset) => !excludedPortfolioAssets.has(asset));
+  const images = curatedAssets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
+  const videos = curatedAssets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
   const heroImage = detailHeroAssets[project.slug] || images[0] || project.image;
   const whatsappMessage = encodeURIComponent(`Bună, Aura! Am văzut proiectul ${project.title} și aș dori să discutăm despre un proiect asemănător.`);
 
