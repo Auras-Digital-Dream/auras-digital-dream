@@ -22,7 +22,12 @@ import { useScrollExperience } from "./useScrollExperience";
 
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const supplementalPortfolioAssets = {
-  "verde-bean": ["/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg"],
+  "verde-bean": [
+    "/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg",
+    "/portfolio/verde-bean/verde-bean-brand-system.jpeg",
+    "/portfolio/verde-bean/verde-bean-hero-branding.jpeg",
+    "/portfolio/verde-bean/verde-bean-menu-system.jpeg",
+  ],
   "selectii-cromatice": [
     "/portfolio/selectii-cromatice/olive-blush.jpeg",
     "/portfolio/selectii-cromatice/dusty-yellow-cool-blue.jpeg",
@@ -42,7 +47,7 @@ const supplementalPortfolioAssets = {
   ],
 };
 const detailHeroAssets = {
-  "verde-bean": "/portfolio/verde-bean/1e4525e49_WhatsAppImage2026-07-02at090649.jpeg",
+  "verde-bean": "/portfolio/verde-bean/verde-bean-hero-branding.jpeg",
   "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg",
   "lupul-and-brici": "/portfolio/lupul-and-brici/2f028c963_generated_image.png",
   "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/7c76798b9_WhatsAppImage2026-07-02at1127331.jpg",
@@ -61,7 +66,7 @@ const detailHeroAssets = {
 
 const projects = [
   { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.jpeg", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
-  { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/assets/verde-bean.jpeg", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
+  { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/portfolio/verde-bean/verde-bean-hero-branding.jpeg", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
   { slug: "lumina-botanica", title: "Lumina Botanica — Identitate de Brand", category: ["Branding"], image: "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg", description: "Branding premium pentru o linie de produse cosmetice organice și botanice." },
   { slug: "lupul-and-brici", title: "Lupul & Brici — Identitate de Brand", category: ["Branding", "Web"], image: "/assets/lupul-brici.png", description: "Identitate vizuală pentru un brand de îngrijire masculină, cu website de prezentare inclus." },
   { slug: "luxury-hair-by-aura", title: "Luxury Hair by Aura — Identitate de Brand", category: ["Branding"], image: "/assets/luxury-hair.png", description: "Identitate vizuală premium pentru un salon de extensii de păr din Slobozia." },
