@@ -11,3 +11,5 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 Durable visual direction: use cinematic scroll storytelling, restrained parallax, staggered reveals, and a visible journey from strategy to creation. Always honor `prefers-reduced-motion` and avoid animation dependencies when browser-native APIs are sufficient.
 
 Storytelling must be genuinely scroll-driven, not limited to entrance reveals: use pinned scenes, changing imagery, depth, and 3D transformations tied continuously to scroll progress. On fine-pointer devices, the custom cursor's central point must stay exactly under the system pointer; only its decorative outer ring may trail.
+
+The hero flower should feel alive through continuous cinematic motion and refraction, not behave like a static background. Prefer refined organic 3D sculpture forms (light, petals, glass, orbital curves) over hard geometric objects such as cubes.

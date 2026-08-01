@@ -196,7 +196,12 @@ export function App() {
       </header>
 
       <section className="hero" id="acasa">
-        <img className="hero-image" data-parallax="0.16" src="/assets/hero.png" alt="Fundal abstract digital" />
+        <div className="hero-motion" data-parallax="0.12">
+          <img className="hero-image hero-image-base" src="/assets/hero.png" alt="Floare digitală abstractă în mișcare" />
+          <img className="hero-image hero-image-liquid" src="/assets/hero.png" alt="" aria-hidden="true" />
+          <div className="hero-light" aria-hidden="true" />
+        </div>
+        <svg className="hero-filters" aria-hidden="true"><filter id="hero-liquid"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="7" result="noise"><animate attributeName="baseFrequency" dur="14s" values="0.006 0.012;0.011 0.007;0.006 0.012" repeatCount="indefinite" /></feTurbulence><feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="B"><animate attributeName="scale" dur="10s" values="10;28;10" repeatCount="indefinite" /></feDisplacementMap></filter></svg>
         <div className="hero-overlay" />
         <div className="hero-content" data-reveal>
           <p className="eyebrow">Marketing · Design · Soluții Digitale</p>
@@ -220,7 +225,10 @@ export function App() {
             <figure className="story-image scene-one"><img src="/assets/verde-bean.jpeg" alt="" /></figure>
             <figure className="story-image scene-two"><img src="/assets/lumina-botanica.jpg" alt="" /></figure>
             <figure className="story-image scene-three"><img src="/assets/trend-vault.jpg" alt="" /></figure>
-            <div className="story-cube"><span>STRATEGIE</span><span>DESIGN</span><span>WEB</span><span>IMPACT</span><span>AURA</span><span>DREAM</span></div>
+            <div className="story-sculpture">
+              <span className="petal p1" /><span className="petal p2" /><span className="petal p3" /><span className="petal p4" /><span className="petal p5" /><span className="petal p6" />
+              <i className="orbit o1" /><i className="orbit o2" /><i className="orbit o3" /><b className="sculpture-core" />
+            </div>
             <div className="story-glow" />
           </div>
           <div className="story-copy">
