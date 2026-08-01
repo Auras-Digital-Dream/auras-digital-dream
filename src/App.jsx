@@ -18,6 +18,7 @@ import {
   X,
 } from "@phosphor-icons/react";
 import { projectDetails } from "./projectDetails";
+import { useScrollExperience } from "./useScrollExperience";
 
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const detailHeroAssets = {
@@ -79,37 +80,38 @@ function scrollToId(id) {
 }
 
 function ProjectDetail({ project, details }) {
+  useScrollExperience();
   const [zoomed, setZoomed] = useState(null);
   const assets = portfolioAssets[project.slug] || [];
   const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
   const videos = assets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
 
   return (
-    <main className="detail-page">
+    <main className="detail-page"><div className="scroll-progress" aria-hidden="true" />
       <header className="detail-header">
         <a className="brand" href="/"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
         <nav><a href="/">Acasă</a><a href="/#despre">Despre</a><a href="/#servicii">Servicii</a><a href="/#portofoliu">Portofoliu</a><a href="/#contact">Contact</a></nav>
       </header>
 
       <section className="detail-hero">
-        <div className="detail-hero-copy">
+        <div className="detail-hero-copy" data-reveal>
           <a className="detail-back" href="/#portofoliu"><ArrowLeft size={18} /> Înapoi la portofoliu</a>
           <div className="detail-meta"><span>{details.category}</span><span>{details.date}</span></div>
           <h1>{project.title}</h1>
           <p>Client: {details.client}</p>
         </div>
-        <img src={detailHeroAssets[project.slug] || images[0] || project.image} alt={project.title} />
+        <div className="detail-hero-visual" data-parallax="0.08"><img src={detailHeroAssets[project.slug] || images[0] || project.image} alt={project.title} /></div>
       </section>
 
       <section className="detail-content">
-        <div className="detail-intro"><p className="section-kicker">Despre proiect</p><h2>{details.about}</h2></div>
-        <div className="detail-columns"><article><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article></div>
+        <div className="detail-intro" data-reveal><p className="section-kicker">Despre proiect</p><h2>{details.about}</h2></div>
+        <div className="detail-columns"><article data-reveal><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article data-reveal><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article></div>
         <div className="detail-results"><p className="section-kicker">Rezultate</p><div>{details.results.map((result) => <article key={result}><Check size={18} weight="bold" /><span>{result}</span></article>)}</div></div>
       </section>
 
       <section className="detail-gallery">
         <p className="section-kicker">Galerie</p><h2>Proiectul <em>în imagini.</em></h2>
-        <div className="gallery-grid">{images.map((image, index) => <button key={image} className={index % 7 === 0 ? "gallery-wide" : ""} onClick={() => setZoomed(image)}><img src={image} alt={`${project.title} — imagine ${index + 1}`} loading="lazy" /><span><ArrowsOutSimple size={24} /> Click pentru zoom</span></button>)}</div>
+        <div className="gallery-grid">{images.map((image, index) => <button data-reveal key={image} className={index % 7 === 0 ? "gallery-wide" : ""} onClick={() => setZoomed(image)}><img src={image} alt={`${project.title} — imagine ${index + 1}`} loading="lazy" /><span><ArrowsOutSimple size={24} /> Click pentru zoom</span></button>)}</div>
         {videos.length > 0 && <div className="video-section"><h3>Video</h3><div>{videos.map((video) => <video controls preload="metadata" key={video}><source src={video} type="video/mp4" /></video>)}</div></div>}
       </section>
 
@@ -122,10 +124,12 @@ function ProjectDetail({ project, details }) {
 }
 
 export function App() {
+  useScrollExperience();
   const [filter, setFilter] = useState("Toate");
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [testimonial, setTestimonial] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState("idle");
   const filtered = useMemo(() => filter === "Toate" ? projects : projects.filter((p) => p.category.includes(filter)), [filter]);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
   const nav = [["Acasă", "acasa"], ["Despre", "despre"], ["Servicii", "servicii"], ["Skills", "skills"], ["Portofoliu", "portofoliu"], ["Estimator", "estimator"], ["Proces", "proces"], ["Contact", "contact"]];
@@ -140,8 +144,52 @@ export function App() {
     setSelectedPrices((current) => current.includes(price) ? current.filter((p) => p !== price) : [...current, price]);
   }
 
+  function contactMessage(form) {
+    const data = new FormData(form);
+    return `Nume: ${data.get("name")}\nEmail: ${data.get("email")}\nTelefon: ${data.get("phone") || "nespecificat"}\nServiciu: ${data.get("service") || "nespecificat"}\n\n${data.get("message")}`;
+  }
+
+  async function submitContact(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    if (data.get("website")) return;
+    setFormStatus("sending");
+    const payload = Object.fromEntries(data.entries());
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/aurastrendvault@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          service: payload.service,
+          message: payload.message,
+          _subject: `Cerere nouă Aura's Digital Dream — ${payload.service || "proiect digital"}`,
+          _template: "table",
+          _replyto: payload.email,
+          _honey: payload.website,
+        }),
+      });
+      if (!response.ok) throw new Error("Delivery failed");
+      setFormStatus("success");
+      form.reset();
+    } catch {
+      setFormStatus("error");
+    }
+  }
+
+  function submitWhatsapp() {
+    const form = document.getElementById("contact-form");
+    if (!form?.reportValidity()) return;
+    const data = new FormData(form);
+    if (data.get("website")) return;
+    window.open(`https://wa.me/40762509423?text=${encodeURIComponent(`Bună, Aura!\n\n${contactMessage(form)}`)}`, "_blank", "noopener,noreferrer");
+  }
+
   return (
-    <main>
+    <main><div className="scroll-progress" aria-hidden="true" />
       <header className="site-header">
         <button className="brand" onClick={() => scrollToId("acasa")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Deschide meniul">{menuOpen ? <X /> : <List />}</button>
@@ -149,9 +197,9 @@ export function App() {
       </header>
 
       <section className="hero" id="acasa">
-        <img className="hero-image" src="/assets/hero.png" alt="Fundal abstract digital" />
+        <img className="hero-image" data-parallax="0.16" src="/assets/hero.png" alt="Fundal abstract digital" />
         <div className="hero-overlay" />
-        <div className="hero-content">
+        <div className="hero-content" data-reveal>
           <p className="eyebrow">Marketing · Design · Soluții Digitale</p>
           <h1>Aura's <em>Digital</em><br />Dream</h1>
           <p className="hero-copy">Idei care prind viață digital.</p>
@@ -160,14 +208,22 @@ export function App() {
         <button className="scroll-mark" onClick={() => scrollToId("despre")} aria-label="Derulează la secțiunea despre"><span /></button>
       </section>
 
-      <section className="section about" id="despre">
+      <div className="story-marquee" aria-hidden="true"><div>STRATEGIE <i>✦</i> IDENTITATE <i>✦</i> EXPERIENȚE DIGITALE <i>✦</i> STORYTELLING <i>✦</i> STRATEGIE <i>✦</i> IDENTITATE <i>✦</i></div></div>
+
+      <section className="section about" id="despre" data-reveal>
         <div><p className="section-kicker">Despre mine</p><h2>Marketing, design și soluții digitale, <em>cu suflet.</em></h2></div>
         <div className="about-copy"><p>Sunt un specialist în marketing digital care crede că fiecare proiect merită atenție la detalii și o viziune clară. Lucrez atât cu companii, cât și cu antreprenori independenți, oferind soluții complete — de la strategie și branding, până la dezvoltare web și documente profesionale.</p><p>Fiecare brand are o poveste unică. Misiunea mea este să transform acea poveste într-o prezență digitală care inspiră încredere, atrage clienți și construiește relații pe termen lung.</p></div>
       </section>
 
+      <section className="story-section" aria-label="Povestea procesului creativ">
+        <div className="story-orbit" data-parallax="-0.08" aria-hidden="true"><span /><span /><span /></div>
+        <div className="story-sticky"><p className="section-kicker">Din idee în experiență</p><h2>Nu creez doar imagini.<br /><em>Construiesc o lume.</em></h2></div>
+        <div className="story-chapters"><article data-reveal><span>01 / Ascult</span><h3>Încep cu povestea ta.</h3><p>Descopăr esența brandului, oamenii cărora li se adresează și emoția pe care vrei să o lași în urmă.</p></article><article data-reveal><span>02 / Imaginez</span><h3>Dau formă unei direcții.</h3><p>Strategia, cuvintele, culoarea și mișcarea devin un limbaj vizual recognoscibil și coerent.</p></article><article data-reveal><span>03 / Construiesc</span><h3>Transform direcția în experiență.</h3><p>Fiecare ecran și fiecare detaliu lucrează împreună pentru ca publicul tău să simtă, să înțeleagă și să acționeze.</p></article></div>
+      </section>
+
       <section className="section dark" id="servicii">
         <p className="section-kicker">Servicii</p><h2>Tot ce ai nevoie, <em>sub un singur acoperiș.</em></h2><p className="section-lead">De la strategie la execuție, fiecare serviciu este gândit pentru a-ți aduce rezultate reale.</p>
-        <div className="service-grid">{services.map(({ icon: Icon, title, copy, list }) => <article className="service-card" key={title}><Icon size={32} weight="light" /><h3>{title}</h3><p>{copy}</p><ul>{list.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul></article>)}</div>
+        <div className="service-grid">{services.map(({ icon: Icon, title, copy, list }) => <article className="service-card" data-reveal key={title}><Icon size={32} weight="light" /><h3>{title}</h3><p>{copy}</p><ul>{list.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul></article>)}</div>
       </section>
 
       <section className="section skills" id="skills">
@@ -182,7 +238,7 @@ export function App() {
       <section className="section portfolio" id="portofoliu">
         <p className="section-kicker">Portofoliu</p><h2>Proiecte <em>recente</em></h2>
         <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
-        <div className="project-grid">{filtered.map((project) => <a className="project-card" href={`/portofoliu/${project.slug}`} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
+        <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
       </section>
 
       <section className="section estimator" id="estimator">
@@ -202,7 +258,7 @@ export function App() {
 
       <section className="section contact" id="contact">
         <div><p className="section-kicker">Contact</p><h2>Hai să lucrăm <em>împreună.</em></h2><p>Ai un proiect în minte? Scrie-mi și găsim împreună cea mai bună soluție. Răspund în maximum 24 de ore.</p><a href="https://wa.me/40762509423"><WhatsappLogo size={22} /><span><b>Scrie-mi pe WhatsApp</b><small>Răspuns rapid, oricând</small></span></a><a href="tel:+40762509423"><Phone size={22} /><span><b>Sună-mă direct</b><small>+40 762 509 423</small></span></a></div>
-        <form onSubmit={(event) => { event.preventDefault(); event.currentTarget.reset(); alert("Mulțumesc! Mesajul tău a fost pregătit."); }}><div className="form-row"><input required placeholder="Numele tău" /><input required type="email" placeholder="Email" /></div><input placeholder="Telefon" /><select defaultValue=""><option value="" disabled>Tip serviciu dorit</option><option>Web & Magazine Online</option><option>Branding & Identitate Vizuală</option><option>Social Media & Promovare</option><option>Design Grafic</option></select><textarea required placeholder="Descrie pe scurt proiectul tău..." /><button className="button primary">Trimite mesajul <ArrowRight size={18} /></button></form>
+        <form id="contact-form" onSubmit={submitContact} data-reveal><input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" /><div className="form-row"><input required name="name" maxLength="80" autoComplete="name" placeholder="Numele tău" /><input required name="email" maxLength="120" type="email" autoComplete="email" placeholder="Email" /></div><input name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" /><select name="service" defaultValue=""><option value="" disabled>Tip serviciu dorit</option><option>Web & Magazine Online</option><option>Branding & Identitate Vizuală</option><option>Social Media & Promovare</option><option>Design Grafic</option></select><textarea required name="message" minLength="15" maxLength="2000" placeholder="Descrie pe scurt proiectul tău..." /><div className="form-actions"><button className="button primary" type="submit" disabled={formStatus === "sending"}>{formStatus === "sending" ? "Se trimite..." : "Trimite pe email"} <ArrowRight size={18} /></button><button className="button whatsapp" type="button" onClick={submitWhatsapp}><WhatsappLogo size={20} /> Trimite pe WhatsApp</button></div>{formStatus === "success" && <p className="form-notice success" role="status">Mesajul a fost trimis. Îți voi răspunde în maximum 24 de ore.</p>}{formStatus === "error" && <p className="form-notice error" role="alert">Trimiterea nu a reușit. Te rog folosește butonul WhatsApp.</p>}<small className="privacy-note">Prin trimitere ești de acord ca datele să fie procesate de FormSubmit exclusiv pentru livrarea mesajului către mine.</small></form>
       </section>
 
       <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura's Digital Dream</strong><p>Marketing, design și soluții digitale, cu suflet.</p></div></div><div className="social"><a href="https://www.instagram.com/aurasdigitaldream" aria-label="Instagram"><InstagramLogo /></a><a href="https://www.linkedin.com/in/aurelia-dobre-a033b2104" aria-label="LinkedIn"><LinkedinLogo /></a><a href="https://wa.me/40762509423" aria-label="WhatsApp"><WhatsappLogo /></a></div><p>© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p></footer>
