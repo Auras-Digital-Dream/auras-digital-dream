@@ -136,6 +136,7 @@ em { font-family:"Italiana",serif; color:var(--rose); font-style:italic; font-we
 .summary > p { color:#aaa29f; min-height:48px; }
 .summary > div { padding:25px 0; border-top:1px solid rgba(255,255,255,.12); display:flex; flex-direction:column; gap:8px; }
 .summary > div strong { font-family:"Italiana",serif; font-size:34px; color:var(--rose); }
+.estimate-note { display:block; color:#aaa29f; line-height:1.55; margin:0 0 22px; }
 .summary .button { width:100%; }
 .process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:56px; }
 .process-grid article { padding:30px; border-left:1px solid rgba(255,255,255,.15); }

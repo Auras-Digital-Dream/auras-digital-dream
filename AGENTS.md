@@ -17,3 +17,5 @@ The hero flower should feel alive through continuous cinematic motion and refrac
 Story-scene portfolio imagery should read as elegant cutouts or floating compositions, with high-resolution source assets and organically feathered transparency. Avoid visible rectangular cards, borders, hard frames, or obvious carousel containers.
 
 Portfolio detail heroes must show the selected artwork in full. Use the strongest available landscape source where possible; for square or portrait artwork, preserve the complete image with `object-fit: contain` over a subtle blurred backdrop rather than cropping it.
+
+Public web pricing should suit small and medium clients in Ialomița: accessible but not bargain-basement, with clear deliverables and recurring costs separated from the initial build estimate.

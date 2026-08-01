@@ -63,10 +63,10 @@ const services = [
 ];
 
 const priceItems = [
-  { title: "Landing page / site one-page", price: 1200 },
-  { title: "Site de prezentare (5–8 pagini)", price: 2500 },
-  { title: "Site de prezentare premium", price: 4500 },
-  { title: "Magazin online standard", price: 6000 },
+  { title: "Landing page / site one-page", price: 850, copy: "Design personalizat, responsive, formular și optimizare de bază." },
+  { title: "Site de prezentare (5–8 pagini)", price: 1750, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
+  { title: "Site de prezentare premium", price: 2950, copy: "Design avansat, animații, strategie de conținut și experiență personalizată." },
+  { title: "Magazin online standard", price: 4200, copy: "Catalog, coș, plăți, curier, configurare inițială și instruire." },
 ];
 
 const testimonials = [
@@ -264,7 +264,7 @@ export function App() {
 
       <section className="section estimator" id="estimator">
         <p className="section-kicker">Estimator de cost</p><h2>Estimează-ți <em>bugetul.</em></h2><p className="section-lead">Selectează serviciile de care ai nevoie și primește o estimare instantanee. Prețurile sunt orientative, afișate ca „de la”.</p>
-        <div className="estimator-grid"><div className="price-list">{priceItems.map((item) => <button className={selectedPrices.includes(item.price) ? "selected" : ""} key={item.title} onClick={() => togglePrice(item.price)}><span className="price-check"><Check size={18} /></span><span><b>{item.title}</b><small>Serviciu complet, adaptat obiectivelor proiectului tău.</small></span><strong>de la {item.price.toLocaleString("ro-RO")} RON</strong></button>)}</div><aside className="summary"><h3>Sumar estimare</h3><p>{selectedPrices.length ? `${selectedPrices.length} servicii selectate` : "Selectează serviciile dorite."}</p><div><span>Total estimativ</span><strong>{total.toLocaleString("ro-RO")} RON</strong></div><a className="button primary" href={`https://wa.me/40762509423?text=${encodeURIComponent(`Salut! Aș dori o ofertă. Total estimat: ${total} RON`)}`}><WhatsappLogo size={20} /> Cere ofertă</a></aside></div>
+        <div className="estimator-grid"><div className="price-list">{priceItems.map((item) => <button className={selectedPrices.includes(item.price) ? "selected" : ""} key={item.title} onClick={() => togglePrice(item.price)}><span className="price-check"><Check size={18} /></span><span><b>{item.title}</b><small>{item.copy}</small></span><strong>de la {item.price.toLocaleString("ro-RO")} RON</strong></button>)}</div><aside className="summary"><h3>Sumar estimare</h3><p>{selectedPrices.length ? `${selectedPrices.length} servicii selectate` : "Selectează serviciile dorite."}</p><div><span>Total estimativ</span><strong>{total.toLocaleString("ro-RO")} RON</strong></div><small className="estimate-note">Preț orientativ. Domeniul, hostingul și serviciile recurente se stabilesc separat.</small><a className="button primary" href={`https://wa.me/40762509423?text=${encodeURIComponent(`Salut! Aș dori o ofertă. Total estimat: ${total} RON`)}`}><WhatsappLogo size={20} /> Cere ofertă</a></aside></div>
       </section>
 
       <section className="section dark" id="proces">
