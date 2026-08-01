@@ -80,14 +80,13 @@ function scrollToId(id) {
 }
 
 function ProjectDetail({ project, details }) {
-  useScrollExperience();
   const [zoomed, setZoomed] = useState(null);
   const assets = portfolioAssets[project.slug] || [];
   const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
   const videos = assets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
 
   return (
-    <main className="detail-page"><div className="scroll-progress" aria-hidden="true" />
+    <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="detail-header">
         <a className="brand" href="/"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
         <nav><a href="/">Acasă</a><a href="/#despre">Despre</a><a href="/#servicii">Servicii</a><a href="/#portofoliu">Portofoliu</a><a href="/#contact">Contact</a></nav>
@@ -189,7 +188,7 @@ export function App() {
   }
 
   return (
-    <main><div className="scroll-progress" aria-hidden="true" />
+    <main><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="site-header">
         <button className="brand" onClick={() => scrollToId("acasa")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Deschide meniul">{menuOpen ? <X /> : <List />}</button>
@@ -215,10 +214,23 @@ export function App() {
         <div className="about-copy"><p>Sunt un specialist în marketing digital care crede că fiecare proiect merită atenție la detalii și o viziune clară. Lucrez atât cu companii, cât și cu antreprenori independenți, oferind soluții complete — de la strategie și branding, până la dezvoltare web și documente profesionale.</p><p>Fiecare brand are o poveste unică. Misiunea mea este să transform acea poveste într-o prezență digitală care inspiră încredere, atrage clienți și construiește relații pe termen lung.</p></div>
       </section>
 
-      <section className="story-section" aria-label="Povestea procesului creativ">
-        <div className="story-orbit" data-parallax="-0.08" aria-hidden="true"><span /><span /><span /></div>
-        <div className="story-sticky"><p className="section-kicker">Din idee în experiență</p><h2>Nu creez doar imagini.<br /><em>Construiesc o lume.</em></h2></div>
-        <div className="story-chapters"><article data-reveal><span>01 / Ascult</span><h3>Încep cu povestea ta.</h3><p>Descopăr esența brandului, oamenii cărora li se adresează și emoția pe care vrei să o lași în urmă.</p></article><article data-reveal><span>02 / Imaginez</span><h3>Dau formă unei direcții.</h3><p>Strategia, cuvintele, culoarea și mișcarea devin un limbaj vizual recognoscibil și coerent.</p></article><article data-reveal><span>03 / Construiesc</span><h3>Transform direcția în experiență.</h3><p>Fiecare ecran și fiecare detaliu lucrează împreună pentru ca publicul tău să simtă, să înțeleagă și să acționeze.</p></article></div>
+      <section className="story-section" data-scroll-story aria-label="Povestea procesului creativ">
+        <div className="story-stage">
+          <div className="story-visuals" aria-hidden="true">
+            <figure className="story-image scene-one"><img src="/assets/verde-bean.jpeg" alt="" /></figure>
+            <figure className="story-image scene-two"><img src="/assets/lumina-botanica.jpg" alt="" /></figure>
+            <figure className="story-image scene-three"><img src="/assets/trend-vault.jpg" alt="" /></figure>
+            <div className="story-cube"><span>STRATEGIE</span><span>DESIGN</span><span>WEB</span><span>IMPACT</span><span>AURA</span><span>DREAM</span></div>
+            <div className="story-glow" />
+          </div>
+          <div className="story-copy">
+            <p className="section-kicker">Din idee în experiență</p>
+            <article className="scene-one"><span>01 / Ascult</span><h2>Povestea ta devine <em>punctul de plecare.</em></h2><p>Descopăr esența brandului, publicul și emoția care trebuie să rămână.</p></article>
+            <article className="scene-two"><span>02 / Imaginez</span><h2>Ideile capătă <em>formă și profunzime.</em></h2><p>Culoarea, cuvintele și mișcarea construiesc o identitate recognoscibilă.</p></article>
+            <article className="scene-three"><span>03 / Construiesc</span><h2>Totul devine o <em>experiență vie.</em></h2><p>Fiecare interacțiune conduce publicul de la curiozitate la încredere și acțiune.</p></article>
+            <div className="story-counter"><b>0<span /></b><i /><small>03</small></div>
+          </div>
+        </div>
       </section>
 
       <section className="section dark" id="servicii">

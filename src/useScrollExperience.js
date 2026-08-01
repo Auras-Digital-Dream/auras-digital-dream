@@ -30,17 +30,56 @@ export function useScrollExperience() {
         const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * Number(element.dataset.parallax || 0.12);
         element.style.setProperty("--parallax-y", `${offset.toFixed(1)}px`);
       });
+      document.querySelectorAll("[data-scroll-story]").forEach((story) => {
+        const rect = story.getBoundingClientRect();
+        const distance = Math.max(story.offsetHeight - window.innerHeight, 1);
+        const progress = Math.min(1, Math.max(0, -rect.top / distance));
+        story.style.setProperty("--story-progress", progress.toFixed(4));
+        story.style.setProperty("--scene-one", Math.max(0, 1 - progress * 3).toFixed(4));
+        story.style.setProperty("--scene-two", Math.max(0, 1 - Math.abs(progress - 0.5) * 4).toFixed(4));
+        story.style.setProperty("--scene-three", Math.max(0, (progress - 0.58) * 2.4).toFixed(4));
+        story.dataset.chapter = progress < 0.34 ? "1" : progress < 0.68 ? "2" : "3";
+      });
       frame = 0;
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const cursor = document.querySelector(".custom-cursor");
+    const cursorRing = document.querySelector(".custom-cursor-ring");
+    let ringX = -100;
+    let ringY = -100;
+    let targetX = -100;
+    let targetY = -100;
+    let cursorFrame = 0;
+    const animateCursor = () => {
+      ringX += (targetX - ringX) * 0.22;
+      ringY += (targetY - ringY) * 0.22;
+      cursorRing?.style.setProperty("transform", `translate3d(${ringX}px,${ringY}px,0)`);
+      cursorFrame = requestAnimationFrame(animateCursor);
+    };
+    const onPointerMove = (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      cursor?.style.setProperty("transform", `translate3d(${targetX}px,${targetY}px,0)`);
+      document.body.classList.add("cursor-ready");
+    };
+    const onPointerOver = (event) => document.body.classList.toggle("cursor-interactive", Boolean(event.target.closest("a,button,input,select,textarea,[role='button']")));
+    if (finePointer) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("pointerover", onPointerOver, { passive: true });
+      cursorFrame = requestAnimationFrame(animateCursor);
+    }
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerover", onPointerOver);
       if (frame) cancelAnimationFrame(frame);
+      if (cursorFrame) cancelAnimationFrame(cursorFrame);
     };
   }, []);
 }
