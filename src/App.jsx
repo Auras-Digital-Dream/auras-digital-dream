@@ -35,6 +35,10 @@ const supplementalPortfolioAssets = {
     "/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.jpeg",
     "/portfolio/auras-trend-vault/editorial-2026/editorial-city-motion.jpeg",
     "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg",
+    "/portfolio/auras-trend-vault/editorial-2026/trend-vault-motion-01.mp4",
+    "/portfolio/auras-trend-vault/editorial-2026/trend-vault-motion-02.mp4",
+    "/portfolio/auras-trend-vault/editorial-2026/trend-vault-motion-03.mp4",
+    "/portfolio/auras-trend-vault/editorial-2026/trend-vault-motion-04.mp4",
   ],
 };
 const detailHeroAssets = {
