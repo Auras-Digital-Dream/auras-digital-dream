@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import {
+  ArrowLeft,
   ArrowRight,
+  ArrowsOutSimple,
   Check,
   CaretLeft,
   CaretRight,
@@ -15,6 +17,25 @@ import {
   WhatsappLogo,
   X,
 } from "@phosphor-icons/react";
+import { projectDetails } from "./projectDetails";
+
+const portfolioAssets = __PORTFOLIO_ASSETS__;
+const detailHeroAssets = {
+  "verde-bean": "/portfolio/verde-bean/730b9953c_WhatsAppImage2026-07-02at090603.jpeg",
+  "lumina-botanica": "/portfolio/lumina-botanica/69944db3b_WhatsAppImage2026-07-02at090156.jpg",
+  "lupul-and-brici": "/portfolio/lupul-and-brici/2f028c963_generated_image.png",
+  "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/31d17cea7_generated_image.png",
+  "real-estate-co": "/portfolio/real-estate-co/9e3247426_generated_image.png",
+  "carti-de-vizita": "/portfolio/carti-de-vizita/4c8202a7a_aurasdigitaldream1.png",
+  "adi-ecoo-2009-sa": "/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.png",
+  "campanie-social-media-luxe": "/portfolio/campanie-social-media-luxe/65714e254_generated_image.png",
+  "auras-trend-vault": "/portfolio/auras-trend-vault/84ce9f083_WhatsAppImage2026-07-01at120708.jpg",
+  "magazine-online-e-commerce": "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg",
+  "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/cbb2fbd88_Daiana.png",
+  "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
+  "arta-digitala-materiale-grafice": "/portfolio/arta-digitala-materiale-grafice/4cf0976b6_generated_image.png",
+  "logo-design": "/portfolio/logo-design/4403fa619_generated_image.png",
+};
 
 const projects = [
   { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/assets/verde-bean.jpeg", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
@@ -57,6 +78,49 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
+function ProjectDetail({ project, details }) {
+  const [zoomed, setZoomed] = useState(null);
+  const assets = portfolioAssets[project.slug] || [];
+  const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
+  const videos = assets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
+
+  return (
+    <main className="detail-page">
+      <header className="detail-header">
+        <a className="brand" href="/"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
+        <nav><a href="/">Acasă</a><a href="/#despre">Despre</a><a href="/#servicii">Servicii</a><a href="/#portofoliu">Portofoliu</a><a href="/#contact">Contact</a></nav>
+      </header>
+
+      <section className="detail-hero">
+        <div className="detail-hero-copy">
+          <a className="detail-back" href="/#portofoliu"><ArrowLeft size={18} /> Înapoi la portofoliu</a>
+          <div className="detail-meta"><span>{details.category}</span><span>{details.date}</span></div>
+          <h1>{project.title}</h1>
+          <p>Client: {details.client}</p>
+        </div>
+        <img src={detailHeroAssets[project.slug] || images[0] || project.image} alt={project.title} />
+      </section>
+
+      <section className="detail-content">
+        <div className="detail-intro"><p className="section-kicker">Despre proiect</p><h2>{details.about}</h2></div>
+        <div className="detail-columns"><article><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article></div>
+        <div className="detail-results"><p className="section-kicker">Rezultate</p><div>{details.results.map((result) => <article key={result}><Check size={18} weight="bold" /><span>{result}</span></article>)}</div></div>
+      </section>
+
+      <section className="detail-gallery">
+        <p className="section-kicker">Galerie</p><h2>Proiectul <em>în imagini.</em></h2>
+        <div className="gallery-grid">{images.map((image, index) => <button key={image} className={index % 7 === 0 ? "gallery-wide" : ""} onClick={() => setZoomed(image)}><img src={image} alt={`${project.title} — imagine ${index + 1}`} loading="lazy" /><span><ArrowsOutSimple size={24} /> Click pentru zoom</span></button>)}</div>
+        {videos.length > 0 && <div className="video-section"><h3>Video</h3><div>{videos.map((video) => <video controls preload="metadata" key={video}><source src={video} type="video/mp4" /></video>)}</div></div>}
+      </section>
+
+      <section className="detail-cta"><p>Îți place ce vezi?</p><h2>Hai să construim ceva <em>memorabil.</em></h2><a className="button primary" href="/#contact">Hai să lucrăm împreună <ArrowRight size={18} /></a></section>
+      <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura's Digital Dream</strong><p>Marketing, design și soluții digitale, cu suflet.</p></div></div><p>© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p></footer>
+      <a className="floating-whatsapp" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"><WhatsappLogo size={28} weight="fill" /></a>
+      {zoomed && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Imagine mărită" onClick={() => setZoomed(null)}><button aria-label="Închide imaginea" onClick={() => setZoomed(null)}><X size={26} /></button><img src={zoomed} alt="Imagine mărită din proiect" /></div>}
+    </main>
+  );
+}
+
 export function App() {
   const [filter, setFilter] = useState("Toate");
   const [selectedPrices, setSelectedPrices] = useState([]);
@@ -65,6 +129,12 @@ export function App() {
   const filtered = useMemo(() => filter === "Toate" ? projects : projects.filter((p) => p.category.includes(filter)), [filter]);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
   const nav = [["Acasă", "acasa"], ["Despre", "despre"], ["Servicii", "servicii"], ["Skills", "skills"], ["Portofoliu", "portofoliu"], ["Estimator", "estimator"], ["Proces", "proces"], ["Contact", "contact"]];
+  const detailSlug = window.location.pathname.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
+  const detailProject = projects.find((project) => project.slug === detailSlug);
+
+  if (detailProject && projectDetails[detailSlug]) {
+    return <ProjectDetail project={detailProject} details={projectDetails[detailSlug]} />;
+  }
 
   function togglePrice(price) {
     setSelectedPrices((current) => current.includes(price) ? current.filter((p) => p !== price) : [...current, price]);
@@ -112,7 +182,7 @@ export function App() {
       <section className="section portfolio" id="portofoliu">
         <p className="section-kicker">Portofoliu</p><h2>Proiecte <em>recente</em></h2>
         <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
-        <div className="project-grid">{filtered.map((project) => <article className="project-card" key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></article>)}</div>
+        <div className="project-grid">{filtered.map((project) => <a className="project-card" href={`/portofoliu/${project.slug}`} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
       </section>
 
       <section className="section estimator" id="estimator">

@@ -6,10 +6,11 @@ Portofoliu web independent pentru servicii de marketing, branding, design și de
 
 - design responsive pentru desktop și mobil
 - portofoliu cu filtre pe categorii
+- 14 pagini individuale de proiect, cu galerii, video și zoom
 - estimator interactiv de cost
 - secțiuni pentru servicii, competențe, proces și testimoniale
 - formular de contact și integrare WhatsApp
-- imagini de brand și proiecte stocate local
+- 212 imagini și videoclipuri de brand/proiect stocate local
 
 ## Dezvoltare locală
 

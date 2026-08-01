@@ -38,6 +38,20 @@ The above-the-fold hero was reviewed at equal desktop dimensions because it cont
 
 1. P2: mobile page produced horizontal overflow because the off-canvas navigation remained in layout bounds. Fixed by hiding horizontal overflow and marking the closed navigation as invisible. Post-fix mobile capture shows a clean 390 px composition.
 2. P2: menu used text glyphs for open/close. Replaced with Phosphor icon components. Post-fix capture shows consistent iconography.
+3. P1: portfolio cards did not initially navigate to individual project pages. Added 14 real routes with the Base44 text, result lists, image galleries, videos, local assets, lightbox zoom, back navigation, and contact CTA.
+4. P1: the first detail-page implementation used a split hero while Base44 placed the project title above a wide cover image. Rebuilt the detail hero to match the source composition and assigned the exact Base44 cover asset for every project.
+
+## Detail-page verification
+
+- Detail source capture: `C:\Users\aural\AppData\Local\Temp\auras-source-detail-ready.png`
+- Final implementation capture: `C:\Users\aural\AppData\Local\Temp\auras-implementation-detail-final.png`
+- Final combined comparison: `C:\Users\aural\AppData\Local\Temp\auras-detail-comparison-final.png`
+- Mobile detail capture: `C:\Users\aural\AppData\Local\Temp\auras-detail-mobile.png`, 390 × 844 CSS px
+- All 14 routes were opened directly and returned the correct H1, gallery, and video count.
+- All rendered images reported valid natural dimensions; broken image count was zero.
+- Gallery lightbox open/close was tested and passed.
+- Detail-page browser console checked: no errors.
+- The final equal-size comparison confirms the Base44 hierarchy: shared navigation, back link, metadata pills, editorial project title, client line, and wide rounded cover image.
 
 ## Findings
 
