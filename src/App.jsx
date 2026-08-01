@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -55,6 +55,8 @@ const projects = [
   { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/assets/logo-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
 ];
 
+const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe"];
+
 const services = [
   { icon: Megaphone, title: "Marketing & Strategie Digitală", copy: "Strategii care transformă vizibilitatea în rezultate concrete.", list: ["Consultanță și strategie", "Social media & content", "Meta / Google Ads", "Branding & poziționare"] },
   { icon: Code, title: "Web & Aplicații", copy: "Prezență online profesională, construită pe fundații solide.", list: ["Site-uri de prezentare", "Landing pages", "Aplicații web", "Optimizare & SEO"] },
@@ -79,17 +81,18 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
-function ProjectDetail({ project, details }) {
+function ProjectDetail({ project, details, onNavigate }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = portfolioAssets[project.slug] || [];
   const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
   const videos = assets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
   const heroImage = detailHeroAssets[project.slug] || images[0] || project.image;
+  const whatsappMessage = encodeURIComponent(`Bună, Aura! Am văzut proiectul ${project.title} și aș dori să discutăm despre un proiect asemănător.`);
 
   return (
     <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="detail-header">
-        <a className="brand" href="/"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
+        <a className="brand" href="/" onClick={(event) => onNavigate(event, "/")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
         <nav><a href="/">Acasă</a><a href="/#despre">Despre</a><a href="/#servicii">Servicii</a><a href="/#portofoliu">Portofoliu</a><a href="/#contact">Contact</a></nav>
       </header>
 
@@ -105,6 +108,7 @@ function ProjectDetail({ project, details }) {
 
       <section className="detail-content">
         <div className="detail-intro" data-reveal><p className="section-kicker">Despre proiect</p><h2>{details.about}</h2></div>
+        <div className="project-facts" data-reveal><article><small>Rol & servicii</small><strong>{project.category.join(" · ")}</strong></article><article><small>Client</small><strong>{details.client}</strong></article><article><small>Perioadă</small><strong>{details.date}</strong></article><article><small>Livrabile</small><strong>{details.results.length} rezultate-cheie</strong></article></div>
         <div className="detail-columns"><article data-reveal><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article data-reveal><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article></div>
         <div className="detail-results"><p className="section-kicker">Rezultate</p><div>{details.results.map((result) => <article key={result}><Check size={18} weight="bold" /><span>{result}</span></article>)}</div></div>
       </section>
@@ -115,7 +119,7 @@ function ProjectDetail({ project, details }) {
         {videos.length > 0 && <div className="video-section"><h3>Video</h3><div>{videos.map((video) => <video controls preload="metadata" key={video}><source src={video} type="video/mp4" /></video>)}</div></div>}
       </section>
 
-      <section className="detail-cta"><p>Îți place ce vezi?</p><h2>Hai să construim ceva <em>memorabil.</em></h2><a className="button primary" href="/#contact">Hai să lucrăm împreună <ArrowRight size={18} /></a></section>
+      <section className="detail-cta"><p>Îți place direcția?</p><h2>Putem crea o poveste la fel de <em>memorabilă pentru brandul tău.</em></h2><a className="button primary" href={`https://wa.me/40762509423?text=${whatsappMessage}`}>Vreau un proiect asemănător <WhatsappLogo size={19} /></a></section>
       <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura's Digital Dream</strong><p>Marketing, design și soluții digitale, cu suflet.</p></div></div><p>© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p></footer>
       <a className="floating-whatsapp" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"><WhatsappLogo size={28} weight="fill" /></a>
       {zoomed && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Imagine mărită" onClick={() => setZoomed(null)}><button aria-label="Închide imaginea" onClick={() => setZoomed(null)}><X size={26} /></button><img src={zoomed} alt="Imagine mărită din proiect" /></div>}
@@ -124,7 +128,8 @@ function ProjectDetail({ project, details }) {
 }
 
 export function App() {
-  useScrollExperience();
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  useScrollExperience(currentPath);
   const [filter, setFilter] = useState("Toate");
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [testimonial, setTestimonial] = useState(0);
@@ -132,12 +137,31 @@ export function App() {
   const [formStatus, setFormStatus] = useState("idle");
   const filtered = useMemo(() => filter === "Toate" ? projects : projects.filter((p) => p.category.includes(filter)), [filter]);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
-  const nav = [["Acasă", "acasa"], ["Despre", "despre"], ["Servicii", "servicii"], ["Skills", "skills"], ["Portofoliu", "portofoliu"], ["Estimator", "estimator"], ["Proces", "proces"], ["Contact", "contact"]];
-  const detailSlug = window.location.pathname.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
+  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Prețuri", "estimator"], ["Contact", "contact"]];
+  const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
+  const detailSlug = currentPath.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
   const detailProject = projects.find((project) => project.slug === detailSlug);
 
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  function navigateTo(event, path) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    const update = () => {
+      window.history.pushState({}, "", path);
+      setCurrentPath(path);
+      window.scrollTo({ top: 0, behavior: "instant" });
+    };
+    if (document.startViewTransition) document.startViewTransition(update);
+    else update();
+  }
+
   if (detailProject && projectDetails[detailSlug]) {
-    return <ProjectDetail project={detailProject} details={projectDetails[detailSlug]} />;
+    return <ProjectDetail project={detailProject} details={projectDetails[detailSlug]} onNavigate={navigateTo} />;
   }
 
   function togglePrice(price) {
@@ -257,9 +281,16 @@ export function App() {
       </section>
 
       <section className="section portfolio" id="portofoliu">
-        <p className="section-kicker">Portofoliu</p><h2>Proiecte <em>recente</em></h2>
+        <div className="portfolio-heading"><div><p className="section-kicker">Selecție curatorială</p><h2>Proiecte care spun o <em>poveste.</em></h2></div><p>O selecție de identități, experiențe web și campanii în care strategia și estetica lucrează împreună.</p></div>
+        <div className="featured-projects">{featured.map((project, index) => <a className="featured-project" data-reveal data-parallax={index % 2 ? "0.025" : "-0.02"} href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="featured-visual"><img src={detailHeroAssets[project.slug] || project.image} alt={project.title} /><span className="featured-index">0{index + 1}</span><span className="featured-open">Descoperă proiectul <ArrowRight size={18} /></span></div><div className="featured-copy"><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p><span className="text-link">Vezi studiul de caz <ArrowRight size={17} /></span></div></a>)}</div>
+        <div className="archive-head"><div><p className="section-kicker">Arhivă</p><h2>Explorează toate <em>creațiile.</em></h2></div><span>{filtered.length.toString().padStart(2, "0")} proiecte</span></div>
         <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
-        <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
+        <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
+      </section>
+
+      <section className="behind" id="behind">
+        <div className="behind-portrait" data-reveal data-parallax="0.035"><div className="portrait-frame"><img src="/portfolio/auras-trend-vault/bdb50b55c_WhatsAppImage2026-07-02at1128453.jpg" alt="Aura Dobre, fondatoarea Aura's Digital Dream" /></div><span className="portrait-orbit" aria-hidden="true">STRATEGIE · CREATIVITATE · EMPATIE ·</span></div>
+        <div className="behind-copy" data-reveal><p className="section-kicker">Behind the Dream</p><h2>Un studio digital cu o perspectivă <em>personală.</em></h2><p>În spatele fiecărui proiect sunt eu, Aura. Îmi place să unesc gândirea strategică, sensibilitatea vizuală și tehnologia, astfel încât fiecare brand să se simtă autentic — nu construit după un șablon.</p><p>Ascult înainte să desenez, caut ideea care merită păstrată și construiesc fiecare experiență cu grijă pentru detalii, ritm și emoție.</p><button className="button ink" onClick={() => scrollToId("contact")}>Povestește-mi ideea ta <ArrowRight size={18} /></button></div>
       </section>
 
       <section className="section estimator" id="estimator">

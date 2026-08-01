@@ -18,4 +18,8 @@ Story-scene portfolio imagery should read as elegant cutouts or floating composi
 
 Portfolio detail heroes must show the selected artwork in full. Use the strongest available landscape source where possible; for square or portrait artwork, preserve the complete image with `object-fit: contain` over a subtle blurred backdrop rather than cropping it.
 
+Treat the portfolio as an editorial journey: lead with a curated selection of flagship projects, then offer the complete filterable archive. Keep the primary navigation concise and use cinematic in-app transitions between the portfolio index and case studies.
+
+Project detail pages should surface practical context (role, client, period, deliverables) and end with a project-specific WhatsApp CTA. Preserve a personal "Behind the Dream" section so the portfolio communicates the creator behind the work, not only the deliverables.
+
 Public web pricing should suit small and medium clients in Ialomița: accessible but not bargain-basement, with clear deliverables and recurring costs separated from the initial build estimate.

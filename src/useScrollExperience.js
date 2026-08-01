@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useScrollExperience() {
+export function useScrollExperience(pageKey = "home") {
   useEffect(() => {
     const root = document.documentElement;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -81,5 +81,5 @@ export function useScrollExperience() {
       if (frame) cancelAnimationFrame(frame);
       if (cursorFrame) cancelAnimationFrame(cursorFrame);
     };
-  }, []);
+  }, [pageKey]);
 }
