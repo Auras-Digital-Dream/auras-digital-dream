@@ -49,11 +49,11 @@ export const projectDetails = {
     results: ["18+ designuri realizate", "Carduri digitale pentru vCard, WhatsApp și web", "QR personalizat și integrat în design", "Coerență între formatul print și digital"]
   },
   "adi-ecoo-2009-sa": {
-    category: "Marketing · Grafică · Web", date: "2025 – 2026", client: "Operator salubritate Ialomița",
-    about: "Campanie completă de social media pentru ADI ECOO 2009 S.A. Am creat un ecosistem vizual educațional — postări, carusele, reels și stories — care informează cetățenii despre colectarea corectă a deșeurilor.",
-    challenge: "Informațiile tehnice despre gestionarea deșeurilor trebuiau transformate în conținut atractiv, clar și ușor de distribuit pe Facebook și Instagram.",
-    solution: "Am dezvoltat o identitate vizuală verde cu accente portocalii și galbene, infografice clare, campanii sezoniere și conținut video animat, sub mesajul Curat azi, verde mâine.",
-    results: ["Postări, carusele, infografice, reels și stories", "Documente pentru toate departamentele", "Administrare completă social media", "Creare și întreținere website", "Campanii tematice timp de 2 ani"]
+    category: "Identitate vizuală · Branding · Marketing · Design editorial · Web", date: "2025 – 2026", client: "Operator de salubritate din județul Ialomița",
+    about: "Un proiect complet de identitate și comunicare pentru ADI ECOO 2009 S.A., dezvoltat ca un ecosistem coerent, nu ca o simplă campanie de marketing. Am realizat logo-ul și direcția vizuală, materialele de brand, campaniile de informare, broșurile, bannerele, ghidurile, documentele, conținutul social media și website-ul.",
+    challenge: "Informațiile tehnice și administrative despre colectarea deșeurilor trebuiau transformate într-un limbaj vizual accesibil pentru public, instituții și parteneri. Fiecare material — de la un ghid sau roll-up până la o campanie video și website — avea nevoie de aceeași identitate clară, profesionistă și ușor de recunoscut.",
+    solution: "Am construit o identitate vizuală flexibilă, bazată pe o paletă verde cu accente energice, elemente grafice educaționale și o ierarhie editorială clară. Sistemul a fost aplicat unitar în logo și branding, broșuri, bannere, ghiduri, materiale pentru evenimente, infografice, campanii tematice, reels, social media și dezvoltarea website-ului.",
+    results: ["Logo și sistem complet de identitate vizuală", "Branding aplicat pe materiale digitale și tipărite", "Broșuri, bannere, roll-up-uri, ghiduri și documente", "Campanii de informare și educare publică", "Postări, carusele, infografice, reels și stories", "Dezvoltare și administrare website", "Comunicare și campanii integrate pe termen lung"]
   },
   "campanie-social-media-luxe": {
     category: "Marketing", date: "Noiembrie 2024", client: "Maison de bijuterii fine",
