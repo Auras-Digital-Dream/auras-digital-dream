@@ -22,6 +22,9 @@ import { useScrollExperience } from "./useScrollExperience";
 
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const supplementalPortfolioAssets = {
+  "adi-ecoo-2009-sa": [
+    "/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.jpeg",
+  ],
   "verde-bean": [
     "/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg",
     "/portfolio/verde-bean/verde-bean-brand-system.jpeg",
