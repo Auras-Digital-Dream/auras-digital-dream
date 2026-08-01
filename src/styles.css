@@ -51,8 +51,12 @@ em { font-family:"Italiana",serif; color:var(--rose); font-style:italic; font-we
 .story-section { position:relative; height:400vh; background:#100e0f; color:#fff; }
 .story-stage { position:sticky; top:0; height:100vh; overflow:hidden; display:grid; grid-template-columns:1.05fr .95fr; isolation:isolate; }
 .story-visuals { position:relative; perspective:1100px; overflow:hidden; background:radial-gradient(circle at 55% 45%,#352127 0,#171214 46%,#0d0b0c 100%); }
-.story-image { position:absolute; inset:9% 8%; margin:0; overflow:hidden; border-radius:18px; box-shadow:0 35px 90px rgba(0,0,0,.55); backface-visibility:hidden; will-change:transform,opacity; }
-.story-image img { width:100%; height:100%; object-fit:cover; }
+.story-image { position:absolute; inset:4% 2%; margin:0; backface-visibility:hidden; will-change:transform,opacity; filter:drop-shadow(0 38px 52px rgba(0,0,0,.48)); }
+.story-image img { width:100%; height:100%; object-fit:contain; transform:scale(1.02); }
+.story-cutout { -webkit-mask-image:radial-gradient(ellipse 54% 58% at 50% 50%,#000 0 58%,rgba(0,0,0,.92) 68%,rgba(0,0,0,.28) 84%,transparent 100%); mask-image:radial-gradient(ellipse 54% 58% at 50% 50%,#000 0 58%,rgba(0,0,0,.92) 68%,rgba(0,0,0,.28) 84%,transparent 100%); }
+.story-cutout.scene-one { -webkit-mask-image:radial-gradient(ellipse 57% 62% at 43% 51%,#000 0 56%,rgba(0,0,0,.9) 69%,transparent 96%); mask-image:radial-gradient(ellipse 57% 62% at 43% 51%,#000 0 56%,rgba(0,0,0,.9) 69%,transparent 96%); }
+.story-cutout.scene-two { -webkit-mask-image:radial-gradient(ellipse 58% 61% at 50% 51%,#000 0 54%,rgba(0,0,0,.86) 67%,transparent 94%); mask-image:radial-gradient(ellipse 58% 61% at 50% 51%,#000 0 54%,rgba(0,0,0,.86) 67%,transparent 94%); }
+.story-cutout.scene-three { -webkit-mask-image:radial-gradient(ellipse 53% 59% at 50% 48%,#000 0 55%,rgba(0,0,0,.88) 70%,transparent 96%); mask-image:radial-gradient(ellipse 53% 59% at 50% 48%,#000 0 55%,rgba(0,0,0,.88) 70%,transparent 96%); }
 .story-image.scene-one { opacity:var(--scene-one); transform:translate3d(calc(var(--story-progress) * -20%),calc(var(--story-progress) * -12%),calc(var(--story-progress) * -240px)) rotateY(calc(var(--story-progress) * 38deg)) rotateZ(calc(var(--story-progress) * -5deg)); }
 .story-image.scene-two { opacity:var(--scene-two); transform:translate3d(calc((.5 - var(--story-progress)) * 90%),calc((.5 - var(--story-progress)) * 30%),calc((.5 - var(--story-progress)) * -420px)) rotateY(calc((.5 - var(--story-progress)) * -55deg)); }
 .story-image.scene-three { opacity:var(--scene-three); transform:translate3d(calc((1 - var(--story-progress)) * 35%),calc((1 - var(--story-progress)) * 24%),calc((1 - var(--story-progress)) * -300px)) rotateX(calc((1 - var(--story-progress)) * 24deg)) scale(calc(.78 + var(--story-progress) * .22)); }

@@ -13,3 +13,5 @@ Durable visual direction: use cinematic scroll storytelling, restrained parallax
 Storytelling must be genuinely scroll-driven, not limited to entrance reveals: use pinned scenes, changing imagery, depth, and 3D transformations tied continuously to scroll progress. On fine-pointer devices, the custom cursor's central point must stay exactly under the system pointer; only its decorative outer ring may trail.
 
 The hero flower should feel alive through continuous cinematic motion and refraction, not behave like a static background. Prefer refined organic 3D sculpture forms (light, petals, glass, orbital curves) over hard geometric objects such as cubes.
+
+Story-scene portfolio imagery should read as elegant cutouts or floating compositions, with high-resolution source assets and organically feathered transparency. Avoid visible rectangular cards, borders, hard frames, or obvious carousel containers.
