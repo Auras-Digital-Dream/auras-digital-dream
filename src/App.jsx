@@ -22,7 +22,7 @@ import { useScrollExperience } from "./useScrollExperience";
 
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const detailHeroAssets = {
-  "verde-bean": "/portfolio/verde-bean/a2f94eaa5_generated_image.png",
+  "verde-bean": "/portfolio/verde-bean/1e4525e49_WhatsAppImage2026-07-02at090649.jpeg",
   "lumina-botanica": "/portfolio/lumina-botanica/86fb1c9db_WhatsAppImage2026-07-02at0903461.jpg",
   "lupul-and-brici": "/portfolio/lupul-and-brici/2f028c963_generated_image.png",
   "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/7c76798b9_WhatsAppImage2026-07-02at1127331.jpg",
@@ -34,7 +34,7 @@ const detailHeroAssets = {
   "magazine-online-e-commerce": "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg",
   "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png",
   "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
-  "arta-digitala-materiale-grafice": "/assets/editorial/digital-art-services.jpg",
+  "arta-digitala-materiale-grafice": "/assets/editorial/golden-portrait-clean.jpg",
   "logo-design": "/portfolio/logo-design/4403fa619_generated_image.png",
 };
 
@@ -84,8 +84,9 @@ function scrollToId(id) {
 function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = portfolioAssets[project.slug] || [];
-  const images = assets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
-  const videos = assets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
+  const qualityAssets = assets.filter((asset) => !/generated_(image|video)|freepik|43d21e774/i.test(asset));
+  const images = qualityAssets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
+  const videos = qualityAssets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
   const heroImage = detailHeroAssets[project.slug] || images[0] || project.image;
   const whatsappMessage = encodeURIComponent(`Bună, Aura! Am văzut proiectul ${project.title} și aș dori să discutăm despre un proiect asemănător.`);
 
@@ -289,8 +290,8 @@ export function App() {
       </section>
 
       <section className="creative-services" aria-label="Servicii de creație digitală">
-        <div className="creative-services-copy" data-reveal><p className="section-kicker">Creative services</p><h2>De la o idee vizuală la un univers <em>coerent.</em></h2><p>Fiecare material este gândit ca parte din aceeași poveste — nu ca o piesă izolată.</p><div className="service-pill-list">{["Artă digitală", "Postere", "Broșuri", "Invitații", "Moodboard-uri", "Coperte"].map((item, index) => <span style={{ "--pill-delay": `${index * 90}ms` }} key={item}>{item}</span>)}</div></div>
-        <figure className="creative-services-visual" data-reveal data-parallax="0.035"><img src="/assets/editorial/creative-services.jpg" alt="Selecție de servicii creative și lucrare pentru ADI ECOO" /><span aria-hidden="true">06 / DIRECȚII CREATIVE</span></figure>
+        <div className="creative-services-copy" data-reveal><p className="section-kicker">Portofoliu de servicii</p><h2>De la o idee vizuală la un univers <em>coerent.</em></h2><p>Fiecare material este gândit ca parte din aceeași poveste — nu ca o piesă izolată.</p><div className="service-pill-list">{["Artă digitală", "Postere", "Broșuri", "Invitații", "Moodboard-uri", "Coperte"].map((item, index) => <span style={{ "--pill-delay": `${index * 90}ms` }} key={item}>{item}</span>)}</div></div>
+        <figure className="creative-services-visual" data-reveal data-parallax="0.035"><img src="/assets/editorial/creative-services-clean.jpg" alt="Selecție de servicii creative și lucrare pentru ADI ECOO" /><span aria-hidden="true">06 / DIRECȚII CREATIVE</span></figure>
       </section>
 
       <section className="section skills" id="skills">
@@ -303,7 +304,7 @@ export function App() {
       </section>
 
       <section className="golden-interlude" aria-label="Artă digitală și storytelling vizual">
-        <div className="golden-image" data-parallax="0.075"><img src="/assets/editorial/golden-digital-art.jpg" alt="Portret artistic în tonuri aurii" /></div>
+        <div className="golden-image" data-parallax="0.075"><img className="golden-backdrop" src="/assets/editorial/golden-portrait-clean.jpg" alt="" aria-hidden="true" /><img className="golden-subject" src="/assets/editorial/golden-portrait-clean.jpg" alt="Portret artistic în tonuri aurii" /></div>
         <div className="golden-shade" aria-hidden="true" />
         <div className="golden-copy" data-reveal><p className="section-kicker">Artă care oprește scroll-ul</p><h2>Imaginea devine <em>atmosferă.</em></h2><p>Compoziții digitale construite pentru campanii, postere și povești vizuale cu personalitate.</p><button className="text-button" onClick={(event) => goToSection(event, "portofoliu")}>Descoperă selecția <ArrowRight size={20} /></button></div>
         <span className="golden-number" aria-hidden="true">ART / 01</span>
@@ -319,7 +320,7 @@ export function App() {
 
       <section className="creative-direction">
         <div className="creative-direction-copy" data-reveal><p className="section-kicker">Creative Direction</p><h2>O privire de ansamblu asupra <em>lumii vizuale.</em></h2><p>Branding, artă digitală, campanii și materiale editoriale reunite într-o compoziție care arată amplitudinea portofoliului.</p><a className="button ink" href="/portofoliu/arta-digitala-materiale-grafice" onClick={(event) => navigateTo(event, "/portofoliu/arta-digitala-materiale-grafice")}>Vezi proiectul de artă digitală <ArrowRight size={18} /></a></div>
-        <figure className="creative-collage" data-reveal data-parallax="-0.035"><div className="collage-halo" aria-hidden="true" /><img src="/assets/editorial/creative-direction-collage.jpg" alt="Colaj cu proiecte de branding, ilustrație și comunicare vizuală" /><span className="collage-caption">Selected works · Aura's Digital Dream</span></figure>
+        <figure className="creative-collage" data-reveal data-parallax="-0.035"><div className="collage-halo" aria-hidden="true" /><img className="collage-piece collage-main" src="/portfolio/auras-trend-vault/84ce9f083_WhatsAppImage2026-07-01at120708.jpg" alt="Portret editorial Aura's Trend Vault" /><img className="collage-piece collage-adi" src="/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.png" alt="Campanie vizuală ADI ECOO" /><img className="collage-piece collage-invite" src="/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png" alt="Invitație pentru botezul lui Theodore" /><img className="collage-piece collage-detail" src="/portfolio/luxury-hair-by-aura/7c76798b9_WhatsAppImage2026-07-02at1127331.jpg" alt="Detaliu vizual dintr-un proiect de branding" /><span className="collage-caption">Selected works · Aura's Digital Dream</span></figure>
       </section>
 
       <section className="behind" id="behind">
