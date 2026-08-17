@@ -102,7 +102,7 @@ em { font-family:var(--font-display); color:var(--rose); font-style:italic; font
 .about-copy { padding-top:48px; color:var(--muted); font-size:17px; line-height:1.9; }
 .dark { background:#191718; color:#fff; }
 .dark .section-lead,.dark p { color:#a9a2a0; }
-.service-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:56px; }
+.service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px; margin-top:56px; }
 .service-card { border:1px solid rgba(255,255,255,.12); padding:32px 26px; min-height:390px; transition:.3s; }
 .service-card:hover { border-color:var(--rose); transform:translateY(-5px); }
 .service-card > svg { color:var(--rose); }
