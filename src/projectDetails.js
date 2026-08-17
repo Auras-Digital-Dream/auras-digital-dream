@@ -46,7 +46,7 @@ export const projectDetails = {
     about: "Cărți de vizită digitale cu cod QR și variante print premium. Codurile sunt integrate organic în design și duc instant la vCard, WhatsApp, website, portofoliu sau social media.",
     challenge: "Fiecare client avea nevoie de un design distinct, memorabil și funcțional, în care codul QR să fie parte din compoziția vizuală, nu un element adăugat artificial.",
     solution: "Am dezvoltat layout-uri split, portrete circulare, coduri QR integrate în forme de brand, palete corporate coerente și tipografie rafinată, optimizate atât pentru share digital, cât și pentru print.",
-    results: ["18+ designuri realizate", "Carduri digitale pentru vCard, WhatsApp și web", "QR personalizat și integrat în design", "Coerență între formatul print și digital"]
+    results: ["Colecție curatoriată de cărți de vizită", "Carduri digitale pentru vCard, WhatsApp și web", "QR personalizat și integrat în design", "Coerență între formatul print și digital"]
   },
   "adi-ecoo-2009-sa": {
     category: "Identitate vizuală · Branding · Marketing · Design editorial · Web", date: "2025 – 2026", client: "Operator de salubritate din județul Ialomița",
