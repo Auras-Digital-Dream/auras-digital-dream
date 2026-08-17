@@ -352,7 +352,15 @@ function BooksPageCinematic({ onNavigate, onSection }) {
 
       <section className="cinematic-quote">
         <video autoPlay muted loop playsInline><source src="/assets/books-cinematic/atmosphere.mp4" type="video/mp4" /></video>
-        <blockquote data-reveal>„O carte de Aura Dobre nu se uită ușor. Intră în lume ca o lumină rece și rămâne acolo.”</blockquote>
+        <motion.div className="cinematic-quote-inner" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
+          <blockquote>
+            <motion.span initial={{ opacity: 0, y: 30, filter: "blur(8px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}>She knew the moment she</motion.span>
+            <motion.span initial={{ opacity: 0, y: 30, filter: "blur(8px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}>walked in.</motion.span>
+            <motion.span initial={{ opacity: 0, y: 30, filter: "blur(8px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.49, ease: [0.16, 1, 0.3, 1] }}>Not where he was.</motion.span>
+            <motion.span initial={{ opacity: 0, y: 30, filter: "blur(8px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.66, ease: [0.16, 1, 0.3, 1] }}>That he was.</motion.span>
+          </blockquote>
+          <motion.div className="quote-book-label" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.25 }}><i />Unreachable<i /></motion.div>
+        </motion.div>
       </section>
 
       <section className="cinematic-library">
