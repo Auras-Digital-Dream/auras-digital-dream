@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -276,30 +277,49 @@ function BooksPage({ onNavigate, onSection }) {
 function BooksPageCinematic({ onNavigate, onSection }) {
   const authorAmazon = "https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0";
   const goodreads = "https://www.goodreads.com/user/show/203519366-aura-dobre";
+  const { scrollY } = useScroll();
+  const heroBgY = useTransform(scrollY, [0, 800], ["0%", "28%"]);
+  const heroOpacity = useTransform(scrollY, [0, 450], [1, 0]);
+  const featureRef = useRef(null);
+  const featureInView = useInView(featureRef, { once: true, margin: "-18% 0px" });
+  const { scrollYProgress: featureProgress } = useScroll({ target: featureRef, offset: ["start end", "center center"] });
+  const featureScale = useTransform(featureProgress, [0, 1], [0.86, 1]);
+  const authorRef = useRef(null);
+  const authorInView = useInView(authorRef, { once: true, margin: "-20% 0px" });
+  const { scrollYProgress: authorProgress } = useScroll({ target: authorRef, offset: ["start end", "end start"] });
+  const authorBgY = useTransform(authorProgress, [0, 1], ["-12%", "12%"]);
+  const finalRef = useRef(null);
+  const { scrollYProgress: finalProgress } = useScroll({ target: finalRef, offset: ["start end", "center center"] });
+  const finalScale = useTransform(finalProgress, [0, 1], [1.14, 1]);
   const publishedBooks = [
     { title: "The Clockmaker's Curse", image: "/assets/amazon/clockmakers-curse.jpg", meta: "Time Holds The Key", copy: "Un blestem, un mecanism și o poveste în care timpul ascunde mai multe decât dezvăluie.", link: "https://amzn.eu/d/0bGKmBLR" },
     { title: "Lunaria's Secret Treasure", image: "/assets/amazon/lunaria-secret-treasure.jpg", meta: "In the Enchanted Forest", copy: "O aventură luminoasă și magică, construită ca o hartă pentru curaj, curiozitate și copilărie.", link: "https://a.co/d/0gsNh4wn" },
   ];
   const chips = ["dark romance", "thriller psihologic", "villain energy", "literary dark fiction", "obsession stories", "morally grey heroes", "slow burn tension"];
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
+  };
+  const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.18, delayChildren: 0.75 } } };
 
   return (
     <main className="books-page cinematic-books"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" /><div className="film-grain" aria-hidden="true" />
-      <header className="cinematic-nav">
+      <motion.header className="cinematic-nav" initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}>
         <a className="cinematic-author-logo" href="/" onClick={(event) => onNavigate(event, "/")}>Aura Dobre</a>
         <nav><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
-      </header>
+      </motion.header>
 
       <section className="cinematic-hero">
-        <video autoPlay muted loop playsInline className="cinematic-video"><source src="/assets/books-cinematic/hero-waves.mp4" type="video/mp4" /></video>
+        <motion.div className="cinematic-video-wrap" style={{ y: heroBgY }}><video autoPlay muted loop playsInline className="cinematic-video"><source src="/assets/books-cinematic/hero-waves.mp4" type="video/mp4" /></video></motion.div>
         <div className="cinematic-veil" />
-        <div className="cinematic-hero-copy" data-reveal>
-          <div className="cinematic-label"><i />Ficțiune literară<i /></div>
-          <h1>Aura Dobre</h1>
-          <p className="cinematic-subtitle">Author · Stories · Dark Fiction</p>
-          <p>Dark romance, thrillere psihologice și povești care se citesc ca un film.</p>
-          <div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Vezi cărțile pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href={goodreads} target="_blank" rel="noopener noreferrer">Profil Goodreads</a></div>
-        </div>
-        <div className="scroll-cue" aria-hidden="true">Scroll <CaretRight size={14} /></div>
+        <motion.div className="cinematic-hero-copy" variants={stagger} initial="hidden" animate="visible" style={{ opacity: heroOpacity }}>
+          <motion.div variants={fadeUp} className="cinematic-label"><i />Ficțiune literară<i /></motion.div>
+          <motion.h1 variants={fadeUp}>Aura Dobre</motion.h1>
+          <motion.p variants={fadeUp} className="cinematic-subtitle">Author · Stories · Dark Fiction</motion.p>
+          <motion.p variants={fadeUp}>Dark romance, thrillere psihologice și povești care se citesc ca un film.</motion.p>
+          <motion.div variants={fadeUp} className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Vezi cărțile pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href={goodreads} target="_blank" rel="noopener noreferrer">Profil Goodreads</a></motion.div>
+        </motion.div>
+        <motion.div className="scroll-cue" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8, duration: 1 }}>Scroll <CaretRight size={14} /></motion.div>
       </section>
 
       <section className="cinematic-universe">
@@ -311,11 +331,11 @@ function BooksPageCinematic({ onNavigate, onSection }) {
         </div>
       </section>
 
-      <section className="cinematic-feature" id="carti">
+      <section className="cinematic-feature" id="carti" ref={featureRef}>
         <video autoPlay muted loop playsInline className="cinematic-bg-video"><source src="/assets/books-cinematic/hallway.mp4" type="video/mp4" /></video>
         <div className="cinematic-feature-inner">
-          <div className="book-feature-copy" data-reveal><p className="section-kicker">02 — Flagship book</p><h2>Unreachable</h2><p className="book-meta">Dark Romance · Thriller psihologic · Remote northern estate</p><p>Iris Vane nu ajunge într-o poveste de dragoste. Ajunge într-un loc unde liniștea are dinți, iar bărbatul care o privește pare construit din control, frig și secrete.</p><div className="literary-chips">{["slow burn","psychological tension","remote estate","morally grey hero","dark romance"].map((chip) => <span key={chip}>{chip}</span>)}</div><div className="book-quotes"><p>„Nu voiam să plec. Nu voiam să rămân. Voiam să fiu văzută.”</p><p>„Conacul era o capcană frumoasă. El era lacătul.”</p><p>„Iubirea lui era ca marea iarna — rece, inevitabilă, perfectă.”</p></div><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/dp/B0GXSLHRNY" target="_blank" rel="sponsored noopener noreferrer">Citește pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href={goodreads} target="_blank" rel="noopener noreferrer">Goodreads</a></div></div>
-          <figure className="cinematic-trailer-card" data-reveal><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/hallway.mp4" type="video/mp4" /></video><span className="trailer-badge">▶ Trailer</span><div className="card-shimmer" aria-hidden="true" /><figcaption><strong>Unreachable</strong><small>zăpadă · conac izolat · tensiune</small></figcaption></figure>
+          <div className="book-feature-copy"><motion.p className="section-kicker" initial={{ opacity: 0 }} animate={featureInView ? { opacity: 1 } : {}} transition={{ duration: 0.8 }}>02 — Carte featured</motion.p><motion.h2 initial={{ opacity: 0, y: 30 }} animate={featureInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}>Unreachable</motion.h2><motion.p className="book-meta" initial={{ opacity: 0 }} animate={featureInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.22 }}>Dark Romance · Thriller psihologic · Remote northern estate</motion.p><motion.p initial={{ opacity: 0 }} animate={featureInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.32 }}>Iris Vane dispare într-o noapte de decembrie. Când se trezește într-o cameră perfectă, într-o casă fără ieșire, înțelege că bărbatul care a urmărit-o luni întregi nu este un necunoscut — este un arhitect al obsesiei.</motion.p><motion.div className="literary-chips" initial={{ opacity: 0 }} animate={featureInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.42 }}>{["villain romance","psychological tension","remote estate","literary prose","slow burn"].map((chip) => <span key={chip}>{chip}</span>)}</motion.div><motion.div className="book-quotes" initial={{ opacity: 0 }} animate={featureInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.52 }}><p>„Nu voiam să plec. Nu voiam să rămân. Voiam să fiu văzută.”</p><p>„Conacul era o capcană frumoasă. El era lacătul.”</p><p>„Iubirea lui era ca marea iarna — rece, inevitabilă, perfectă.”</p></motion.div><motion.div className="books-actions" initial={{ opacity: 0 }} animate={featureInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.62 }}><a className="button primary" href="https://www.amazon.co.uk/dp/B0GXSLHRNY" target="_blank" rel="sponsored noopener noreferrer">Citește pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href={goodreads} target="_blank" rel="noopener noreferrer">Goodreads</a></motion.div></div>
+          <motion.figure className="cinematic-trailer-card" style={{ scale: featureScale }}><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/hallway.mp4" type="video/mp4" /></video><span className="trailer-badge">▶ Trailer</span><div className="card-shimmer" aria-hidden="true" /><figcaption><strong>Unreachable</strong><small>Aura Dobre · Dark Romance</small></figcaption></motion.figure>
         </div>
       </section>
 
@@ -336,12 +356,12 @@ function BooksPageCinematic({ onNavigate, onSection }) {
 
       <section className="cinematic-reader" data-reveal><p className="section-kicker">04 — Cititoarea mea</p><h2>Pentru cine sunt cărțile mele</h2><p>Pentru cititoarea care iubește intensitatea — care vrea să simtă tensiunea de pe fiecare pagină, care nu se teme de eroi moralmente gri și care citește la 3 dimineața pentru că nu poate lăsa cartea jos.</p><div className="literary-chips">{chips.map((chip) => <span key={chip}>{chip}</span>)}</div></section>
 
-      <section className="cinematic-author" id="despre">
-        <video autoPlay muted loop playsInline><source src="/assets/books-cinematic/book-pages.mp4" type="video/mp4" /></video>
-        <div data-reveal><p className="section-kicker">05 — Autoarea</p><h2>În spatele poveștilor</h2><p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p><p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p><div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></div></div>
+      <section className="cinematic-author" id="despre" ref={authorRef}>
+        <motion.div className="cinematic-author-bg" style={{ y: authorBgY }}><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/book-pages.mp4" type="video/mp4" /></video></motion.div>
+        <div><motion.p className="section-kicker" initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8 }}>05 — Autoarea</motion.p><motion.h2 initial={{ opacity: 0, x: -28 }} animate={authorInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}>În spatele poveștilor</motion.h2><motion.div initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.35 }}><p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p><p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p></motion.div><motion.div className="books-actions" initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.5 }}><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></motion.div></div>
       </section>
 
-      <section className="cinematic-final" data-reveal><p className="section-kicker">06 — Finale</p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Amazon îți arată titlurile, Goodreads îți arată reacțiile, iar această pagină îți arată intenția: lumi în care să vrei să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></section>
+      <motion.section className="cinematic-final" ref={finalRef} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}><motion.div className="cinematic-final-orb" style={{ scale: finalScale }} /><p className="section-kicker">06 — Finale</p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Amazon îți arată titlurile, Goodreads îți arată reacțiile, iar această pagină îți arată intenția: lumi în care să vrei să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></motion.section>
       <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura Dobre</strong><p>Cărți, lumi vizuale și povești cinematice.</p></div></div><p>© 2026 Aura Dobre. Toate drepturile rezervate.</p></footer>
     </main>
   );
