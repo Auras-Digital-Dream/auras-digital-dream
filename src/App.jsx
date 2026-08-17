@@ -276,19 +276,17 @@ function BooksPage({ onNavigate, onSection }) {
 function BooksPageCinematic({ onNavigate, onSection }) {
   const authorAmazon = "https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0";
   const goodreads = "https://www.goodreads.com/user/show/203519366-aura-dobre";
-  const books = [
-    { title: "Unreachable", image: "/assets/amazon/unreachable.jpg", meta: "Dark Romance · Thriller psihologic", copy: "O casă izolată, o tensiune rece și un bărbat care nu vrea să fie iubit — vrea să fie imposibil de uitat.", link: "https://www.amazon.co.uk/dp/B0GXSLHRNY" },
+  const publishedBooks = [
     { title: "The Clockmaker's Curse", image: "/assets/amazon/clockmakers-curse.jpg", meta: "Time Holds The Key", copy: "Un blestem, un mecanism și o poveste în care timpul ascunde mai multe decât dezvăluie.", link: "https://amzn.eu/d/0bGKmBLR" },
     { title: "Lunaria's Secret Treasure", image: "/assets/amazon/lunaria-secret-treasure.jpg", meta: "In the Enchanted Forest", copy: "O aventură luminoasă și magică, construită ca o hartă pentru curaj, curiozitate și copilărie.", link: "https://a.co/d/0gsNh4wn" },
-    { title: "Echoes of Eternity", image: "/assets/books-cinematic/echoes-of-eternity.png", meta: "Coming soon", copy: "O prezență din universul vizual al template-ului — păstrată ca promisiune editorială și atmosferă de autor.", link: authorAmazon },
   ];
   const chips = ["dark romance", "thriller psihologic", "villain energy", "literary dark fiction", "obsession stories", "morally grey heroes", "slow burn tension"];
 
   return (
     <main className="books-page cinematic-books"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" /><div className="film-grain" aria-hidden="true" />
-      <header className="detail-header books-header">
-        <a className="brand" href="/" onClick={(event) => onNavigate(event, "/")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
-        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a></nav>
+      <header className="cinematic-nav">
+        <a className="cinematic-author-logo" href="/" onClick={(event) => onNavigate(event, "/")}>Aura Dobre</a>
+        <nav><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
       </header>
 
       <section className="cinematic-hero">
@@ -316,8 +314,8 @@ function BooksPageCinematic({ onNavigate, onSection }) {
       <section className="cinematic-feature" id="carti">
         <video autoPlay muted loop playsInline className="cinematic-bg-video"><source src="/assets/books-cinematic/hallway.mp4" type="video/mp4" /></video>
         <div className="cinematic-feature-inner">
-          <div className="book-feature-copy" data-reveal><p className="section-kicker">02 — Flagship book</p><h2>Unreachable</h2><p className="book-meta">Dark Romance · Thriller psihologic · Remote northern estate</p><p>Un bărbat care nu vrea să fie iubit — vrea să fie temut. O femeie care dispare fără urmă. O casă izolată pe un promontoriu, unde unele lucruri sunt aduse ca să rămână.</p><div className="literary-chips">{["villain romance","psychological tension","remote estate","literary prose"].map((chip) => <span key={chip}>{chip}</span>)}</div><div className="book-quotes"><p>„Nu te-a răpit. Te-a colecționat.”</p><p>„Unele femei sunt de neatins. Până nu mai sunt.”</p></div><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/dp/B0GXSLHRNY" target="_blank" rel="sponsored noopener noreferrer">Citește pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href={goodreads} target="_blank" rel="noopener noreferrer">Goodreads</a></div></div>
-          <figure className="cinematic-cover-card" data-reveal><img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" /><figcaption>zăpadă · casă izolată · tensiune</figcaption></figure>
+          <div className="book-feature-copy" data-reveal><p className="section-kicker">02 — Flagship book</p><h2>Unreachable</h2><p className="book-meta">Dark Romance · Thriller psihologic · Remote northern estate</p><p>Iris Vane nu ajunge într-o poveste de dragoste. Ajunge într-un loc unde liniștea are dinți, iar bărbatul care o privește pare construit din control, frig și secrete.</p><div className="literary-chips">{["slow burn","psychological tension","remote estate","morally grey hero","dark romance"].map((chip) => <span key={chip}>{chip}</span>)}</div><div className="book-quotes"><p>„Nu voiam să plec. Nu voiam să rămân. Voiam să fiu văzută.”</p><p>„Conacul era o capcană frumoasă. El era lacătul.”</p><p>„Iubirea lui era ca marea iarna — rece, inevitabilă, perfectă.”</p></div><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/dp/B0GXSLHRNY" target="_blank" rel="sponsored noopener noreferrer">Citește pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href={goodreads} target="_blank" rel="noopener noreferrer">Goodreads</a></div></div>
+          <figure className="cinematic-trailer-card" data-reveal><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/hallway.mp4" type="video/mp4" /></video><span className="trailer-badge">▶ Trailer</span><div className="card-shimmer" aria-hidden="true" /><figcaption><strong>Unreachable</strong><small>zăpadă · conac izolat · tensiune</small></figcaption></figure>
         </div>
       </section>
 
@@ -327,15 +325,20 @@ function BooksPageCinematic({ onNavigate, onSection }) {
       </section>
 
       <section className="cinematic-library">
-        <div className="cinematic-library-head" data-reveal><p className="section-kicker">03 — Biblioteca</p><h2>Cărțile scrise de mine</h2><p>O selecție de lumi publicate sau pregătite pentru cititori: întunecate, fragile, tensionate și profund vizuale.</p></div>
-        <div className="cinematic-book-grid">{books.map((book) => <article className="cinematic-book-card" data-reveal key={book.title}><div className="book-card-shine" /><img src={book.image} alt={`Coperta ${book.title}`} /><div><span>{book.meta}</span><h3>{book.title}</h3><p>{book.copy}</p><a href={book.link} target="_blank" rel="sponsored noopener noreferrer">Vezi pe Amazon <ArrowRight size={15} /></a></div></article>)}</div>
+        <div className="cinematic-library-head" data-reveal><p className="section-kicker">03 — Biblioteca</p><h2>Cărțile scrise de mine</h2><p>Amazon le listează ca titluri publicate; aici le prezint ca lumi vizuale, cu atmosferă, tensiune și storytelling.</p></div>
+        <div className="cinematic-published-grid">{publishedBooks.map((book) => <article className="cinematic-published-card" data-reveal key={book.title}><div className="book-card-shine" /><img src={book.image} alt={`Coperta ${book.title}`} /><div><span>{book.meta}</span><h3>{book.title}</h3><p>{book.copy}</p><a href={book.link} target="_blank" rel="sponsored noopener noreferrer">Vezi pe Amazon <ArrowRight size={15} /></a></div></article>)}</div>
+        <div className="cinematic-coming-label" data-reveal>Ce urmează</div>
+        <div className="cinematic-coming-grid">
+          <article className="cinematic-upcoming-card" data-reveal><img src="/assets/books-cinematic/echoes-of-eternity.png" alt="Coperta Echoes of Eternity" /><div><span>Coming soon</span><h3>Echoes of Eternity</h3><p>O promisiune editorială construită în aceeași atmosferă: umbre, memorie, dorință și destin.</p></div></article>
+          <article className="abstract-story-card" data-reveal><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/book-pages.mp4" type="video/mp4" /></video>{["obsesie","putere","frică","control","dorință","umbră"].map((word, index) => <span className={`scattered-word word-${index + 1}`} key={word}>{word}</span>)}<div><span>Abstract storytelling</span><h3>Nescrisă</h3><p>Un spațiu vizual pentru următoarea lume: pagini, cerneală și tensiune înainte să devină capitol.</p></div></article>
+        </div>
       </section>
 
       <section className="cinematic-reader" data-reveal><p className="section-kicker">04 — Cititoarea mea</p><h2>Pentru cine sunt cărțile mele</h2><p>Pentru cititoarea care iubește intensitatea — care vrea să simtă tensiunea de pe fiecare pagină, care nu se teme de eroi moralmente gri și care citește la 3 dimineața pentru că nu poate lăsa cartea jos.</p><div className="literary-chips">{chips.map((chip) => <span key={chip}>{chip}</span>)}</div></section>
 
-      <section className="cinematic-author">
+      <section className="cinematic-author" id="despre">
         <video autoPlay muted loop playsInline><source src="/assets/books-cinematic/book-pages.mp4" type="video/mp4" /></video>
-        <div data-reveal><p className="section-kicker">05 — Autoarea</p><h2>În spatele poveștilor</h2><p>Sunt Aura Dobre, autor, designer și om care se uită la lume ca la un set de povești posibile. Scriu dintr-un loc în care estetica, psihologia și vulnerabilitatea se întâlnesc.</p><div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></div></div>
+        <div data-reveal><p className="section-kicker">05 — Autoarea</p><h2>În spatele poveștilor</h2><p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p><p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p><div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></div></div>
       </section>
 
       <section className="cinematic-final" data-reveal><p className="section-kicker">06 — Finale</p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Amazon îți arată titlurile, Goodreads îți arată reacțiile, iar această pagină îți arată intenția: lumi în care să vrei să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></section>
