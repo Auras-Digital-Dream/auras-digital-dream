@@ -13,6 +13,13 @@ export const projectDetails = {
     solution: "Am dezvoltat un sistem vizual coerent bazat pe nuanțe de verde măsliniu, ilustrații botanice stilizate și tipografie elegantă. Logo-ul combină o boabă de cafea ilustrată manual cu un font script rafinat. Ambalajele pe hârtie kraft și materialele de brand creează o experiență tactilă premium.",
     results: ["Identitate completă: logo, paletă, tipografie", "Ambalaje pentru 5 produse din gamă", "Materiale de punct de vânzare și semnalistică", "Creștere de 40% în recunoașterea brandului"]
   },
+  "painea-de-acasa": {
+    category: "Identitate vizuală · Branding · Grafică", date: "August 2026", client: "Brutărie artizanală locală, Slobozia",
+    about: "Identitate vizuală pentru Pâinea de Acasă, un brand local cu atmosferă caldă, artizanală și apropiată de comunitate. Direcția vizuală combină naturalețea pâinii făcute cu grijă, tonurile pământii și un simbol delicat inspirat din grâu, frunze și soare.",
+    challenge: "Brandul trebuia să transmită autenticitate și căldură fără să pară rustic învechit. Avea nevoie de o imagine coerentă pentru ambalaje, materiale de prezentare, semnalistică și comunicare digitală, păstrând promisiunea: simplu, bun, local.",
+    solution: "Am construit un sistem vizual cu logo serif elegant, iconografie fină, paletă inspirată din verde închis, kraft, crem și maro cald, plus aplicații de brand pe pungi, pahare, cutii, etichete și materiale de prezentare. Rezultatul este o identitate prietenoasă, premium și ușor de recunoscut.",
+    results: ["Logo principal și variante secundare", "Paletă cromatică și direcție tipografică", "Aplicații pe ambalaje, pungi, pahare și etichete", "Moodboard vizual și elemente grafice", "Sistem de brand pregătit pentru social media și materiale print"]
+  },
   "lumina-botanica": {
     category: "Grafică", date: "Iunie 2025", client: "Linie de cosmetice organice premium",
     about: "Branding premium pentru Lumina Botanica, o linie de produse cosmetice organice și botanice. Am creat o identitate care comunică puritate, naturalețe și lux — de la logo și ambalaje până la materiale de prezentare și social media.",
@@ -49,11 +56,11 @@ export const projectDetails = {
     results: ["Colecție curatoriată de cărți de vizită", "Carduri digitale pentru vCard, WhatsApp și web", "QR personalizat și integrat în design", "Coerență între formatul print și digital"]
   },
   "adi-ecoo-2009-sa": {
-    category: "Identitate vizuală · Branding · Marketing · Design editorial · Web", date: "2025 – 2026", client: "Operator de salubritate din județul Ialomița",
-    about: "Un proiect complet de identitate și comunicare pentru ADI ECOO 2009 S.A., dezvoltat ca un ecosistem coerent, nu ca o simplă campanie de marketing. Am realizat logo-ul și direcția vizuală, materialele de brand, campaniile de informare, broșurile, bannerele, ghidurile, documentele, conținutul social media și website-ul.",
+    category: "Identitate vizuală · Marketing · Design editorial · www.adiecoo2009sa.ro", date: "2025 – 2026", client: "Operator de salubritate din județul Ialomița",
+    about: "Un proiect complet de identitate și comunicare pentru ADI ECOO 2009 S.A., dezvoltat ca un ecosistem coerent, nu ca o simplă campanie de marketing. Am realizat logo-ul și direcția vizuală, materialele de brand, campaniile de informare, broșurile, bannerele, ghidurile, documentele, conținutul social media și website-ul www.adiecoo2009sa.ro.",
     challenge: "Informațiile tehnice și administrative despre colectarea deșeurilor trebuiau transformate într-un limbaj vizual accesibil pentru public, instituții și parteneri. Fiecare material — de la un ghid sau roll-up până la o campanie video și website — avea nevoie de aceeași identitate clară, profesionistă și ușor de recunoscut.",
     solution: "Am construit o identitate vizuală flexibilă, bazată pe o paletă verde cu accente energice, elemente grafice educaționale și o ierarhie editorială clară. Sistemul a fost aplicat unitar în logo și branding, broșuri, bannere, ghiduri, materiale pentru evenimente, infografice, campanii tematice, reels, social media și dezvoltarea website-ului.",
-    results: ["Logo și sistem complet de identitate vizuală", "Branding aplicat pe materiale digitale și tipărite", "Broșuri, bannere, roll-up-uri, ghiduri și documente", "Campanii de informare și educare publică", "Postări, carusele, infografice, reels și stories", "Dezvoltare și administrare website", "Comunicare și campanii integrate pe termen lung"]
+    results: ["Logo și sistem complet de identitate vizuală", "Branding aplicat pe materiale digitale și tipărite", "Broșuri, bannere, roll-up-uri, ghiduri și documente", "Campanii de informare și educare publică", "Postări, carusele, infografice, reels și stories", "Website www.adiecoo2009sa.ro", "Comunicare și campanii integrate pe termen lung"]
   },
   "campanie-social-media-luxe": {
     category: "Marketing", date: "Noiembrie 2024", client: "Maison de bijuterii fine",
