@@ -414,6 +414,9 @@ export function App() {
           <a className="book-cover book-lunaria" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Vezi pagina de autor Aura Dobre pe Amazon">
             <img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Coperta Lunaria's Secret Treasure in the Enchanted Forest" />
           </a>
+          <a className="book-cover book-unreachable" href="https://amzn.eu/d/02oZ1plv" target="_blank" rel="sponsored noopener noreferrer" aria-label="Vezi cartea Unreachable de Aura Dobre pe Amazon">
+            <img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" />
+          </a>
           <div className="author-link">
             <span>Cărți scrise și publicate de mine</span><strong>Aura Dobre</strong>
             <div className="author-store-links">
