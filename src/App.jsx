@@ -125,18 +125,18 @@ const services = [
 ];
 
 const priceItems = [
-  { title: "Landing page / site one-page", price: 850, copy: "Design personalizat, responsive, formular și optimizare de bază." },
-  { title: "Site de prezentare (5–8 pagini)", price: 1750, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
-  { title: "Site de prezentare premium", price: 2950, copy: "Design avansat, animații, strategie de conținut și experiență personalizată." },
-  { title: "Magazin online standard", price: 4200, copy: "Catalog, coș, plăți, curier, configurare inițială și instruire." },
-  { title: "Asistență editorială pentru lucrare de licență", price: 1000, copy: "Structurare, tehnoredactare, formatare, bibliografie și prezentare. Conținutul original este furnizat și asumat de student." },
-  { title: "Logo design", price: 300, copy: "Concept de logo, variante cromatice și fișiere pregătite pentru web." },
-  { title: "Brand design / identitate vizuală", price: 500, copy: "Logo, paletă cromatică, fonturi și direcție vizuală de bază." },
-  { title: "Întocmire și tehnoredactare documente", price: 30, unit: "/ pagină", copy: "Formatare, structurare și aranjare vizuală; tariful final depinde de complexitate." },
-  { title: "Pachet social media — 6 vizualuri", price: 450, copy: "Șase postări sau story-uri coerente vizual, adaptate brandului." },
-  { title: "Poster, flyer sau invitație", price: 150, copy: "O direcție vizuală personalizată și fișiere pentru digital sau tipar." },
-  { title: "Prezentare profesională — până la 10 slide-uri", price: 400, copy: "Structură clară, design coerent și pregătire pentru prezentare sau PDF." },
-  { title: "Carte de vizită", price: 180, copy: "Design față-verso, variantă digitală și fișier pregătit pentru tipar." },
+  { title: "Pachet Start-up", price: 900, maxPrice: 1200, copy: "Logo, identitate vizuală de bază și mini kit social media." },
+  { title: "Pachet Rebranding", price: 1500, maxPrice: 2200, copy: "Refresh vizual, repoziționare, materiale actualizate și direcție de comunicare." },
+  { title: "Pachet Website (5–8 pagini)", price: 2000, maxPrice: 2500, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
+  { title: "Website Premium — animații & storytelling", price: 3500, maxPrice: 4500, copy: "Design avansat, animații, storytelling vizual și experiență personalizată." },
+  { title: "Magazin online", price: 4500, maxPrice: 6000, copy: "Catalog, coș, plăți, curier, configurare inițială și instruire." },
+  { title: "Logo design", price: 400, maxPrice: 600, copy: "Concept de logo, variante cromatice și fișiere pregătite pentru web." },
+  { title: "Identitate vizuală completă", price: 800, maxPrice: 1200, copy: "Logo, paletă cromatică, fonturi, direcție vizuală și aplicații de bază." },
+  { title: "Pachet social media — 6 vizualuri", price: 450, maxPrice: 600, copy: "Șase postări sau story-uri coerente vizual, adaptate brandului." },
+  { title: "Documente profesionale", price: 40, maxPrice: 60, unit: "/ pagină", copy: "Formatare, structurare și aranjare vizuală; tariful final depinde de complexitate." },
+  { title: "Prezentare profesională — 10 slide-uri", price: 450, maxPrice: 700, copy: "Structură clară, design coerent și pregătire pentru prezentare sau PDF." },
+  { title: "Poster / flyer", price: 150, maxPrice: 250, copy: "O direcție vizuală personalizată și fișiere pentru digital sau tipar." },
+  { title: "Carte de vizită", price: 180, maxPrice: 250, copy: "Design față-verso, variantă digitală și fișier pregătit pentru tipar." },
 ];
 
 const testimonials = [
@@ -257,7 +257,9 @@ export function App() {
     ...group,
     projects: group.slugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   })), []);
-  const total = selectedPrices.reduce((sum, price) => sum + price, 0);
+  const selectedPriceItems = priceItems.filter((item) => selectedPrices.includes(item.title));
+  const total = selectedPriceItems.reduce((sum, item) => sum + item.price, 0);
+  const totalMax = selectedPriceItems.reduce((sum, item) => sum + (item.maxPrice || item.price), 0);
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
   const detailSlug = currentPath.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
@@ -306,8 +308,8 @@ export function App() {
     return <BooksPage onNavigate={navigateTo} onSection={goToSection} />;
   }
 
-  function togglePrice(price) {
-    setSelectedPrices((current) => current.includes(price) ? current.filter((p) => p !== price) : [...current, price]);
+  function togglePrice(title) {
+    setSelectedPrices((current) => current.includes(title) ? current.filter((itemTitle) => itemTitle !== title) : [...current, title]);
   }
 
   function contactMessage(form) {
@@ -415,7 +417,7 @@ export function App() {
 
       <section className="section estimator" id="estimator">
         <p className="section-kicker">Estimator de cost</p><h2>Estimează-ți <em>bugetul.</em></h2><p className="section-lead">Selectează serviciile de care ai nevoie și primește o estimare instantanee. Toate prețurile sunt sugestive, afișate „de la” și pot varia în funcție de complexitate, volum și termenul de livrare.</p>
-        <div className="estimator-grid"><div className="price-list">{priceItems.map((item) => <button className={selectedPrices.includes(item.price) ? "selected" : ""} key={item.title} onClick={() => togglePrice(item.price)}><span className="price-check"><Check size={18} /></span><span><b>{item.title}</b><small>{item.copy}</small></span><strong>de la {item.price.toLocaleString("ro-RO")} RON {item.unit && <em>{item.unit}</em>}</strong></button>)}</div><aside className="summary"><span className="summary-label">Estimare orientativă</span><h3>Sumar estimare</h3><p>{selectedPrices.length ? `${selectedPrices.length} servicii selectate` : "Selectează serviciile dorite."}</p><div><span>Total minim estimativ</span><strong>{total.toLocaleString("ro-RO")} RON</strong></div><small className="estimate-note">Sumele sunt sugestive. Oferta finală se stabilește după brief, în funcție de complexitate, număr de pagini sau livrabile, urgență și revizii. Domeniul, hostingul, tiparul și serviciile recurente se calculează separat.</small><a className="button primary" href={`https://wa.me/40762509423?text=${encodeURIComponent(`Salut! Aș dori o ofertă personalizată. Total minim estimat: ${total} RON`)}`}><WhatsappLogo size={20} /> Cere ofertă</a></aside></div>
+        <div className="estimator-grid"><div className="price-list">{priceItems.map((item) => <button className={selectedPrices.includes(item.title) ? "selected" : ""} key={item.title} onClick={() => togglePrice(item.title)}><span className="price-check"><Check size={18} /></span><span><b>{item.title}</b><small>{item.copy}</small></span><strong>{item.price.toLocaleString("ro-RO")} – {(item.maxPrice || item.price).toLocaleString("ro-RO")} RON {item.unit && <em>{item.unit}</em>}</strong></button>)}</div><aside className="summary"><span className="summary-label">Estimare orientativă</span><h3>Sumar estimare</h3><p>{selectedPrices.length ? `${selectedPrices.length} servicii selectate` : "Selectează serviciile dorite."}</p><div><span>Total estimativ</span><strong>{total.toLocaleString("ro-RO")} – {totalMax.toLocaleString("ro-RO")} RON</strong></div><small className="estimate-note">Sumele sunt sugestive pentru Ialomița / România 2026. Oferta finală se stabilește după brief, în funcție de complexitate, număr de pagini sau livrabile, urgență și revizii. Domeniul, hostingul, tiparul și serviciile recurente se calculează separat.</small><a className="button primary" href={`https://wa.me/40762509423?text=${encodeURIComponent(`Salut! Aș dori o ofertă personalizată. Total estimativ: ${total} - ${totalMax} RON`)}`}><WhatsappLogo size={20} /> Cere ofertă</a></aside></div>
       </section>
 
       <section className="creative-services" aria-label="Servicii de creație digitală">
