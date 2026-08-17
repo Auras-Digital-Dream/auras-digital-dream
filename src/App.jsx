@@ -98,6 +98,24 @@ const featuredCardAssets = {
   "auras-trend-vault": "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg",
 };
 
+const portfolioGroups = [
+  {
+    title: "Branding",
+    copy: "Identități vizuale, logo-uri, direcții cromatice și materiale de brand care fac o afacere recognoscibilă.",
+    slugs: ["verde-bean", "lumina-botanica", "luxury-hair-by-aura", "logo-design", "carti-de-vizita", "selectii-cromatice"],
+  },
+  {
+    title: "Web",
+    copy: "Platforme, website-uri și experiențe digitale create pentru prezentare, conversie și încredere.",
+    slugs: ["auras-trend-vault", "real-estate-co", "lupul-and-brici", "magazine-online-e-commerce"],
+  },
+  {
+    title: "Marketing",
+    copy: "Campanii, conținut vizual, documente și materiale promoționale construite pentru vizibilitate.",
+    slugs: ["adi-ecoo-2009-sa", "campanie-social-media-luxe", "invitatii-nunti-botezuri-evenimente", "documente-corporatiste-licenta", "arta-digitala-materiale-grafice"],
+  },
+];
+
 const services = [
   { icon: Palette, title: "Pachet Start-up", copy: "Pentru branduri la început care au nevoie de o imagine clară și credibilă din prima zi.", list: ["Logo și direcție vizuală", "Paletă cromatică și fonturi", "Carte de vizită sau semnătură digitală", "Mini kit pentru social media"] },
   { icon: Megaphone, title: "Pachet Rebranding", copy: "Pentru afaceri care există deja, dar au nevoie de o imagine mai matură, coerentă și premium.", list: ["Audit vizual și poziționare", "Refresh logo și identitate", "Materiale grafice actualizate", "Direcție de comunicare"] },
@@ -190,12 +208,14 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
 export function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   useScrollExperience(currentPath);
-  const [filter, setFilter] = useState("Toate");
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [testimonial, setTestimonial] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("idle");
-  const filtered = useMemo(() => filter === "Toate" ? projects : projects.filter((p) => p.category.includes(filter)), [filter]);
+  const groupedProjects = useMemo(() => portfolioGroups.map((group) => ({
+    ...group,
+    projects: group.slugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
+  })), []);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Amazon Picks", "amazon-picks"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
@@ -372,9 +392,15 @@ export function App() {
       <section className="section portfolio" id="portofoliu">
         <div className="portfolio-heading"><div><p className="section-kicker">Selecție curatorială</p><h2>Proiecte care spun o <em>poveste.</em></h2></div><p>O selecție de identități, experiențe web și campanii în care strategia și estetica lucrează împreună.</p></div>
         <div className="featured-projects">{featured.map((project, index) => <a className="featured-project" data-reveal data-parallax={index % 2 ? "0.025" : "-0.02"} href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="featured-visual"><img src={featuredCardAssets[project.slug] || detailHeroAssets[project.slug] || project.image} alt={project.title} /><span className="featured-index">0{index + 1}</span><span className="featured-open">Descoperă proiectul <ArrowRight size={18} /></span></div><div className="featured-copy"><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p><span className="text-link">Vezi studiul de caz <ArrowRight size={17} /></span></div></a>)}</div>
-        <div className="archive-head"><div><p className="section-kicker">Arhivă</p><h2>Explorează toate <em>creațiile.</em></h2></div><span>{filtered.length.toString().padStart(2, "0")} proiecte</span></div>
-        <div className="filters">{["Toate", "Branding", "Web", "Marketing", "Grafică", "Moodboard", "Logo Design", "Documente"].map((item) => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
-        <div className="project-grid">{filtered.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}</div>
+        <div className="archive-head"><div><p className="section-kicker">Portofoliu organizat</p><h2>Alege direcția care se potrivește <em>brandului tău.</em></h2></div><span>{projects.length.toString().padStart(2, "0")} proiecte</span></div>
+        <div className="portfolio-groups">
+          {groupedProjects.map((group) => <section className="portfolio-group" data-reveal key={group.title}>
+            <div className="portfolio-group-head"><span>{group.title}</span><p>{group.copy}</p></div>
+            <div className="project-grid compact">
+              {group.projects.map((project) => <a className="project-card" data-reveal href={`/portofoliu/${project.slug}`} onClick={(event) => navigateTo(event, `/portofoliu/${project.slug}`)} key={project.slug}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-hover"><span>Vezi proiectul</span><ArrowRight size={22} /></div></div><div className="tags">{project.category.map((tag) => <span key={tag}>{tag}</span>)}</div><h3>{project.title}</h3><p>{project.description}</p></a>)}
+            </div>
+          </section>)}
+        </div>
       </section>
 
       <section className="creative-direction">
