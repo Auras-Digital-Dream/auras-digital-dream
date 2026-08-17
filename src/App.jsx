@@ -125,6 +125,12 @@ const services = [
   { icon: FileText, title: "Pachet Documente Profesionale", subtitle: "Materiale impecabile", copy: "Pentru documente, prezentări și materiale oficiale care trebuie să arate ordonat și profesionist.", list: ["Prezentări", "Rapoarte", "Broșuri", "PDF-uri", "Tehnoredactare completă"], benefits: ["Documente curate și ușor de citit", "Imagine serioasă și profesionistă", "Structură clară pentru informații complexe"], price: "40 – 60 RON / pagină" },
 ];
 
+const documentTemplates = [
+  { title: "Memorandum juridic / administrativ", label: "Legal memo", copy: "Document structurat pentru situații oficiale: context, întrebare, răspuns scurt, fapte relevante, analiză și concluzie." },
+  { title: "Documentație tehnică / system design", label: "System design", copy: "Pentru aplicații, website-uri sau procese digitale: obiective, arhitectură, componente, fluxuri, API-uri, riscuri și pași de implementare." },
+  { title: "Dosare, rapoarte și lucrări", label: "Business & academic", copy: "Structurare, tehnoredactare și design pentru materiale lungi: lucrări de licență, rapoarte, proceduri, ghiduri și prezentări PDF." },
+];
+
 const priceItems = [
   { title: "Pachet Start-up", price: 900, maxPrice: 1200, copy: "Logo, identitate vizuală de bază și mini kit social media." },
   { title: "Pachet Rebranding", price: 1500, maxPrice: 2200, copy: "Refresh vizual, repoziționare, materiale actualizate și direcție de comunicare." },
@@ -414,6 +420,16 @@ export function App() {
       <section className="section dark" id="servicii">
         <p className="section-kicker">Servicii</p><h2>Tot ce ai nevoie, <em>sub un singur acoperiș.</em></h2><p className="section-lead">De la strategie la execuție, fiecare serviciu este gândit pentru a-ți aduce rezultate reale.</p>
         <div className="service-grid">{services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }) => <article className="service-card" data-reveal key={title}><Icon size={32} weight="light" /><h3>{title}</h3><strong className="service-subtitle">{subtitle}</strong><p>{copy}</p><div className="service-list-block"><span>Ce primești</span><ul>{list.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul></div><div className="service-list-block benefits"><span>Beneficii</span><ul>{benefits.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul></div><div className="service-price"><span>Preț recomandat</span><strong>{price}</strong></div></article>)}</div>
+        <div className="document-template-showcase" data-reveal>
+          <div>
+            <p className="section-kicker">Documente premium</p>
+            <h3>Template-uri profesionale, adaptate pentru afacerea sau proiectul tău.</h3>
+            <p>Pot construi documente cu structură clară, estetică premium și logică de prezentare — nu doar fișiere frumoase, ci materiale care se pot trimite către clienți, instituții, colaboratori sau echipe tehnice.</p>
+          </div>
+          <div className="document-template-grid">
+            {documentTemplates.map((item) => <article key={item.title}><span>{item.label}</span><h4>{item.title}</h4><p>{item.copy}</p></article>)}
+          </div>
+        </div>
       </section>
 
       <section className="section estimator" id="estimator">
