@@ -324,10 +324,21 @@ function BooksPageCinematic({ onNavigate, onSection }) {
 
       <section className="cinematic-universe">
         <div className="gold-divider" aria-hidden="true"><i /><b /><i /></div>
-        <div className="cinematic-universe-inner" data-reveal>
-          <p className="section-kicker">01 — Universul</p>
-          <h2>Personajele mele trăiesc la marginea rațiunii.</h2>
-          <div><p>Unde obsesia devine artă și vulnerabilitatea, putere. Conace izolate, tensiuni psihologice, iubiri care ard și distrug în același timp.</p><p>Cărțile mele trăiesc la intersecția dintre dark romance, thriller psihologic și ficțiune literară. Amazon le listează ca produse. Eu le văd ca lumi.</p></div>
+        <div className="cinematic-universe-inner cinematic-universe-editorial">
+          <motion.p className="section-kicker" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>01 — Universul literar</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}>Universul meu literar</motion.h2>
+          <div className="universe-lines">
+            {[
+              "Personajele mele trăiesc la marginea rațiunii —",
+              "unde obsesia devine artă și vulnerabilitatea, putere.",
+              "Conace izolate, tensiuni psihologice,",
+              "iubiri care ard și distrug în același timp.",
+            ].map((line, index) => <motion.p key={line} initial={{ opacity: 0, x: -28, filter: "blur(5px)" }} whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.35 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}>{line}</motion.p>)}
+          </div>
+          <motion.div className="universe-copy" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.1 }}>
+            <p>Scriu despre putere și fragilitate, despre bărbați care stăpânesc și femei care îi sfidează — nu pentru că aleg un clișeu, ci pentru că tensiunea aceasta e adevărată.</p>
+            <p>Fiecare carte este o experiență senzorială — un film pe care îl citești, o lume în care intri și din care nu vrei să ieși.</p>
+          </motion.div>
         </div>
       </section>
 
