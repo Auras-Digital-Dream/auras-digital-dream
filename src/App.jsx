@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowsOutSimple,
+  BookOpen,
   Check,
   CaretLeft,
   CaretRight,
@@ -292,8 +293,8 @@ function BooksPageCinematic({ onNavigate, onSection }) {
   const { scrollYProgress: finalProgress } = useScroll({ target: finalRef, offset: ["start end", "center center"] });
   const finalScale = useTransform(finalProgress, [0, 1], [1.14, 1]);
   const publishedBooks = [
-    { title: "The Clockmaker's Curse", image: "/assets/amazon/clockmakers-curse.jpg", meta: "Time Holds The Key", copy: "Un blestem, un mecanism și o poveste în care timpul ascunde mai multe decât dezvăluie.", link: "https://amzn.eu/d/0bGKmBLR" },
-    { title: "Lunaria's Secret Treasure", image: "/assets/amazon/lunaria-secret-treasure.jpg", meta: "In the Enchanted Forest", copy: "O aventură luminoasă și magică, construită ca o hartă pentru curaj, curiozitate și copilărie.", link: "https://a.co/d/0gsNh4wn" },
+    { title: "The Clockmaker's Curse", image: "/assets/amazon/clockmakers-curse.jpg", meta: "Thriller · Mystery", subtitle: "Time Holds The key", copy: "O poveste despre timp, obsesie și secrete îngropate adânc în mecanismele unui ceas. Fiecare tic-tac ascunde o minciună.", link: "https://amzn.eu/d/0bGKmBLR" },
+    { title: "Lunaria's Secret Treasure", image: "/assets/amazon/lunaria-secret-treasure.jpg", meta: "Children's Fantasy · Adventure", subtitle: "in the Enchanted Forest", copy: "O aventură magică pentru cei mici — unde păduri fermecate ascund comori, iar curajul e singura hartă de care ai nevoie.", link: "https://a.co/d/0gsNh4wn" },
   ];
   const chips = ["dark romance", "thriller psihologic", "villain energy", "literary dark fiction", "obsession stories", "morally grey heroes", "slow burn tension"];
   const fadeUp = {
@@ -364,8 +365,8 @@ function BooksPageCinematic({ onNavigate, onSection }) {
       </section>
 
       <section className="cinematic-library">
-        <div className="cinematic-library-head" data-reveal><p className="section-kicker">03 — Biblioteca</p><h2>Cărțile scrise de mine</h2><p>Amazon le listează ca titluri publicate; aici le prezint ca lumi vizuale, cu atmosferă, tensiune și storytelling.</p></div>
-        <div className="cinematic-published-grid">{publishedBooks.map((book) => <article className="cinematic-published-card" data-reveal key={book.title}><div className="book-card-shine" /><img src={book.image} alt={`Coperta ${book.title}`} /><div><span>{book.meta}</span><h3>{book.title}</h3><p>{book.copy}</p><a href={book.link} target="_blank" rel="sponsored noopener noreferrer">Vezi pe Amazon <ArrowRight size={15} /></a></div></article>)}</div>
+        <div className="cinematic-library-head" data-reveal><h2>Alte cărți scrise de mine</h2><p>Scriu în mai multe lumi — fiecare carte e un univers cu propria sa atmosferă, propriile sale reguli și propriile sale personaje care nu te lasă să uiți.</p></div>
+        <div className="cinematic-published-grid">{publishedBooks.map((book) => <article className="cinematic-published-card" data-reveal key={book.title}><img src={book.image} alt={`Coperta ${book.title}`} /><div><span>{book.meta}</span><h3>{book.title}</h3><em>{book.subtitle}</em><p>{book.copy}</p><a href={book.link} target="_blank" rel="sponsored noopener noreferrer"><BookOpen size={13} /> Disponibil pe Amazon <ArrowRight size={12} /></a></div></article>)}</div>
         <div className="cinematic-coming-label" data-reveal>Ce urmează</div>
         <div className="cinematic-coming-grid">
           <article className="cinematic-upcoming-card" data-reveal><img src="/assets/books-cinematic/echoes-of-eternity.png" alt="Coperta Echoes of Eternity" /><div><span>Coming soon</span><h3>Echoes of Eternity</h3><p>O promisiune editorială construită în aceeași atmosferă: umbre, memorie, dorință și destin.</p></div></article>
