@@ -463,69 +463,26 @@ export function App() {
         <div className="behind-copy" data-reveal><p className="section-kicker">Behind the Dream</p><h2>Un studio digital cu o perspectivă <em>personală.</em></h2><p>În spatele fiecărui proiect sunt eu, Aura. Îmi place să unesc gândirea strategică, sensibilitatea vizuală și tehnologia, astfel încât fiecare brand să se simtă autentic — nu construit după un șablon.</p><p>Ascult înainte să desenez, caut ideea care merită păstrată și construiesc fiecare experiență cu grijă pentru detalii, ritm și emoție.</p><button className="button ink" onClick={() => scrollToId("contact")}>Povestește-mi ideea ta <ArrowRight size={18} /></button></div>
       </section>
 
-      <section className="amazon-world" id="amazon-picks">
+      <section className="amazon-world amazon-teaser" id="amazon-picks">
         <div className="amazon-world-glow" aria-hidden="true" />
         <div className="amazon-world-copy" data-reveal>
           <p className="section-kicker">Aura Dobre · Author Universe</p>
-          <h2>Cărțile scrise <em>de mine.</em></h2>
-          <p>Aceasta este vitrina mea literară: dark romance, thrillere psihologice și povești care se citesc ca un film. Amazon le listează ca titluri publicate; aici le prezint ca lumi vizuale, cu atmosferă, tensiune și storytelling.</p>
+          <h2>Cărțile mele au acum <em>pagina lor.</em></h2>
+          <p>Am separat vitrina literară într-o pagină dedicată, unde cărțile scrise de mine pot respira ca lumi vizuale: cu atmosferă, tensiune, coperți și storytelling.</p>
           <div className="literary-chips" aria-label="Genuri literare">
-            {["dark romance", "thriller psihologic", "villain energy", "ficțiune cinematică"].map((chip) => <span key={chip}>{chip}</span>)}
+            {["dark romance", "thriller psihologic", "ficțiune cinematică"].map((chip) => <span key={chip}>{chip}</span>)}
           </div>
-          <div className="author-universe-card" data-reveal>
-            <h3>Universul meu literar</h3>
-            <p>Scriu despre oameni care cred că sunt de neatins și despre momentele în care descoperă că nu mai sunt. Despre case care nu sunt doar locuri, ci mecanisme. Despre relații care nu sunt doar povești de dragoste, ci experimente de putere.</p>
-            <p>Cărțile mele trăiesc la intersecția dintre dark romance, thriller psihologic și ficțiune literară. Amazon le listează ca produse. Eu le văd ca lumi.</p>
+          <div className="books-actions">
+            <a className="button primary" href="/cartile-mele" onClick={(event) => navigateTo(event, "/cartile-mele")}>Vezi pagina cărților <ArrowRight size={18} /></a>
+            <a className="button ghost" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Amazon Author Page</a>
           </div>
-          <div className="amazon-market-links author-book-links" aria-label="Linkuri către cărțile Aura Dobre">
-            <a className="amazon-market" href="https://amzn.eu/d/02oZ1plv" target="_blank" rel="sponsored noopener noreferrer">
-              <span><b>NEW</b><small>Amazon EU</small></span><strong>Unreachable</strong><ArrowRight size={19} />
-            </a>
-            <a className="amazon-market" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">
-              <span><b>ALL</b><small>Author page</small></span><strong>Toate cărțile pe Amazon</strong><ArrowRight size={19} />
-            </a>
-            <a className="amazon-market" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">
-              <span><b>PDF</b><small>Gumroad</small></span><strong>Cărțile mele pe Gumroad</strong><ArrowRight size={19} />
-            </a>
-          </div>
-          <small className="affiliate-disclosure">Cărți scrise și publicate de Aura Dobre. Linkurile Amazon pot fi linkuri afiliate.</small>
         </div>
-
-        <div className="author-showcase" data-reveal data-parallax="0.025">
-          <span className="author-orbit" aria-hidden="true">AURA DOBRE · AUTHOR · STORIES ·</span>
-          <a className="book-cover book-clock" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Descoperă The Clockmaker's Curse de Aura Dobre">
-            <img src="/assets/amazon/clockmakers-curse.jpg" alt="Coperta The Clockmaker's Curse" />
-          </a>
-          <a className="book-cover book-lunaria" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Vezi pagina de autor Aura Dobre pe Amazon">
-            <img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Coperta Lunaria's Secret Treasure in the Enchanted Forest" />
-          </a>
-          <a className="book-cover book-unreachable" href="https://amzn.eu/d/02oZ1plv" target="_blank" rel="sponsored noopener noreferrer" aria-label="Vezi cartea Unreachable de Aura Dobre pe Amazon">
-            <img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" />
-          </a>
-          <div className="author-link">
-            <span>Univers literar scris și publicat de mine</span><strong>Aura Dobre</strong>
-            <div className="author-store-links">
-              <a href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Cărțile mele pe Amazon <ArrowRight size={15} /></a>
-              <a href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad <ArrowRight size={15} /></a>
-              <a href="/cartile-mele" onClick={(event) => navigateTo(event, "/cartile-mele")}>Pagina dedicată <ArrowRight size={15} /></a>
-            </div>
-          </div>
-          <div className="book-spotlight" data-reveal>
-            <span>Flagship book</span>
-            <h3>Unreachable</h3>
-            <p>Un bărbat care nu vrea să fie iubit — vrea să fie temut. O femeie care dispare fără urmă. O casă izolată pe un promontoriu, unde unele lucruri sunt aduse ca să rămână.</p>
-            <div className="book-quotes">
-              <p>„Nu te-a răpit. Te-a colecționat.”</p>
-              <p>„Unele femei sunt de neatins. Până nu mai sunt.”</p>
-            </div>
-          </div>
-          <div className="reader-note" data-reveal>
-            <h3>Pentru cine sunt cărțile mele</h3>
-            <p>Dacă iubești poveștile întunecate, personajele complexe, tensiunea psihologică și relațiile care nu pot fi reduse la „boy meets girl”, ești în locul potrivit.</p>
-          </div>
+        <div className="author-mini-stack" data-reveal data-parallax="0.025" aria-label="Coperțile cărților Aura Dobre">
+          <img src="/assets/amazon/clockmakers-curse.jpg" alt="Coperta The Clockmaker's Curse" />
+          <img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" />
+          <img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Coperta Lunaria's Secret Treasure" />
         </div>
       </section>
-
       <section className="section dark" id="proces">
         <p className="section-kicker">Proces de lucru</p><h2>De la idee, <em>la realitate.</em></h2>
         <div className="process-grid">{[["01","Descoperire","Înțeleg obiectivele tale, publicul și provocările brandului."],["02","Strategie","Construiesc direcția creativă și planul de comunicare."],["03","Creație","Transform strategia în identitate vizuală, website sau materiale."],["04","Optimizare","Lansăm proiectul și îl ajustăm pentru rezultate maxime."]].map(([nr,title,copy]) => <article key={nr}><span>{nr}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
