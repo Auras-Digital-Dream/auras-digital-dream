@@ -140,9 +140,10 @@ const priceItems = [
 ];
 
 const testimonials = [
-  ["Colaborarea cu Aura's Digital Dream a fost cea mai bună decizie pentru brandul nostru. Profesionalism de top și rezultate vizibile.", "Maria P.", "Studio de Design Interior"],
-  ["Aura a înțeles imediat direcția brandului și a transformat ideile noastre într-o identitate coerentă și elegantă.", "Andreea M.", "Fondator brand beauty"],
-  ["Comunicare excelentă, atenție la detalii și o livrare care a depășit așteptările.", "Radu C.", "Antreprenor"],
+  { type: "Branding", initials: "MB", quote: "Aura ne-a ajutat să transformăm o idee destul de împrăștiată într-o identitate clară: logo, culori, materiale și o direcție vizuală pe care o putem folosi consecvent.", name: "Mihaela B.", role: "Fondator brand local" },
+  { type: "Web", initials: "AC", quote: "Site-ul a devenit mult mai ușor de înțeles pentru clienți. Structura, butoanele și prezentarea serviciilor ne-au ajutat să primim cereri mai clare.", name: "Andrei C.", role: "Antreprenor servicii premium" },
+  { type: "Documente", initials: "EP", quote: "Aveam nevoie ca documentele să arate profesionist, nu doar corect scrise. Aura a organizat informația, a curățat vizual paginile și a dat materialului un aspect serios.", name: "Elena P.", role: "Client documente & prezentări" },
+  { type: "Social Media", initials: "IR", quote: "Vizualurile pentru social media au început să pară parte din același brand. Nu mai postăm la întâmplare, ci cu o linie estetică ușor de recunoscut.", name: "Ioana R.", role: "Beauty & lifestyle business" },
 ];
 
 function scrollToId(id) {
@@ -466,7 +467,7 @@ export function App() {
 
       <section className="section testimonials">
         <p className="section-kicker">Testimoniale</p><h2>Ce spun <em>clienții.</em></h2>
-        <div className="quote"><p>„{testimonials[testimonial][0]}”</p><strong>{testimonials[testimonial][1]}</strong><span>{testimonials[testimonial][2]}</span><div><button onClick={() => setTestimonial((testimonial + testimonials.length - 1) % testimonials.length)} aria-label="Anterior"><CaretLeft /></button><button onClick={() => setTestimonial((testimonial + 1) % testimonials.length)} aria-label="Următor"><CaretRight /></button></div></div>
+        <div className="quote"><span className="quote-type">{testimonials[testimonial].type}</span><p>„{testimonials[testimonial].quote}”</p><div className="quote-author"><span className="quote-avatar">{testimonials[testimonial].initials}</span><div><strong>{testimonials[testimonial].name}</strong><span>{testimonials[testimonial].role}</span></div></div><div className="quote-controls"><button onClick={() => setTestimonial((testimonial + testimonials.length - 1) % testimonials.length)} aria-label="Anterior"><CaretLeft /></button><button onClick={() => setTestimonial((testimonial + 1) % testimonials.length)} aria-label="Următor"><CaretRight /></button></div></div>
       </section>
 
       <section className="section contact" id="contact">

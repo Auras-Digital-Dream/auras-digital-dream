@@ -292,11 +292,14 @@ em { font-family:var(--font-display); color:var(--rose); font-style:italic; font
 .process-grid p { line-height:1.7; font-size:14px; }
 .testimonials { text-align:center; }
 .testimonials h2 { margin-inline:auto; }
-.quote { max-width:780px; margin:45px auto 0; }
+.quote { max-width:860px; margin:45px auto 0; }
+.quote-type { display:inline-flex; align-items:center; justify-content:center; min-width:120px; padding:8px 16px; border:1px solid var(--line); border-radius:999px; color:var(--rose); text-transform:uppercase; letter-spacing:.14em; font-size:11px; font-weight:700; }
 .quote > p { font-family:var(--font-display); font-size:clamp(25px,3vw,38px); line-height:1.45; }
-.quote > strong,.quote > span { display:block; }
-.quote > span { color:var(--muted); font-size:13px; margin-top:5px; }
-.quote > div { display:flex; gap:10px; justify-content:center; margin-top:30px; }
+.quote-author { display:flex; align-items:center; justify-content:center; gap:14px; margin-top:28px; }
+.quote-avatar { width:56px; height:56px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(135deg,var(--gold),var(--rose)); color:#171011; font-weight:800; letter-spacing:.08em; box-shadow:0 18px 40px rgba(211,56,97,.22); }
+.quote-author strong,.quote-author span { display:block; text-align:left; }
+.quote-author span { color:var(--muted); font-size:13px; margin-top:5px; }
+.quote-controls { display:flex; gap:10px; justify-content:center; margin-top:30px; }
 .quote button { border:1px solid var(--line); background:transparent; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; cursor:pointer; }
 .contact { background:#fff; display:grid; grid-template-columns:.85fr 1.15fr; gap:9vw; }
 .contact > div > p:not(.section-kicker) { color:var(--muted); line-height:1.7; max-width:500px; }
