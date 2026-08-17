@@ -218,7 +218,7 @@ export function App() {
     projects: group.slugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   })), []);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
-  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Amazon Picks", "amazon-picks"], ["Prețuri", "estimator"], ["Contact", "contact"]];
+  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "amazon-picks"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
   const detailSlug = currentPath.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
   const detailProject = projects.find((project) => project.slug === detailSlug);
@@ -417,26 +417,29 @@ export function App() {
       <section className="amazon-world" id="amazon-picks">
         <div className="amazon-world-glow" aria-hidden="true" />
         <div className="amazon-world-copy" data-reveal>
-          <p className="section-kicker">Aura's curated world</p>
-          <h2>Recomandările mele. <em>Cărțile scrise de mine.</em></h2>
-          <p>Două vitrine cu recomandările mele de fashion, beauty, lifestyle și inspirație creativă pentru UK și USA, alături de cărțile pe care le-am scris și publicat.</p>
-          <div className="amazon-market-links" aria-label="Storefronturi Amazon">
-            <a className="amazon-market" href="https://amzn.eu/d/0bGKmBLR" target="_blank" rel="sponsored noopener noreferrer">
-              <span><b>UK</b><small>Amazon.co.uk</small></span><strong>Shop my favourites</strong><ArrowRight size={19} />
-            </a>
-            <a className="amazon-market" href="https://a.co/d/0gsNh4wn" target="_blank" rel="sponsored noopener noreferrer">
-              <span><b>US</b><small>Amazon.com</small></span><strong>Shop my favourites</strong><ArrowRight size={19} />
-            </a>
+          <p className="section-kicker">Aura Dobre · Author Universe</p>
+          <h2>Cărțile scrise <em>de mine.</em></h2>
+          <p>Aceasta este vitrina mea literară: dark romance, thrillere psihologice și povești care se citesc ca un film. Amazon le listează ca titluri publicate; aici le prezint ca lumi vizuale, cu atmosferă, tensiune și storytelling.</p>
+          <div className="literary-chips" aria-label="Genuri literare">
+            {["dark romance", "thriller psihologic", "villain energy", "ficțiune cinematică"].map((chip) => <span key={chip}>{chip}</span>)}
+          </div>
+          <div className="amazon-market-links author-book-links" aria-label="Linkuri către cărțile Aura Dobre">
             <a className="amazon-market" href="https://amzn.eu/d/02oZ1plv" target="_blank" rel="sponsored noopener noreferrer">
-              <span><b>BOOK</b><small>Amazon EU</small></span><strong>Cărțile mele pe Amazon</strong><ArrowRight size={19} />
+              <span><b>NEW</b><small>Amazon EU</small></span><strong>Unreachable</strong><ArrowRight size={19} />
+            </a>
+            <a className="amazon-market" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">
+              <span><b>ALL</b><small>Author page</small></span><strong>Toate cărțile pe Amazon</strong><ArrowRight size={19} />
+            </a>
+            <a className="amazon-market" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">
+              <span><b>PDF</b><small>Gumroad</small></span><strong>Cărțile mele pe Gumroad</strong><ArrowRight size={19} />
             </a>
           </div>
-          <small className="affiliate-disclosure">Linkuri afiliate. As an Amazon Associate I earn from qualifying purchases.</small>
+          <small className="affiliate-disclosure">Cărți scrise și publicate de Aura Dobre. Linkurile Amazon pot fi linkuri afiliate.</small>
         </div>
 
         <div className="author-showcase" data-reveal data-parallax="0.025">
           <span className="author-orbit" aria-hidden="true">AURA DOBRE · AUTHOR · STORIES ·</span>
-          <a className="book-cover book-clock" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Descoperă cărțile semnate de Aura Dobre">
+          <a className="book-cover book-clock" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Descoperă The Clockmaker's Curse de Aura Dobre">
             <img src="/assets/amazon/clockmakers-curse.jpg" alt="Coperta The Clockmaker's Curse" />
           </a>
           <a className="book-cover book-lunaria" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer" aria-label="Vezi pagina de autor Aura Dobre pe Amazon">
@@ -446,7 +449,7 @@ export function App() {
             <img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" />
           </a>
           <div className="author-link">
-            <span>Cărți scrise și publicate de mine</span><strong>Aura Dobre</strong>
+            <span>Univers literar scris și publicat de mine</span><strong>Aura Dobre</strong>
             <div className="author-store-links">
               <a href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Cărțile mele pe Amazon <ArrowRight size={15} /></a>
               <a href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad <ArrowRight size={15} /></a>
