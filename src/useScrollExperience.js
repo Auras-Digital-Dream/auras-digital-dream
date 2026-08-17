@@ -5,7 +5,7 @@ export function useScrollExperience(pageKey = "home") {
     const root = document.documentElement;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const revealItems = [...document.querySelectorAll("[data-reveal]")];
-    if (reducedMotion.matches) {
+    if (reducedMotion.matches || !("IntersectionObserver" in window)) {
       revealItems.forEach((item) => item.classList.add("is-visible"));
       return undefined;
     }

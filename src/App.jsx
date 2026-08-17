@@ -127,7 +127,13 @@ const testimonials = [
 ];
 
 function scrollToId(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const targetId = id === "estimare" ? "estimator" : id;
+  document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+}
+
+function scheduleScrollToId(id) {
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollToId(id)));
+  window.setTimeout(() => scrollToId(id), 120);
 }
 
 function ProjectDetail({ project, details, onNavigate, onSection }) {
@@ -204,7 +210,7 @@ export function App() {
   useEffect(() => {
     if (currentPath !== "/" || !window.location.hash) return;
     const id = decodeURIComponent(window.location.hash.slice(1));
-    requestAnimationFrame(() => requestAnimationFrame(() => scrollToId(id)));
+    scheduleScrollToId(id);
   }, [currentPath]);
 
   function navigateTo(event, path) {
@@ -224,7 +230,7 @@ export function App() {
     const revealSection = () => {
       window.history.pushState({}, "", `/#${id}`);
       setCurrentPath("/");
-      requestAnimationFrame(() => requestAnimationFrame(() => scrollToId(id)));
+      scheduleScrollToId(id);
     };
     if (currentPath !== "/" && document.startViewTransition) document.startViewTransition(revealSection);
     else revealSection();
