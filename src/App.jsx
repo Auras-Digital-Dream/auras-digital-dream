@@ -465,6 +465,18 @@ export function App() {
         <div className="process-grid">{[["01","Descoperire","Înțeleg nevoile tale, publicul țintă și obiectivele de business."],["02","Strategie","Construiesc un plan clar, cu direcții creative adaptate brandului."],["03","Creație","Transform strategia în elemente vizuale și conținut memorabil."],["04","Livrare","Lansez proiectul și optimizez experiența pentru rezultate maxime."]].map(([nr,title,copy]) => <article key={nr}><span>{nr}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
 
+      <section className="section why-me" id="de-ce-eu">
+        <div className="why-me-card" data-reveal>
+          <p className="section-kicker">Încredere & direcție</p>
+          <h2>De ce să lucrezi <em>cu mine</em></h2>
+          <div className="why-me-copy">
+            <p>Sunt specialist în marketing digital, design și web, cu peste 15 proiecte finalizate în branding, campanii, website-uri și documente profesionale.</p>
+            <p>Lucrez cu antreprenori și companii care vor rezultate reale, nu doar vizibilitate.</p>
+            <p>Fiecare proiect este construit cu atenție la detalii, strategie clară și o estetică premium care diferențiază brandul tău.</p>
+          </div>
+        </div>
+      </section>
+
       <section className="section testimonials">
         <p className="section-kicker">Testimoniale</p><h2>Ce spun <em>clienții.</em></h2>
         <div className="quote"><span className="quote-type">{testimonials[testimonial].type}</span><p>„{testimonials[testimonial].quote}”</p><div className="quote-author"><span className="quote-avatar">{testimonials[testimonial].initials}</span><div><strong>{testimonials[testimonial].name}</strong><span>{testimonials[testimonial].role}</span></div></div><div className="quote-controls"><button onClick={() => setTestimonial((testimonial + testimonials.length - 1) % testimonials.length)} aria-label="Anterior"><CaretLeft /></button><button onClick={() => setTestimonial((testimonial + 1) % testimonials.length)} aria-label="Următor"><CaretRight /></button></div></div>
