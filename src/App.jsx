@@ -462,7 +462,7 @@ export function App() {
 
       <section className="section dark" id="proces">
         <p className="section-kicker">Proces de lucru</p><h2>De la idee, <em>la realitate.</em></h2>
-        <div className="process-grid">{[["01","Descoperire","Înțeleg nevoile tale, publicul țintă și obiectivele de business."],["02","Strategie","Construiesc un plan clar, cu direcții creative adaptate brandului."],["03","Creație","Transform strategia în elemente vizuale și conținut memorabil."],["04","Livrare","Lansez proiectul și optimizez experiența pentru rezultate maxime."]].map(([nr,title,copy]) => <article key={nr}><span>{nr}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+        <div className="process-grid">{[["01","Descoperire","Înțeleg obiectivele tale, publicul și provocările brandului."],["02","Strategie","Construiesc direcția creativă și planul de comunicare."],["03","Creație","Transform strategia în identitate vizuală, website sau materiale."],["04","Optimizare","Lansăm proiectul și îl ajustăm pentru rezultate maxime."]].map(([nr,title,copy]) => <article key={nr}><span>{nr}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
 
       <section className="section why-me" id="de-ce-eu">
