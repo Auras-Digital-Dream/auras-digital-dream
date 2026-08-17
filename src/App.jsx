@@ -206,6 +206,46 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
   );
 }
 
+function BooksPage({ onNavigate, onSection }) {
+  return (
+    <main className="books-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
+      <header className="detail-header books-header">
+        <a className="brand" href="/" onClick={(event) => onNavigate(event, "/")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
+        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a></nav>
+      </header>
+
+      <section className="books-hero" data-reveal>
+        <div><p className="section-kicker">Aura Dobre · Amazon Picks · Books</p><h1>Dark romance, thrillere psihologice și povești care se citesc ca un film.</h1><p>Aceasta este vitrina mea literară: cărțile pe care le-am scris și publicat, așa cum apar pe Amazon și Goodreads, dar trăite aici ca un storytelling vizual. Fiecare scroll este un pas mai adânc în universul meu.</p><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0" target="_blank" rel="noopener noreferrer">Vezi toate cărțile pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://www.goodreads.com/user/show/203519366-aura-dobre" target="_blank" rel="noopener noreferrer">Profilul meu pe Goodreads</a></div></div>
+        <div className="books-cover-stack" data-parallax="0.035"><img src="/assets/amazon/clockmakers-curse.jpg" alt="The Clockmaker's Curse" /><img src="/assets/amazon/unreachable.jpg" alt="Unreachable" /><img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Lunaria Secret Treasure" /></div>
+      </section>
+
+      <section className="books-section books-universe" data-reveal>
+        <div className="books-section-inner"><p className="section-kicker">Univers literar</p><h2>Universul meu literar</h2><p>Scriu despre oameni care cred că sunt de neatins și despre momentele în care descoperă că nu mai sunt. Despre case care nu sunt doar locuri, ci mecanisme. Despre relații care nu sunt doar povești de dragoste, ci experimente de putere. Despre vulnerabilitate, obsesie și felul în care ne construim propriile mitologii.</p><p>Cărțile mele trăiesc la intersecția dintre dark romance, thriller psihologic și ficțiune literară. Amazon le listează ca produse. Eu le văd ca lumi.</p></div>
+      </section>
+
+      <section className="books-section book-feature" id="unreachable" data-reveal>
+        <div className="book-feature-copy"><p className="section-kicker">Flagship book</p><h2>Unreachable</h2><p className="book-meta">Dark Romance · Thriller psihologic · Remote northern estate</p><p>Un bărbat care nu vrea să fie iubit — vrea să fie temut. O femeie care dispare fără urmă. O casă izolată pe un promontoriu, unde unele lucruri sunt aduse ca să rămână. <em>Unreachable</em> este o poveste despre obsesie, captivitate și momentul în care îți dai seama că nu mai ești doar spectator în propria viață.</p><div className="literary-chips">{["villain romance","psychological tension","remote estate","literary prose"].map((chip) => <span key={chip}>{chip}</span>)}</div><div className="book-quotes"><p>„Nu te-a răpit. Te-a colecționat.”</p><p>„El nu voia iubire. Voia momentul în care ai înțeles că ești a lui.”</p><p>„Unele femei sunt de neatins. Până nu mai sunt.”</p></div><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/dp/B0GXSLHRNY" target="_blank" rel="sponsored noopener noreferrer">Citește Unreachable pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://www.goodreads.com/book/show/256317209-unreachable" target="_blank" rel="noopener noreferrer">Vezi cartea pe Goodreads</a></div></div>
+        <figure className="book-feature-cover"><img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" /><figcaption>Atmosferă cinematică: zăpadă, casă izolată, tensiune psihologică.</figcaption></figure>
+      </section>
+
+      <section className="books-section other-books" data-reveal>
+        <div className="books-section-inner"><p className="section-kicker">Bibliotecă de autor</p><h2>Alte cărți scrise de mine</h2><p>Pe pagina mea de autor de pe Amazon vei găsi toate titlurile publicate: proiecte literare, ficțiune psihologică, povești scurte și lumi care explorează identitatea, memoria, relațiile și felul în care ne spunem poveștile nouă înșine.</p></div>
+        <div className="other-book-grid">
+          {[["The Clockmaker's Curse","/assets/amazon/clockmakers-curse.jpg","Time Holds The Key"],["Lunaria's Secret Treasure","/assets/amazon/lunaria-secret-treasure.jpg","In the Enchanted Forest"]].map(([title,image,meta]) => <article className="other-book-card" key={title}><img src={image} alt={`Coperta ${title}`} /><div><h3>{title}</h3><p>{meta}</p><a href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Vezi pe Amazon <ArrowRight size={15} /></a></div></article>)}
+        </div>
+      </section>
+
+      <section className="books-section books-reader" data-reveal><div><p className="section-kicker">Pentru cititori</p><h2>Pentru cine sunt cărțile mele</h2><p>Dacă iubești poveștile întunecate, personajele complexe, tensiunea psihologică și relațiile care nu pot fi reduse la „boy meets girl”, ești în locul potrivit. Cărțile mele sunt pentru cititorii care vor să simtă ceva intens, nu doar să treacă prin pagini.</p><div className="literary-chips">{["dark romance","thriller psihologic","villain energy","literary dark fiction","obsession stories"].map((chip) => <span key={chip}>{chip}</span>)}</div></div></section>
+
+      <section className="books-section behind-author" data-reveal><div><p className="section-kicker">Behind the author</p><h2>În spatele poveștilor</h2><p>Sunt Aura Dobre, autor, designer și om care se uită la lume ca la un set de povești posibile. Scriu dintr-un loc în care estetica, psihologia și vulnerabilitatea se întâlnesc.</p><div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Abonează-te la newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Vezi și lumea mea digitală</a></div></div></section>
+
+      <section className="books-final-cta" data-reveal><h2>Hai să intri în poveste.</h2><p>Derularea se oprește aici, dar poveștile nu. Amazon îți arată titlurile, Goodreads îți arată reacțiile, iar această pagină îți arată intenția: să construiesc lumi în care să vrei să rămâi.</p><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0" target="_blank" rel="noopener noreferrer">Intră în vitrina mea de pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></section>
+
+      <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura Dobre</strong><p>Cărți, lumi vizuale și povești cinematice.</p></div></div><p>© 2026 Aura Dobre. Toate drepturile rezervate.</p></footer>
+    </main>
+  );
+}
+
 export function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   useScrollExperience(currentPath);
@@ -218,7 +258,7 @@ export function App() {
     projects: group.slugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   })), []);
   const total = selectedPrices.reduce((sum, price) => sum + price, 0);
-  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "amazon-picks"], ["Prețuri", "estimator"], ["Contact", "contact"]];
+  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
   const detailSlug = currentPath.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
   const detailProject = projects.find((project) => project.slug === detailSlug);
@@ -260,6 +300,10 @@ export function App() {
 
   if (detailProject && projectDetails[detailSlug]) {
     return <ProjectDetail project={detailProject} details={projectDetails[detailSlug]} onNavigate={navigateTo} onSection={goToSection} />;
+  }
+
+  if (currentPath === "/cartile-mele") {
+    return <BooksPage onNavigate={navigateTo} onSection={goToSection} />;
   }
 
   function togglePrice(price) {
@@ -315,7 +359,7 @@ export function App() {
       <header className="site-header">
         <button className="brand" onClick={(event) => goToSection(event, "acasa")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Deschide meniul">{menuOpen ? <X /> : <List />}</button>
-        <nav className={menuOpen ? "open" : ""}>{nav.map(([label, id]) => <button key={id} onClick={(event) => { goToSection(event, id); setMenuOpen(false); }}>{label}</button>)}</nav>
+        <nav className={menuOpen ? "open" : ""}>{nav.map(([label, id]) => <button key={id} onClick={(event) => { id.startsWith("/") ? navigateTo(event, id) : goToSection(event, id); setMenuOpen(false); }}>{label}</button>)}</nav>
       </header>
 
       <section className="hero" id="acasa">
@@ -458,6 +502,7 @@ export function App() {
             <div className="author-store-links">
               <a href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Cărțile mele pe Amazon <ArrowRight size={15} /></a>
               <a href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad <ArrowRight size={15} /></a>
+              <a href="/cartile-mele" onClick={(event) => navigateTo(event, "/cartile-mele")}>Pagina dedicată <ArrowRight size={15} /></a>
             </div>
           </div>
           <div className="book-spotlight" data-reveal>
