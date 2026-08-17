@@ -307,8 +307,8 @@ export function App() {
         <div className="hero-content" data-reveal>
           <p className="eyebrow">Marketing · Design · Soluții Digitale</p>
           <h1>Aura's <em>Digital</em><br />Dream</h1>
-          <p className="hero-copy">Idei care prind viață digital.</p>
-          <div className="hero-actions"><button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button><a className="button ghost" href="https://wa.me/40762509423">Scrie-mi pe WhatsApp</a></div>
+          <p className="hero-copy">Marketing, design și web pentru branduri care vor să crească vizibil, rapid și profesionist.</p>
+          <div className="hero-actions"><button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button><button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button><a className="button ghost" href="https://wa.me/40762509423">Scrie-mi pe WhatsApp</a></div>
         </div>
         <button className="scroll-mark" onClick={() => scrollToId("despre")} aria-label="Derulează la secțiunea despre"><span /></button>
       </section>
