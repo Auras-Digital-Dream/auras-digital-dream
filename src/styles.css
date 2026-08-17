@@ -558,10 +558,11 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .cinematic-published-card { display:grid; grid-template-columns:220px 1fr; gap:31px; align-items:stretch; }
 .cinematic-published-card:hover,.cinematic-upcoming-card:hover,.abstract-story-card:hover { transform:translateY(-8px); border-color:rgba(201,161,107,.34); box-shadow:0 38px 100px rgba(0,0,0,.48),0 0 45px rgba(201,161,107,.06); }
 .book-card-shine { position:absolute; inset:-20% auto -20% -65%; width:45%; transform:skewX(-12deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent); animation:cardShimmer 4.5s ease-in-out 2s infinite; }
-.cinematic-published-card img { width:220px; height:298px; object-fit:cover; object-position:center; filter:saturate(.82) brightness(.72); box-shadow:none; transition:transform .8s cubic-bezier(.16,1,.3,1), filter .8s ease, opacity .8s ease; }
-.cinematic-published-card::after { content:""; position:absolute; inset:0 auto 0 0; width:305px; background:linear-gradient(90deg,rgba(5,6,10,.04) 0%,rgba(5,6,10,.08) 34%,rgba(5,6,10,.72) 76%,rgba(5,6,10,.98) 100%),linear-gradient(180deg,rgba(5,6,10,.08),transparent 38%,rgba(5,6,10,.34) 100%); pointer-events:none; opacity:.98; transition:opacity .6s ease; }
-.cinematic-published-card:hover img { transform:scale(1.045); filter:saturate(.96) brightness(.86); opacity:.95; }
-.cinematic-published-card:hover::after { opacity:.78; }
+.published-image-frame { position:relative; overflow:hidden; width:220px; min-height:298px; background:#07080c; }
+.published-image-frame::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(5,6,10,.03) 0%,rgba(5,6,10,.1) 34%,rgba(5,6,10,.72) 76%,rgba(5,6,10,.98) 100%),linear-gradient(180deg,rgba(5,6,10,.08) 0%,transparent 45%,rgba(5,6,10,.88) 100%); pointer-events:none; opacity:.98; transition:opacity .7s ease; }
+.cinematic-published-card img { width:220px; height:298px; object-fit:cover; object-position:center; filter:saturate(.82) brightness(.72); box-shadow:none; transition:transform .9s cubic-bezier(.16,1,.3,1), filter .9s ease, opacity .9s ease; }
+.cinematic-published-card:hover img { transform:scale(1.055); filter:saturate(1) brightness(.9); opacity:.96; }
+.cinematic-published-card:hover .published-image-frame::after { opacity:.76; }
 .cinematic-published-card > div { position:relative; z-index:1; padding:31px 34px 28px 0; display:flex; flex-direction:column; align-items:flex-start; }
 .cinematic-published-card span,.cinematic-upcoming-card span,.abstract-story-card span:not(.scattered-word) { color:#c9a16b; text-transform:uppercase; letter-spacing:.42em; font-size:10px; }
 .cinematic-published-card h3,.cinematic-upcoming-card h3,.abstract-story-card h3 { margin:18px 0 7px; font-family:var(--font-serif); font-size:27px; font-weight:700; color:white; line-height:1.05; }
@@ -616,6 +617,7 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
   .cinematic-amazon-link { padding:9px 10px; }
   .cinematic-published-grid,.cinematic-coming-grid { grid-template-columns:1fr; }
   .cinematic-published-card { grid-template-columns:190px 1fr; min-height:auto; }
+  .published-image-frame { width:190px; min-height:258px; }
   .cinematic-published-card img { width:190px; height:258px; }
   .cinematic-published-card > div { padding:26px 26px 24px 0; }
   .cinematic-upcoming-card { grid-template-columns:190px 1fr; min-height:auto; }
@@ -627,7 +629,8 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 @media (max-width:560px) {
   .cinematic-nav nav a:not(.cinematic-amazon-link) { display:none; }
   .cinematic-published-card,.cinematic-upcoming-card { grid-template-columns:1fr; }
-  .cinematic-published-card img { width:100%; height:auto; aspect-ratio:4/3; }
+  .published-image-frame { width:100%; min-height:auto; height:420px; }
+  .cinematic-published-card img { width:100%; height:420px; aspect-ratio:auto; }
   .cinematic-published-card > div { padding:24px; }
   .upcoming-image-frame { width:100%; min-height:auto; height:420px; }
   .cinematic-upcoming-card img { width:100%; height:420px; }
