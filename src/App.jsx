@@ -399,6 +399,9 @@ export function App() {
             <a className="amazon-market" href="https://a.co/d/0gsNh4wn" target="_blank" rel="sponsored noopener noreferrer">
               <span><b>US</b><small>Amazon.com</small></span><strong>Shop my favourites</strong><ArrowRight size={19} />
             </a>
+            <a className="amazon-market" href="https://amzn.eu/d/02oZ1plv" target="_blank" rel="sponsored noopener noreferrer">
+              <span><b>BOOK</b><small>Amazon EU</small></span><strong>Cărțile mele pe Amazon</strong><ArrowRight size={19} />
+            </a>
           </div>
           <small className="affiliate-disclosure">Linkuri afiliate. As an Amazon Associate I earn from qualifying purchases.</small>
         </div>

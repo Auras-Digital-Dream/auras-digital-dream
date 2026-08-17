@@ -227,7 +227,7 @@ em { font-family:var(--font-display); color:var(--rose); font-style:italic; font
 .amazon-world-copy h2 { margin:22px 0 30px; font-family:var(--font-display); font-size:clamp(48px,5.5vw,84px); font-weight:400; line-height:.98; letter-spacing:-.025em; }
 .amazon-world-copy h2 em { color:#e9c17c; }
 .amazon-world-copy > p:not(.section-kicker) { max-width:590px; color:#bdb2aa; line-height:1.85; }
-.amazon-market-links { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:40px; }
+.amazon-market-links { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:40px; }
 .amazon-market { position:relative; min-height:145px; padding:21px; display:grid; grid-template-columns:1fr auto; align-items:end; gap:20px; overflow:hidden; border:1px solid rgba(235,201,139,.24); background:rgba(255,255,255,.035); transition:transform .35s,border-color .35s,background .35s; }
 .amazon-market::after { content:""; position:absolute; width:110px; height:110px; right:-62px; top:-62px; border:1px solid rgba(235,201,139,.28); border-radius:50%; transition:transform .5s; }
 .amazon-market:hover { transform:translateY(-5px); border-color:#e9c17c; background:rgba(235,193,124,.08); }
