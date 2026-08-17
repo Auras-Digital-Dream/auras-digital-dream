@@ -515,7 +515,7 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .universe-lines { display:grid; gap:22px; margin:0 auto clamp(72px,8vw,105px); }
 .universe-lines p { margin:0; font-family:var(--font-serif); font-style:italic; font-size:clamp(27px,3vw,36px); line-height:1.32; color:rgba(154,159,176,.72); }
 .universe-copy { max-width:850px; margin:0 auto; display:grid; gap:28px; }
-.universe-copy p { margin:0; font-family:var(--font-sans); font-size:clamp(18px,1.8vw,24px); line-height:1.55; color:rgba(154,159,176,.5); }
+.universe-copy p { margin:0; font-family:var(--font-sans); font-size:14px; line-height:1.75; color:rgba(154,159,176,.5); }
 .cinematic-universe h2,.cinematic-library h2,.cinematic-reader h2,.cinematic-author h2,.cinematic-final h2 { font-family:var(--font-serif); font-size:clamp(44px,6vw,88px); font-weight:400; line-height:1; margin:18px 0 28px; color:white; }
 .cinematic-universe p,.cinematic-library-head p,.cinematic-reader p,.cinematic-author p,.cinematic-final p { color:rgba(154,159,176,.74); line-height:1.85; }
 .cinematic-feature { position:relative; min-height:105vh; display:grid; align-items:center; padding:max(110px,10vw) max(7vw,24px); overflow:hidden; isolation:isolate; }
