@@ -521,6 +521,12 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .cinematic-feature { position:relative; min-height:105vh; display:grid; align-items:center; padding:max(110px,10vw) max(7vw,24px); overflow:hidden; isolation:isolate; }
 .cinematic-feature::before,.cinematic-quote::before,.cinematic-author::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,rgba(5,6,10,.94),rgba(5,6,10,.66),rgba(5,6,10,.28)),radial-gradient(ellipse at 50% 50%,transparent 20%,#05060a 100%); }
 .cinematic-feature-inner { position:relative; z-index:2; width:min(100%,1160px); margin:auto; display:grid; grid-template-columns:1fr .58fr; gap:clamp(40px,7vw,100px); align-items:center; }
+.cinematic-books .book-feature-copy { max-width:640px; }
+.cinematic-books .literary-chips { display:flex; flex-wrap:wrap; gap:12px 10px; margin-top:28px; }
+.cinematic-books .literary-chips span { min-height:40px; display:inline-flex; align-items:center; justify-content:center; padding:0 22px; border:1px solid rgba(154,159,176,.14); border-radius:999px; background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); color:rgba(154,159,176,.8); font-family:var(--font-sans); font-size:15px; font-weight:400; letter-spacing:0; text-transform:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.035); }
+.cinematic-books .book-quotes { margin-top:40px; padding-left:30px; border-left:2px solid rgba(201,161,107,.28); display:grid; gap:24px; }
+.cinematic-books .book-quotes p { margin:0; color:rgba(154,159,176,.72); font-family:var(--font-serif); font-style:italic; font-size:18px; line-height:1.45; letter-spacing:0; }
+.cinematic-books .book-quotes p + p { margin-top:0; }
 .cinematic-trailer-card { position:relative; margin:0; justify-self:center; width:min(100%,390px); aspect-ratio:2/3; overflow:hidden; border:1px solid rgba(201,161,107,.24); background:#090a0f; box-shadow:0 50px 120px rgba(0,0,0,.72),0 0 80px rgba(201,161,107,.12); transform:rotate(2.5deg); transition:.55s cubic-bezier(.16,1,.3,1); }
 .cinematic-trailer-card:hover { transform:translateY(-16px) rotate(.3deg); border-color:rgba(201,161,107,.55); }
 .cinematic-trailer-card video { width:100%; height:100%; object-fit:cover; filter:saturate(.84) contrast(1.08); }
