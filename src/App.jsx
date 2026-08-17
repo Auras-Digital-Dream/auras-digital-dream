@@ -423,6 +423,11 @@ export function App() {
           <div className="literary-chips" aria-label="Genuri literare">
             {["dark romance", "thriller psihologic", "villain energy", "ficțiune cinematică"].map((chip) => <span key={chip}>{chip}</span>)}
           </div>
+          <div className="author-universe-card" data-reveal>
+            <h3>Universul meu literar</h3>
+            <p>Scriu despre oameni care cred că sunt de neatins și despre momentele în care descoperă că nu mai sunt. Despre case care nu sunt doar locuri, ci mecanisme. Despre relații care nu sunt doar povești de dragoste, ci experimente de putere.</p>
+            <p>Cărțile mele trăiesc la intersecția dintre dark romance, thriller psihologic și ficțiune literară. Amazon le listează ca produse. Eu le văd ca lumi.</p>
+          </div>
           <div className="amazon-market-links author-book-links" aria-label="Linkuri către cărțile Aura Dobre">
             <a className="amazon-market" href="https://amzn.eu/d/02oZ1plv" target="_blank" rel="sponsored noopener noreferrer">
               <span><b>NEW</b><small>Amazon EU</small></span><strong>Unreachable</strong><ArrowRight size={19} />
@@ -454,6 +459,19 @@ export function App() {
               <a href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8?ref=ap_rdr&shoppingPortalEnabled=true&ccs_id=26b0d51d-d6bb-476b-bde1-e053aa0e05fb" target="_blank" rel="noopener noreferrer">Cărțile mele pe Amazon <ArrowRight size={15} /></a>
               <a href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad <ArrowRight size={15} /></a>
             </div>
+          </div>
+          <div className="book-spotlight" data-reveal>
+            <span>Flagship book</span>
+            <h3>Unreachable</h3>
+            <p>Un bărbat care nu vrea să fie iubit — vrea să fie temut. O femeie care dispare fără urmă. O casă izolată pe un promontoriu, unde unele lucruri sunt aduse ca să rămână.</p>
+            <div className="book-quotes">
+              <p>„Nu te-a răpit. Te-a colecționat.”</p>
+              <p>„Unele femei sunt de neatins. Până nu mai sunt.”</p>
+            </div>
+          </div>
+          <div className="reader-note" data-reveal>
+            <h3>Pentru cine sunt cărțile mele</h3>
+            <p>Dacă iubești poveștile întunecate, personajele complexe, tensiunea psihologică și relațiile care nu pot fi reduse la „boy meets girl”, ești în locul potrivit.</p>
           </div>
         </div>
       </section>

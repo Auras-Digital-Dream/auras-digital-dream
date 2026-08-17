@@ -236,6 +236,15 @@ em { font-family:var(--font-display); color:var(--rose); font-style:italic; font
 .amazon-world-copy > p:not(.section-kicker) { max-width:590px; color:#bdb2aa; line-height:1.85; }
 .literary-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
 .literary-chips span { padding:7px 12px; border:1px solid rgba(235,193,124,.28); border-radius:999px; color:#e9c17c; background:rgba(255,255,255,.035); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+.author-universe-card,.book-spotlight,.reader-note { margin-top:26px; padding:24px; border:1px solid rgba(235,193,124,.18); background:rgba(255,255,255,.035); box-shadow:0 20px 55px rgba(0,0,0,.24); }
+.author-universe-card h3,.book-spotlight h3,.reader-note h3 { margin:0 0 12px; color:#f8f2e9; font-family:var(--font-display); font-size:clamp(25px,2.2vw,34px); font-weight:400; }
+.author-universe-card p,.book-spotlight p,.reader-note p { color:#bdb2aa; line-height:1.75; margin:0; }
+.author-universe-card p + p { margin-top:12px; }
+.book-spotlight { background:radial-gradient(circle at 18% 0,rgba(211,56,97,.2),rgba(255,255,255,.035) 42%); }
+.book-spotlight > span { display:block; margin-bottom:8px; color:#e9c17c; text-transform:uppercase; letter-spacing:.16em; font-size:10px; font-weight:700; }
+.book-quotes { margin-top:18px; padding-left:14px; border-left:1px solid rgba(235,193,124,.38); }
+.book-quotes p { color:#ead3a6; font-family:var(--font-display); font-size:18px; line-height:1.45; }
+.book-quotes p + p { margin-top:8px; }
 .amazon-market-links { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:40px; }
 .author-book-links { margin-top:32px; }
 .amazon-market { position:relative; min-height:145px; padding:21px; display:grid; grid-template-columns:1fr auto; align-items:end; gap:20px; overflow:hidden; border:1px solid rgba(235,201,139,.24); background:rgba(255,255,255,.035); transition:transform .35s,border-color .35s,background .35s; }
