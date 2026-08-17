@@ -216,6 +216,11 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
 }
 
 function BooksPage({ onNavigate, onSection }) {
+  const bookScenes = [
+    { nr: "01", title: "Izolarea", book: "Unreachable", image: "/assets/amazon/unreachable.jpg", tone: "zăpadă · tăcere · obsesie", copy: "O casă rece, o prezență care apasă pe fiecare pagină și sentimentul că liniștea nu este niciodată sigură." },
+    { nr: "02", title: "Mecanismul", book: "The Clockmaker's Curse", image: "/assets/amazon/clockmakers-curse.jpg", tone: "timp · cheie · blestem", copy: "Aici timpul nu curge. Se strânge. Fiecare rotiță ascunde o alegere, iar fiecare alegere deschide ceva ce nu mai poate fi închis." },
+    { nr: "03", title: "Pădurea", book: "Lunaria's Secret Treasure", image: "/assets/amazon/lunaria-secret-treasure.jpg", tone: "magie · copilărie · aventură", copy: "O lume luminoasă, creată ca o hartă pentru curaj, curiozitate și acea parte din noi care încă mai caută comori." },
+  ];
   return (
     <main className="books-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="detail-header books-header">
@@ -224,8 +229,21 @@ function BooksPage({ onNavigate, onSection }) {
       </header>
 
       <section className="books-hero" data-reveal>
-        <div><p className="section-kicker">Aura Dobre · Amazon Picks · Books</p><h1>Dark romance, thrillere psihologice și povești care se citesc ca un film.</h1><p>Aceasta este vitrina mea literară: cărțile pe care le-am scris și publicat, așa cum apar pe Amazon și Goodreads, dar trăite aici ca un storytelling vizual. Fiecare scroll este un pas mai adânc în universul meu.</p><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0" target="_blank" rel="noopener noreferrer">Vezi toate cărțile pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://www.goodreads.com/user/show/203519366-aura-dobre" target="_blank" rel="noopener noreferrer">Profilul meu pe Goodreads</a></div></div>
-        <div className="books-cover-stack" data-parallax="0.035"><img src="/assets/amazon/clockmakers-curse.jpg" alt="The Clockmaker's Curse" /><img src="/assets/amazon/unreachable.jpg" alt="Unreachable" /><img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Lunaria Secret Treasure" /></div>
+        <div><p className="section-kicker">Aura Dobre · Author universe</p><h1>O pagină care se citește ca un trailer.</h1><p>Aceasta este vitrina mea literară: cărțile pe care le-am scris și publicat, trăite aici ca un storytelling vizual. Fiecare scroll deschide o altă atmosferă: tensiune, mister, magie și lumi construite cu intenție.</p><div className="books-actions"><a className="button primary" href="https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0" target="_blank" rel="noopener noreferrer">Vezi toate cărțile pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://www.goodreads.com/user/show/203519366-aura-dobre" target="_blank" rel="noopener noreferrer">Profilul meu pe Goodreads</a></div></div>
+        <div className="books-cover-stack cinematic-stack" data-parallax="0.035"><span className="book-spark one" /><span className="book-spark two" /><img src="/assets/amazon/clockmakers-curse.jpg" alt="The Clockmaker's Curse" /><img src="/assets/amazon/unreachable.jpg" alt="Unreachable" /><img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Lunaria Secret Treasure" /><b>scroll pentru capitole</b></div>
+      </section>
+
+      <section className="book-scroll-story" aria-label="Storytelling cinematic pentru cărțile Aura Dobre">
+        <div className="book-story-pin">
+          <p className="section-kicker">Scroll story</p>
+          <h2>Trei uși. Trei lumi. Același instinct: să intri mai adânc.</h2>
+        </div>
+        <div className="book-story-scenes">
+          {bookScenes.map((scene) => <article className="book-story-scene" data-reveal key={scene.title}>
+            <div className="scene-copy"><span>{scene.nr} / {scene.tone}</span><h3>{scene.title}</h3><p>{scene.copy}</p></div>
+            <figure><img src={scene.image} alt={`Coperta ${scene.book}`} /><figcaption>{scene.book}</figcaption></figure>
+          </article>)}
+        </div>
       </section>
 
       <section className="books-section books-universe" data-reveal>
