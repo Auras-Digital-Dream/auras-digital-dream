@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
 
@@ -182,6 +182,24 @@ export function HomePage({ onNavigate, onSection }) {
   const heroTitle = "Aura's Digital Dream";
   const heroLetters = heroTitle.split("");
   const floatingLogos = ["AD", "SEO", "UX", "3D", "WEB", "AI"];
+  const storyRef = useRef(null);
+  const storyVideoRef = useRef(null);
+  const { scrollYProgress: storyProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
+  const storyVideoScale = useTransform(storyProgress, [0, 0.5, 1], [1.08, 1.16, 1.04]);
+  const storyVideoOpacity = useTransform(storyProgress, [0, 0.08, 0.88, 1], [0, 0.85, 0.85, 0]);
+  const storyDepthNear = useTransform(storyProgress, [0, 1], ["-8%", "18%"]);
+  const storyDepthMid = useTransform(storyProgress, [0, 1], ["10%", "-22%"]);
+  const storyDepthFar = useTransform(storyProgress, [0, 1], ["22%", "-10%"]);
+  const storyBlackout = useTransform(storyProgress, [0, 0.28, 0.5, 0.72, 1], [0.18, 0.45, 0.12, 0.5, 0.78]);
+
+  useEffect(() => {
+    const video = storyVideoRef.current;
+    const unsubscribe = storyProgress.on("change", (progress) => {
+      if (!video || !Number.isFinite(video.duration)) return;
+      video.currentTime = Math.min(video.duration - 0.05, Math.max(0, progress * video.duration));
+    });
+    return unsubscribe;
+  }, [storyProgress]);
 
   const serif = { fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" };
 
@@ -285,35 +303,44 @@ export function HomePage({ onNavigate, onSection }) {
         </FadeUp>
       </section>
 
-      <section className="story-section" data-scroll-story aria-label="Povestea procesului creativ">
+      <section ref={storyRef} className="story-section trailer-story-section" data-scroll-story aria-label="Povestea procesului creativ">
         <div className="story-stage">
+          <motion.div className="story-video-layer" style={{ opacity: storyVideoOpacity, scale: storyVideoScale }}>
+            <video ref={storyVideoRef} muted playsInline preload="auto" className="story-scroll-video">
+              <source src="/video/story-trailer-scroll.mp4" type="video/mp4" />
+            </video>
+            <motion.div className="story-cinematic-blackout" style={{ opacity: storyBlackout }} />
+          </motion.div>
           <div className="story-visuals" aria-hidden="true">
-            <figure className="story-image story-cutout scene-one"><img src="/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg" alt="" /></figure>
-            <figure className="story-image story-cutout scene-two"><img src="/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg" alt="" /></figure>
-            <figure className="story-image story-cutout scene-three"><img src="/assets/bijuterii.png" alt="" /></figure>
-            <div className="story-sculpture">
+            <motion.figure className="story-image story-cutout scene-one" style={{ y: storyDepthNear, z: 90 }}><img src="/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg" alt="" /></motion.figure>
+            <motion.figure className="story-image story-cutout scene-two" style={{ y: storyDepthMid, z: 40 }}><img src="/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg" alt="" /></motion.figure>
+            <motion.figure className="story-image story-cutout scene-three" style={{ y: storyDepthFar, z: 120 }}><img src="/assets/bijuterii.png" alt="" /></motion.figure>
+            <motion.div className="story-sculpture" style={{ y: storyDepthMid }}>
               <span className="petal p1" /><span className="petal p2" /><span className="petal p3" /><span className="petal p4" />
               <i className="orbit o1" /><i className="orbit o2" /><i className="orbit o3" /><b className="sculpture-core" />
-            </div>
+            </motion.div>
             <div className="story-glow" />
           </div>
           <div className="story-copy">
             <p className="section-kicker">Din idee în experiență</p>
-            <article className="scene-one">
+            <motion.article className="scene-one" initial={{ opacity: 0, y: 36, filter: "blur(12px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ amount: 0.55 }} transition={{ duration: 0.85 }}>
               <span>01 / Ascult</span>
               <h2 style={serif}>Povestea ta devine <em>punctul de plecare.</em></h2>
               <p>Nu pornesc de la template-uri sau tendințe. Pornesc de la ce eşti tu, ce vrei să comunici şi cine vrei să atragi.</p>
-            </article>
-            <article className="scene-two">
+              <blockquote>„Ascult întâi. Abia apoi construiesc imaginea care rămâne.”</blockquote>
+            </motion.article>
+            <motion.article className="scene-two" initial={{ opacity: 0, y: 36, filter: "blur(12px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ amount: 0.55 }} transition={{ duration: 0.85 }}>
               <span>02 / Imaginez</span>
               <h2 style={serif}>Ideile captă <em>formă şi profunzime.</em></h2>
               <p>Construiesc direcții vizuale, explor concepte şi transform abstractul în ceva concret, coerent şi memorabil.</p>
-            </article>
-            <article className="scene-three">
+              <blockquote>„Culoarea, ritmul și mișcarea devin limbajul brandului.”</blockquote>
+            </motion.article>
+            <motion.article className="scene-three" initial={{ opacity: 0, y: 36, filter: "blur(12px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ amount: 0.55 }} transition={{ duration: 0.85 }}>
               <span>03 / Construiesc</span>
               <h2 style={serif}>Totul devine o <em>experiență vie.</em></h2>
               <p>De la pixel la strategie, de la logo la campanie — livrez sisteme complete, gata de folosit.</p>
-            </article>
+              <blockquote>„Fiecare ecran trebuie să pară o scenă, nu o simplă secțiune.”</blockquote>
+            </motion.article>
             <div className="story-counter"><b>0<span /></b><i /><small>03</small></div>
           </div>
         </div>
