@@ -16,15 +16,21 @@ function FadeUp({ children, delay = 0, className = "" }) {
   );
 }
 
-function TiltCard({ children, className = "" }) {
+function TiltCard({ children, className = "", delay = 0 }) {
   const tx = useMotionValue(0), ty = useMotionValue(0);
   const rx = useSpring(tx, { stiffness: 200, damping: 22 });
   const ry = useSpring(ty, { stiffness: 200, damping: 22 });
   return (
     <motion.div className={className}
       style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+      initial={{ opacity: 0, y: 42, scale: 0.96, filter: "blur(12px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.18 }}
+      transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
       onMouseMove={e => {
         const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - r.left}px`);
+        e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - r.top}px`);
         tx.set(((e.clientY - r.top - r.height / 2) / (r.height / 2)) * -7);
         ty.set(((e.clientX - r.left - r.width / 2) / (r.width / 2)) * 7);
       }}
@@ -346,13 +352,15 @@ export function HomePage({ onNavigate, onSection }) {
         </div>
       </section>
 
-      <section className="section dark" id="servicii">
+      <section className="section dark services-premium" id="servicii">
+        <div className="services-heading">
         <FadeUp><p className="section-kicker">Servicii</p></FadeUp>
         <FadeUp delay={0.1}><h2 style={serif}>Tot ce ai nevoie, <em>sub un singur acoperis.</em></h2></FadeUp>
         <FadeUp delay={0.18}><p className="section-copy">De la identitate vizuală şi web la documente şi social media — construiesc tot ce are nevoie un brand pentru a arăta şi comunica profesionist.</p></FadeUp>
+        </div>
         <div className="service-grid">
-          {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }) => (
-            <TiltCard key={title} className="service-card">
+          {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
+            <TiltCard key={title} className="service-card premium-service-card" delay={index * 0.08}>
               <div className="service-icon"><Icon size={28} /></div>
               <h3>{title}</h3>
               <p className="service-subtitle">{subtitle}</p>
