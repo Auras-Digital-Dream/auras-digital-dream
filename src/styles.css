@@ -16,9 +16,23 @@
   --font-sans:"Inter",system-ui,-apple-system,sans-serif;
   --ink:#F5F3EE;
   --paper:#0E0D0C;
-  --accent:#C9A86A;
+  --rose:#C9A86A;
   --muted:#C7C3BA;
-  --border:rgba(232,220,192,.16);
+  --line:rgba(232,220,192,.16);
+  --gold:#C9A86A;
+  --ocean:#0E0D0C;
+  --deep-blue:#0E0D0C;
+  --blue-smoke:#E8DCC0;
+  --mist:#C7C3BA;
+  --ice:#1A1816;
+  --powder:#E8DCC0;
+  --shadow:rgba(0,0,0,.45);
+  --highlight:rgba(255,220,160,.25);
+  --marble:#E8DCC0;
+  --ivory:#F5F3EE;
+  --parchment:#C7C3BA;
+  --accent:var(--gold);
+  --border:var(--line);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -1650,4 +1664,26 @@ body { background:var(--paper); }
   .cinematic-contact form {
     border-radius: 26px;
   }
+}
+
+/* Subtle vignette on every video container */
+.hero-video-layer,
+.story-video-layer,
+.about-scene-video,
+.portrait-video,
+.cinematic-video-wrap,
+.cinematic-trailer-card,
+.story-step-video-card,
+.abstract-story-card,
+.contact-film-layer {
+  box-shadow: inset 0 0 clamp(60px, 9vw, 150px) clamp(16px, 2.4vw, 44px) var(--shadow);
+}
+
+.video-section video {
+  -webkit-mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #000 52%, rgba(0,0,0,.78) 100%);
+  mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #000 52%, rgba(0,0,0,.78) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
 }
