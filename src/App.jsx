@@ -509,6 +509,5 @@ export function App() {
     window.open(`https://wa.me/40762509423?text=${encodeURIComponent(`Bună, Aura!\n\n${contactMessage(form)}`)}`, "_blank", "noopener,noreferrer");
   }
 
-  return <HomePage onNavigate={navigateTo} onSection={goToSection} />;
-
+  return <HomePage onNavigate={navigateTo} />;
 }

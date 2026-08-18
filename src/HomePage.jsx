@@ -1,67 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import { motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
-
-// ── Animation primitives ─────────────────────────────────────────────────────
-function FadeUp({ children, delay = 0, className = "" }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
-  return (
-    <motion.div ref={ref} className={className}
-      initial={{ opacity: 0, y: 36, filter: "blur(8px)" }}
-      animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}>
-      {children}
-    </motion.div>
-  );
-}
-
-function TiltCard({ children, className = "", delay = 0 }) {
-  const tx = useMotionValue(0), ty = useMotionValue(0);
-  const rx = useSpring(tx, { stiffness: 200, damping: 22 });
-  const ry = useSpring(ty, { stiffness: 200, damping: 22 });
-  return (
-    <motion.div className={className}
-      style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
-      initial={{ opacity: 0, y: 42, scale: 0.96, filter: "blur(12px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
-      onMouseMove={e => {
-        const r = e.currentTarget.getBoundingClientRect();
-        e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - r.left}px`);
-        e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - r.top}px`);
-        tx.set(((e.clientY - r.top - r.height / 2) / (r.height / 2)) * -7);
-        ty.set(((e.clientX - r.left - r.width / 2) / (r.width / 2)) * 7);
-      }}
-      onMouseLeave={() => { tx.set(0); ty.set(0); }}>
-      {children}
-    </motion.div>
-  );
-}
-
-function ParallaxY({ children, strength = 0.1 }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["-" + (strength * 100) + "%", (strength * 100) + "%"]);
-  return <div ref={ref} style={{ overflow: "hidden", position: "relative" }}><motion.div style={{ y }}>{children}</motion.div></div>;
-}
-
-function SkillBar({ name, value }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-5% 0px" });
-  return (
-    <div ref={ref} className="skill-row">
-      <div className="skill-label"><span>{name}</span><span>{value}%</span></div>
-      <div className="skill-bar">
-        <motion.div className="skill-fill"
-          initial={{ width: 0 }}
-          animate={inView ? { width: value + "%" } : {}}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }} />
-      </div>
-    </div>
-  );
-}
+import { Chapters, Depth, Lines, Progress, Reveal, Rise, ScrollCue, Track } from "./scroll.jsx";
 
 // ── Static data ──────────────────────────────────────────────────────────────
 const projects = [
@@ -82,8 +22,7 @@ const projects = [
   { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", description: "Ilustrații, postere, compoziții abstracte şi materiale grafice create într-o direcție contemporană." },
   { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate şi sigle de lux." },
 ];
-const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe"];
-const featuredCardAssets = { "auras-trend-vault": "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg" };
+const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe", "adi-ecoo-2009-sa", "lumina-botanica"];
 const portfolioGroups = [
   { title: "Branding", copy: "Identități vizuale, logo-uri, direcții cromatice şi materiale de brand care fac o afacere recognoscibilă.", slugs: ["verde-bean", "painea-de-acasa", "lumina-botanica", "luxury-hair-by-aura", "logo-design", "carti-de-vizita", "selectii-cromatice"] },
   { title: "Web", copy: "Platforme, website-uri şi experiențe digitale create pentru prezentare, conversie şi încredere.", slugs: ["auras-trend-vault", "real-estate-co", "lupul-and-brici", "magazine-online-e-commerce"] },
@@ -129,62 +68,70 @@ const packageComparison = [
   { feature: "Storytelling & animații", start: "minimal", web: "echilibrat", premium: "avansat" },
   { feature: "SEO & claritate", start: "de bază", web: "structurat", premium: "extins + conținut" },
 ];
+const chapters = [
+  { key: "asculta", number: "01", title: "Ascult", video: "/video/story-ascult-workshop.mp4", headline: "Nu pornesc de la tendințe. Pornesc de la tine.", copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.", meta: "Atelier vechi · marmură" },
+  { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", headline: "Ideile tale devin formă, lumină și experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
+  { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
+];
+const processSteps = [
+  ["01", "Descoperire", "Înțeleg obiectivele tale, publicul şi provocările brandului. Ascult înainte să propun."],
+  ["02", "Strategie", "Definesc direcția vizuală, structura şi mesajele-cheie. Nimic nu se întâmplă la întâmplare."],
+  ["03", "Execuție", "Construiesc fiecare element cu atenție la detalii: design, texte, funcționalitate."],
+  ["04", "Livrare & Ajustare", "Prezint rezultatul, colectez feedback şi îl ajustăm pentru rezultate maxime."],
+];
+const skillGroups = [
+  ["Design & Creație", [["Canva (avansat)", 98], ["Editare foto", 80], ["Design Thinking", 88]]],
+  ["Web & Tehnic", [["Wix", 95], ["WebWave", 90], ["Dezvoltare aplicații web", 78], ["SEO de bază", 82]]],
+  ["Marketing & AI", [["Meta Business Suite", 92], ["Copywriting", 95], ["AI avansat (prompting)", 96]]],
+];
 
 function scrollToId(id) {
-  const targetId = id === "estimare" ? "estimator" : id;
-  document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+  document.getElementById(id === "estimare" ? "estimator" : id)?.scrollIntoView({ behavior: "smooth" });
+}
+
+function SkillBar({ name, value }) {
+  const reduced = useReducedMotion();
+  return (
+    <div className="skill-row">
+      <div className="skill-label"><span>{name}</span><span>{value}%</span></div>
+      <div className="skill-bar">
+        <motion.div
+          className="skill-fill"
+          initial={reduced ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: value / 100 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          style={{ transformOrigin: "left", scaleX: reduced ? value / 100 : undefined }}
+        />
+      </div>
+    </div>
+  );
 }
 
 // ── Main component ───────────────────────────────────────────────────────────
-export function HomePage({ onNavigate, onSection }) {
+export function HomePage({ onNavigate }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedPrices, setSelectedPrices] = useState([]);
 
+  const heroRef = useRef(null);
+  const reduced = useReducedMotion();
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
-  const featured = projects.filter(p => featuredSlugs.includes(p.slug));
-  const groupedProjects = portfolioGroups.map(g => ({ ...g, projects: g.slugs.map(s => projects.find(p => p.slug === s)).filter(Boolean) }));
-  const storySceneNames = ["one", "two", "three"];
-  const storySteps = [
-    {
-      number: "01",
-      title: "Ascult",
-      label: "Atelier vechi · marmură",
-      video: "/video/story-ascult-workshop.mp4",
-      headline: <>Nu pornesc de la tendințe. <em>Pornesc de la tine.</em></>,
-      copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.",
-      quote: "Nu pornesc de la tendințe. Pornesc de la tine.",
-    },
-    {
-      number: "02",
-      title: "Imaginez",
-      label: "Palmă · lumină aurie",
-      video: "/video/story-imaginez-golden-hand.mp4",
-      headline: <>Ideile tale devin <em>formă, lumină și experiență.</em></>,
-      copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.",
-      quote: "Ideile tale devin formă, lumină și experiență.",
-    },
-    {
-      number: "03",
-      title: "Construiesc",
-      label: "Birou modern · lumină rece",
-      video: "/video/story-construiesc-modern-office.mp4",
-      headline: <>Construiesc sisteme care <em>se simt vii.</em></>,
-      copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.",
-      quote: "Fiecare detaliu trebuie să conducă spre emoție, claritate și acțiune.",
-    },
-  ];
-  const portfolioThumbVideos = [
-    "/video/story-ascult-workshop.mp4",
-    "/video/story-imaginez-golden-hand.mp4",
-    "/video/story-construiesc-modern-office.mp4",
-  ];
-  const selectedPriceItems = priceItems.filter(i => selectedPrices.includes(i.title));
+  const featured = featuredSlugs.map((slug) => projects.find((p) => p.slug === slug)).filter(Boolean);
+  const groupedProjects = portfolioGroups.map((g) => ({ ...g, projects: g.slugs.map((s) => projects.find((p) => p.slug === s)).filter(Boolean) }));
+  const selectedPriceItems = priceItems.filter((i) => selectedPrices.includes(i.title));
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
 
-  function togglePrice(title) { setSelectedPrices(c => c.includes(title) ? c.filter(t => t !== title) : [...c, title]); }
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroScale = useTransform(heroProgress, [0, 1], [1, 1.12]);
+  const heroFade = useTransform(heroProgress, [0, 0.85], [1, 0]);
+  const heroLift = useTransform(heroProgress, [0, 1], ["0%", "-14%"]);
+
+  function togglePrice(title) {
+    setSelectedPrices((c) => (c.includes(title) ? c.filter((t) => t !== title) : [...c, title]));
+  }
 
   function contactMessage(form) {
     const d = new FormData(form);
@@ -218,72 +165,6 @@ export function HomePage({ onNavigate, onSection }) {
     window.open("https://wa.me/40762509423?text=" + encodeURIComponent("Bună, Aura!\n\n" + contactMessage(form)), "_blank", "noopener,noreferrer");
   }
 
-  const { scrollY } = useScroll();
-  const heroBgY = useTransform(scrollY, [0, 760], ["-2%", "10%"]);
-  const heroTextY = useTransform(scrollY, [0, 760], ["0%", "-18%"]);
-  const heroParticleY = useTransform(scrollY, [0, 760], ["0%", "42%"]);
-  const heroVideoScale = useTransform(scrollY, [0, 760], [1.02, 1.11]);
-  const heroDistortion = useTransform(scrollY, [0, 760], ["brightness(1.08) saturate(1.08) contrast(1.05)", "brightness(1.14) saturate(1.16) contrast(1.12) hue-rotate(-2deg)"]);
-  const heroOpacity = useTransform(scrollY, [0, 560], [1, 0]);
-
-  const heroStagger = { hidden: {}, visible: { transition: { staggerChildren: 0.14, delayChildren: 0.5 } } };
-  const heroItem = { hidden: { opacity: 0, y: 32, filter: "blur(8px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } } };
-  const heroTitle = "Aura's Digital Dream";
-  const heroLetters = heroTitle.split("");
-  const floatingLogos = ["AD", "SEO", "UX", "3D", "WEB", "AI"];
-  const aboutRef = useRef(null);
-  const aboutVideoRef = useRef(null);
-  const behindRef = useRef(null);
-  const { scrollYProgress: aboutProgress } = useScroll({ target: aboutRef, offset: ["start end", "end start"] });
-  const aboutVideoScale = useTransform(aboutProgress, [0, 0.5, 1], [1.16, 1.04, 1.12]);
-  const aboutVideoFilter = useTransform(aboutProgress, [0, 0.5, 1], ["brightness(.52) saturate(.95) contrast(1.05)", "brightness(.86) saturate(1.08) contrast(1.12)", "brightness(.48) saturate(.92) contrast(1.08)"]);
-  const aboutPortraitY = useTransform(aboutProgress, [0, 1], ["8%", "-10%"]);
-  const aboutPortraitRotate = useTransform(aboutProgress, [0, 1], [-3, 3]);
-  const aboutMask = useTransform(aboutProgress, [0, 0.18, 0.56, 0.82], ["inset(0 100% 0 0 round 28px)", "inset(0 18% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)"]);
-  const { scrollYProgress: behindProgress } = useScroll({ target: behindRef, offset: ["start end", "end start"] });
-  const behindLightY = useTransform(behindProgress, [0, 1], ["12%", "-16%"]);
-  const behindStudioY = useTransform(behindProgress, [0, 1], ["-8%", "10%"]);
-  const behindHandY = useTransform(behindProgress, [0, 1], ["18%", "-12%"]);
-  const behindGlow = useTransform(behindProgress, [0, 0.5, 1], [0.24, 0.74, 0.32]);
-  const behindText = "Aura’s Digital Dream s-a născut dintr-o obsesie: să transform ideile în experiențe care se simt, nu doar se văd.";
-  const storyRef = useRef(null);
-  const storyVideoRef = useRef(null);
-  const storyStepVideoRefs = useRef([]);
-  const { scrollYProgress: storyProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
-  const storyVideoScale = useTransform(storyProgress, [0, 0.5, 1], [1.08, 1.16, 1.04]);
-  const storyVideoOpacity = useTransform(storyProgress, [0, 0.08, 0.88, 1], [0, 0.85, 0.85, 0]);
-  const storyDepthNear = useTransform(storyProgress, [0, 1], ["-8%", "18%"]);
-  const storyDepthMid = useTransform(storyProgress, [0, 1], ["10%", "-22%"]);
-  const storyDepthFar = useTransform(storyProgress, [0, 1], ["22%", "-10%"]);
-  const storyBlackout = useTransform(storyProgress, [0, 0.28, 0.5, 0.72, 1], [0.18, 0.45, 0.12, 0.5, 0.78]);
-  const storySceneOne = useTransform(storyProgress, [0, 0.12, 0.28, 0.4], [0, 1, 1, 0]);
-  const storySceneTwo = useTransform(storyProgress, [0.28, 0.42, 0.58, 0.7], [0, 1, 1, 0]);
-  const storySceneThree = useTransform(storyProgress, [0.58, 0.72, 0.9, 1], [0, 1, 1, 0]);
-
-  useEffect(() => {
-    const video = storyVideoRef.current;
-    const unsubscribe = storyProgress.on("change", (progress) => {
-      if (video && Number.isFinite(video.duration)) {
-        video.currentTime = Math.min(video.duration - 0.05, Math.max(0, progress * video.duration));
-      }
-      storyStepVideoRefs.current.forEach((stepVideo, index) => {
-        if (!stepVideo || !Number.isFinite(stepVideo.duration)) return;
-        const localProgress = Math.min(1, Math.max(0, (progress - index / 3) * 3));
-        stepVideo.currentTime = Math.min(stepVideo.duration - 0.05, Math.max(0, localProgress * stepVideo.duration));
-      });
-    });
-    return unsubscribe;
-  }, [storyProgress]);
-
-  useEffect(() => {
-    const video = aboutVideoRef.current;
-    const unsubscribe = aboutProgress.on("change", (progress) => {
-      if (!video || !Number.isFinite(video.duration)) return;
-      video.currentTime = Math.min(video.duration - 0.05, Math.max(0, progress * video.duration));
-    });
-    return unsubscribe;
-  }, [aboutProgress]);
-
   useEffect(() => {
     const structuredData = {
       "@context": "https://schema.org",
@@ -308,521 +189,549 @@ export function HomePage({ onNavigate, onSection }) {
     return () => script.remove();
   }, []);
 
-  const serif = { fontFamily: "var(--font-display)", fontWeight: 600, letterSpacing: "1px" };
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   return (
-    <main>
-      <div className="scroll-progress" aria-hidden="true" />
-      <div className="custom-cursor" aria-hidden="true" />
-      <div className="custom-cursor-ring" aria-hidden="true" />
+    <main className="home">
+      <Progress />
 
-      <motion.header className="site-header"
-        initial={{ opacity: 0, y: -22 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}>
-        <button className="brand" onClick={e => onSection(e, "acasa")}>
-          <img src="/assets/logo.jpg" alt="Aura's Digital Dream" />
-          <span>Aura's <em>Digital</em> Dream</span>
+      {/* ── Header ───────────────────────────────────────────────────────── */}
+      <header className="masthead">
+        <button className="masthead-brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <img src="/assets/logo.jpg" alt="" aria-hidden="true" />
+          <span>Aura's Digital Dream</span>
         </button>
-        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Deschide meniul">
-          {menuOpen ? <X /> : <List />}
-        </button>
-        <nav className={menuOpen ? "open" : ""}>
-          {nav.map(([label, id]) => (
-            <button key={id} onClick={e => { id.startsWith("/") ? onNavigate(e, id) : onSection(e, id); setMenuOpen(false); }}>{label}</button>
+        <nav className="masthead-nav" aria-label="Navigare principală">
+          {nav.map(([label, target]) => (
+            target.startsWith("/")
+              ? <a key={label} href={target} onClick={(e) => onNavigate(e, target)}>{label}</a>
+              : <button key={label} onClick={() => scrollToId(target)}>{label}</button>
           ))}
         </nav>
-      </motion.header>
+        <button className="masthead-toggle" onClick={() => setMenuOpen(true)} aria-label="Deschide meniul">
+          <List size={24} />
+        </button>
+      </header>
 
-      <section className="hero" id="acasa">
-        <motion.div className="hero-motion hero-video-layer" style={{ y: heroBgY, filter: heroDistortion, scale: heroVideoScale }}>
-          <video autoPlay muted loop playsInline preload="metadata" className="hero-cinematic-video">
+      {menuOpen && (
+        <div className="menu-sheet" role="dialog" aria-modal="true" aria-label="Meniu">
+          <button className="menu-close" onClick={() => setMenuOpen(false)} aria-label="Închide meniul"><X size={26} /></button>
+          {nav.map(([label, target]) => (
+            target.startsWith("/")
+              ? <a key={label} href={target} onClick={(e) => { setMenuOpen(false); onNavigate(e, target); }}>{label}</a>
+              : <button key={label} onClick={() => { setMenuOpen(false); scrollToId(target); }}>{label}</button>
+          ))}
+        </div>
+      )}
+
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section className="hero" ref={heroRef} id="acasa">
+        <motion.div className="hero-media" style={reduced ? undefined : { scale: heroScale }}>
+          <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
             <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
           </video>
+          <span className="hero-scrim" aria-hidden="true" />
         </motion.div>
-        <motion.div className="hero-motion hero-orb-layer" style={{ y: heroParticleY }}>
-          <div className="hero-light" aria-hidden="true" />
-          <div className="hero-gold-veins" aria-hidden="true"><span /><span /><span /></div>
-          <div className="hero-renaissance-frame" aria-hidden="true"><i /><i /><i /><i /></div>
-          <div className="hero-dust-field" aria-hidden="true">
-            {Array.from({ length: 28 }).map((_, index) => <b key={index} style={{ "--i": index }} />)}
-          </div>
-          <div className="hero-particles" aria-hidden="true">
-            {Array.from({ length: 18 }).map((_, index) => <span key={index} style={{ "--i": index }} />)}
-          </div>
-          <div className="hero-floating-logos" aria-hidden="true">
-            {floatingLogos.map((logo, index) => <i key={logo} style={{ "--i": index }}>{logo}</i>)}
-          </div>
-        </motion.div>
-        <div className="hero-overlay" />
-        <motion.div className="hero-content hero-cinematic-content" variants={heroStagger} initial="hidden" animate="visible" style={{ opacity: heroOpacity, y: heroTextY }}>
-          <motion.p variants={heroItem} className="eyebrow hero-kicker">Atelier digital renascentist</motion.p>
-          <motion.h1 className="hero-letter-title" aria-label={heroTitle} style={serif}>
-            {heroLetters.map((letter, index) => (
-              <motion.span
-                key={`${letter}-${index}`}
-                aria-hidden="true"
-                initial={{ opacity: 0, y: 34, rotateX: -75, filter: "blur(14px)" }}
-                animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.85, delay: 0.45 + index * 0.035, ease: [0.16, 1, 0.3, 1] }}
-                className={letter === " " ? "hero-letter-space" : undefined}
-                style={{ "--letter-index": index }}
-              >
-                {letter === " " ? "\u00A0" : letter}
-              </motion.span>
-            ))}
-          </motion.h1>
-          <motion.p variants={heroItem} className="hero-copy hero-sculptor-copy">transformă ideea ta brută într-o experiență digitală șlefuită cu grijă — așa cum un sculptor vede forma din piatră înainte ca lumea s-o vadă.</motion.p>
-          <motion.div variants={heroItem} className="hero-actions">
-            <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button>
+        <motion.div className="hero-body shell" style={reduced ? undefined : { opacity: heroFade, y: heroLift }}>
+          <Reveal as="p" className="kicker" delay={0.15}>Marketing · Design · Web</Reveal>
+          <Lines as="h1" className="hero-title" text="Brandul tău merită să fie simțit, nu doar văzut." delay={0.3} />
+          <Reveal as="p" className="hero-lead" delay={0.6}>
+            Construiesc identități vizuale, website-uri și campanii pentru antreprenori care vor
+            o prezență clară, coerentă și memorabilă.
+          </Reveal>
+          <Rise delay={0.8} className="hero-actions">
+            <button className="button primary" onClick={() => scrollToId("contact")}>Începe un proiect <ArrowRight size={16} /></button>
             <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
-            <button className="button ghost" onClick={e => onNavigate(e, "/cartile-mele")}>Cărțile mele</button>
-          </motion.div>
-          <motion.div variants={heroItem} className="hero-proof-strip" aria-label="Servicii principale">
-            <span>Brand strategy</span>
-            <span>Web cinematic</span>
-            <span>Visual identity</span>
-          </motion.div>
+          </Rise>
         </motion.div>
-        <motion.button className="scroll-mark" onClick={() => scrollToId("despre")} aria-label="Derulează mai jos"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8, duration: 1 }}>↓</motion.button>
+        <ScrollCue />
       </section>
 
-      <div className="story-marquee" aria-hidden="true">
-        <div>STRATEGIE <i>✶</i> IDENTITATE <i>✶</i> EXPERIENȞE DIGITALE <i>✶</i> BRANDING <i>✶</i> WEB <i>✶</i> MARKETING <i>✶</i> STRATEGIE <i>✶</i> IDENTITATE <i>✶</i> EXPERIENȞE DIGITALE <i>✶</i></div>
-      </div>
-
-      <section ref={aboutRef} className="about-scene" id="despre" aria-label="Despre Aura">
-        <motion.div className="about-scene-video" style={{ scale: aboutVideoScale, filter: aboutVideoFilter }}>
-          <video ref={aboutVideoRef} muted playsInline preload="auto" className="about-scroll-video">
-            <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
-          </video>
-        </motion.div>
-        <div className="about-scene-overlay" />
-        <motion.div className="about-portrait-card" style={{ y: aboutPortraitY, rotate: aboutPortraitRotate }}>
-          <img src="/assets/aura-cinematic-portrait.jpeg" alt="Aura Dobre într-un portret editorial cinematic" />
-          <span className="about-portrait-glow" aria-hidden="true" />
-        </motion.div>
-        <motion.div className="about-scene-copy" style={{ clipPath: aboutMask }}>
-          <p className="section-kicker">Despre mine</p>
-          <h2 style={serif}>Sunt Aura — designer, marketer şi <em>sculptor digital.</em></h2>
-          <p className="about-manifesto">Nu creez proiecte. Modelez identități.</p>
-          <p>Fiecare brand are o formă ascunsă. Eu o scot la lumină.</p>
-          <button className="button ghost" onClick={() => scrollToId("servicii")}>Vezi cum lucrăm <ArrowRight size={16} /></button>
-        </motion.div>
+      {/* ── Manifesto ────────────────────────────────────────────────────── */}
+      <section className="manifesto" aria-label="Manifest">
+        <div className="shell">
+          <Lines
+            as="p"
+            className="manifesto-text"
+            text="Nu fac doar materiale frumoase. Construiesc lumi vizuale în care brandul tău capătă ritm, claritate și memorie."
+          />
+          <Rise delay={0.2} className="manifesto-meta">
+            <span>Aura Dobre</span>
+            <span>Designer & strateg digital</span>
+          </Rise>
+        </div>
       </section>
 
-      <motion.section ref={storyRef} className="story-section trailer-story-section" data-scroll-story aria-label="Povestea procesului creativ" style={{ "--story-progress": storyProgress, "--scene-one": storySceneOne, "--scene-two": storySceneTwo, "--scene-three": storySceneThree }}>
-        <div className="story-stage">
-          <motion.div className="story-video-layer" style={{ opacity: storyVideoOpacity, scale: storyVideoScale }}>
-            <video ref={storyVideoRef} muted playsInline preload="auto" className="story-scroll-video">
-              <source src="/video/story-trailer-scroll.mp4" type="video/mp4" />
+      {/* ── Chapters: the working method ─────────────────────────────────── */}
+      <Chapters
+        id="proces"
+        className="method"
+        items={chapters}
+        renderMedia={(item) => (
+          <>
+            <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+              <source src={item.video} type="video/mp4" />
             </video>
-            <motion.div className="story-cinematic-blackout" style={{ opacity: storyBlackout }} />
-          </motion.div>
-          <div className="story-visuals story-video-scenes" aria-hidden="true">
-            <div className="story-step-videos">
-              {storySteps.map((step, index) => (
-                <motion.figure
-                  key={step.number}
-                  className={`story-step-video-card scene-${index + 1}`}
-                  style={{ y: index === 0 ? storyDepthNear : index === 1 ? storyDepthMid : storyDepthFar, z: index === 1 ? 120 : 70 }}
-                >
-                  <video ref={(el) => { storyStepVideoRefs.current[index] = el; }} muted playsInline preload="auto">
-                    <source src={step.video} type="video/mp4" />
-                  </video>
-                  <figcaption><span>{step.number}</span>{step.label}</figcaption>
-                </motion.figure>
-              ))}
+            <span className="chapter-scrim" aria-hidden="true" />
+          </>
+        )}
+        renderCopy={(item) => (
+          <>
+            <p className="kicker">{item.number} — {item.title}</p>
+            <h2 className="chapter-headline">{item.headline}</h2>
+            <p className="chapter-body">{item.copy}</p>
+            <span className="chapter-meta">{item.meta}</span>
+          </>
+        )}
+      />
+
+      {/* ── Featured work, horizontal ────────────────────────────────────── */}
+      <section className="work-intro" id="portofoliu">
+        <div className="shell">
+          <Reveal as="p" className="kicker">Selecție curatorială</Reveal>
+          <Lines as="h2" className="section-title" text="Proiecte care nu doar arată bine — ci spun ceva." />
+        </div>
+      </section>
+
+      <Track className="work-track" label="Proiecte reprezentative">
+        {featured.map((project, index) => (
+          <a
+            className="work-frame"
+            key={project.slug}
+            href={"/portofoliu/" + project.slug}
+            onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
+          >
+            <span className="work-frame-index">{String(index + 1).padStart(2, "0")}</span>
+            <span className="work-frame-media">
+              <img src={project.image} alt={project.title} loading="lazy" />
+            </span>
+            <span className="work-frame-copy">
+              <span className="work-frame-tags">{project.category.join(" · ")}</span>
+              <span className="work-frame-title">{project.title}</span>
+              <span className="work-frame-cta">Vezi proiectul <ArrowRight size={14} /></span>
+            </span>
+          </a>
+        ))}
+      </Track>
+
+      {/* ── Services ─────────────────────────────────────────────────────── */}
+      <section className="services" id="servicii">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Servicii</Reveal>
+            <Lines as="h2" className="section-title" text="Tot ce ai nevoie, sub un singur acoperiș." />
+            <Rise delay={0.15}>
+              <p className="section-lead">
+                De la identitate vizuală şi web la documente şi social media — construiesc tot ce
+                are nevoie un brand pentru a arăta şi comunica profesionist.
+              </p>
+            </Rise>
+          </div>
+          <div className="service-grid">
+            {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
+              <Rise key={title} delay={(index % 3) * 0.08} className="service-card">
+                <span className="service-icon"><Icon size={24} /></span>
+                <h3>{title}</h3>
+                <p className="service-subtitle">{subtitle}</p>
+                <p className="service-copy">{copy}</p>
+                <ul className="service-list">
+                  {list.map((item) => <li key={item}><Check size={12} weight="bold" /> {item}</li>)}
+                </ul>
+                <ul className="service-benefits">
+                  {benefits.map((b) => <li key={b}>{b}</li>)}
+                </ul>
+                <p className="service-price">{price}</p>
+                <button className="button ghost small" onClick={() => scrollToId("contact")}>
+                  Solicită ofertă <ArrowRight size={13} />
+                </button>
+              </Rise>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Process ──────────────────────────────────────────────────────── */}
+      <section className="process">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Proces de lucru</Reveal>
+            <Lines as="h2" className="section-title" text="De la idee, la realitate." />
+          </div>
+          <ol className="process-grid">
+            {processSteps.map(([nr, title, copy], index) => (
+              <Rise key={nr} delay={index * 0.08}>
+                <li className="process-step">
+                  <span className="process-number">{nr}</span>
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                </li>
+              </Rise>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ── Estimator ────────────────────────────────────────────────────── */}
+      <section className="estimator" id="estimator">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Estimator de cost</Reveal>
+            <Lines as="h2" className="section-title" text="Estimează-ți bugetul." />
+            <Rise delay={0.15}>
+              <p className="section-lead">
+                Selectează serviciile de care ai nevoie şi obții imediat o estimare orientativă.
+                Prețul final se stabileşte după o discuție personalizată.
+              </p>
+            </Rise>
+          </div>
+          <div className="estimator-grid">
+            <div className="price-list" role="group" aria-label="Servicii disponibile">
+              {priceItems.map((item) => {
+                const on = selectedPrices.includes(item.title);
+                return (
+                  <button
+                    key={item.title}
+                    type="button"
+                    className={"price-item" + (on ? " is-on" : "")}
+                    aria-pressed={on}
+                    onClick={() => togglePrice(item.title)}
+                  >
+                    <span className="price-check" aria-hidden="true">{on && <Check size={13} weight="bold" />}</span>
+                    <span className="price-text">
+                      <strong>{item.title}</strong>
+                      <small>{item.copy}</small>
+                    </span>
+                    <span className="price-value">
+                      {item.price.toLocaleString("ro")}
+                      {item.maxPrice ? " – " + item.maxPrice.toLocaleString("ro") : ""} {item.unit || "RON"}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-            <motion.div className="story-sculpture" style={{ y: storyDepthMid }}>
-              <span className="petal p1" /><span className="petal p2" /><span className="petal p3" /><span className="petal p4" />
-              <i className="orbit o1" /><i className="orbit o2" /><i className="orbit o3" /><b className="sculpture-core" />
-            </motion.div>
-            <div className="story-glow" />
-          </div>
-          <div className="story-copy story-cinematic-copy">
-            <p className="section-kicker">Din idee în experiență</p>
-            {storySteps.map((step, index) => (
-              <motion.article key={step.number} className={`scene-${storySceneNames[index]} story-step-copy`}>
-                <span>{step.number} / {step.title}</span>
-                <h2 style={serif}>{step.headline}</h2>
-                <p>{step.copy}</p>
-                <blockquote>„{step.quote}”</blockquote>
-              </motion.article>
-            ))}
-            <div className="story-counter"><b>0<span /></b><i /><small>03</small></div>
-          </div>
-        </div>
-      </motion.section>
-
-      <section className="section dark services-premium" id="servicii">
-        <div className="services-heading">
-        <FadeUp><p className="section-kicker">Servicii</p></FadeUp>
-        <FadeUp delay={0.1}><h2 style={serif}>Tot ce ai nevoie, <em>sub un singur acoperis.</em></h2></FadeUp>
-        <FadeUp delay={0.18}><p className="section-copy">De la identitate vizuală şi web la documente şi social media — construiesc tot ce are nevoie un brand pentru a arăta şi comunica profesionist.</p></FadeUp>
-        </div>
-        <div className="service-grid">
-          {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
-            <TiltCard key={title} className="service-card premium-service-card" delay={index * 0.08}>
-              <div className="service-icon"><Icon size={28} /></div>
-              <h3>{title}</h3>
-              <p className="service-subtitle">{subtitle}</p>
-              <p>{copy}</p>
-              <ul>{list.map(item => <li key={item}><Check size={13} weight="bold" /> {item}</li>)}</ul>
-              <ul className="benefit-list">{benefits.map(b => <li key={b}>✶ {b}</li>)}</ul>
-              <p className="price-tag">{price}</p>
-              <button className="button primary small" onClick={() => scrollToId("contact")}>Solicită ofertă <ArrowRight size={14} /></button>
-            </TiltCard>
-          ))}
-        </div>
-      </section>
-
-      <section className="section estimator" id="estimator">
-        <FadeUp><p className="section-kicker">Estimator de cost</p></FadeUp>
-        <FadeUp delay={0.1}><h2 style={serif}>Estimează-ți <em>bugetul.</em></h2></FadeUp>
-        <FadeUp delay={0.15}><p className="section-copy">Selectează serviciile de care ai nevoie şi obții imediat o estimare orientativă. Prețul final se stabileste după o discuție personalizată.</p></FadeUp>
-        <div className="estimator-grid">
-          <div className="price-list">
-            {priceItems.map(item => (
-              <motion.button key={item.title}
-                className={"price-item" + (selectedPrices.includes(item.title) ? " selected" : "")}
-                onClick={() => togglePrice(item.title)}
-                whileHover={{ scale: 1.015 }} whileTap={{ scale: 0.985 }}>
-                <div><strong>{item.title}</strong><p>{item.copy}</p></div>
-                <span>{item.price.toLocaleString("ro")} {item.unit || "RON"}{item.maxPrice ? " – " + item.maxPrice.toLocaleString("ro") + " RON" : ""}</span>
-              </motion.button>
-            ))}
-          </div>
-          <div className="price-summary">
-            <p className="section-kicker">Estimare totală</p>
-            {selectedPriceItems.length === 0
-              ? <p>Selectează serviciile pentru a vedea estimarea.</p>
-              : <>
-                  <ul>{selectedPriceItems.map(i => <li key={i.title}><span>{i.title}</span><span>{i.price.toLocaleString("ro")} – {(i.maxPrice || i.price).toLocaleString("ro")} {i.unit || "RON"}</span></li>)}</ul>
-                  <div className="price-total"><strong>Total estimat</strong><span>{total.toLocaleString("ro")} – {totalMax.toLocaleString("ro")} RON</span></div>
+            <aside className="price-summary" aria-live="polite">
+              <p className="kicker">Estimare totală</p>
+              {selectedPriceItems.length === 0 ? (
+                <p className="price-empty">Selectează serviciile pentru a vedea estimarea.</p>
+              ) : (
+                <>
+                  <ul className="price-chosen">
+                    {selectedPriceItems.map((i) => (
+                      <li key={i.title}>
+                        <span>{i.title}</span>
+                        <span>{i.price.toLocaleString("ro")} – {(i.maxPrice || i.price).toLocaleString("ro")} {i.unit || "RON"}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="price-total">
+                    <span>Total estimat</span>
+                    <strong>{total.toLocaleString("ro")} – {totalMax.toLocaleString("ro")} RON</strong>
+                  </p>
                   <p className="price-note">Preț orientativ. Oferta finală se trimite după o discuție despre proiect.</p>
-                  <button className="button primary" onClick={() => scrollToId("contact")}>Solicită ofertă personalizată <ArrowRight size={16} /></button>
+                  <button className="button primary" onClick={() => scrollToId("contact")}>
+                    Solicită ofertă personalizată <ArrowRight size={15} />
+                  </button>
                 </>
-            }
+              )}
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className="section skills" id="skills">
-        <FadeUp><p className="section-kicker">Skills & Competențe</p></FadeUp>
-        <FadeUp delay={0.1}><h2 style={serif}>Instrumente <em>stăpânite.</em></h2></FadeUp>
-        <div className="skill-columns">
-          {[
-            ["Design & Creație", [["Canva (avansat)", 98], ["Editare foto", 80], ["Design Thinking", 88]]],
-            ["Web & Tehnic", [["Wix", 95], ["WebWave", 90], ["Dezvoltare aplicații web", 78], ["SEO de bază", 82]]],
-            ["Marketing & AI", [["Meta Business Suite", 92], ["Copywriting", 95], ["AI avansat (prompting)", 96]]],
-          ].map(([title, rows]) => (
-            <FadeUp key={title} className="skill-card">
-              <h3>{title}</h3>
-              {rows.map(([name, value]) => <SkillBar key={name} name={name} value={value} />)}
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      <section className="golden-interlude" aria-label="Artă digitală şi storytelling vizual">
-        <ParallaxY strength={0.1}>
-          <img className="golden-backdrop" src="/assets/editorial/golden-portrait-clean.jpg" alt="" aria-hidden="true" style={{ width: "100%", objectFit: "cover", display: "block" }} />
-        </ParallaxY>
-        <div className="golden-shade" aria-hidden="true" />
-        <FadeUp className="golden-copy">
-          <p className="section-kicker">Artă care opreşte scroll-ul</p>
-          <h2 style={serif}>Imaginile vorbesc <em>înaintea cuvintelor.</em></h2>
-          <p>Fotografie editorială, direcție de artă şi identitate vizuală pentru branduri care vor să fie simțite, nu doar văzute.</p>
-          <button className="button primary" onClick={() => scrollToId("portofoliu")}>Explorează portofoliul <ArrowRight size={15} /></button>
-        </FadeUp>
-        <span className="golden-number" aria-hidden="true">ART / 01</span>
-      </section>
-
-      <section className="section portfolio" id="portofoliu">
-        <div className="portfolio-heading">
-          <FadeUp><p className="section-kicker">Selecție curatorială</p><h2 style={serif}>Proiecte care nu doar arată bine — <em>ci spun ceva.</em></h2></FadeUp>
-        </div>
-        <div className="featured-projects cinematic-featured-projects">
-          {featured.map((project, index) => (
-            <TiltCard key={project.slug} className="featured-project cinematic-project-card" delay={index * 0.08}>
-              <a href={"/portofoliu/" + project.slug} data-reveal onClick={e => onNavigate(e, "/portofoliu/" + project.slug)}>
-                <video className="portfolio-thumb-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-                  <source src={portfolioThumbVideos[index % portfolioThumbVideos.length]} type="video/mp4" />
-                </video>
-                <img src={featuredCardAssets[project.slug] || project.image} alt={project.title} />
-                <span className="portfolio-card-grain" aria-hidden="true" />
-                <span className="portfolio-card-orbit" aria-hidden="true" />
-                <div className="featured-project-copy">
-                  <span>{project.category.join(" · ")}</span>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <span className="link-cta">Vezi proiectul <ArrowRight size={14} /></span>
-                </div>
-              </a>
-            </TiltCard>
-          ))}
-        </div>
-        <FadeUp className="archive-head">
-          <p className="section-kicker">Portofoliu organizat</p>
-          <h2 style={serif}>Alege direcția care <em>te reprezintă.</em></h2>
-        </FadeUp>
-        <div className="portfolio-groups">
-          {groupedProjects.map(group => (
-            <FadeUp key={group.title} className="portfolio-group">
-              <div className="portfolio-group-head"><span>{group.title}</span><p>{group.copy}</p></div>
-              <div className="project-grid compact">
+      {/* ── Portfolio archive ────────────────────────────────────────────── */}
+      <section className="archive">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Portofoliu organizat</Reveal>
+            <Lines as="h2" className="section-title" text="Alege direcția care te reprezintă." />
+          </div>
+          {groupedProjects.map((group) => (
+            <div className="archive-group" key={group.title}>
+              <div className="archive-group-head">
+                <h3>{group.title}</h3>
+                <p>{group.copy}</p>
+              </div>
+              <div className="archive-grid">
                 {group.projects.map((project, index) => (
-                  <motion.a key={project.slug} className="project-card compact-cinematic-card" data-reveal
-                    href={"/portofoliu/" + project.slug}
-                    onClick={e => onNavigate(e, "/portofoliu/" + project.slug)}
-                    whileHover={{ y: -5, transition: { duration: 0.25 } }}>
-                    <video className="compact-project-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-                      <source src={portfolioThumbVideos[index % portfolioThumbVideos.length]} type="video/mp4" />
-                    </video>
-                    <img src={project.image} alt={project.title} loading="lazy" />
-                    <span className="portfolio-card-grain" aria-hidden="true" />
-                    <div><span>{project.category.join(" · ")}</span><h4>{project.title}</h4></div>
-                  </motion.a>
+                  <Rise key={project.slug} delay={(index % 4) * 0.06}>
+                    <a
+                      className="archive-card"
+                      href={"/portofoliu/" + project.slug}
+                      onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
+                    >
+                      <span className="archive-card-media">
+                        <img src={project.image} alt={project.title} loading="lazy" />
+                      </span>
+                      <span className="archive-card-tags">{project.category.join(" · ")}</span>
+                      <span className="archive-card-title">{project.title}</span>
+                    </a>
+                  </Rise>
                 ))}
               </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      <section className="creative-direction">
-        <FadeUp className="creative-direction-copy">
-          <p className="section-kicker">Creative Direction</p>
-          <h2 style={serif}>O poveste vizuală <em>completă.</em></h2>
-          <p>Direcție de artă, fotografie editorială şi estetică de brand construite cu intenție şi coerență.</p>
-        </FadeUp>
-        <figure className="creative-collage" style={{ overflow: "hidden" }}>
-          <ParallaxY strength={-0.06}>
-            <div className="collage-halo" aria-hidden="true" />
-            <img src="/assets/editorial/golden-portrait-clean.jpg" alt="Creative direction Aura's Digital Dream" style={{ width: "100%", objectFit: "cover", display: "block" }} />
-          </ParallaxY>
-        </figure>
-      </section>
-
-      <section ref={behindRef} className="behind behind-film" id="behind" aria-label="Behind the Dream">
-        <div className="behind-film-stage" aria-hidden="true">
-          <motion.video className="behind-film-video behind-film-studio" style={{ y: behindStudioY }} autoPlay muted loop playsInline preload="metadata">
-            <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
-          </motion.video>
-          <motion.video className="behind-film-video behind-film-hand" style={{ y: behindHandY }} autoPlay muted loop playsInline preload="metadata">
-            <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
-          </motion.video>
-          <motion.video className="behind-film-video behind-film-light" style={{ y: behindLightY }} autoPlay muted loop playsInline preload="metadata">
-            <source src="/video/story-imaginez-golden-hand.mp4" type="video/mp4" />
-          </motion.video>
-          <motion.span className="behind-film-glow" style={{ opacity: behindGlow }} />
-          <span className="behind-film-blackout" />
-          <span className="behind-film-grain" />
-        </div>
-        <motion.div className="behind-copy behind-film-copy" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.055, delayChildren: 0.18 } } }}>
-          <motion.p className="section-kicker" variants={heroItem}>Behind the Dream</motion.p>
-          <h2 style={serif} aria-label={behindText}>
-            {behindText.split(" ").map((word, index) => (
-              <motion.span
-                key={`${word}-${index}`}
-                aria-hidden="true"
-                variants={{ hidden: { opacity: 0, y: 24, filter: "blur(10px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.72, ease: [0.16, 1, 0.3, 1] } } }}
-              >
-                {word}&nbsp;
-              </motion.span>
-            ))}
-          </h2>
-          <motion.p variants={heroItem}>Nu fac doar materiale frumoase. Construiesc lumi vizuale în care brandul tău capătă ritm, claritate și memorie.</motion.p>
-          <motion.div variants={heroItem} className="books-actions">
-            <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm <ArrowRight size={15} /></button>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      <section className="amazon-world amazon-teaser" id="amazon-picks">
-        <div className="amazon-world-glow" aria-hidden="true" />
-        <FadeUp className="amazon-world-copy">
-          <p className="section-kicker">Aura Dobre · Author Universe</p>
-          <h2 style={serif}>Cărțile mele au acum <em>pagina lor.</em></h2>
-          <p>Am separat vitrina literară într-o pagină dedicată, unde cărțile scrise de mine pot respira ca lumi vizuale separate. Dark romance, thrillere psihologice şi poveşti care se citesc ca un film.</p>
-          <div className="literary-chips">
-            {["dark romance", "thriller psihologic", "ficțiune cinematică"].map(chip => <span key={chip}>{chip}</span>)}
-          </div>
-          <div className="books-actions">
-            <a className="button primary" href="/cartile-mele" onClick={e => onNavigate(e, "/cartile-mele")}>Vizitează lumea mea literară <ArrowRight size={16} /></a>
-            <a className="button ghost" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8" target="_blank" rel="noopener noreferrer">Amazon</a>
-          </div>
-        </FadeUp>
-        <FadeUp delay={0.2} className="author-mini-stack">
-          <img src="/assets/amazon/clockmakers-curse.jpg" alt="Coperta The Clockmaker's Curse" />
-          <img src="/assets/amazon/unreachable.jpg" alt="Coperta Unreachable de Aura Dobre" />
-          <img src="/assets/amazon/lunaria-secret-treasure.jpg" alt="Coperta Lunaria's Secret Treasure" />
-        </FadeUp>
-      </section>
-
-      <section className="section dark" id="proces">
-        <FadeUp><p className="section-kicker">Proces de lucru</p></FadeUp>
-        <FadeUp delay={0.1}><h2 style={serif}>De la idee, <em>la realitate.</em></h2></FadeUp>
-        <div className="process-grid">
-          {[
-            ["01", "Descoperire", "Înteleg obiectivele tale, publicul şi provocările brandului. Ascult înainte să propun."],
-            ["02", "Strategie", "Definesc direcția vizuală, structura şi mesajele-cheie. Nimic nu se întâmplă la întâmplare."],
-            ["03", "Execuție", "Construiesc fiecare element cu atenție la detalii: design, texte, funcționalitate."],
-            ["04", "Livrare & Ajustare", "Prezint rezultatul, colectez feedback şi îl ajustăm pentru rezultate maxime."],
-          ].map(([nr, title, copy], i) => (
-            <FadeUp key={nr} delay={i * 0.1} className="process-step">
-              <span>{nr}</span><h3>{title}</h3><p>{copy}</p>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      <section className="section why-me" id="de-ce-eu">
-        <TiltCard className="why-me-card">
-          <FadeUp>
-            <p className="section-kicker">Încredere & direcție</p>
-            <h2 style={serif}>De ce să lucrezi <em>cu mine</em></h2>
-            <div className="why-me-copy">
-              <p>Sunt specialist în marketing digital, design şi web, cu peste 15 proiecte finalizate în branding, campanii, website-uri şi documente profesionale.</p>
-              <p>Lucrez cu antreprenori şi companii care vor rezultate reale, nu doar vizibilitate.</p>
-              <p>Fiecare proiect este construit cu atenție la detalii, strategie clară şi o estetică premium care diferențiază brandul tău.</p>
             </div>
-          </FadeUp>
-        </TiltCard>
+          ))}
+        </div>
       </section>
 
-      <section className="client-clarity" id="claritate">
-        <div className="clarity-veil" aria-hidden="true" />
-        <FadeUp className="clarity-heading">
-          <p className="section-kicker">Claritate înainte de ofertă</p>
-          <h2 style={serif}>Nu te las să alegi la întâmplare. <em>Îți arăt drumul.</em></h2>
-          <p>Fiecare secțiune din site răspunde unei întrebări reale: ce primești, cât costă, cum lucrăm și unde vezi exemple. Așa transform vizitatorul curios într-un client care înțelege valoarea.</p>
-        </FadeUp>
-        <div className="clarity-grid">
-          <div className="clarity-faq" aria-label="Întrebări frecvente">
-            {clientQuestions.map((item, index) => (
-              <FadeUp key={item.q} delay={index * 0.06}>
-                <details className="clarity-question" open={index === 0}>
-                  <summary><span>0{index + 1}</span>{item.q}</summary>
-                  <p>{item.a}</p>
-                </details>
-              </FadeUp>
+      {/* ── Editorial break ──────────────────────────────────────────────── */}
+      <section className="editorial" aria-label="Direcție de artă">
+        <Depth speed={0.18} className="editorial-media">
+          <img src="/assets/editorial/golden-portrait-clean.jpg" alt="" aria-hidden="true" />
+        </Depth>
+        <span className="editorial-scrim" aria-hidden="true" />
+        <div className="shell editorial-body">
+          <Reveal as="p" className="kicker">Artă care oprește scroll-ul</Reveal>
+          <Lines as="h2" className="section-title" text="Imaginile vorbesc înaintea cuvintelor." />
+          <Rise delay={0.2}>
+            <p>Fotografie editorială, direcție de artă şi estetică de brand construite cu intenție şi coerență.</p>
+          </Rise>
+        </div>
+      </section>
+
+      {/* ── Skills ───────────────────────────────────────────────────────── */}
+      <section className="skills" id="skills">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Skills & competențe</Reveal>
+            <Lines as="h2" className="section-title" text="Instrumente stăpânite." />
+          </div>
+          <div className="skill-grid">
+            {skillGroups.map(([title, rows], index) => (
+              <Rise key={title} delay={index * 0.1} className="skill-card">
+                <h3>{title}</h3>
+                {rows.map(([name, value]) => <SkillBar key={name} name={name} value={value} />)}
+              </Rise>
             ))}
           </div>
-          <TiltCard className="clarity-comparison">
-            <p className="section-kicker">Comparație rapidă</p>
-            <h3 style={serif}>Alegi după nevoie, nu după ghicit.</h3>
-            <div className="comparison-table" role="table" aria-label="Comparație pachete Aura's Digital Dream">
-              <div role="row" className="comparison-head"><span>Ce contează</span><span>Start-up</span><span>Website</span><span>Premium</span></div>
-              {packageComparison.map((row) => (
-                <div role="row" key={row.feature}>
-                  <span>{row.feature}</span><span>{row.start}</span><span>{row.web}</span><span>{row.premium}</span>
-                </div>
+        </div>
+      </section>
+
+      {/* ── Why me ───────────────────────────────────────────────────────── */}
+      <section className="why" id="de-ce-eu">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Încredere & direcție</Reveal>
+            <Lines as="h2" className="section-title" text="De ce să lucrezi cu mine" />
+          </div>
+          <div className="why-grid">
+            {[
+              "Sunt specialist în marketing digital, design şi web, cu peste 15 proiecte finalizate în branding, campanii, website-uri şi documente profesionale.",
+              "Lucrez cu antreprenori şi companii care vor rezultate reale, nu doar vizibilitate.",
+              "Fiecare proiect este construit cu atenție la detalii, strategie clară şi o estetică premium care diferențiază brandul tău.",
+            ].map((copy, index) => (
+              <Rise key={copy} delay={index * 0.08}>
+                <p className="why-item">{copy}</p>
+              </Rise>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Clarity: FAQ + comparison ────────────────────────────────────── */}
+      <section className="clarity" id="claritate">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Claritate înainte de ofertă</Reveal>
+            <Lines as="h2" className="section-title" text="Nu te las să alegi la întâmplare. Îți arăt drumul." />
+            <Rise delay={0.15}>
+              <p className="section-lead">
+                Fiecare secțiune din site răspunde unei întrebări reale: ce primești, cât costă,
+                cum lucrăm și unde vezi exemple.
+              </p>
+            </Rise>
+          </div>
+          <div className="clarity-grid">
+            <div className="faq">
+              {clientQuestions.map((item, index) => (
+                <Rise key={item.q} delay={index * 0.06}>
+                  <details className="faq-item" open={index === 0}>
+                    <summary>
+                      <span className="faq-number">{String(index + 1).padStart(2, "0")}</span>
+                      {item.q}
+                    </summary>
+                    <p>{item.a}</p>
+                  </details>
+                </Rise>
               ))}
             </div>
-            <div className="live-page-note">
-              <span>Actualizat: august 2026</span>
-              <p>Portofoliul rămâne viu: proiectele, materialele, cărțile și aplicațiile pot fi extinse fără să pierdem estetica sau storytelling-ul.</p>
-            </div>
-          </TiltCard>
+            <Rise delay={0.1} className="compare">
+              <h3>Alegi după nevoie, nu după ghicit.</h3>
+              <table className="compare-table">
+                <caption className="visually-hidden">Comparație pachete Aura's Digital Dream</caption>
+                <thead>
+                  <tr><th scope="col">Ce contează</th><th scope="col">Start-up</th><th scope="col">Website</th><th scope="col">Premium</th></tr>
+                </thead>
+                <tbody>
+                  {packageComparison.map((row) => (
+                    <tr key={row.feature}>
+                      <th scope="row">{row.feature}</th>
+                      <td>{row.start}</td><td>{row.web}</td><td>{row.premium}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="compare-note">
+                Portofoliul rămâne viu: proiectele, materialele, cărțile și aplicațiile pot fi
+                extinse fără să pierdem estetica sau storytelling-ul.
+              </p>
+            </Rise>
+          </div>
         </div>
       </section>
 
-      <section className="section testimonials">
-        <FadeUp><p className="section-kicker">Testimoniale</p></FadeUp>
-        <FadeUp delay={0.1}><h2 style={serif}>Ce spun <em>clienții.</em></h2></FadeUp>
-        <motion.div className="quote" key={testimonialIdx}
-          initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}>
-          <span className="quote-type">{testimonials[testimonialIdx].type}</span>
-          <p>„{testimonials[testimonialIdx].quote}”</p>
-          <div className="quote-author">
-            <span className="quote-avatar">{testimonials[testimonialIdx].initials}</span>
-            <div><strong>{testimonials[testimonialIdx].name}</strong><span>{testimonials[testimonialIdx].role}</span></div>
+      {/* ── Testimonials ─────────────────────────────────────────────────── */}
+      <section className="voices">
+        <div className="shell">
+          <div className="section-head">
+            <Reveal as="p" className="kicker">Testimoniale</Reveal>
+            <Lines as="h2" className="section-title" text="Ce spun clienții." />
           </div>
-          <div className="quote-controls">
-            <button onClick={() => setTestimonialIdx((testimonialIdx + testimonials.length - 1) % testimonials.length)} aria-label="Anterior"><CaretLeft /></button>
-            <button onClick={() => setTestimonialIdx((testimonialIdx + 1) % testimonials.length)} aria-label="Următor"><CaretRight /></button>
+          <motion.figure
+            className="voice"
+            key={testimonialIdx}
+            initial={reduced ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="voice-tag">{testimonials[testimonialIdx].type}</span>
+            <blockquote>„{testimonials[testimonialIdx].quote}”</blockquote>
+            <figcaption>
+              <span className="voice-avatar" aria-hidden="true">{testimonials[testimonialIdx].initials}</span>
+              <span>
+                <strong>{testimonials[testimonialIdx].name}</strong>
+                <small>{testimonials[testimonialIdx].role}</small>
+              </span>
+            </figcaption>
+          </motion.figure>
+          <div className="voice-controls">
+            <button onClick={() => setTestimonialIdx((testimonialIdx + testimonials.length - 1) % testimonials.length)} aria-label="Testimonialul anterior"><CaretLeft size={18} /></button>
+            <span aria-hidden="true">{testimonialIdx + 1} / {testimonials.length}</span>
+            <button onClick={() => setTestimonialIdx((testimonialIdx + 1) % testimonials.length)} aria-label="Testimonialul următor"><CaretRight size={18} /></button>
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      <section className="section contact cinematic-contact" id="contact">
-        <div className="contact-film-layer" aria-hidden="true">
+      {/* ── Books teaser ─────────────────────────────────────────────────── */}
+      <section className="books" id="amazon-picks">
+        <div className="shell books-grid">
+          <div>
+            <Reveal as="p" className="kicker">Aura Dobre · Author Universe</Reveal>
+            <Lines as="h2" className="section-title" text="Cărțile mele au acum pagina lor." />
+            <Rise delay={0.15}>
+              <p className="section-lead">
+                Am separat vitrina literară într-o pagină dedicată, unde cărțile scrise de mine pot
+                respira ca lumi vizuale separate. Dark romance, thrillere psihologice şi poveşti
+                care se citesc ca un film.
+              </p>
+              <div className="books-actions">
+                <a className="button primary" href="/cartile-mele" onClick={(e) => onNavigate(e, "/cartile-mele")}>
+                  Vizitează lumea mea literară <ArrowRight size={15} />
+                </a>
+                <a className="button ghost" href="https://www.amazon.com/stores/Aura-Dobre/author/B0DSJP6MX8" target="_blank" rel="noopener noreferrer">Amazon</a>
+              </div>
+            </Rise>
+          </div>
+          <Rise delay={0.2} className="books-stack">
+            {[
+              ["/assets/amazon/clockmakers-curse.jpg", "Coperta The Clockmaker's Curse"],
+              ["/assets/amazon/unreachable.jpg", "Coperta Unreachable de Aura Dobre"],
+              ["/assets/amazon/lunaria-secret-treasure.jpg", "Coperta Lunaria's Secret Treasure"],
+            ].map(([src, alt]) => <img key={src} src={src} alt={alt} loading="lazy" />)}
+          </Rise>
+        </div>
+      </section>
+
+      {/* ── Contact ──────────────────────────────────────────────────────── */}
+      <section className="contact" id="contact">
+        <div className="contact-media" aria-hidden="true">
           <video autoPlay muted loop playsInline preload="metadata">
             <source src="/video/story-imaginez-golden-hand.mp4" type="video/mp4" />
           </video>
-          <span className="contact-light-orb" />
-          <span className="contact-grain" />
-          <span className="contact-black-fade" />
+          <span className="contact-scrim" />
         </div>
-        <FadeUp className="contact-copy">
-          <p className="section-kicker">Contact</p>
-          <h2 className="contact-cinematic-title" style={serif}>
-            {"Hai să sculptăm împreună ideea ta.".split(" ").map((word, index) => (
-              <span key={`${word}-${index}`} style={{ "--word-index": index }}>{word}&nbsp;</span>
-            ))}
-          </h2>
-          <p>Spune-mi ce vrei să construim, iar eu transform brief-ul într-o direcție clară: strategie, estetică și pașii potriviți pentru lansare. Răspund în maximum 24 de ore.</p>
-          <a href="https://wa.me/40762509423"><WhatsappLogo size={22} /><span><b>Scrie-mi pe WhatsApp</b><small>Răspuns rapid, oricând</small></span></a>
-          <a href="tel:+40762509423"><Phone size={22} /><span><b>Sună-mă direct</b><small>+40 762 509 423</small></span></a>
-        </FadeUp>
-        <FadeUp delay={0.15} className="contact-form-wrap">
-          <form id="contact-form" onSubmit={submitContact} data-reveal>
-            <input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" />
-            <div className="form-row">
-              <input required name="name" maxLength="80" autoComplete="name" placeholder="Numele tău" />
-              <input required name="email" maxLength="120" type="email" autoComplete="email" placeholder="Email" />
-            </div>
-            <input name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" />
-            <select name="service" defaultValue="">
-              <option value="" disabled>Alege pachetul potrivit</option>
-              <option>Pachet Start-up</option>
-              <option>Pachet Rebranding</option>
-              <option>Pachet Website</option>
-              <option>Pachet Social Media</option>
-              <option>Pachet Documente Profesionale</option>
-              <option>Nu sunt sigură încă</option>
-            </select>
-            <textarea required name="message" minLength="15" maxLength="2000" placeholder="Descrie pe scurt proiectul tău..." />
-            <div className="form-actions">
-              <button className="button primary" type="submit" disabled={formStatus === "sending"}>
-                {formStatus === "sending" ? "Se trimite..." : "Trimite pe email"} <ArrowRight size={18} />
-              </button>
-              <button className="button whatsapp" type="button" onClick={submitWhatsapp}>
-                <WhatsappLogo size={20} /> Trimite pe WhatsApp
-              </button>
-            </div>
-            {formStatus === "success" && <p className="form-notice success" role="status">Mesajul a fost trimis. Îi voi răspunde în maximum 24 de ore.</p>}
-            {formStatus === "error" && <p className="form-notice error" role="alert">Trimiterea nu a reuşit. Te rog foloseşte butonul WhatsApp.</p>}
-            <small className="privacy-note">Prin trimitere eşti de acord ca datele să fie procesate de FormSubmit exclusiv pentru livrarea mesajului către mine.</small>
-          </form>
-        </FadeUp>
+        <div className="shell contact-grid">
+          <div className="contact-copy">
+            <Reveal as="p" className="kicker">Contact</Reveal>
+            <Lines as="h2" className="section-title" text="Hai să construim împreună ideea ta." />
+            <Rise delay={0.15}>
+              <p>
+                Spune-mi ce vrei să construim, iar eu transform brief-ul într-o direcție clară:
+                strategie, estetică și pașii potriviți pentru lansare. Răspund în maximum 24 de ore.
+              </p>
+              <div className="contact-links">
+                <a href="https://wa.me/40762509423">
+                  <WhatsappLogo size={20} />
+                  <span><b>Scrie-mi pe WhatsApp</b><small>Răspuns rapid, oricând</small></span>
+                </a>
+                <a href="tel:+40762509423">
+                  <Phone size={20} />
+                  <span><b>Sună-mă direct</b><small>+40 762 509 423</small></span>
+                </a>
+              </div>
+            </Rise>
+          </div>
+          <Rise delay={0.2} className="contact-form-wrap">
+            <form id="contact-form" onSubmit={submitContact}>
+              <input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" />
+              <div className="form-row">
+                <input required name="name" maxLength="80" autoComplete="name" placeholder="Numele tău" />
+                <input required name="email" maxLength="120" type="email" autoComplete="email" placeholder="Email" />
+              </div>
+              <input name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" />
+              <select name="service" defaultValue="">
+                <option value="" disabled>Alege pachetul potrivit</option>
+                <option>Pachet Start-up</option>
+                <option>Pachet Rebranding</option>
+                <option>Pachet Website</option>
+                <option>Pachet Social Media</option>
+                <option>Pachet Documente Profesionale</option>
+                <option>Nu sunt sigură încă</option>
+              </select>
+              <textarea required name="message" minLength="15" maxLength="2000" placeholder="Descrie pe scurt proiectul tău..." />
+              <div className="form-actions">
+                <button className="button primary" type="submit" disabled={formStatus === "sending"}>
+                  {formStatus === "sending" ? "Se trimite..." : "Trimite pe email"} <ArrowRight size={16} />
+                </button>
+                <button className="button ghost" type="button" onClick={submitWhatsapp}>
+                  <WhatsappLogo size={18} /> Trimite pe WhatsApp
+                </button>
+              </div>
+              {formStatus === "success" && <p className="form-notice is-success" role="status">Mesajul a fost trimis. Îți voi răspunde în maximum 24 de ore.</p>}
+              {formStatus === "error" && <p className="form-notice is-error" role="alert">Trimiterea nu a reuşit. Te rog foloseşte butonul WhatsApp.</p>}
+              <small className="form-privacy">
+                Prin trimitere eşti de acord ca datele să fie procesate de FormSubmit exclusiv
+                pentru livrarea mesajului către mine.
+              </small>
+            </form>
+          </Rise>
+        </div>
       </section>
 
-      <footer>
-        <div className="footer-brand">
-          <img src="/assets/logo.jpg" alt="Aura's Digital Dream" />
-          <div><strong>Aura's Digital Dream</strong><p>Marketing, design şi soluții digitale, cu suflet.</p></div>
+      {/* ── Footer ───────────────────────────────────────────────────────── */}
+      <footer className="site-footer">
+        <div className="shell footer-grid">
+          <div className="footer-brand">
+            <img src="/assets/logo.jpg" alt="" aria-hidden="true" />
+            <div>
+              <strong>Aura's Digital Dream</strong>
+              <p>Marketing, design şi soluții digitale, cu suflet.</p>
+            </div>
+          </div>
+          <nav className="footer-social" aria-label="Rețele sociale">
+            <a href="https://www.instagram.com/aurasdigitaldream" aria-label="Instagram"><InstagramLogo size={20} /></a>
+            <a href="https://www.linkedin.com/in/aurelia-dobre-a033b2104" aria-label="LinkedIn"><LinkedinLogo size={20} /></a>
+            <a href="https://wa.me/40762509423" aria-label="WhatsApp"><WhatsappLogo size={20} /></a>
+          </nav>
+          <p className="footer-legal">© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p>
         </div>
-        <div className="social">
-          <a href="https://www.instagram.com/aurasdigitaldream" aria-label="Instagram"><InstagramLogo /></a>
-          <a href="https://www.linkedin.com/in/aurelia-dobre-a033b2104" aria-label="LinkedIn"><LinkedinLogo /></a>
-          <a href="https://wa.me/40762509423" aria-label="WhatsApp"><WhatsappLogo /></a>
-        </div>
-        <p>© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p>
       </footer>
 
-      <motion.a className="floating-whatsapp" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 3, type: "spring", stiffness: 260, damping: 20 }}
-        whileHover={{ scale: 1.14 }}
-        whileTap={{ scale: 0.92 }}>
-        <WhatsappLogo size={28} weight="fill" />
-      </motion.a>
+      <a className="whatsapp-fab" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp">
+        <WhatsappLogo size={26} weight="fill" />
+      </a>
     </main>
   );
 }

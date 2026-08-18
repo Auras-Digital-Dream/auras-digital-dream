@@ -30,16 +30,6 @@ export function useScrollExperience(pageKey = "home") {
         const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * Number(element.dataset.parallax || 0.12);
         element.style.setProperty("--parallax-y", `${offset.toFixed(1)}px`);
       });
-      document.querySelectorAll("[data-scroll-story]").forEach((story) => {
-        const rect = story.getBoundingClientRect();
-        const distance = Math.max(story.offsetHeight - window.innerHeight, 1);
-        const progress = Math.min(1, Math.max(0, -rect.top / distance));
-        story.style.setProperty("--story-progress", progress.toFixed(4));
-        story.style.setProperty("--scene-one", Math.max(0, 1 - progress * 3).toFixed(4));
-        story.style.setProperty("--scene-two", Math.max(0, 1 - Math.abs(progress - 0.5) * 4).toFixed(4));
-        story.style.setProperty("--scene-three", Math.max(0, (progress - 0.58) * 2.4).toFixed(4));
-        story.dataset.chapter = progress < 0.34 ? "1" : progress < 0.68 ? "2" : "3";
-      });
       frame = 0;
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
