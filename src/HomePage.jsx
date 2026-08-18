@@ -171,11 +171,17 @@ export function HomePage({ onNavigate, onSection }) {
   }
 
   const { scrollY } = useScroll();
-  const heroBgY = useTransform(scrollY, [0, 700], ["0%", "28%"]);
-  const heroOpacity = useTransform(scrollY, [0, 450], [1, 0]);
+  const heroBgY = useTransform(scrollY, [0, 700], ["-4%", "18%"]);
+  const heroTextY = useTransform(scrollY, [0, 700], ["0%", "-12%"]);
+  const heroParticleY = useTransform(scrollY, [0, 700], ["0%", "34%"]);
+  const heroDistortion = useTransform(scrollY, [0, 700], ["blur(10px) scale(1.08) saturate(1.08)", "blur(16px) scale(1.18) saturate(1.22)"]);
+  const heroOpacity = useTransform(scrollY, [0, 520], [1, 0]);
 
   const heroStagger = { hidden: {}, visible: { transition: { staggerChildren: 0.14, delayChildren: 0.5 } } };
   const heroItem = { hidden: { opacity: 0, y: 32, filter: "blur(8px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } } };
+  const heroTitle = "Aura's Digital Dream";
+  const heroLetters = heroTitle.split("");
+  const floatingLogos = ["AD", "SEO", "UX", "3D", "WEB", "AI"];
 
   const serif = { fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" };
 
@@ -204,13 +210,20 @@ export function HomePage({ onNavigate, onSection }) {
       </motion.header>
 
       <section className="hero" id="acasa">
-        <motion.div className="hero-motion" style={{ y: heroBgY }}>
-          <video autoPlay muted loop playsInline
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}>
-            <source src="/video/aura-creative-showreel.mp4" type="video/mp4" />
+        <motion.div className="hero-motion hero-video-layer" style={{ y: heroBgY, filter: heroDistortion }}>
+          <video autoPlay muted loop playsInline preload="metadata" className="hero-cinematic-video">
+            <source src="/video/branding-elements-montage-hero.mp4" type="video/mp4" />
           </video>
+        </motion.div>
+        <motion.div className="hero-motion hero-orb-layer" style={{ y: heroParticleY }}>
           <img className="hero-image hero-image-liquid" src="/assets/hero.png" alt="" aria-hidden="true" />
           <div className="hero-light" aria-hidden="true" />
+          <div className="hero-particles" aria-hidden="true">
+            {Array.from({ length: 18 }).map((_, index) => <span key={index} style={{ "--i": index }} />)}
+          </div>
+          <div className="hero-floating-logos" aria-hidden="true">
+            {floatingLogos.map((logo, index) => <i key={logo} style={{ "--i": index }}>{logo}</i>)}
+          </div>
         </motion.div>
         <svg className="hero-filters" aria-hidden="true">
           <filter id="hero-liquid">
@@ -223,9 +236,22 @@ export function HomePage({ onNavigate, onSection }) {
           </filter>
         </svg>
         <div className="hero-overlay" />
-        <motion.div className="hero-content" variants={heroStagger} initial="hidden" animate="visible" style={{ opacity: heroOpacity }}>
+        <motion.div className="hero-content hero-cinematic-content" variants={heroStagger} initial="hidden" animate="visible" style={{ opacity: heroOpacity, y: heroTextY }}>
           <motion.p variants={heroItem} className="eyebrow">Marketing · Design · Soluții Digitale</motion.p>
-          <motion.h1 variants={heroItem} style={serif}>Aura's <em>Digital</em><br />Dream</motion.h1>
+          <motion.h1 className="hero-letter-title" aria-label={heroTitle} style={serif}>
+            {heroLetters.map((letter, index) => (
+              <motion.span
+                key={`${letter}-${index}`}
+                aria-hidden="true"
+                initial={{ opacity: 0, y: 34, rotateX: -75, filter: "blur(14px)" }}
+                animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.85, delay: 0.45 + index * 0.035, ease: [0.16, 1, 0.3, 1] }}
+                className={letter === " " ? "hero-letter-space" : undefined}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </motion.span>
+            ))}
+          </motion.h1>
           <motion.p variants={heroItem} className="hero-copy">Marketing, design şi web pentru branduri care vor să crească vizibil, rapid şi profesionist.</motion.p>
           <motion.div variants={heroItem} className="hero-actions">
             <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button>
@@ -233,6 +259,13 @@ export function HomePage({ onNavigate, onSection }) {
             <a className="hero-books-link" href="/cartile-mele" onClick={e => onNavigate(e, "/cartile-mele")}>• Cărțile mele</a>
           </motion.div>
         </motion.div>
+        <motion.a className="hero-floating-cta" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"
+          initial={{ opacity: 0, scale: 0.35, y: 46 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 2.1, type: "spring", stiffness: 170, damping: 13 }}>
+          <WhatsappLogo size={24} weight="fill" />
+          <span>Brief rapid</span>
+        </motion.a>
         <motion.button className="scroll-mark" onClick={() => scrollToId("despre")} aria-label="Derulează mai jos"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8, duration: 1 }}>↓</motion.button>
       </section>
