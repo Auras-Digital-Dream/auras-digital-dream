@@ -122,6 +122,18 @@ const testimonials = [
   { type: "Documente", initials: "EP", quote: "Aveam nevoie ca documentele să arate profesionist, nu doar corect scrise. Aura a organizat informația, a curățat vizual paginile şi a dat materialului un aspect serios.", name: "Elena P.", role: "Client documente & prezentări" },
   { type: "Social Media", initials: "IR", quote: "Vizualurile pentru social media au început să pară parte din acelaşi brand. Nu mai postăm la întâmplare, ci cu o linie estetică uşor de recunoscut.", name: "Ioana R.", role: "Beauty & lifestyle business" },
 ];
+const clientQuestions = [
+  { q: "Nu știu exact ce pachet mi se potrivește. De unde încep?", a: "Începem cu o discuție scurtă despre obiectiv, buget și urgență. Dacă ai nevoie de imagine de la zero, Start-up sau Branding sunt firești; dacă ai nevoie de vânzare și prezență online, Website devine prioritar." },
+  { q: "Ce primesc concret la final?", a: "Primești fișiere clare, materiale pregătite pentru folosire, structură de comunicare și instrucțiuni. La web includ pagini responsive, CTA-uri, formular, WhatsApp și SEO de bază." },
+  { q: "Cât durează un proiect?", a: "Logo-ul sau materialele rapide pot dura câteva zile. Un website sau un brand complet are nevoie, de regulă, de una până la câteva săptămâni, în funcție de conținut, feedback și complexitate." },
+  { q: "Pot începe cu ceva mic și continua apoi?", a: "Da. Site-ul și pachetele sunt gândite modular: poți începe cu logo, un set de vizualuri sau o pagină de prezentare, apoi extindem identitatea, campaniile sau website-ul." },
+];
+const packageComparison = [
+  { feature: "Identitate vizuală", start: "esențială", web: "adaptată", premium: "direcție completă" },
+  { feature: "Website responsive", start: "opțional", web: "inclus", premium: "experiență cinematică" },
+  { feature: "Storytelling & animații", start: "minimal", web: "echilibrat", premium: "avansat" },
+  { feature: "SEO & claritate", start: "de bază", web: "structurat", premium: "extins + conținut" },
+];
 
 function scrollToId(id) {
   const targetId = id === "estimare" ? "estimator" : id;
@@ -227,6 +239,30 @@ export function HomePage({ onNavigate, onSection }) {
     });
     return unsubscribe;
   }, [aboutProgress]);
+
+  useEffect(() => {
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      name: "Aura's Digital Dream",
+      url: "https://aurastudios.ro/",
+      founder: { "@type": "Person", name: "Aura Dobre" },
+      areaServed: "România",
+      serviceType: ["Branding", "Web design", "Marketing digital", "Documente profesionale"],
+      mainEntity: clientQuestions.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "homepage-service-faq-schema";
+    script.textContent = JSON.stringify(structuredData);
+    document.head.querySelector("#homepage-service-faq-schema")?.remove();
+    document.head.appendChild(script);
+    return () => script.remove();
+  }, []);
 
   const serif = { fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" };
 
@@ -613,6 +649,43 @@ export function HomePage({ onNavigate, onSection }) {
             </div>
           </FadeUp>
         </TiltCard>
+      </section>
+
+      <section className="client-clarity" id="claritate">
+        <div className="clarity-veil" aria-hidden="true" />
+        <FadeUp className="clarity-heading">
+          <p className="section-kicker">Claritate înainte de ofertă</p>
+          <h2 style={serif}>Nu te las să alegi la întâmplare. <em>Îți arăt drumul.</em></h2>
+          <p>Fiecare secțiune din site răspunde unei întrebări reale: ce primești, cât costă, cum lucrăm și unde vezi exemple. Așa transform vizitatorul curios într-un client care înțelege valoarea.</p>
+        </FadeUp>
+        <div className="clarity-grid">
+          <div className="clarity-faq" aria-label="Întrebări frecvente">
+            {clientQuestions.map((item, index) => (
+              <FadeUp key={item.q} delay={index * 0.06}>
+                <details className="clarity-question" open={index === 0}>
+                  <summary><span>0{index + 1}</span>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              </FadeUp>
+            ))}
+          </div>
+          <TiltCard className="clarity-comparison">
+            <p className="section-kicker">Comparație rapidă</p>
+            <h3 style={serif}>Alegi după nevoie, nu după ghicit.</h3>
+            <div className="comparison-table" role="table" aria-label="Comparație pachete Aura's Digital Dream">
+              <div role="row" className="comparison-head"><span>Ce contează</span><span>Start-up</span><span>Website</span><span>Premium</span></div>
+              {packageComparison.map((row) => (
+                <div role="row" key={row.feature}>
+                  <span>{row.feature}</span><span>{row.start}</span><span>{row.web}</span><span>{row.premium}</span>
+                </div>
+              ))}
+            </div>
+            <div className="live-page-note">
+              <span>Actualizat: august 2026</span>
+              <p>Portofoliul rămâne viu: proiectele, materialele, cărțile și aplicațiile pot fi extinse fără să pierdem estetica sau storytelling-ul.</p>
+            </div>
+          </TiltCard>
+        </div>
       </section>
 
       <section className="section testimonials">
