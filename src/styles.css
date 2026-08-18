@@ -1050,3 +1050,170 @@ body { background:var(--paper); }
     animation: none !important;
   }
 }
+
+/* Cinematic portfolio gallery */
+.cinematic-featured-projects {
+  perspective: 1400px;
+}
+
+.cinematic-project-card > a,
+.compact-cinematic-card {
+  transform-style: preserve-3d;
+  border: 1px solid rgba(168, 220, 244, .24);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(168, 220, 244, .18), transparent 32%),
+    linear-gradient(135deg, rgba(10, 36, 56, .96), rgba(6, 19, 29, .98));
+  box-shadow: 0 34px 78px -32px rgba(10, 36, 56, .68), 0 0 0 1px rgba(255,255,255,.03) inset;
+}
+
+.cinematic-project-card > a::before,
+.compact-cinematic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 35%, transparent 28%, rgba(3, 10, 16, .28) 62%, rgba(3, 10, 16, .82) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 30%, rgba(0,0,0,.54));
+  opacity: .88;
+  transition: opacity .55s ease;
+}
+
+.portfolio-thumb-video,
+.compact-project-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: saturate(1.08) contrast(1.08) brightness(.72) blur(9px);
+  transform: scale(1.08) translateZ(0);
+  transition: opacity .65s ease, filter .65s ease, transform .85s cubic-bezier(.2,.75,.2,1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cinematic-project-card > a > img,
+.compact-cinematic-card > img {
+  z-index: 1;
+  mix-blend-mode: normal;
+}
+
+.cinematic-project-card:hover > a,
+.compact-cinematic-card:hover {
+  box-shadow: 0 44px 95px -34px rgba(10, 36, 56, .72), 0 0 58px rgba(218, 187, 125, .28);
+}
+
+.cinematic-project-card:hover .portfolio-thumb-video,
+.compact-cinematic-card:hover .compact-project-video {
+  opacity: .64;
+  filter: saturate(1.14) contrast(1.12) brightness(.82) blur(2px);
+  transform: scale(1.16) translateZ(18px);
+}
+
+.cinematic-project-card:hover > a > img,
+.compact-cinematic-card:hover > img {
+  transform: scale(1.075) translateZ(32px);
+  filter: saturate(1.05) brightness(.86) contrast(1.05);
+}
+
+.portfolio-card-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .18;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 65%, rgba(255,255,255,.22) 0 1px, transparent 1px);
+  background-size: 18px 18px, 31px 31px;
+  mix-blend-mode: overlay;
+}
+
+.portfolio-card-orbit {
+  position: absolute;
+  right: -62px;
+  top: -62px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(218, 187, 125, .24);
+  border-radius: 50%;
+  z-index: 4;
+  pointer-events: none;
+  opacity: .72;
+  transform: translateZ(50px) rotate(-18deg);
+  transition: transform .8s cubic-bezier(.2,.75,.2,1), opacity .45s ease;
+}
+
+.cinematic-project-card:hover .portfolio-card-orbit {
+  opacity: 1;
+  transform: translateZ(70px) rotate(18deg) scale(1.08);
+}
+
+.cinematic-project-card .featured-project-copy,
+.compact-cinematic-card > div {
+  position: relative;
+  z-index: 5;
+  transform: translateZ(58px);
+}
+
+.compact-cinematic-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  border-radius: 28px;
+  color: #fff;
+  padding: 0;
+  isolation: isolate;
+}
+
+.compact-cinematic-card > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .75s cubic-bezier(.2,.75,.2,1), filter .5s ease;
+}
+
+.compact-cinematic-card > div {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 26px;
+  background: linear-gradient(180deg, transparent 38%, rgba(3, 10, 16, .86));
+}
+
+.compact-cinematic-card span {
+  color: rgba(168, 220, 244, .92);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.compact-cinematic-card h4 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.02;
+  text-shadow: 0 20px 45px rgba(0,0,0,.5);
+}
+
+@media (max-width: 760px) {
+  .compact-cinematic-card,
+  .compact-cinematic-card > div {
+    min-height: 310px;
+  }
+
+  .portfolio-thumb-video,
+  .compact-project-video {
+    opacity: .22;
+    filter: saturate(1.05) contrast(1.05) brightness(.78) blur(4px);
+  }
+}

@@ -175,6 +175,11 @@ export function HomePage({ onNavigate, onSection }) {
       quote: "Fiecare detaliu trebuie să conducă spre emoție, claritate și acțiune.",
     },
   ];
+  const portfolioThumbVideos = [
+    "/video/story-ascult-workshop.mp4",
+    "/video/story-imaginez-golden-hand.mp4",
+    "/video/story-construiesc-modern-office.mp4",
+  ];
   const selectedPriceItems = priceItems.filter(i => selectedPrices.includes(i.title));
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
@@ -530,13 +535,18 @@ export function HomePage({ onNavigate, onSection }) {
 
       <section className="section portfolio" id="portofoliu">
         <div className="portfolio-heading">
-          <FadeUp><p className="section-kicker">Selecție curatorialb</p><h2 style={serif}>Proiecte care <em>vorbesc singure.</em></h2></FadeUp>
+          <FadeUp><p className="section-kicker">Selecție curatorială</p><h2 style={serif}>Proiecte care nu doar arată bine — <em>ci spun ceva.</em></h2></FadeUp>
         </div>
-        <div className="featured-projects">
+        <div className="featured-projects cinematic-featured-projects">
           {featured.map((project, index) => (
-            <TiltCard key={project.slug} className="featured-project">
+            <TiltCard key={project.slug} className="featured-project cinematic-project-card" delay={index * 0.08}>
               <a href={"/portofoliu/" + project.slug} data-reveal onClick={e => onNavigate(e, "/portofoliu/" + project.slug)}>
+                <video className="portfolio-thumb-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+                  <source src={portfolioThumbVideos[index % portfolioThumbVideos.length]} type="video/mp4" />
+                </video>
                 <img src={featuredCardAssets[project.slug] || project.image} alt={project.title} />
+                <span className="portfolio-card-grain" aria-hidden="true" />
+                <span className="portfolio-card-orbit" aria-hidden="true" />
                 <div className="featured-project-copy">
                   <span>{project.category.join(" · ")}</span>
                   <h3>{project.title}</h3>
@@ -556,12 +566,16 @@ export function HomePage({ onNavigate, onSection }) {
             <FadeUp key={group.title} className="portfolio-group">
               <div className="portfolio-group-head"><span>{group.title}</span><p>{group.copy}</p></div>
               <div className="project-grid compact">
-                {group.projects.map(project => (
-                  <motion.a key={project.slug} className="project-card" data-reveal
+                {group.projects.map((project, index) => (
+                  <motion.a key={project.slug} className="project-card compact-cinematic-card" data-reveal
                     href={"/portofoliu/" + project.slug}
                     onClick={e => onNavigate(e, "/portofoliu/" + project.slug)}
                     whileHover={{ y: -5, transition: { duration: 0.25 } }}>
+                    <video className="compact-project-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+                      <source src={portfolioThumbVideos[index % portfolioThumbVideos.length]} type="video/mp4" />
+                    </video>
                     <img src={project.image} alt={project.title} loading="lazy" />
+                    <span className="portfolio-card-grain" aria-hidden="true" />
                     <div><span>{project.category.join(" · ")}</span><h4>{project.title}</h4></div>
                   </motion.a>
                 ))}
