@@ -255,12 +255,15 @@ export function HomePage({ onNavigate, onSection }) {
       <section className="hero" id="acasa">
         <motion.div className="hero-motion hero-video-layer" style={{ y: heroBgY, filter: heroDistortion }}>
           <video autoPlay muted loop playsInline preload="metadata" className="hero-cinematic-video">
-            <source src="/video/branding-elements-montage-hero.mp4" type="video/mp4" />
+            <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
           </video>
         </motion.div>
         <motion.div className="hero-motion hero-orb-layer" style={{ y: heroParticleY }}>
-          <img className="hero-image hero-image-liquid" src="/assets/hero.png" alt="" aria-hidden="true" />
           <div className="hero-light" aria-hidden="true" />
+          <div className="hero-gold-veins" aria-hidden="true"><span /><span /><span /></div>
+          <div className="hero-dust-field" aria-hidden="true">
+            {Array.from({ length: 28 }).map((_, index) => <b key={index} style={{ "--i": index }} />)}
+          </div>
           <div className="hero-particles" aria-hidden="true">
             {Array.from({ length: 18 }).map((_, index) => <span key={index} style={{ "--i": index }} />)}
           </div>
@@ -268,16 +271,6 @@ export function HomePage({ onNavigate, onSection }) {
             {floatingLogos.map((logo, index) => <i key={logo} style={{ "--i": index }}>{logo}</i>)}
           </div>
         </motion.div>
-        <svg className="hero-filters" aria-hidden="true">
-          <filter id="hero-liquid">
-            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="7" result="noise">
-              <animate attributeName="baseFrequency" dur="14s" values="0.006 0.012;0.011 0.007;0.006 0.012" repeatCount="indefinite" />
-            </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="B">
-              <animate attributeName="scale" dur="10s" values="10;28;10" repeatCount="indefinite" />
-            </feDisplacementMap>
-          </filter>
-        </svg>
         <div className="hero-overlay" />
         <motion.div className="hero-content hero-cinematic-content" variants={heroStagger} initial="hidden" animate="visible" style={{ opacity: heroOpacity, y: heroTextY }}>
           <motion.p variants={heroItem} className="eyebrow">Marketing · Design · Soluții Digitale</motion.p>
@@ -290,12 +283,13 @@ export function HomePage({ onNavigate, onSection }) {
                 animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.85, delay: 0.45 + index * 0.035, ease: [0.16, 1, 0.3, 1] }}
                 className={letter === " " ? "hero-letter-space" : undefined}
+                style={{ "--letter-index": index }}
               >
                 {letter === " " ? "\u00A0" : letter}
               </motion.span>
             ))}
           </motion.h1>
-          <motion.p variants={heroItem} className="hero-copy">Marketing, design şi web pentru branduri care vor să crească vizibil, rapid şi profesionist.</motion.p>
+          <motion.p variants={heroItem} className="hero-copy hero-sculptor-copy">Aura's Digital Dream transformă ideea ta brută într-o experiență digitală șlefuită cu grijă — așa cum un sculptor vede forma din piatră înainte ca lumea s-o vadă.</motion.p>
           <motion.div variants={heroItem} className="hero-actions">
             <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button>
             <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
