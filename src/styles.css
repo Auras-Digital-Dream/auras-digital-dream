@@ -627,7 +627,7 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
   .cinematic-trailer-card { transform:none; width:min(100%,330px); }
 }
 @media (max-width:560px) {
-  .cinematic-nav nav a:not(.cinematic-amazon-link) { display:none; }
+  .cinematic-nav nav a:not(.cinematic-amazon-link):not(.cinematic-home-link) { display:none; }
   .cinematic-published-card,.cinematic-upcoming-card { grid-template-columns:1fr; }
   .published-image-frame { width:100%; min-height:auto; height:420px; }
   .cinematic-published-card img { width:100%; height:420px; aspect-ratio:auto; }

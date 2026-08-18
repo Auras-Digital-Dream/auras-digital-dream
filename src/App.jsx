@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useInView, useScroll, useTransform } from "motion/react";
+import { motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -285,6 +285,18 @@ function BooksPageCinematic({ onNavigate, onSection }) {
   const featureInView = useInView(featureRef, { once: true, margin: "-18% 0px" });
   const { scrollYProgress: featureProgress } = useScroll({ target: featureRef, offset: ["start end", "center center"] });
   const featureScale = useTransform(featureProgress, [0, 1], [0.86, 1]);
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const springTiltX = useSpring(tiltX, { stiffness: 220, damping: 22 });
+  const springTiltY = useSpring(tiltY, { stiffness: 220, damping: 22 });
+  function handleTiltMove(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    tiltX.set(((e.clientY - cy) / (rect.height / 2)) * -10);
+    tiltY.set(((e.clientX - cx) / (rect.width / 2)) * 10);
+  }
+  function handleTiltLeave() { tiltX.set(0); tiltY.set(0); }
   const authorRef = useRef(null);
   const authorInView = useInView(authorRef, { once: true, margin: "-20% 0px" });
   const { scrollYProgress: authorProgress } = useScroll({ target: authorRef, offset: ["start end", "end start"] });
@@ -307,7 +319,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
     <main className="books-page cinematic-books"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" /><div className="film-grain" aria-hidden="true" />
       <motion.header className="cinematic-nav" initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}>
         <a className="cinematic-author-logo" href="/" onClick={(event) => onNavigate(event, "/")}>Aura Dobre</a>
-        <nav><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
+        <nav><a className="cinematic-home-link" href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
       </motion.header>
 
       <section className="cinematic-hero">
