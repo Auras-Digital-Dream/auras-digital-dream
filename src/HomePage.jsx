@@ -123,25 +123,6 @@ const testimonials = [
   { type: "Social Media", initials: "IR", quote: "Vizualurile pentru social media au început să pară parte din acelaşi brand. Nu mai postăm la întâmplare, ci cu o linie estetică uşor de recunoscut.", name: "Ioana R.", role: "Beauty & lifestyle business" },
 ];
 
-const blueprintLeft = [
-  { n: "01", title: "H1 sculptat", copy: "Promisiunea principală apare imediat, ca o inscripție pe marmură: marketing, design și web pentru creștere vizibilă." },
-  { n: "03", title: "Subtitlul", copy: "O frază limpede explică rezultatul: brandul tău devine mai coerent, mai premium și mai ușor de ales." },
-  { n: "05", title: "Răspunsul", copy: "Clientul află rapid ce faci, pentru cine lucrezi și de ce experiența nu este una banală." },
-  { n: "07", title: "Problema", copy: "Arătăm ce costă o imagine improvizată: neîncredere, mesaje haotice și oportunități pierdute." },
-  { n: "09", title: "Soluția", copy: "Pachetele, portofoliul și procesul conduc firesc către o cerere de ofertă, nu către confuzie." },
-  { n: "11", title: "Dovada", copy: "Proiectele reale rămân vizibile ca studii de caz, cu materiale grafice, website-uri și campanii." },
-  { n: "13", title: "CTA de preț", copy: "Estimatorul devine următorul pas concret: clientul își poate imagina bugetul fără presiune." },
-];
-const blueprintRight = [
-  { n: "02", title: "Semnătura Aura", copy: "Pagina are autor clar: designer, marketer, constructor de website-uri și creatoare de lumi vizuale." },
-  { n: "04", title: "Întrebări vii", copy: "Fiecare secțiune răspunde unei întrebări reale: ce primesc, cât costă, cum lucrăm, unde văd exemple?" },
-  { n: "06", title: "Construcție curată", copy: "Textele rămân HTML real, imaginile au alt text, iar efectele nu ascund conținutul important." },
-  { n: "08", title: "FAQ și claritate", copy: "Obiecțiile devin răspunsuri elegante: timp, buget, materiale necesare și pași de colaborare." },
-  { n: "10", title: "Structură SEO", copy: "Homepage-ul capătă ordine semantică și un ritm clar pentru motoare de căutare și vizitatori." },
-  { n: "12", title: "Comparație", copy: "Pachetele sunt mai ușor de înțeles decât o listă lungă: clientul vede imediat diferențele." },
-  { n: "14", title: "Pagină vie", copy: "Data, proiectele și materialele pot evolua fără să pierdem estetica sau storytelling-ul." },
-];
-
 function scrollToId(id) {
   const targetId = id === "estimare" ? "estimator" : id;
   document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
@@ -330,73 +311,6 @@ export function HomePage({ onNavigate, onSection }) {
       <div className="story-marquee" aria-hidden="true">
         <div>STRATEGIE <i>✶</i> IDENTITATE <i>✶</i> EXPERIENȞE DIGITALE <i>✶</i> BRANDING <i>✶</i> WEB <i>✶</i> MARKETING <i>✶</i> STRATEGIE <i>✶</i> IDENTITATE <i>✶</i> EXPERIENȞE DIGITALE <i>✶</i></div>
       </div>
-
-      <section className="renaissance-blueprint" aria-label="Arhitectura homepage-ului Aura's Digital Dream">
-        <div className="renaissance-glow" aria-hidden="true" />
-        <FadeUp className="renaissance-heading">
-          <p className="section-kicker">Atelier renascentist / Strategie de conversie</p>
-          <h2 style={serif}>Arhitectura unei pagini care vinde, desenată ca un <em>fresco digital.</em></h2>
-          <p>Inspirată de logica unei pagini premium și reinterpretată în estetica epocii lui Michelangelo: marmură, schițe fine, lumină albastră, aur discret și storytelling care conduce vizitatorul de la emoție la acțiune.</p>
-        </FadeUp>
-        <div className="blueprint-layout">
-          <div className="blueprint-notes blueprint-left">
-            {blueprintLeft.map((item, index) => (
-              <FadeUp key={item.n} delay={index * 0.04} className="blueprint-note">
-                <span>{item.n}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.copy}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-          <TiltCard className="blueprint-canvas" delay={0.12}>
-            <div className="canvas-browser">
-              <i /><i /><i />
-              <span>Aura's Digital Dream</span>
-            </div>
-            <div className="canvas-hero-mini">
-              <div>
-                <small>VIZIUNE</small>
-                <h3 style={serif}>Marketing, design și web pentru branduri care cresc.</h3>
-                <p>O scenă cinematică, nu un template.</p>
-              </div>
-              <img src="/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg" alt="Material editorial Aura's Trend Vault" />
-            </div>
-            <div className="canvas-trust-row">
-              <span>Branding</span><span>Web</span><span>Marketing</span><span>Documente</span>
-            </div>
-            <div className="canvas-service-row">
-              <article><Palette size={22} /><b>Identitate</b><small>logo, culori, ghid</small></article>
-              <article><Code size={22} /><b>Website</b><small>UX, SEO, animații</small></article>
-              <article><Megaphone size={22} /><b>Campanii</b><small>vizualuri, strategie</small></article>
-            </div>
-            <div className="canvas-proof">
-              <img src="/portfolio/verde-bean/verde-bean-hero-branding.jpeg" alt="Verde Bean branding" />
-              <img src="/portfolio/painea-de-acasa/painea-de-acasa-packaging.jpeg" alt="Pâinea de Acasă branding" />
-              <img src="/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.jpeg" alt="ADI ECOO material roll-up" />
-            </div>
-            <div className="canvas-cta">
-              <div>
-                <small>URMĂTORUL PAS</small>
-                <strong>Transformă ideea într-un sistem vizual.</strong>
-              </div>
-              <button className="button primary small" onClick={() => scrollToId("servicii")}>Vezi pachetele <ArrowRight size={14} /></button>
-            </div>
-          </TiltCard>
-          <div className="blueprint-notes blueprint-right">
-            {blueprintRight.map((item, index) => (
-              <FadeUp key={item.n} delay={index * 0.04} className="blueprint-note">
-                <span>{item.n}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.copy}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section ref={aboutRef} className="about-scene" id="despre" aria-label="Despre Aura">
         <motion.div className="about-scene-video" style={{ scale: aboutVideoScale, filter: aboutVideoFilter }}>
