@@ -208,6 +208,14 @@ export function HomePage({ onNavigate, onSection }) {
   const heroTitle = "Aura's Digital Dream";
   const heroLetters = heroTitle.split("");
   const floatingLogos = ["AD", "SEO", "UX", "3D", "WEB", "AI"];
+  const aboutRef = useRef(null);
+  const aboutVideoRef = useRef(null);
+  const { scrollYProgress: aboutProgress } = useScroll({ target: aboutRef, offset: ["start end", "end start"] });
+  const aboutVideoScale = useTransform(aboutProgress, [0, 0.5, 1], [1.16, 1.04, 1.12]);
+  const aboutVideoFilter = useTransform(aboutProgress, [0, 0.5, 1], ["brightness(.52) saturate(.95) contrast(1.05)", "brightness(.86) saturate(1.08) contrast(1.12)", "brightness(.48) saturate(.92) contrast(1.08)"]);
+  const aboutPortraitY = useTransform(aboutProgress, [0, 1], ["8%", "-10%"]);
+  const aboutPortraitRotate = useTransform(aboutProgress, [0, 1], [-3, 3]);
+  const aboutMask = useTransform(aboutProgress, [0, 0.18, 0.56, 0.82], ["inset(0 100% 0 0 round 28px)", "inset(0 18% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)"]);
   const storyRef = useRef(null);
   const storyVideoRef = useRef(null);
   const { scrollYProgress: storyProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
@@ -229,6 +237,15 @@ export function HomePage({ onNavigate, onSection }) {
     });
     return unsubscribe;
   }, [storyProgress]);
+
+  useEffect(() => {
+    const video = aboutVideoRef.current;
+    const unsubscribe = aboutProgress.on("change", (progress) => {
+      if (!video || !Number.isFinite(video.duration)) return;
+      video.currentTime = Math.min(video.duration - 0.05, Math.max(0, progress * video.duration));
+    });
+    return unsubscribe;
+  }, [aboutProgress]);
 
   const serif = { fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" };
 
@@ -381,15 +398,24 @@ export function HomePage({ onNavigate, onSection }) {
         </div>
       </section>
 
-      <section className="section about" id="despre">
-        <FadeUp>
+      <section ref={aboutRef} className="about-scene" id="despre" aria-label="Despre Aura">
+        <motion.div className="about-scene-video" style={{ scale: aboutVideoScale, filter: aboutVideoFilter }}>
+          <video ref={aboutVideoRef} muted playsInline preload="auto" className="about-scroll-video">
+            <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
+          </video>
+        </motion.div>
+        <div className="about-scene-overlay" />
+        <motion.div className="about-portrait-card" style={{ y: aboutPortraitY, rotate: aboutPortraitRotate }}>
+          <img src="/assets/aura-cinematic-portrait.jpeg" alt="Aura Dobre într-un portret editorial cinematic" />
+          <span className="about-portrait-glow" aria-hidden="true" />
+        </motion.div>
+        <motion.div className="about-scene-copy" style={{ clipPath: aboutMask }}>
           <p className="section-kicker">Despre mine</p>
-          <h2 style={serif}>Marketing, design şi soluții digitale, <em>cu suflet.</em></h2>
-        </FadeUp>
-        <FadeUp delay={0.2} className="about-copy">
-          <p>Sunt un specialist în marketing digital care crede că fiecare proiect merită atenție personalizată. Nu creez conținut la kilogram — creez sisteme vizuale şi comunicare care chiar funcționează pentru brandul tău.</p>
-          <p>Sunt Aura Dobre — antreprenoare, designer, marketer şi autor. Lucrez cu oameni ambițioşi care vor mai mult de la prezența lor digitală.</p>
-        </FadeUp>
+          <h2 style={serif}>Sunt Aura — designer, marketer şi <em>sculptor digital.</em></h2>
+          <p className="about-manifesto">Nu creez proiecte. Modelez identități.</p>
+          <p>Fiecare brand are o formă ascunsă. Eu o scot la lumină.</p>
+          <button className="button ghost" onClick={() => scrollToId("servicii")}>Vezi cum lucrăm <ArrowRight size={16} /></button>
+        </motion.div>
       </section>
 
       <motion.section ref={storyRef} className="story-section trailer-story-section" data-scroll-story aria-label="Povestea procesului creativ" style={{ "--story-progress": storyProgress, "--scene-one": storySceneOne, "--scene-two": storySceneTwo, "--scene-three": storySceneThree }}>
