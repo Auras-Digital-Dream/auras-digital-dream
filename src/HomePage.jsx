@@ -308,7 +308,7 @@ export function HomePage({ onNavigate, onSection }) {
     return () => script.remove();
   }, []);
 
-  const serif = { fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" };
+  const serif = { fontFamily: "var(--font-display)", fontWeight: 600, letterSpacing: "1px" };
 
   return (
     <main>
