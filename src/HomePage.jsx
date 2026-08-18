@@ -196,11 +196,11 @@ export function HomePage({ onNavigate, onSection }) {
   }
 
   const { scrollY } = useScroll();
-  const heroBgY = useTransform(scrollY, [0, 700], ["-4%", "18%"]);
-  const heroTextY = useTransform(scrollY, [0, 700], ["0%", "-12%"]);
-  const heroParticleY = useTransform(scrollY, [0, 700], ["0%", "34%"]);
-  const heroDistortion = useTransform(scrollY, [0, 700], ["blur(10px) scale(1.08) saturate(1.08)", "blur(16px) scale(1.18) saturate(1.22)"]);
-  const heroOpacity = useTransform(scrollY, [0, 520], [1, 0]);
+  const heroBgY = useTransform(scrollY, [0, 760], ["-2%", "10%"]);
+  const heroTextY = useTransform(scrollY, [0, 760], ["0%", "-18%"]);
+  const heroParticleY = useTransform(scrollY, [0, 760], ["0%", "42%"]);
+  const heroDistortion = useTransform(scrollY, [0, 760], ["scale(1.02) saturate(1.08) contrast(1.05)", "scale(1.12) saturate(1.18) contrast(1.12)"]);
+  const heroOpacity = useTransform(scrollY, [0, 560], [1, 0]);
 
   const heroStagger = { hidden: {}, visible: { transition: { staggerChildren: 0.14, delayChildren: 0.5 } } };
   const heroItem = { hidden: { opacity: 0, y: 32, filter: "blur(8px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } } };
@@ -264,6 +264,7 @@ export function HomePage({ onNavigate, onSection }) {
         <motion.div className="hero-motion hero-orb-layer" style={{ y: heroParticleY }}>
           <div className="hero-light" aria-hidden="true" />
           <div className="hero-gold-veins" aria-hidden="true"><span /><span /><span /></div>
+          <div className="hero-renaissance-frame" aria-hidden="true"><i /><i /><i /><i /></div>
           <div className="hero-dust-field" aria-hidden="true">
             {Array.from({ length: 28 }).map((_, index) => <b key={index} style={{ "--i": index }} />)}
           </div>
@@ -276,7 +277,7 @@ export function HomePage({ onNavigate, onSection }) {
         </motion.div>
         <div className="hero-overlay" />
         <motion.div className="hero-content hero-cinematic-content" variants={heroStagger} initial="hidden" animate="visible" style={{ opacity: heroOpacity, y: heroTextY }}>
-          <motion.p variants={heroItem} className="eyebrow">Marketing · Design · Soluții Digitale</motion.p>
+          <motion.p variants={heroItem} className="eyebrow hero-kicker">Atelier digital renascentist</motion.p>
           <motion.h1 className="hero-letter-title" aria-label={heroTitle} style={serif}>
             {heroLetters.map((letter, index) => (
               <motion.span
@@ -297,6 +298,11 @@ export function HomePage({ onNavigate, onSection }) {
             <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button>
             <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
             <a className="hero-books-link" href="/cartile-mele" onClick={e => onNavigate(e, "/cartile-mele")}>• Cărțile mele</a>
+          </motion.div>
+          <motion.div variants={heroItem} className="hero-proof-strip" aria-label="Servicii principale">
+            <span>Brand strategy</span>
+            <span>Web cinematic</span>
+            <span>Visual identity</span>
           </motion.div>
         </motion.div>
         <motion.a className="hero-floating-cta" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"
