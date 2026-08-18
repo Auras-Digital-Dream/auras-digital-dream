@@ -19,8 +19,11 @@ function useMeasure(ref, deps = []) {
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node) return undefined;
-    const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
+    const observer = new ResizeObserver(() => {
+      // Border-box, not contentRect: the rail has horizontal padding and
+      // contentRect would under-report the travel by both gutters.
+      const width = node.offsetWidth;
+      const height = node.offsetHeight;
       setBox((prev) => (prev.width === width && prev.height === height ? prev : { width, height }));
     });
     observer.observe(node);
@@ -31,43 +34,64 @@ function useMeasure(ref, deps = []) {
 }
 
 /* ── Reveal ────────────────────────────────────────────────────────────────
-   Wipes content in from below a mask. Used for headings and blocks. */
+   Wipes content in from below a mask.
+
+   The trigger lives on the MASK, not on the thing being wiped. An
+   IntersectionObserver clips against ancestor overflow, so an element parked
+   below an `overflow:hidden` mask reports zero intersection and would wait
+   forever for an in-view event that can never fire. Observing the unclipped
+   mask and driving the child through variants breaks that deadlock. */
 export function Reveal({ children, delay = 0, as = "div", className = "", amount = 0.3 }) {
   const reduced = useReducedMotion();
+  const Plain = as;
   const Tag = motion[as] || motion.div;
-  if (reduced) return <Tag className={className}>{children}</Tag>;
+  if (reduced) return <Plain className={className}>{children}</Plain>;
   return (
-    <span className="reveal-mask">
+    <motion.div
+      className="reveal-mask"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount }}
+    >
       <Tag
         className={className}
-        initial={{ y: "110%" }}
-        whileInView={{ y: "0%" }}
-        viewport={{ once: true, amount }}
-        transition={{ duration: 1, delay, ease: EASE }}
+        variants={{
+          hidden: { y: "110%" },
+          visible: { y: "0%", transition: { duration: 1, delay, ease: EASE } },
+        }}
       >
         {children}
       </Tag>
-    </span>
+    </motion.div>
   );
 }
 
 /* ── Lines ─────────────────────────────────────────────────────────────────
    Splits a string into words and wipes them in sequence. Keeps the whole
    string in an aria-label so screen readers read one sentence, not confetti. */
-export function Lines({ text, className = "", as: Tag = "h2", delay = 0, style }) {
+export function Lines({ text, className = "", as = "h2", delay = 0, style }) {
   const reduced = useReducedMotion();
-  if (reduced) return <Tag className={className} style={style}>{text}</Tag>;
+  const Plain = as;
+  const Tag = motion[as] || motion.h2;
+  if (reduced) return <Plain className={className} style={style}>{text}</Plain>;
   return (
-    <Tag className={`lines ${className}`} style={style} aria-label={text}>
+    <Tag
+      className={`lines ${className}`}
+      style={style}
+      aria-label={text}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+    >
       {text.split(" ").map((word, index) => (
         <span className="lines-word" key={`${word}-${index}`} aria-hidden="true">
           <motion.span
-            initial={{ y: "108%" }}
-            whileInView={{ y: "0%" }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.9, delay: delay + index * 0.045, ease: EASE }}
+            variants={{
+              hidden: { y: "108%" },
+              visible: { y: "0%", transition: { duration: 0.9, delay: delay + index * 0.045, ease: EASE } },
+            }}
           >
-            {word}
+            {word}{" "}
           </motion.span>
         </span>
       ))}
