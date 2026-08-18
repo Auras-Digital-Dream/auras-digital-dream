@@ -233,12 +233,19 @@ export function HomePage({ onNavigate, onSection }) {
   const floatingLogos = ["AD", "SEO", "UX", "3D", "WEB", "AI"];
   const aboutRef = useRef(null);
   const aboutVideoRef = useRef(null);
+  const behindRef = useRef(null);
   const { scrollYProgress: aboutProgress } = useScroll({ target: aboutRef, offset: ["start end", "end start"] });
   const aboutVideoScale = useTransform(aboutProgress, [0, 0.5, 1], [1.16, 1.04, 1.12]);
   const aboutVideoFilter = useTransform(aboutProgress, [0, 0.5, 1], ["brightness(.52) saturate(.95) contrast(1.05)", "brightness(.86) saturate(1.08) contrast(1.12)", "brightness(.48) saturate(.92) contrast(1.08)"]);
   const aboutPortraitY = useTransform(aboutProgress, [0, 1], ["8%", "-10%"]);
   const aboutPortraitRotate = useTransform(aboutProgress, [0, 1], [-3, 3]);
   const aboutMask = useTransform(aboutProgress, [0, 0.18, 0.56, 0.82], ["inset(0 100% 0 0 round 28px)", "inset(0 18% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)"]);
+  const { scrollYProgress: behindProgress } = useScroll({ target: behindRef, offset: ["start end", "end start"] });
+  const behindLightY = useTransform(behindProgress, [0, 1], ["12%", "-16%"]);
+  const behindStudioY = useTransform(behindProgress, [0, 1], ["-8%", "10%"]);
+  const behindHandY = useTransform(behindProgress, [0, 1], ["18%", "-12%"]);
+  const behindGlow = useTransform(behindProgress, [0, 0.5, 1], [0.24, 0.74, 0.32]);
+  const behindText = "Aura’s Digital Dream s-a născut dintr-o obsesie: să transform ideile în experiențe care se simt, nu doar se văd.";
   const storyRef = useRef(null);
   const storyVideoRef = useRef(null);
   const storyStepVideoRefs = useRef([]);
@@ -599,23 +606,39 @@ export function HomePage({ onNavigate, onSection }) {
         </figure>
       </section>
 
-      <section className="behind" id="behind">
-        <div className="behind-portrait" style={{ overflow: "hidden" }}>
-          <ParallaxY strength={0.07}>
-            <div className="portrait-frame portrait-video">
-              <video autoPlay muted loop playsInline><source src="/video/aura-creative-showreel.mp4" type="video/mp4" /></video>
-            </div>
-          </ParallaxY>
+      <section ref={behindRef} className="behind behind-film" id="behind" aria-label="Behind the Dream">
+        <div className="behind-film-stage" aria-hidden="true">
+          <motion.video className="behind-film-video behind-film-studio" style={{ y: behindStudioY }} autoPlay muted loop playsInline preload="metadata">
+            <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
+          </motion.video>
+          <motion.video className="behind-film-video behind-film-hand" style={{ y: behindHandY }} autoPlay muted loop playsInline preload="metadata">
+            <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
+          </motion.video>
+          <motion.video className="behind-film-video behind-film-light" style={{ y: behindLightY }} autoPlay muted loop playsInline preload="metadata">
+            <source src="/video/story-imaginez-golden-hand.mp4" type="video/mp4" />
+          </motion.video>
+          <motion.span className="behind-film-glow" style={{ opacity: behindGlow }} />
+          <span className="behind-film-blackout" />
+          <span className="behind-film-grain" />
         </div>
-        <FadeUp className="behind-copy">
-          <p className="section-kicker">Behind the Dream</p>
-          <h2 style={serif}>Un studio digital <em>cu o poveste.</em></h2>
-          <p>Aura's Digital Dream s-a născut din convingerea că un brand bun nu este doar frumos — este coerent, autentic şi construit să dureze.</p>
-          <p>Sunt Aura, şi fac asta pentru că îmi place să transform idei în realitate digitală. Cu fiecare proiect, aduc un pic din povestea ta în lume.</p>
-          <div className="books-actions">
+        <motion.div className="behind-copy behind-film-copy" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.055, delayChildren: 0.18 } } }}>
+          <motion.p className="section-kicker" variants={heroItem}>Behind the Dream</motion.p>
+          <h2 style={serif} aria-label={behindText}>
+            {behindText.split(" ").map((word, index) => (
+              <motion.span
+                key={`${word}-${index}`}
+                aria-hidden="true"
+                variants={{ hidden: { opacity: 0, y: 24, filter: "blur(10px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.72, ease: [0.16, 1, 0.3, 1] } } }}
+              >
+                {word}&nbsp;
+              </motion.span>
+            ))}
+          </h2>
+          <motion.p variants={heroItem}>Nu fac doar materiale frumoase. Construiesc lumi vizuale în care brandul tău capătă ritm, claritate și memorie.</motion.p>
+          <motion.div variants={heroItem} className="books-actions">
             <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm <ArrowRight size={15} /></button>
-          </div>
-        </FadeUp>
+          </motion.div>
+        </motion.div>
       </section>
 
       <section className="amazon-world amazon-teaser" id="amazon-picks">

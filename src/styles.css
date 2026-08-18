@@ -1217,3 +1217,196 @@ body { background:var(--paper); }
     filter: saturate(1.05) contrast(1.05) brightness(.78) blur(4px);
   }
 }
+
+/* Behind the Dream mini-film */
+.behind-film {
+  position: relative;
+  min-height: 112vh;
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(360px, .78fr);
+  gap: clamp(34px, 6vw, 96px);
+  align-items: center;
+  padding: clamp(96px, 10vw, 150px) max(5vw, 24px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #03070b;
+  color: #fff;
+}
+
+.behind-film::before,
+.behind-film::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.behind-film::before {
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.95), rgba(0,0,0,.34) 48%, rgba(0,0,0,.88)),
+    radial-gradient(circle at 74% 42%, rgba(218,187,125,.22), transparent 26%);
+}
+
+.behind-film::after {
+  background: linear-gradient(180deg, #03070b 0%, transparent 18%, transparent 72%, #03070b 100%);
+}
+
+.behind-film-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.behind-film-video {
+  position: absolute;
+  width: 58vw;
+  height: 62vh;
+  object-fit: cover;
+  border: 1px solid rgba(218, 187, 125, .22);
+  box-shadow: 0 44px 120px rgba(0, 0, 0, .72), 0 0 70px rgba(218,187,125,.14);
+  filter: saturate(1.05) contrast(1.14) brightness(.72);
+}
+
+.behind-film-studio {
+  left: -8vw;
+  top: 10vh;
+  width: 62vw;
+  height: 78vh;
+  opacity: .42;
+  transform: rotate(-2deg) scale(1.04);
+}
+
+.behind-film-hand {
+  right: -7vw;
+  top: 6vh;
+  width: 54vw;
+  height: 70vh;
+  opacity: .58;
+  border-radius: 42px;
+  transform: rotate(2.5deg);
+}
+
+.behind-film-light {
+  left: 22vw;
+  bottom: -10vh;
+  width: 52vw;
+  height: 52vh;
+  opacity: .48;
+  border-radius: 999px;
+  mix-blend-mode: screen;
+  filter: saturate(1.2) contrast(1.08) brightness(.88) blur(1px);
+}
+
+.behind-film-glow {
+  position: absolute;
+  right: 19vw;
+  top: 31vh;
+  width: 28vw;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(248,220,146,.62), rgba(218,187,125,.18) 38%, transparent 70%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  z-index: 2;
+  animation: behindGlowPulse 4.8s ease-in-out infinite alternate;
+}
+
+.behind-film-blackout {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(circle at 58% 42%, transparent 20%, rgba(0,0,0,.35) 58%, rgba(0,0,0,.92) 100%);
+}
+
+.behind-film-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: .16;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(255,255,255,.34) 0 1px, transparent 1px),
+    radial-gradient(circle at 82% 64%, rgba(255,255,255,.2) 0 1px, transparent 1px);
+  background-size: 17px 17px, 29px 29px;
+}
+
+.behind-film-copy {
+  position: relative;
+  z-index: 5;
+  grid-column: 1 / 2;
+  max-width: 850px;
+  padding: clamp(24px, 5vw, 64px);
+  border-left: 1px solid rgba(218,187,125,.34);
+  background: linear-gradient(90deg, rgba(3,7,11,.56), transparent);
+}
+
+.behind-film-copy h2 {
+  margin: 18px 0 28px;
+  font-size: clamp(42px, 6.3vw, 96px);
+  line-height: .98;
+  font-weight: 400;
+  letter-spacing: -.04em;
+  text-shadow: 0 0 30px rgba(218,187,125,.16), 0 30px 80px rgba(0,0,0,.65);
+}
+
+.behind-film-copy h2 span {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+}
+
+.behind-film-copy p:not(.section-kicker) {
+  max-width: 610px;
+  color: rgba(238, 246, 250, .78);
+  line-height: 1.85;
+}
+
+.behind-film-copy .button {
+  box-shadow: 0 0 34px rgba(218,187,125,.18);
+}
+
+@keyframes behindGlowPulse {
+  from { transform: scale(.94); filter: blur(24px); }
+  to { transform: scale(1.12); filter: blur(14px); }
+}
+
+@media (max-width: 900px) {
+  .behind-film {
+    min-height: 105vh;
+    grid-template-columns: 1fr;
+    padding-block: 110px;
+  }
+
+  .behind-film-video {
+    width: 92vw;
+    height: 52vh;
+  }
+
+  .behind-film-studio {
+    left: -22vw;
+    top: 8vh;
+  }
+
+  .behind-film-hand {
+    right: -28vw;
+    top: 18vh;
+    opacity: .5;
+  }
+
+  .behind-film-light {
+    left: 10vw;
+    bottom: 10vh;
+    width: 88vw;
+    opacity: .38;
+  }
+
+  .behind-film-copy {
+    padding: 28px 0 28px 22px;
+    background: transparent;
+  }
+
+  .behind-film-copy h2 {
+    font-size: clamp(40px, 13vw, 64px);
+  }
+}
