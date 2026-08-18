@@ -97,11 +97,6 @@ const services = [
   { icon: Megaphone, title: "Pachet Social Media", subtitle: "Vizibilitate constantă", copy: "Pentru branduri care au nevoie de conținut coerent şi o prezență recognoscibilă.", list: ["6 vizualuri / lună", "Template-uri reutilizabile", "Calendar de conținut", "Copywriting", "Mini strategie"], benefits: ["Postări coerente vizual", "Mai multă claritate în comunicare", "Prezență constantă fără haos"], price: "450 – 600 RON" },
   { icon: FileText, title: "Pachet Documente Profesionale", subtitle: "Materiale impecabile", copy: "Pentru documente, prezentări şi materiale oficiale care trebuie să arate ordonat şi profesionist.", list: ["Prezentări", "Rapoarte", "Broşuri", "PDF-uri", "Tehnoredactare completă"], benefits: ["Documente curate şi uşor de citit", "Imagine serioasă şi profesionistă", "Structură clară pentru informații complexe"], price: "40 – 60 RON / pagină" },
 ];
-const documentTemplates = [
-  { title: "Memorandum juridic / administrativ", label: "Legal memo", copy: "Document structurat pentru situații oficiale: context, întrebare, răspuns scurt, fapte relevante, analiză şi concluzie." },
-  { title: "Documentație tehnică / system design", label: "System design", copy: "Pentru aplicații, website-uri sau procese digitale: obiective, arhitectură, componente, fluxuri, API-uri, riscuri şi paşi de implementare." },
-  { title: "Dosare, rapoarte şi lucrări", label: "Business & academic", copy: "Structurare, tehnoredactare şi design pentru materiale lungi: lucrări de licență, rapoarte, proceduri, ghiduri şi prezentări PDF." },
-];
 const priceItems = [
   { title: "Pachet Start-up", price: 900, maxPrice: 1200, copy: "Logo, identitate vizuală de bază şi mini kit social media." },
   { title: "Pachet Rebranding", price: 1500, maxPrice: 2200, copy: "Refresh vizual, repoziționare, materiale actualizate şi direcție de comunicare." },
@@ -431,22 +426,6 @@ export function HomePage({ onNavigate, onSection }) {
             </TiltCard>
           ))}
         </div>
-        <FadeUp delay={0.1} className="document-template-showcase">
-          <div>
-            <p className="section-kicker">Documente premium</p>
-            <h3 style={serif}>Template-uri profesionale, adaptate pentru afacerea sau proiectul tău.</h3>
-            <p>Pot construi documente cu structură clară, estetică premium şi logică de prezentare — nu doar fişiere frumoase, ci materiale care comunică eficient.</p>
-          </div>
-          <div className="document-template-grid">
-            {documentTemplates.map(item => (
-              <TiltCard key={item.title} className="document-template-card">
-                <span>{item.label}</span>
-                <h4>{item.title}</h4>
-                <p>{item.copy}</p>
-              </TiltCard>
-            ))}
-          </div>
-        </FadeUp>
       </section>
 
       <section className="section estimator" id="estimator">
@@ -478,18 +457,6 @@ export function HomePage({ onNavigate, onSection }) {
             }
           </div>
         </div>
-      </section>
-
-      <section className="creative-services" aria-label="Servicii de creație digitală">
-        <FadeUp className="creative-services-copy">
-          <p className="section-kicker">Portofoliu de servicii</p>
-          <h2 style={serif}>Creație vizuală <em>de nivel premium.</em></h2>
-          <p>Fiecare element vizual pe care îl creez are o logică în spate: de ce acel font, de ce acea culoare, de ce acea compoziție. Estetica nu este un accesoriu — este strategia ta vizibilă.</p>
-          <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Explorează portofoliul <ArrowRight size={15} /></button>
-        </FadeUp>
-        <ParallaxY strength={0.1} className="creative-services-visual">
-          <img src="/assets/editorial/creative-services-clean.jpg" alt="Servicii creative Aura's Digital Dream" style={{ width: "100%", objectFit: "cover", display: "block" }} />
-        </ParallaxY>
       </section>
 
       <section className="section skills" id="skills">
