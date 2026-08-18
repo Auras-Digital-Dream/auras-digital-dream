@@ -199,7 +199,8 @@ export function HomePage({ onNavigate, onSection }) {
   const heroBgY = useTransform(scrollY, [0, 760], ["-2%", "10%"]);
   const heroTextY = useTransform(scrollY, [0, 760], ["0%", "-18%"]);
   const heroParticleY = useTransform(scrollY, [0, 760], ["0%", "42%"]);
-  const heroDistortion = useTransform(scrollY, [0, 760], ["scale(1.02) saturate(1.08) contrast(1.05)", "scale(1.12) saturate(1.18) contrast(1.12)"]);
+  const heroVideoScale = useTransform(scrollY, [0, 760], [1.02, 1.11]);
+  const heroDistortion = useTransform(scrollY, [0, 760], ["brightness(1.08) saturate(1.08) contrast(1.05)", "brightness(1.14) saturate(1.16) contrast(1.12) hue-rotate(-2deg)"]);
   const heroOpacity = useTransform(scrollY, [0, 560], [1, 0]);
 
   const heroStagger = { hidden: {}, visible: { transition: { staggerChildren: 0.14, delayChildren: 0.5 } } };
@@ -256,7 +257,7 @@ export function HomePage({ onNavigate, onSection }) {
       </motion.header>
 
       <section className="hero" id="acasa">
-        <motion.div className="hero-motion hero-video-layer" style={{ y: heroBgY, filter: heroDistortion }}>
+        <motion.div className="hero-motion hero-video-layer" style={{ y: heroBgY, filter: heroDistortion, scale: heroVideoScale }}>
           <video autoPlay muted loop playsInline preload="metadata" className="hero-cinematic-video">
             <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
           </video>
@@ -293,11 +294,11 @@ export function HomePage({ onNavigate, onSection }) {
               </motion.span>
             ))}
           </motion.h1>
-          <motion.p variants={heroItem} className="hero-copy hero-sculptor-copy">Aura's Digital Dream transformă ideea ta brută într-o experiență digitală șlefuită cu grijă — așa cum un sculptor vede forma din piatră înainte ca lumea s-o vadă.</motion.p>
+          <motion.p variants={heroItem} className="hero-copy hero-sculptor-copy">transformă ideea ta brută într-o experiență digitală șlefuită cu grijă — așa cum un sculptor vede forma din piatră înainte ca lumea s-o vadă.</motion.p>
           <motion.div variants={heroItem} className="hero-actions">
             <button className="button primary" onClick={() => scrollToId("contact")}>Hai să lucrăm împreună</button>
             <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
-            <a className="hero-books-link" href="/cartile-mele" onClick={e => onNavigate(e, "/cartile-mele")}>• Cărțile mele</a>
+            <button className="button ghost" onClick={e => onNavigate(e, "/cartile-mele")}>Cărțile mele</button>
           </motion.div>
           <motion.div variants={heroItem} className="hero-proof-strip" aria-label="Servicii principale">
             <span>Brand strategy</span>
@@ -305,13 +306,6 @@ export function HomePage({ onNavigate, onSection }) {
             <span>Visual identity</span>
           </motion.div>
         </motion.div>
-        <motion.a className="hero-floating-cta" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"
-          initial={{ opacity: 0, scale: 0.35, y: 46 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 2.1, type: "spring", stiffness: 170, damping: 13 }}>
-          <WhatsappLogo size={24} weight="fill" />
-          <span>Brief rapid</span>
-        </motion.a>
         <motion.button className="scroll-mark" onClick={() => scrollToId("despre")} aria-label="Derulează mai jos"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8, duration: 1 }}>↓</motion.button>
       </section>
