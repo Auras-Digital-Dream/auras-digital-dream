@@ -216,6 +216,9 @@ export function HomePage({ onNavigate, onSection }) {
   const storyDepthMid = useTransform(storyProgress, [0, 1], ["10%", "-22%"]);
   const storyDepthFar = useTransform(storyProgress, [0, 1], ["22%", "-10%"]);
   const storyBlackout = useTransform(storyProgress, [0, 0.28, 0.5, 0.72, 1], [0.18, 0.45, 0.12, 0.5, 0.78]);
+  const storySceneOne = useTransform(storyProgress, [0, 0.12, 0.28, 0.4], [0, 1, 1, 0]);
+  const storySceneTwo = useTransform(storyProgress, [0.28, 0.42, 0.58, 0.7], [0, 1, 1, 0]);
+  const storySceneThree = useTransform(storyProgress, [0.58, 0.72, 0.9, 1], [0, 1, 1, 0]);
 
   useEffect(() => {
     const video = storyVideoRef.current;
@@ -389,7 +392,7 @@ export function HomePage({ onNavigate, onSection }) {
         </FadeUp>
       </section>
 
-      <section ref={storyRef} className="story-section trailer-story-section" data-scroll-story aria-label="Povestea procesului creativ">
+      <motion.section ref={storyRef} className="story-section trailer-story-section" data-scroll-story aria-label="Povestea procesului creativ" style={{ "--story-progress": storyProgress, "--scene-one": storySceneOne, "--scene-two": storySceneTwo, "--scene-three": storySceneThree }}>
         <div className="story-stage">
           <motion.div className="story-video-layer" style={{ opacity: storyVideoOpacity, scale: storyVideoScale }}>
             <video ref={storyVideoRef} muted playsInline preload="auto" className="story-scroll-video">
@@ -409,19 +412,19 @@ export function HomePage({ onNavigate, onSection }) {
           </div>
           <div className="story-copy">
             <p className="section-kicker">Din idee în experiență</p>
-            <motion.article className="scene-one" initial={{ opacity: 0, y: 36, filter: "blur(12px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ amount: 0.55 }} transition={{ duration: 0.85 }}>
+            <motion.article className="scene-one">
               <span>01 / Ascult</span>
               <h2 style={serif}>Povestea ta devine <em>punctul de plecare.</em></h2>
               <p>Nu pornesc de la template-uri sau tendințe. Pornesc de la ce eşti tu, ce vrei să comunici şi cine vrei să atragi.</p>
               <blockquote>„Ascult întâi. Abia apoi construiesc imaginea care rămâne.”</blockquote>
             </motion.article>
-            <motion.article className="scene-two" initial={{ opacity: 0, y: 36, filter: "blur(12px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ amount: 0.55 }} transition={{ duration: 0.85 }}>
+            <motion.article className="scene-two">
               <span>02 / Imaginez</span>
               <h2 style={serif}>Ideile captă <em>formă şi profunzime.</em></h2>
               <p>Construiesc direcții vizuale, explor concepte şi transform abstractul în ceva concret, coerent şi memorabil.</p>
               <blockquote>„Culoarea, ritmul și mișcarea devin limbajul brandului.”</blockquote>
             </motion.article>
-            <motion.article className="scene-three" initial={{ opacity: 0, y: 36, filter: "blur(12px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ amount: 0.55 }} transition={{ duration: 0.85 }}>
+            <motion.article className="scene-three">
               <span>03 / Construiesc</span>
               <h2 style={serif}>Totul devine o <em>experiență vie.</em></h2>
               <p>De la pixel la strategie, de la logo la campanie — livrez sisteme complete, gata de folosit.</p>
@@ -430,7 +433,7 @@ export function HomePage({ onNavigate, onSection }) {
             <div className="story-counter"><b>0<span /></b><i /><small>03</small></div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <section className="section dark services-premium" id="servicii">
         <div className="services-heading">
