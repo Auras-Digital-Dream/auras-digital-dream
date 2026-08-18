@@ -749,15 +749,27 @@ export function HomePage({ onNavigate, onSection }) {
         </motion.div>
       </section>
 
-      <section className="section contact" id="contact">
-        <FadeUp>
+      <section className="section contact cinematic-contact" id="contact">
+        <div className="contact-film-layer" aria-hidden="true">
+          <video autoPlay muted loop playsInline preload="metadata">
+            <source src="/video/story-imaginez-golden-hand.mp4" type="video/mp4" />
+          </video>
+          <span className="contact-light-orb" />
+          <span className="contact-grain" />
+          <span className="contact-black-fade" />
+        </div>
+        <FadeUp className="contact-copy">
           <p className="section-kicker">Contact</p>
-          <h2 style={serif}>Hai să lucrăm <em>împreună.</em></h2>
-          <p>Ai un proiect în minte? Scrie-mi şi găsim împreună cea mai bună soluție. Răspund în maximum 24 de ore.</p>
+          <h2 className="contact-cinematic-title" style={serif}>
+            {"Hai să sculptăm împreună ideea ta.".split(" ").map((word, index) => (
+              <span key={`${word}-${index}`} style={{ "--word-index": index }}>{word}&nbsp;</span>
+            ))}
+          </h2>
+          <p>Spune-mi ce vrei să construim, iar eu transform brief-ul într-o direcție clară: strategie, estetică și pașii potriviți pentru lansare. Răspund în maximum 24 de ore.</p>
           <a href="https://wa.me/40762509423"><WhatsappLogo size={22} /><span><b>Scrie-mi pe WhatsApp</b><small>Răspuns rapid, oricând</small></span></a>
           <a href="tel:+40762509423"><Phone size={22} /><span><b>Sună-mă direct</b><small>+40 762 509 423</small></span></a>
         </FadeUp>
-        <FadeUp delay={0.15}>
+        <FadeUp delay={0.15} className="contact-form-wrap">
           <form id="contact-form" onSubmit={submitContact} data-reveal>
             <input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" />
             <div className="form-row">
