@@ -145,6 +145,36 @@ export function HomePage({ onNavigate, onSection }) {
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter(p => featuredSlugs.includes(p.slug));
   const groupedProjects = portfolioGroups.map(g => ({ ...g, projects: g.slugs.map(s => projects.find(p => p.slug === s)).filter(Boolean) }));
+  const storySceneNames = ["one", "two", "three"];
+  const storySteps = [
+    {
+      number: "01",
+      title: "Ascult",
+      label: "Atelier vechi · marmură",
+      video: "/video/story-ascult-workshop.mp4",
+      headline: <>Nu pornesc de la tendințe. <em>Pornesc de la tine.</em></>,
+      copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.",
+      quote: "Nu pornesc de la tendințe. Pornesc de la tine.",
+    },
+    {
+      number: "02",
+      title: "Imaginez",
+      label: "Palmă · lumină aurie",
+      video: "/video/story-imaginez-golden-hand.mp4",
+      headline: <>Ideile tale devin <em>formă, lumină și experiență.</em></>,
+      copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.",
+      quote: "Ideile tale devin formă, lumină și experiență.",
+    },
+    {
+      number: "03",
+      title: "Construiesc",
+      label: "Birou modern · lumină rece",
+      video: "/video/story-construiesc-modern-office.mp4",
+      headline: <>Construiesc sisteme care <em>se simt vii.</em></>,
+      copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.",
+      quote: "Fiecare detaliu trebuie să conducă spre emoție, claritate și acțiune.",
+    },
+  ];
   const selectedPriceItems = priceItems.filter(i => selectedPrices.includes(i.title));
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
@@ -206,6 +236,7 @@ export function HomePage({ onNavigate, onSection }) {
   const aboutMask = useTransform(aboutProgress, [0, 0.18, 0.56, 0.82], ["inset(0 100% 0 0 round 28px)", "inset(0 18% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)", "inset(0 0% 0 0 round 28px)"]);
   const storyRef = useRef(null);
   const storyVideoRef = useRef(null);
+  const storyStepVideoRefs = useRef([]);
   const { scrollYProgress: storyProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
   const storyVideoScale = useTransform(storyProgress, [0, 0.5, 1], [1.08, 1.16, 1.04]);
   const storyVideoOpacity = useTransform(storyProgress, [0, 0.08, 0.88, 1], [0, 0.85, 0.85, 0]);
@@ -220,8 +251,14 @@ export function HomePage({ onNavigate, onSection }) {
   useEffect(() => {
     const video = storyVideoRef.current;
     const unsubscribe = storyProgress.on("change", (progress) => {
-      if (!video || !Number.isFinite(video.duration)) return;
-      video.currentTime = Math.min(video.duration - 0.05, Math.max(0, progress * video.duration));
+      if (video && Number.isFinite(video.duration)) {
+        video.currentTime = Math.min(video.duration - 0.05, Math.max(0, progress * video.duration));
+      }
+      storyStepVideoRefs.current.forEach((stepVideo, index) => {
+        if (!stepVideo || !Number.isFinite(stepVideo.duration)) return;
+        const localProgress = Math.min(1, Math.max(0, (progress - index / 3) * 3));
+        stepVideo.currentTime = Math.min(stepVideo.duration - 0.05, Math.max(0, localProgress * stepVideo.duration));
+      });
     });
     return unsubscribe;
   }, [storyProgress]);
@@ -371,36 +408,37 @@ export function HomePage({ onNavigate, onSection }) {
             </video>
             <motion.div className="story-cinematic-blackout" style={{ opacity: storyBlackout }} />
           </motion.div>
-          <div className="story-visuals" aria-hidden="true">
-            <motion.figure className="story-image story-cutout scene-one" style={{ y: storyDepthNear, z: 90 }}><img src="/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg" alt="" /></motion.figure>
-            <motion.figure className="story-image story-cutout scene-two" style={{ y: storyDepthMid, z: 40 }}><img src="/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg" alt="" /></motion.figure>
-            <motion.figure className="story-image story-cutout scene-three" style={{ y: storyDepthFar, z: 120 }}><img src="/assets/bijuterii.png" alt="" /></motion.figure>
+          <div className="story-visuals story-video-scenes" aria-hidden="true">
+            <div className="story-step-videos">
+              {storySteps.map((step, index) => (
+                <motion.figure
+                  key={step.number}
+                  className={`story-step-video-card scene-${index + 1}`}
+                  style={{ y: index === 0 ? storyDepthNear : index === 1 ? storyDepthMid : storyDepthFar, z: index === 1 ? 120 : 70 }}
+                >
+                  <video ref={(el) => { storyStepVideoRefs.current[index] = el; }} muted playsInline preload="auto">
+                    <source src={step.video} type="video/mp4" />
+                  </video>
+                  <figcaption><span>{step.number}</span>{step.label}</figcaption>
+                </motion.figure>
+              ))}
+            </div>
             <motion.div className="story-sculpture" style={{ y: storyDepthMid }}>
               <span className="petal p1" /><span className="petal p2" /><span className="petal p3" /><span className="petal p4" />
               <i className="orbit o1" /><i className="orbit o2" /><i className="orbit o3" /><b className="sculpture-core" />
             </motion.div>
             <div className="story-glow" />
           </div>
-          <div className="story-copy">
+          <div className="story-copy story-cinematic-copy">
             <p className="section-kicker">Din idee în experiență</p>
-            <motion.article className="scene-one">
-              <span>01 / Ascult</span>
-              <h2 style={serif}>Povestea ta devine <em>punctul de plecare.</em></h2>
-              <p>Nu pornesc de la template-uri sau tendințe. Pornesc de la ce eşti tu, ce vrei să comunici şi cine vrei să atragi.</p>
-              <blockquote>„Ascult întâi. Abia apoi construiesc imaginea care rămâne.”</blockquote>
-            </motion.article>
-            <motion.article className="scene-two">
-              <span>02 / Imaginez</span>
-              <h2 style={serif}>Ideile captă <em>formă şi profunzime.</em></h2>
-              <p>Construiesc direcții vizuale, explor concepte şi transform abstractul în ceva concret, coerent şi memorabil.</p>
-              <blockquote>„Culoarea, ritmul și mișcarea devin limbajul brandului.”</blockquote>
-            </motion.article>
-            <motion.article className="scene-three">
-              <span>03 / Construiesc</span>
-              <h2 style={serif}>Totul devine o <em>experiență vie.</em></h2>
-              <p>De la pixel la strategie, de la logo la campanie — livrez sisteme complete, gata de folosit.</p>
-              <blockquote>„Fiecare ecran trebuie să pară o scenă, nu o simplă secțiune.”</blockquote>
-            </motion.article>
+            {storySteps.map((step, index) => (
+              <motion.article key={step.number} className={`scene-${storySceneNames[index]} story-step-copy`}>
+                <span>{step.number} / {step.title}</span>
+                <h2 style={serif}>{step.headline}</h2>
+                <p>{step.copy}</p>
+                <blockquote>„{step.quote}”</blockquote>
+              </motion.article>
+            ))}
             <div className="story-counter"><b>0<span /></b><i /><small>03</small></div>
           </div>
         </div>

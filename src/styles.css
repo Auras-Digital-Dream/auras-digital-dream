@@ -859,3 +859,194 @@ body { background:var(--paper); }
   .cinematic-books *, .cinematic-books *::before, .cinematic-books *::after { animation-duration:.01ms!important; animation-iteration-count:1!important; scroll-behavior:auto!important; transition-duration:.01ms!important; }
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}[data-reveal]{opacity:1!important;transform:none!important}[data-parallax],.story-image,.story-sculpture{transform:none!important}.story-section{height:auto}.story-stage{position:relative;min-height:100vh}.story-copy article.scene-one{position:relative;opacity:1;transform:none;left:auto;right:auto;top:auto}.story-copy article:not(.scene-one){display:none}.custom-cursor,.custom-cursor-ring{display:none}::view-transition-old(root),::view-transition-new(root){animation:none!important}}
+
+/* Cinematic scroll story: Din idee in experienta */
+.trailer-story-section .story-video-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 28% 36%, rgba(220, 184, 114, .20), transparent 28%),
+    linear-gradient(90deg, rgba(4, 13, 20, .78), rgba(6, 21, 32, .42) 48%, rgba(3, 10, 16, .88));
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.story-video-scenes {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.story-step-videos {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.story-step-video-card {
+  --scene-opacity: 0;
+  position: absolute;
+  margin: 0;
+  width: min(46vw, 660px);
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgba(218, 187, 125, .34);
+  border-radius: 34px;
+  overflow: hidden;
+  background: rgba(8, 18, 28, .72);
+  box-shadow: 0 42px 90px rgba(0, 0, 0, .52), 0 0 70px rgba(218, 187, 125, .12);
+  opacity: var(--scene-opacity);
+  filter: blur(calc((1 - var(--scene-opacity)) * 10px)) saturate(1.05) contrast(1.06);
+  transform: translate3d(0, 0, 0) rotateX(calc((1 - var(--scene-opacity)) * 8deg)) rotateY(calc((1 - var(--scene-opacity)) * -10deg)) scale(calc(.9 + var(--scene-opacity) * .1));
+  transition: filter .45s ease, box-shadow .45s ease;
+}
+
+.story-step-video-card::before,
+.story-step-video-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.story-step-video-card::before {
+  background: radial-gradient(circle at 50% 45%, transparent 36%, rgba(3, 9, 14, .38) 68%, rgba(3, 9, 14, .86) 100%);
+}
+
+.story-step-video-card::after {
+  background: linear-gradient(180deg, transparent 48%, rgba(2, 8, 13, .86));
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, .58), inset 0 0 0 1px rgba(255, 255, 255, .04);
+}
+
+.story-step-video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.06);
+}
+
+.story-step-video-card figcaption {
+  position: absolute;
+  left: 24px;
+  bottom: 22px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(244, 235, 216, .9);
+  font-size: .78rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-shadow: 0 10px 28px rgba(0, 0, 0, .72);
+}
+
+.story-step-video-card figcaption span {
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 25%, #fff4d7, #dabb7d 48%, #1a5a7f 100%);
+  color: #06131d;
+  font-weight: 800;
+  letter-spacing: .03em;
+  box-shadow: 0 0 26px rgba(218, 187, 125, .42);
+}
+
+.story-step-video-card.scene-1 {
+  --scene-opacity: var(--scene-one, 0);
+  left: 7%;
+  top: 16%;
+  transform-origin: 15% 60%;
+}
+
+.story-step-video-card.scene-2 {
+  --scene-opacity: var(--scene-two, 0);
+  right: 8%;
+  top: 25%;
+  width: min(42vw, 590px);
+  transform-origin: 80% 45%;
+}
+
+.story-step-video-card.scene-3 {
+  --scene-opacity: var(--scene-three, 0);
+  left: 16%;
+  bottom: 12%;
+  width: min(44vw, 620px);
+  transform-origin: 40% 80%;
+}
+
+.story-cinematic-copy article {
+  transform-style: preserve-3d;
+}
+
+.story-step-copy span {
+  color: rgba(218, 187, 125, .92);
+  text-shadow: 0 0 24px rgba(218, 187, 125, .28);
+}
+
+.story-step-copy h2 {
+  text-shadow: 0 0 0 rgba(218, 187, 125, 0), 0 28px 55px rgba(0, 0, 0, .45);
+  animation: storyTitleGlow 3.6s ease-in-out infinite alternate;
+}
+
+.story-step-copy h2 em {
+  color: #f1d28b;
+  text-shadow: 0 0 24px rgba(218, 187, 125, .26);
+}
+
+.story-step-copy p,
+.story-step-copy blockquote {
+  animation: sculpturalTextIn 1.6s ease both;
+}
+
+.story-step-copy blockquote {
+  border-left: 1px solid rgba(218, 187, 125, .55);
+  padding-left: 1.15rem;
+  color: rgba(244, 235, 216, .82);
+  font-style: italic;
+  letter-spacing: .01em;
+}
+
+@keyframes storyTitleGlow {
+  0% { text-shadow: 0 0 0 rgba(218, 187, 125, 0), 0 28px 55px rgba(0, 0, 0, .45); }
+  100% { text-shadow: 0 0 28px rgba(218, 187, 125, .24), 0 28px 70px rgba(0, 0, 0, .62); }
+}
+
+@keyframes sculpturalTextIn {
+  from { opacity: .58; filter: blur(6px); transform: translateY(14px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .story-step-video-card {
+    width: 88vw !important;
+    left: 6vw !important;
+    right: auto !important;
+    bottom: auto !important;
+    border-radius: 24px;
+    opacity: calc(var(--scene-opacity) * .64);
+  }
+
+  .story-step-video-card.scene-1 { top: 10%; }
+  .story-step-video-card.scene-2 { top: 29%; }
+  .story-step-video-card.scene-3 { top: 48%; }
+
+  .story-step-video-card figcaption {
+    left: 16px;
+    bottom: 15px;
+    font-size: .62rem;
+    letter-spacing: .14em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-step-video-card,
+  .story-step-copy h2,
+  .story-step-copy p,
+  .story-step-copy blockquote {
+    animation: none !important;
+  }
+}
