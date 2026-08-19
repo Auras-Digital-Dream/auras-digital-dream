@@ -59,6 +59,10 @@
      so accents stay readable on both light panels and dark film. */
   --accent:#2D353C;
   --muted:#5A6066;
+  /* Small copy carries less ink per glyph than body text, so it needs more
+     room than the 4.5:1 floor. This clears 7.14:1 on --paper and 5.95:1 on
+     --marble, the darkest light ground on the page. */
+  --ink-soft-strong:#544F49;
 }
 
 /* Sections backed by video or full-bleed imagery keep light type on a
