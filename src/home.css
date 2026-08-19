@@ -1347,8 +1347,7 @@
   translate: calc(var(--rx) * var(--cos, 0)) calc(var(--ry) * var(--sin, -1));
   scale: calc(.80 + .26 * var(--depth));
   rotate: calc(var(--cos, 0) * 4deg + var(--scatter, 0deg));
-  opacity: calc(.52 + .48 * var(--depth));
-  will-change: translate, scale, rotate, opacity;
+  will-change: translate, scale, rotate;
 }
 
 /* On a narrow screen the ring runs out of width long before it runs out of
@@ -1383,25 +1382,55 @@
     translate: none;
     scale: 1;
     rotate: 0deg;
-    opacity: 1;
   }
 
-  .fan-card-index { left: auto; right: 8px; top: 8px; }
+  .fan-card figure::after { background: none; }
+
+  .fan-card-index { left: auto; right: 5px; top: 8px; }
+  .fan-card figure::before { inset: 0 0 0 auto; background: linear-gradient(270deg, rgba(45,53,60,.94) 0 19px, rgba(45,53,60,.5) 25px, transparent); }
 }
 
 /* Set on its side just outside the print, the way a contact sheet numbers
    its frames. */
 .fan-card-index {
   position: absolute;
-  top: 0;
-  left: -1.55em;
-  z-index: 2;
+  top: 10px;
+  left: 3px;
+  z-index: 3;
   writing-mode: vertical-rl;
   font-family: var(--font-sans);
   font-size: 10.5px;
   font-weight: 500;
   letter-spacing: .22em;
-  color: rgba(249,239,228,.62);
+  color: rgba(249,239,228,.92);
+}
+
+/* Depth: strongest at the back of the ring, gone at the front. Painted on
+   the card rather than applied as opacity, so the card never turns into a
+   window onto its neighbours. */
+.fan-card figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(45,53,60, calc(.52 - .52 * var(--depth, 1)));
+  pointer-events: none;
+}
+
+/* The strip the number is printed on, down the sprocket edge of the frame.
+   Sixteen cards overlap, so anything outside the print sits on an
+   unpredictable photograph; inside, it always has this to sit on. */
+.fan-card figure::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 34px;
+  /* Solid for the width the number actually occupies, then falling away, so
+     no part of the glyph box can land on the photograph underneath. */
+  background: linear-gradient(90deg,
+    rgba(45,53,60,.94) 0 19px, rgba(45,53,60,.5) 25px, transparent);
+  pointer-events: none;
 }
 
 .fan-card figure {
@@ -1736,6 +1765,26 @@
       color-mix(in srgb, var(--ink), black 16%), var(--ink) 30%,
       color-mix(in srgb, var(--ink), black 24%) 56%, var(--ink) 78%,
       color-mix(in srgb, var(--ink), black 16%));
+}
+
+/* .services and .estimator read as a warmer band than the rest of the light
+   page, and that distinction is doing work — they are the two sections that
+   sell. This is the same stone cut deeper: the base runs through --marble,
+   --shell and --sand-soft instead of --surface-2, --paper and --marble. */
+.bg-marble.is-deep {
+  background-color: var(--marble);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.03'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 155% 95% at 6% 16%,
+      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 46%) 47.88% 47.98%, transparent 48.10%),
+    radial-gradient(ellipse 125% 150% at 97% 64%,
+      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 56%) 41.40% 41.50%, transparent 41.62%),
+    radial-gradient(ellipse 190% 75% at 38% 111%,
+      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 50%) 38.90% 39.00%, transparent 39.12%),
+    radial-gradient(ellipse 85% 95% at 91% 88%,
+      color-mix(in srgb, var(--sand-soft), transparent 40%), transparent 62%),
+    conic-gradient(from 205deg at 66% 28%,
+      var(--shell), var(--marble) 26%, var(--sand-soft) 51%, var(--marble) 72%, var(--shell));
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

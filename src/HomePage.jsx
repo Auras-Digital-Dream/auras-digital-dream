@@ -323,7 +323,7 @@ export function HomePage({ onNavigate }) {
       {/* ── Chapters: the working method ─────────────────────────────────── */}
       <Chapters
         id="proces"
-        className="method"
+        className="method bg-ink-marble"
         items={chapters}
         renderMedia={(item) => (
           <>
@@ -359,7 +359,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       <Fan
-        className="work-fan"
+        className="work-fan bg-ink-marble"
         label="Toate proiectele"
         backdrop={(
           <p className="fan-backdrop" aria-hidden="true">
@@ -379,7 +379,7 @@ export function HomePage({ onNavigate }) {
       />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
-      <section className="services gilt" id="servicii">
+      <section className="services gilt bg-marble is-deep" id="servicii">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Servicii</Reveal>
@@ -415,7 +415,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Process ──────────────────────────────────────────────────────── */}
-      <section className="process">
+      <section className="process bg-marble">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Proces de lucru</Reveal>
@@ -436,7 +436,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Estimator ────────────────────────────────────────────────────── */}
-      <section className="estimator" id="estimator">
+      <section className="estimator bg-marble is-deep" id="estimator">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Estimator de cost</Reveal>
@@ -813,7 +813,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="site-footer">
+      <footer className="site-footer bg-ink-marble">
         <div className="shell footer-grid">
           <div className="footer-brand">
             <img src="/assets/logo.jpg" alt="" aria-hidden="true" />
