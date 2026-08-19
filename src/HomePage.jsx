@@ -70,7 +70,7 @@ const packageComparison = [
 ];
 const chapters = [
   { key: "asculta", number: "01", title: "Ascult", video: "/video/story-ascult-workshop.mp4", poster: "/video/poster/story-ascult-workshop.jpg", headline: "Nu pornesc de la tendințe. Pornesc de la tine.", copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.", meta: "Atelier vechi · marmură" },
-  { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Ideile tale devin formă, lumină și experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
+  { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Ideea ta devine formă. Forma devine lumină. Lumina devine experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
   { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", poster: "/video/poster/story-construiesc-modern-office.jpg", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
 ];
 const processSteps = [
@@ -260,7 +260,7 @@ export function HomePage({ onNavigate }) {
             style={reduced ? undefined : { scale: titleScale, y: titleShift }}
           >
             <Reveal as="p" className="kicker" delay={0.15}>Marketing · Design · Web</Reveal>
-            <Lines as="h1" className="hero-title" text="Brandul tău merită să fie simțit, nu doar văzut." delay={0.3} />
+            <Lines as="h1" className="hero-title" text="Îți transform ideea brută într-o experiență șlefuită cu grijă." delay={0.3} />
           </motion.div>
 
           <motion.div
@@ -268,8 +268,7 @@ export function HomePage({ onNavigate }) {
             style={reduced ? undefined : { opacity: bodyReveal, y: bodyShift }}
           >
             <p className="hero-lead">
-              Construiesc identități vizuale, website-uri și campanii pentru antreprenori care vor
-              o prezență clară, coerentă și memorabilă.
+              Așa cum sculptorul vede forma în piatră înainte ca lumea s-o vadă.
             </p>
             <div className="hero-actions">
               <button className="button primary" onClick={() => scrollToId("contact")}>Începe un proiect <ArrowRight size={16} /></button>
@@ -287,7 +286,7 @@ export function HomePage({ onNavigate }) {
           <Lines
             as="p"
             className="manifesto-text"
-            text="Nu fac doar materiale frumoase. Construiesc lumi vizuale în care brandul tău capătă ritm, claritate și memorie."
+            text="Sunt Aura — designer, marketer și sculptor digital. Nu creez proiecte. Modelez identități."
           />
           <Rise delay={0.2} className="manifesto-meta">
             <span>Aura Dobre</span>
@@ -334,7 +333,7 @@ export function HomePage({ onNavigate }) {
       <section className="work-intro" id="portofoliu">
         <div className="shell">
           <Reveal as="p" className="kicker">Selecție curatorială</Reveal>
-          <Lines as="h2" className="section-title" text="Proiecte care nu doar arată bine — ci spun ceva." />
+          <Lines as="h2" className="section-title" text="Creez proiecte care nu doar arată bine. Spun ceva." />
         </div>
       </section>
 
@@ -358,11 +357,11 @@ export function HomePage({ onNavigate }) {
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Servicii</Reveal>
-            <Lines as="h2" className="section-title" text="Tot ce ai nevoie, sub un singur acoperiș." />
+            <Lines as="h2" className="section-title" text="Nu livrez servicii. Livrez transformări." />
             <Rise delay={0.15}>
               <p className="section-lead">
-                De la identitate vizuală şi web la documente şi social media — construiesc tot ce
-                are nevoie un brand pentru a arăta şi comunica profesionist.
+                Adun sub un singur acoperiș tot ce dă viață unei prezențe: identitate,
+                strategie, design, experiență.
               </p>
             </Rise>
           </div>
@@ -525,10 +524,10 @@ export function HomePage({ onNavigate }) {
         </Depth>
         <span className="editorial-scrim" aria-hidden="true" />
         <div className="shell editorial-body">
-          <Reveal as="p" className="kicker">Artă care oprește scroll-ul</Reveal>
+          <Reveal as="p" className="kicker">Behind the Dream</Reveal>
           <Lines as="h2" className="section-title" text="Imaginile vorbesc înaintea cuvintelor." />
           <Rise delay={0.2}>
-            <p>Fotografie editorială, direcție de artă şi estetică de brand construite cu intenție şi coerență.</p>
+            <p>Am pornit dintr-o dorință simplă: să transform ideile în experiențe care se simt, nu doar se văd.</p>
           </Rise>
         </div>
       </section>
@@ -725,7 +724,7 @@ export function HomePage({ onNavigate }) {
         <div className="shell contact-grid">
           <div className="contact-copy">
             <Reveal as="p" className="kicker">Contact</Reveal>
-            <Lines as="h2" className="section-title" text="Hai să construim împreună ideea ta." />
+            <Lines as="h2" className="section-title" text="Hai să sculptăm împreună ideea ta." />
             <Rise delay={0.15}>
               <p>
                 Spune-mi ce vrei să construim, iar eu transform brief-ul într-o direcție clară:
