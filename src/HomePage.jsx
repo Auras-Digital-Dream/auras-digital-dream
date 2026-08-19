@@ -353,7 +353,6 @@ export function HomePage({ onNavigate }) {
 
       <Fan
         className="work-fan"
-        spread={13}
         label="Proiecte reprezentative"
         items={featured.map((p) => ({ ...p, key: p.slug }))}
         renderCard={(project) => (

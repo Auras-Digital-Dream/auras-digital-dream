@@ -1219,26 +1219,45 @@
    beat between the services block and the archive. */
 .fan { background: var(--ink); color: #fff; }
 
-/* The arc's width grows with the pivot distance, so on a narrow screen the
-   outer cards would run past both edges. Scaling the whole stage keeps the
-   fan's proportions intact instead of squashing the geometry. */
+/* The cards orbit a full turn rather than sweeping an arc. The ring is an
+   ellipse, not a circle: the section has width to spare and very little
+   height, and a ring seen from slightly above is an ellipse anyway.
+
+   Both radii are derived from what is actually left over once the card is
+   placed, so the ring can never push a card past an edge however narrow
+   the screen gets — which is what the old --fan-scale hack was patching,
+   at the cost of shrinking the cards. */
 .fan-stage {
+  --card-w: clamp(148px, 22vw, 300px);
+  --card-h: calc(var(--card-w) * 4 / 3);
+  --rx: min(430px, calc((100vw - var(--card-w) - var(--gutter) * 2) / 2));
+  --ry: max(70px, min(var(--ry-max, 180px), calc((100svh - var(--card-h) * 1.12 - 96px) / 2)));
+
   position: sticky;
   top: 0;
   height: 100svh;
   display: grid;
   place-items: center;
   perspective: 1600px;
-  transform: scale(var(--fan-scale, 1));
 }
 
 .fan-card {
   grid-area: 1 / 1;
-  width: clamp(160px, 17vw, 240px);
-  /* Pivot far below the card, so the spread reads as a hand of cards
-     swinging open rather than each card spinning on its own centre. */
-  transform-origin: 50% 300%;
-  will-change: transform;
+  width: var(--card-w);
+  /* 0 at the back of the ring, 1 at the front. */
+  --depth: calc((var(--sin, -1) + 1) / 2);
+  translate: calc(var(--rx) * var(--cos, 0)) calc(var(--ry) * var(--sin, -1));
+  scale: calc(.78 + .28 * var(--depth));
+  rotate: calc(var(--cos, 0) * 6deg);
+  opacity: calc(.46 + .54 * var(--depth));
+  will-change: translate, scale, rotate, opacity;
+}
+
+/* On a narrow screen the ring runs out of width long before it runs out of
+   height, and the cards start covering each other's captions. Let it grow
+   downward instead — the space is sitting there unused. */
+@media (max-width: 720px) {
+  .fan-stage { --ry-max: 250px; }
 }
 
 .fan-card-index {
@@ -1422,15 +1441,12 @@
   display: block;
 }
 
-@media (max-width: 1100px) { .home { --fan-scale: .82; } }
 
 @media (max-width: 860px) {
-  .home { --fan-scale: .6; }
   .difference-grid { grid-template-columns: minmax(0, 1fr); }
   .difference-col:last-child { margin-top: 0; }
 }
 
-@media (max-width: 560px) { .home { --fan-scale: .44; } }
 
 /* ══════════════════════════════════════════════════════════════════════════
    CONTRAST RHYTHM

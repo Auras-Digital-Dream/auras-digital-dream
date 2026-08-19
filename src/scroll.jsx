@@ -300,30 +300,35 @@ export function Progress() {
 
    Each card is its own component: the rotation is driven by hooks, and hooks
    cannot be called from inside a map callback. */
-function FanCard({ index, offset, open, spread, count, children }) {
-  const rotate = useTransform(open, [0, 1], [0, offset * spread]);
-  const y = useTransform(open, [0, 1], [0, -Math.abs(offset) * 14]);
-  const scale = useTransform(open, [0, 1], [0.92, 1]);
+const TAU = Math.PI * 2;
+
+/* One card on the ring. It is placed by the cosine and sine of its own
+   angle, handed to CSS as plain numbers so the radii can stay in the
+   stylesheet where the breakpoints are. Angle 0 is the front of the ring,
+   nearest the viewer; the card never turns upside down because only the
+   position orbits, not the card. */
+function FanCard({ index, count, turn, children }) {
+  const angle = useTransform(turn, (t) => (index / count + t) * TAU + Math.PI / 2);
+  const cos = useTransform(angle, Math.cos);
+  const sin = useTransform(angle, Math.sin);
+  const zIndex = useTransform(sin, (s) => Math.round(50 + s * 40));
   return (
-    <motion.div
-      className="fan-card"
-      style={{ rotate, y, scale, zIndex: count - Math.abs(offset) }}
-    >
+    <motion.div className="fan-card" style={{ "--cos": cos, "--sin": sin, zIndex }}>
       <span className="fan-card-index">{String(index + 1).padStart(2, "0")}</span>
       {children}
     </motion.div>
   );
 }
 
-export function Fan({ items, renderCard, className = "", id, label, spread = 9 }) {
+export function Fan({ items, renderCard, className = "", id, label }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const open = useSpring(useTransform(scrollYProgress, [0.08, 0.6], [0, 1]), {
+  // 0 -> 1 is one complete revolution, spread across almost the whole pin.
+  const turn = useSpring(useTransform(scrollYProgress, [0.04, 0.96], [0, 1]), {
     stiffness: 90, damping: 26, mass: 0.5,
   });
   const count = items.length;
-  const mid = (count - 1) / 2;
 
   if (reduced) {
     return (
@@ -350,14 +355,7 @@ export function Fan({ items, renderCard, className = "", id, label, spread = 9 }
     >
       <div className="fan-stage">
         {items.map((item, i) => (
-          <FanCard
-            key={item.key ?? i}
-            index={i}
-            offset={i - mid}
-            open={open}
-            spread={spread}
-            count={count}
-          >
+          <FanCard key={item.key ?? i} index={i} count={count} turn={turn}>
             {renderCard(item, i)}
           </FanCard>
         ))}
