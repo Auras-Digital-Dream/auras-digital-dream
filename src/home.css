@@ -57,6 +57,35 @@
   color: var(--accent);
 }
 
+/* The gold accent on a heading: drawn, not written. On paper gold is 1.92:1
+   as text, so it comes in as a hairline in front of the kicker; on the ink
+   sections the kicker text is gold itself and the line simply matches. */
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kicker::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* Centred blocks need the rule on both sides or the text sits off-axis. */
+.hero-headline .kicker,
+.marquee-lead .kicker { justify-content: center; }
+.hero-headline .kicker::after,
+.marquee-lead .kicker::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
 .section-title {
   margin: 0;
   font-family: var(--font-display);
@@ -316,7 +345,7 @@
     rgba(45,53,60,.9), rgba(45,53,60,.62) 52%, rgba(45,53,60,.2) 76%, transparent 88%);
 }
 
-.hero-headline .kicker { color: var(--frost); text-shadow: 0 1px 10px rgba(45,53,60,.9); }
+.hero-headline .kicker { color: var(--gold); text-shadow: 0 1px 10px rgba(45,53,60,.9); }
 
 .hero-title {
   margin: 0;
@@ -475,7 +504,7 @@
 }
 
 .chapter-copy[data-active="true"] { opacity: 1; transform: none; pointer-events: auto; }
-.chapter-copy .kicker { color: var(--frost); }
+.chapter-copy .kicker { color: var(--gold); }
 .chapter-headline { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.06; letter-spacing: 1px; }
 .chapter-body { max-width: 46ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.78); }
 .chapter-meta { display: block; margin-top: 26px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.5); }
@@ -566,7 +595,10 @@
 
 /* ── Services ─────────────────────────────────────────────────────────── */
 
-.services { padding-block: var(--rhythm); background: var(--paper); }
+/* The two sections that sell go on marble: warmer and a shade deeper than
+   paper, so they read as a premium band without leaving the light scheme.
+   Ink on marble is 9.58:1. */
+.services { padding-block: var(--rhythm); background: var(--marble); }
 
 .service-grid {
   display: grid;
@@ -630,13 +662,16 @@
 }
 
 .process-step { padding-top: 22px; border-top: 1px solid var(--steel); }
-.process-number { display: block; font-family: var(--font-display); font-size: 34px; color: var(--sky); letter-spacing: 1px; }
+/* --sky on surface-2 is 1.45:1: the step numbers were barely there. Gold
+   would be 2.02:1, no better — this is why gold stays a drawn line on light
+   ground. --ink-soft gives 4.69:1 and still reads as secondary. */
+.process-number { display: block; font-family: var(--font-display); font-size: 34px; color: var(--ink-soft); letter-spacing: 1px; }
 .process-step h3 { margin: 10px 0 8px; font-family: var(--font-display); font-size: 21px; font-weight: 600; letter-spacing: 1px; }
 .process-step p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
 
 /* ── Estimator ────────────────────────────────────────────────────────── */
 
-.estimator { padding-block: var(--rhythm); background: var(--paper); }
+.estimator { padding-block: var(--rhythm); background: var(--marble); }
 
 .estimator-grid {
   display: grid;
@@ -694,7 +729,7 @@
   color: #fff;
 }
 
-.price-summary .kicker { color: var(--frost); margin-bottom: 0; }
+.price-summary .kicker { color: var(--gold); margin-bottom: 0; }
 .price-empty { margin: 0; font-size: 14px; color: rgba(255,255,255,.68); }
 .price-chosen { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .price-chosen li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; font-size: 13px; color: rgba(255,255,255,.78); }
@@ -771,7 +806,7 @@
     rgba(45,53,60,.92));
 }
 
-.editorial .kicker { color: var(--frost); }
+.editorial .kicker { color: var(--gold); }
 .editorial-body { max-width: 720px; }
 .editorial-body p { max-width: 52ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.82); }
 
@@ -879,6 +914,24 @@
 
 .contact { padding-block: var(--rhythm); color: #fff; }
 .contact-media { position: absolute; inset: 0; z-index: -1; background: linear-gradient(150deg, #3A434A, #232A30); }
+
+/* Vignette on every video container, homepage included — an inset shadow so
+   it darkens the corners without touching the footage's own brightness.
+   Dimming the video itself is what buried it three times before. */
+.hero-frame::after,
+.chapter-media::after,
+.chapter-static-media::after,
+.film::after,
+.editorial-media::after,
+.contact-media::after,
+.difference-figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: inset 0 0 clamp(60px, 9vw, 150px) clamp(14px, 2.2vw, 40px) rgba(20,26,31,.42);
+}
 .contact-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .contact-scrim {
   position: absolute;
@@ -887,7 +940,7 @@
     linear-gradient(90deg, rgba(45,53,60,.9) 0 28%, rgba(45,53,60,.55) 58%, rgba(45,53,60,.32)),
     linear-gradient(180deg, rgba(45,53,60,.5), transparent 34%, transparent 66%, rgba(45,53,60,.6));
 }
-.contact .kicker { color: var(--frost); }
+.contact .kicker { color: var(--gold); }
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
 .contact-copy p { max-width: 50ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.8); }
 .contact-links { display: grid; gap: 12px; margin-top: 32px; }
@@ -1087,7 +1140,7 @@
 /* Dark ground under the fan: the cards read as objects lifted off a
    surface instead of paper on paper. This is also the page's contrast
    beat between the services block and the archive. */
-.fan { background: var(--ink); }
+.fan { background: var(--ink); color: #fff; }
 
 /* The arc's width grows with the pivot distance, so on a narrow screen the
    outer cards would run past both edges. Scaling the whole stage keeps the
@@ -1213,6 +1266,7 @@
 .film {
   height: 100svh;
   padding: 0;
+  color: #fff;
   background: linear-gradient(150deg, #3A434A, #232A30);
 }
 
@@ -1309,9 +1363,21 @@
    sections read as paper rather than as the only possible ground.
    ══════════════════════════════════════════════════════════════════════════ */
 
+/* Every section whose ground is ink: the accent has to leave the root's
+   ink value or it renders on itself. */
+.chapters,
+.fan,
+.film,
+.marquee,
+.contact,
+.site-footer {
+  --accent: var(--gold);
+  --muted: rgba(255,255,255,.7);
+}
+
 .difference,
 .clarity {
-  --accent: var(--frost);
+  --accent: var(--gold);
   --muted: rgba(255,255,255,.7);
   background-color: var(--ink);
   background-image: none;
@@ -1354,7 +1420,7 @@
   background-color: var(--ink);
   background-image: none;
   color: #fff;
-  --accent: var(--frost);
+  --accent: var(--gold);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
