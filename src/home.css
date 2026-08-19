@@ -901,25 +901,4 @@
   display: block;
 }
 
-/* Work cards hold a still until pointed at, then dissolve to motion. The
-   clip carries preload="none", so none of it costs bandwidth up front. */
-.work-frame-media { position: relative; }
-
-.work-frame-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity .55s var(--ease);
-  pointer-events: none;
-}
-
-.work-frame:hover .work-frame-video,
-.work-frame:focus-visible .work-frame-video { opacity: 1; }
 .work-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
-
-@media (prefers-reduced-motion: reduce) {
-  .work-frame-video { display: none; }
-}

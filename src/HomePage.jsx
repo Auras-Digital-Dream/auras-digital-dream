@@ -73,11 +73,6 @@ const chapters = [
   { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", headline: "Ideile tale devin formă, lumină și experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
   { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
 ];
-const frameClips = [
-  "/video/kintsugi-hand-touch.mp4",
-  "/video/stone-hand-dust.mp4",
-  "/video/about-renaissance-studio.mp4",
-];
 const processSteps = [
   ["01", "Descoperire", "Înțeleg obiectivele tale, publicul şi provocările brandului. Ascult înainte să propun."],
   ["02", "Strategie", "Definesc direcția vizuală, structura şi mesajele-cheie. Nimic nu se întâmplă la întâmplare."],
@@ -121,7 +116,6 @@ export function HomePage({ onNavigate }) {
   const [selectedPrices, setSelectedPrices] = useState([]);
 
   const heroRef = useRef(null);
-  const frameVideos = useRef([]);
   const reduced = useReducedMotion();
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = featuredSlugs.map((slug) => projects.find((p) => p.slug === slug)).filter(Boolean);
@@ -134,19 +128,6 @@ export function HomePage({ onNavigate }) {
   const heroScale = useTransform(heroProgress, [0, 1], [1, 1.12]);
   const heroFade = useTransform(heroProgress, [0, 0.85], [1, 0]);
   const heroLift = useTransform(heroProgress, [0, 1], ["0%", "-14%"]);
-
-  function playFrame(index) {
-    const video = frameVideos.current[index];
-    if (!video || reduced) return;
-    video.play().catch(() => {});
-  }
-
-  function stopFrame(index) {
-    const video = frameVideos.current[index];
-    if (!video) return;
-    video.pause();
-    video.currentTime = 0;
-  }
 
   function togglePrice(title) {
     setSelectedPrices((c) => (c.includes(title) ? c.filter((t) => t !== title) : [...c, title]));
@@ -322,21 +303,10 @@ export function HomePage({ onNavigate }) {
             key={project.slug}
             href={"/portofoliu/" + project.slug}
             onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
-            onMouseEnter={() => playFrame(index)}
-            onMouseLeave={() => stopFrame(index)}
-            onFocus={() => playFrame(index)}
-            onBlur={() => stopFrame(index)}
           >
             <span className="work-frame-index">{String(index + 1).padStart(2, "0")}</span>
             <span className="work-frame-media">
               <img src={project.image} alt={project.title} loading="lazy" />
-              <video
-                className="work-frame-video"
-                muted loop playsInline preload="none" aria-hidden="true"
-                ref={(node) => { frameVideos.current[index] = node; }}
-              >
-                <source src={frameClips[index % frameClips.length]} type="video/mp4" />
-              </video>
             </span>
             <span className="work-frame-copy">
               <span className="work-frame-tags">{project.category.join(" · ")}</span>
