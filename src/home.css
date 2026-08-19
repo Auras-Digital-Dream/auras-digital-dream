@@ -157,7 +157,22 @@
 
 .button.primary { background: var(--ink); color: var(--paper); }
 .button.primary:hover { background: var(--ink-soft); }
-.button.primary:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.button.primary:disabled { opacity: .55; cursor: not-allowed; transform: none; animation: none; }
+
+/* A slow gold breath on the calls to action. It stays a glow and never a
+   scale: a button that changes size nudges its neighbours every cycle. The
+   global reduced-motion rule switches it off with everything else. */
+@keyframes ctaGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,106,0), 0 8px 22px -14px rgba(20,26,31,.5); }
+  50%      { box-shadow: 0 0 0 6px rgba(201,168,106,.16), 0 0 26px -2px rgba(201,168,106,.44); }
+}
+
+.button.primary,
+.masthead-cta { animation: ctaGlow 3.6s var(--ease) infinite; }
+
+/* Hover is already a signal; two at once is noise. */
+.button.primary:hover,
+.masthead-cta:hover { animation: none; }
 
 .button.ghost { border-color: var(--line); color: var(--ink); background: transparent; }
 .button.ghost:hover { border-color: var(--ink); background: var(--surface); }
@@ -187,17 +202,25 @@
 
 /* ── Masthead ─────────────────────────────────────────────────────────── */
 
+/* Brand on the left, navigation on the centre line, menu button on the
+   right. The nav is its own pane rather than loose links: a hollow bar that
+   takes its colour from whatever passes underneath it. */
 .masthead {
   position: absolute;
   inset: 0 0 auto;
   z-index: 60;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
-  padding: 26px var(--gutter);
+  padding: 22px var(--gutter);
   color: #fff;
 }
+
+/* When the nav pane is hidden the grid loses its middle item, so the toggle
+   would slide into column two and land mid-header. Pin it to the last
+   column instead of relying on source order. */
+.masthead-toggle { grid-column: 3; justify-self: end; }
 
 .masthead-brand {
   display: inline-flex;
@@ -220,23 +243,49 @@
   border: 1px solid rgba(255,255,255,.28);
 }
 
-.masthead-nav { display: flex; align-items: center; gap: 28px; }
+.masthead-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 6px 6px 20px;
+  border: 1px solid rgba(255,255,255,.20);
+  border-radius: 999px;
+  background: rgba(255,255,255,.07);
+  /* The glass. -webkit- included because Safari still needs it. */
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.24),
+    0 14px 40px -18px rgba(20,26,31,.7);
+}
 
 .masthead-nav a,
 .masthead-nav button {
-  padding: 6px 0;
+  padding: 9px 14px;
   border: 0;
+  border-radius: 999px;
   background: none;
-  color: rgba(255,255,255,.78);
+  color: rgba(255,255,255,.86);
   cursor: pointer;
   font-family: var(--font-body);
-  font-size: 13px;
-  letter-spacing: .5px;
-  transition: color .3s var(--ease);
+  font-size: 12.5px;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  transition: color .3s var(--ease), background .3s var(--ease);
 }
 
 .masthead-nav a:hover,
-.masthead-nav button:hover { color: #fff; }
+.masthead-nav button:hover { color: #fff; background: rgba(255,255,255,.14); }
+
+/* The one solid thing in the pane, so the eye has somewhere to land. */
+.masthead-cta {
+  padding: 9px 20px !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  font-weight: 600;
+}
+
+.masthead-cta:hover { background: #fff !important; color: var(--ink) !important; }
 .masthead-toggle { display: none; border: 0; background: none; color: #fff; cursor: pointer; }
 
 .menu-sheet {
@@ -1245,10 +1294,13 @@
    the screen gets — which is what the old --fan-scale hack was patching,
    at the cost of shrinking the cards. */
 .fan-stage {
-  --card-w: clamp(148px, 22vw, 300px);
+  /* Sixteen cards need a much longer ring than six did, so the radii cap
+     higher; both are still derived from the space actually left once the
+     card is placed, which is what keeps a card from crossing an edge. */
+  --card-w: clamp(120px, 15vw, 224px);
   --card-h: calc(var(--card-w) * 4 / 3);
-  --rx: min(430px, calc((100vw - var(--card-w) - var(--gutter) * 2) / 2));
-  --ry: max(70px, min(var(--ry-max, 180px), calc((100svh - var(--card-h) * 1.12 - 96px) / 2)));
+  --rx: min(600px, calc((100vw - var(--card-w) - var(--gutter) * 2) / 2));
+  --ry: max(84px, min(var(--ry-max, 300px), calc((100svh - var(--card-h) * 1.1 - 72px) / 2)));
 
   position: sticky;
   top: 0;
@@ -1258,35 +1310,98 @@
   perspective: 1600px;
 }
 
+/* The statement the wheel turns over. Two weights of the same sentence:
+   cream carries it, frost answers — both on ink, at 11.5:1 and 10.1:1, so
+   it is type you can read rather than a watermark. */
+.fan-backdrop {
+  grid-area: 1 / 1;
+  z-index: 0;
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: .02em;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  /* Sized to live inside the ring's opening rather than run under the
+     prints: the gap between the left and right cards is 2*rx - card_w. */
+  font-size: clamp(34px, 7.2vw, 116px);
+  line-height: .86;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  /* The hole in the ring is above centre: the front cards sit at the bottom
+     and are the largest and most opaque of the sixteen. */
+  translate: 0 -7svh;
+}
+
+.fan-backdrop span:first-child { color: var(--paper); }
+.fan-backdrop span:last-child { color: var(--frost); }
+
 .fan-card {
   grid-area: 1 / 1;
+  z-index: 1;
   width: var(--card-w);
   /* 0 at the back of the ring, 1 at the front. */
   --depth: calc((var(--sin, -1) + 1) / 2);
   translate: calc(var(--rx) * var(--cos, 0)) calc(var(--ry) * var(--sin, -1));
-  scale: calc(.78 + .28 * var(--depth));
-  rotate: calc(var(--cos, 0) * 6deg);
-  opacity: calc(.46 + .54 * var(--depth));
+  scale: calc(.80 + .26 * var(--depth));
+  rotate: calc(var(--cos, 0) * 4deg + var(--scatter, 0deg));
+  opacity: calc(.52 + .48 * var(--depth));
   will-change: translate, scale, rotate, opacity;
 }
 
 /* On a narrow screen the ring runs out of width long before it runs out of
    height, and the cards start covering each other's captions. Let it grow
    downward instead — the space is sitting there unused. */
+/* Sixteen prints on a ring the width of a phone is a pile, not a wheel.
+   The same markup lays flat below 720px — no second component, no second
+   set of cards to keep in step. */
 @media (max-width: 720px) {
-  .fan-stage { --ry-max: 250px; }
+  .fan { height: auto !important; }
+
+  .fan-stage {
+    position: static;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: var(--rhythm) var(--gutter);
+    perspective: none;
+  }
+
+  .fan-backdrop {
+    grid-area: auto / 1 / auto / -1;
+    font-size: clamp(40px, 15vw, 72px);
+    margin-bottom: 22px;
+    translate: none;
+  }
+
+  .fan-card {
+    grid-area: auto;
+    width: auto;
+    translate: none;
+    scale: 1;
+    rotate: 0deg;
+    opacity: 1;
+  }
+
+  .fan-card-index { left: auto; right: 8px; top: 8px; }
 }
 
+/* Set on its side just outside the print, the way a contact sheet numbers
+   its frames. */
 .fan-card-index {
   position: absolute;
-  top: 12px;
-  left: 14px;
+  top: 0;
+  left: -1.55em;
   z-index: 2;
-  font-family: var(--font-body);
-  font-size: 11.5px;
-  letter-spacing: .18em;
-  color: rgba(255,255,255,.9);
-  text-shadow: 0 1px 6px rgba(45,53,60,.6);
+  writing-mode: vertical-rl;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  color: rgba(249,239,228,.62);
 }
 
 .fan-card figure {
@@ -1610,12 +1725,23 @@
 .work-frame-title,
 .faq-item summary,
 .footer-brand strong,
-.masthead-brand,
 .menu-sheet a,
 .menu-sheet button {
   font-family: var(--font-serif);
   font-weight: 600;
   letter-spacing: .2px;
+}
+
+/* The wordmark is the one piece of UI that is a logotype, not a label, so
+   it keeps the script — set at zero tracking and one weight, the way this
+   face needs. */
+.masthead-brand {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(17px, 1.6vw, 24px);
+  letter-spacing: 0;
+  /* A logotype does not wrap. */
+  white-space: nowrap;
 }
 
 .service-price,

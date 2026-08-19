@@ -3,6 +3,14 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 
+// Fields arrive one after another as the form comes into view. Same
+// mechanism the rest of the page uses, so there is one reveal system, not two.
+const FIELD = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+};
+const FORM_STAGGER = { visible: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } } };
+
 // ── Static data ──────────────────────────────────────────────────────────────
 const projects = [
   { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.jpeg", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii şi spații digitale." },
@@ -22,7 +30,6 @@ const projects = [
   { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", description: "Ilustrații, postere, compoziții abstracte şi materiale grafice create într-o direcție contemporană." },
   { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate şi sigle de lux." },
 ];
-const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe", "adi-ecoo-2009-sa", "lumina-botanica"];
 const portfolioGroups = [
   { title: "Branding", copy: "Identități vizuale, logo-uri, direcții cromatice şi materiale de brand care fac o afacere recognoscibilă.", slugs: ["verde-bean", "painea-de-acasa", "lumina-botanica", "luxury-hair-by-aura", "logo-design", "carti-de-vizita", "selectii-cromatice"] },
   { title: "Web", copy: "Platforme, website-uri şi experiențe digitale create pentru prezentare, conversie şi încredere.", slugs: ["auras-trend-vault", "real-estate-co", "lupul-and-brici", "magazine-online-e-commerce"] },
@@ -118,7 +125,6 @@ export function HomePage({ onNavigate }) {
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
-  const featured = featuredSlugs.map((slug) => projects.find((p) => p.slug === slug)).filter(Boolean);
   const groupedProjects = portfolioGroups.map((g) => ({ ...g, projects: g.slugs.map((s) => projects.find((p) => p.slug === s)).filter(Boolean) }));
   const selectedPriceItems = priceItems.filter((i) => selectedPrices.includes(i.title));
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
@@ -216,11 +222,12 @@ export function HomePage({ onNavigate }) {
           <span>Aura's Digital Dream</span>
         </button>
         <nav className="masthead-nav" aria-label="Navigare principală">
-          {nav.map(([label, target]) => (
+          {nav.filter(([, target]) => target !== "contact").map(([label, target]) => (
             target.startsWith("/")
               ? <a key={label} href={target} onClick={(e) => onNavigate(e, target)}>{label}</a>
               : <button key={label} onClick={() => scrollToId(target)}>{label}</button>
           ))}
+          <button className="masthead-cta" onClick={() => scrollToId("contact")}>Contact</button>
         </nav>
         <button className="masthead-toggle" onClick={() => setMenuOpen(true)} aria-label="Deschide meniul">
           <List size={24} />
@@ -353,8 +360,14 @@ export function HomePage({ onNavigate }) {
 
       <Fan
         className="work-fan"
-        label="Proiecte reprezentative"
-        items={featured.map((p) => ({ ...p, key: p.slug }))}
+        label="Toate proiectele"
+        backdrop={(
+          <p className="fan-backdrop" aria-hidden="true">
+            <span>Modelez</span>
+            <span>identități</span>
+          </p>
+        )}
+        items={projects.map((p) => ({ ...p, key: p.slug }))}
         renderCard={(project) => (
           <a href={"/portofoliu/" + project.slug} onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}>
             <figure>
@@ -756,14 +769,21 @@ export function HomePage({ onNavigate }) {
             </Rise>
           </div>
           <Rise delay={0.2} className="contact-form-wrap">
-            <form id="contact-form" onSubmit={submitContact}>
+            <motion.form
+              id="contact-form"
+              onSubmit={submitContact}
+              initial={reduced ? false : "hidden"}
+              whileInView={reduced ? undefined : "visible"}
+              viewport={{ once: true, amount: 0.2 }}
+              variants={FORM_STAGGER}
+            >
               <input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" />
-              <div className="form-row">
+              <motion.div className="form-row" variants={FIELD}>
                 <input required name="name" maxLength="80" autoComplete="name" placeholder="Numele tău" />
                 <input required name="email" maxLength="120" type="email" autoComplete="email" placeholder="Email" />
-              </div>
-              <input name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" />
-              <select name="service" defaultValue="">
+              </motion.div>
+              <motion.input variants={FIELD} name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" />
+              <motion.select variants={FIELD} name="service" defaultValue="">
                 <option value="" disabled>Alege pachetul potrivit</option>
                 <option>Pachet Start-up</option>
                 <option>Pachet Rebranding</option>
@@ -771,23 +791,23 @@ export function HomePage({ onNavigate }) {
                 <option>Pachet Social Media</option>
                 <option>Pachet Documente Profesionale</option>
                 <option>Nu sunt sigură încă</option>
-              </select>
-              <textarea required name="message" minLength="15" maxLength="2000" placeholder="Descrie pe scurt proiectul tău..." />
-              <div className="form-actions">
+              </motion.select>
+              <motion.textarea variants={FIELD} required name="message" minLength="15" maxLength="2000" placeholder="Descrie pe scurt proiectul tău..." />
+              <motion.div className="form-actions" variants={FIELD}>
                 <button className="button primary" type="submit" disabled={formStatus === "sending"}>
                   {formStatus === "sending" ? "Se trimite..." : "Trimite pe email"} <ArrowRight size={16} />
                 </button>
                 <button className="button ghost" type="button" onClick={submitWhatsapp}>
                   <WhatsappLogo size={18} /> Trimite pe WhatsApp
                 </button>
-              </div>
+              </motion.div>
               {formStatus === "success" && <p className="form-notice is-success" role="status">Mesajul a fost trimis. Îți voi răspunde în maximum 24 de ore.</p>}
               {formStatus === "error" && <p className="form-notice is-error" role="alert">Trimiterea nu a reuşit. Te rog foloseşte butonul WhatsApp.</p>}
               <small className="form-privacy">
                 Prin trimitere eşti de acord ca datele să fie procesate de FormSubmit exclusiv
                 pentru livrarea mesajului către mine.
               </small>
-            </form>
+            </motion.form>
           </Rise>
         </div>
       </section>

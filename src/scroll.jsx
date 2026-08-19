@@ -312,15 +312,22 @@ function FanCard({ index, count, turn, children }) {
   const cos = useTransform(angle, Math.cos);
   const sin = useTransform(angle, Math.sin);
   const zIndex = useTransform(sin, (s) => Math.round(50 + s * 40));
+  // Each card is pinned at its own slight angle, the way prints land when you
+  // lay them out by hand. Derived from the index so it never reshuffles
+  // between renders.
+  const scatter = (((index * 37) % 13) - 6) * 0.9;
   return (
-    <motion.div className="fan-card" style={{ "--cos": cos, "--sin": sin, zIndex }}>
+    <motion.div
+      className="fan-card"
+      style={{ "--cos": cos, "--sin": sin, "--scatter": `${scatter}deg`, zIndex }}
+    >
       <span className="fan-card-index">{String(index + 1).padStart(2, "0")}</span>
       {children}
     </motion.div>
   );
 }
 
-export function Fan({ items, renderCard, className = "", id, label }) {
+export function Fan({ items, renderCard, className = "", id, label, backdrop = null }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -333,6 +340,7 @@ export function Fan({ items, renderCard, className = "", id, label }) {
   if (reduced) {
     return (
       <section id={id} className={`fan fan-static ${className}`} aria-label={label}>
+        {backdrop}
         <div className="fan-rail">
           {items.map((item, i) => (
             <div className="fan-card" key={item.key ?? i}>
@@ -351,9 +359,10 @@ export function Fan({ items, renderCard, className = "", id, label }) {
       ref={ref}
       className={`fan ${className}`}
       aria-label={label}
-      style={{ height: `${140 + count * 22}vh` }}
+      style={{ height: `${Math.min(150 + count * 14, 400)}vh` }}
     >
       <div className="fan-stage">
+        {backdrop}
         {items.map((item, i) => (
           <FanCard key={item.key ?? i} index={i} count={count} turn={turn}>
             {renderCard(item, i)}
