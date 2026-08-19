@@ -1872,6 +1872,46 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+   .reveal-on-scroll — the page's one scroll reveal
+
+   Driven by src/reveal.js: an IntersectionObserver, no library. A container
+   with .reveal-child children holds still and lets them arrive in sequence;
+   a container without them is what moves. Only opacity and transform, so
+   neither state can cost a frame while the page is scrolling.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.reveal-on-scroll:not(:has(> .reveal-child)),
+.reveal-on-scroll > .reveal-child {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 820ms ease-out, transform 820ms ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll > .reveal-child {
+  transition-delay: calc(var(--reveal-i, 0) * 100ms);
+}
+
+.reveal-on-scroll.is-revealed:not(:has(> .reveal-child)),
+.reveal-on-scroll.is-revealed > .reveal-child {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* No travel and no wait, and the starting state is visible rather than
+   hidden, so nothing depends on the observer having run. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll:not(:has(> .reveal-child)),
+  .reveal-on-scroll > .reveal-child {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
    AMORESA — how a joining script has to be set
 
    Two things break this face and both were in the old rules:

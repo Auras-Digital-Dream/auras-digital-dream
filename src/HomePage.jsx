@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
+import { useRevealOnScroll } from "./reveal.js";
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -129,6 +130,8 @@ export function HomePage({ onNavigate }) {
   const selectedPriceItems = priceItems.filter((i) => selectedPrices.includes(i.title));
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
+
+  useRevealOnScroll([]);
 
   /* The hero is the site's opening move: the footage starts as a held card
      and grows into the whole screen, then the headline settles down into the
@@ -352,9 +355,9 @@ export function HomePage({ onNavigate }) {
 
       {/* ── Featured work, fanned ────────────────────────────────────────── */}
       <section className="work-intro bg-ink-marble" id="portofoliu">
-        <div className="shell">
-          <Reveal as="p" className="kicker">Selecție curatorială</Reveal>
-          <Lines as="h2" className="section-title" text="Creez proiecte care nu doar arată bine. Spun ceva." />
+        <div className="shell reveal-on-scroll">
+          <p className="kicker reveal-child">Selecție curatorială</p>
+          <h2 className="section-title reveal-child">Creez proiecte care nu doar arată bine. Spun ceva.</h2>
         </div>
       </section>
 
@@ -381,19 +384,17 @@ export function HomePage({ onNavigate }) {
       {/* ── Services ─────────────────────────────────────────────────────── */}
       <section className="services gilt bg-marble is-deep" id="servicii">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Servicii</Reveal>
-            <Lines as="h2" className="section-title" text="Nu livrez servicii. Livrez transformări." />
-            <Rise delay={0.15}>
-              <p className="section-lead">
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Servicii</p>
+            <h2 className="section-title reveal-child">Nu livrez servicii. Livrez transformări.</h2>
+            <p className="section-lead reveal-child">
                 Adun sub un singur acoperiș tot ce dă viață unei prezențe: identitate,
                 strategie, design, experiență.
               </p>
-            </Rise>
           </div>
-          <div className="service-grid">
+          <div className="service-grid reveal-on-scroll">
             {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
-              <Rise key={title} delay={(index % 3) * 0.08} className="service-card glass-panel">
+              <div key={title} className="service-card glass-panel reveal-child">
                 <span className="service-icon"><Icon size={24} /></span>
                 <h3>{title}</h3>
                 <p className="service-subtitle">{subtitle}</p>
@@ -408,7 +409,7 @@ export function HomePage({ onNavigate }) {
                 <button className="button ghost small" onClick={() => scrollToId("contact")}>
                   Solicită ofertă <ArrowRight size={13} />
                 </button>
-              </Rise>
+              </div>
             ))}
           </div>
         </div>
@@ -417,9 +418,9 @@ export function HomePage({ onNavigate }) {
       {/* ── Process ──────────────────────────────────────────────────────── */}
       <section className="process bg-marble">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Proces de lucru</Reveal>
-            <Lines as="h2" className="section-title" text="De la idee, la realitate." />
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Proces de lucru</p>
+            <h2 className="section-title reveal-child">De la idee, la realitate.</h2>
           </div>
           <ol className="process-grid">
             {processSteps.map(([nr, title, copy], index) => (
@@ -438,25 +439,23 @@ export function HomePage({ onNavigate }) {
       {/* ── Estimator ────────────────────────────────────────────────────── */}
       <section className="estimator bg-marble is-deep" id="estimator">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Estimator de cost</Reveal>
-            <Lines as="h2" className="section-title" text="Estimează-ți bugetul." />
-            <Rise delay={0.15}>
-              <p className="section-lead">
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Estimator de cost</p>
+            <h2 className="section-title reveal-child">Estimează-ți bugetul.</h2>
+            <p className="section-lead reveal-child">
                 Selectează serviciile de care ai nevoie şi obții imediat o estimare orientativă.
                 Prețul final se stabileşte după o discuție personalizată.
               </p>
-            </Rise>
           </div>
           <div className="estimator-grid">
-            <div className="price-list" role="group" aria-label="Servicii disponibile">
+            <div className="price-list reveal-on-scroll" role="group" aria-label="Servicii disponibile">
               {priceItems.map((item) => {
                 const on = selectedPrices.includes(item.title);
                 return (
                   <button
                     key={item.title}
                     type="button"
-                    className={"price-item glass-panel is-silver" + (on ? " is-on" : "")}
+                    className={"price-item glass-panel is-silver reveal-child" + (on ? " is-on" : "")}
                     aria-pressed={on}
                     onClick={() => togglePrice(item.title)}
                   >
@@ -505,9 +504,9 @@ export function HomePage({ onNavigate }) {
       {/* ── Portfolio archive ────────────────────────────────────────────── */}
       <section className="archive bg-marble">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Portofoliu organizat</Reveal>
-            <Lines as="h2" className="section-title" text="Alege direcția care te reprezintă." />
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Portofoliu organizat</p>
+            <h2 className="section-title reveal-child">Alege direcția care te reprezintă.</h2>
           </div>
           {groupedProjects.map((group) => (
             <div className="archive-group" key={group.title}>
@@ -515,21 +514,20 @@ export function HomePage({ onNavigate }) {
                 <h3>{group.title}</h3>
                 <p>{group.copy}</p>
               </div>
-              <div className="archive-grid">
+              <div className="archive-grid reveal-on-scroll">
                 {group.projects.map((project, index) => (
-                  <Rise key={project.slug} delay={(index % 4) * 0.06}>
-                    <a
-                      className="archive-card"
-                      href={"/portofoliu/" + project.slug}
-                      onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
-                    >
-                      <span className="archive-card-media">
-                        <img src={project.image} alt={project.title} loading="lazy" />
-                      </span>
-                      <span className="archive-card-tags">{project.category.join(" · ")}</span>
-                      <span className="archive-card-title">{project.title}</span>
-                    </a>
-                  </Rise>
+                  <a
+                    key={project.slug}
+                    className="archive-card reveal-child"
+                    href={"/portofoliu/" + project.slug}
+                    onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
+                  >
+                    <span className="archive-card-media">
+                      <img src={project.image} alt={project.title} loading="lazy" />
+                    </span>
+                    <span className="archive-card-tags">{project.category.join(" · ")}</span>
+                    <span className="archive-card-title">{project.title}</span>
+                  </a>
                 ))}
               </div>
             </div>
@@ -549,9 +547,9 @@ export function HomePage({ onNavigate }) {
           </video>
         </Depth>
         <span className="editorial-scrim" aria-hidden="true" />
-        <div className="shell editorial-body">
-          <Reveal as="p" className="kicker">Behind the Dream</Reveal>
-          <Lines as="h2" className="section-title" text="Imaginile vorbesc înaintea cuvintelor." />
+        <div className="shell editorial-body reveal-on-scroll">
+          <p className="kicker reveal-child">Behind the Dream</p>
+          <h2 className="section-title reveal-child">Imaginile vorbesc înaintea cuvintelor.</h2>
           <Rise delay={0.2}>
             <p>Am pornit dintr-o dorință simplă: să transform ideile în experiențe care se simt, nu doar se văd.</p>
           </Rise>
@@ -561,9 +559,9 @@ export function HomePage({ onNavigate }) {
       {/* ── Skills ───────────────────────────────────────────────────────── */}
       <section className="skills bg-marble" id="skills">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Skills & competențe</Reveal>
-            <Lines as="h2" className="section-title" text="Instrumente stăpânite." />
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Skills & competențe</p>
+            <h2 className="section-title reveal-child">Instrumente stăpânite.</h2>
           </div>
           <div className="skill-grid">
             {skillGroups.map(([title, rows], index) => (
@@ -579,16 +577,14 @@ export function HomePage({ onNavigate }) {
       {/* ── Difference: what you get elsewhere vs here ───────────────────── */}
       <section className="difference bg-ink-marble" id="de-ce-eu">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Diferența</Reveal>
-            <Lines as="h2" className="section-title" text="Un livrabil se termină. Un sistem rămâne." />
-            <Rise delay={0.15}>
-              <p className="section-lead">
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Diferența</p>
+            <h2 className="section-title reveal-child">Un livrabil se termină. Un sistem rămâne.</h2>
+            <p className="section-lead reveal-child">
                 Cei mai mulți îți trimit fișierele și dispar. Eu îți las în urmă o structură
                 pe care o poți folosi și fără mine, peste șase luni, când apare materialul
                 la care nimeni nu se gândise.
               </p>
-            </Rise>
           </div>
           <div className="difference-grid">
             <Rise className="difference-col">
@@ -628,15 +624,13 @@ export function HomePage({ onNavigate }) {
       {/* ── Clarity: FAQ + comparison ────────────────────────────────────── */}
       <section className="clarity bg-ink-marble" id="claritate">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Claritate înainte de ofertă</Reveal>
-            <Lines as="h2" className="section-title" text="Nu te las să alegi la întâmplare. Îți arăt drumul." />
-            <Rise delay={0.15}>
-              <p className="section-lead">
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Claritate înainte de ofertă</p>
+            <h2 className="section-title reveal-child">Nu te las să alegi la întâmplare. Îți arăt drumul.</h2>
+            <p className="section-lead reveal-child">
                 Fiecare secțiune din site răspunde unei întrebări reale: ce primești, cât costă,
                 cum lucrăm și unde vezi exemple.
               </p>
-            </Rise>
           </div>
           <div className="clarity-grid">
             <div className="faq">
@@ -680,9 +674,9 @@ export function HomePage({ onNavigate }) {
       {/* ── Testimonials ─────────────────────────────────────────────────── */}
       <section className="voices bg-marble">
         <div className="shell">
-          <div className="section-head">
-            <Reveal as="p" className="kicker">Testimoniale</Reveal>
-            <Lines as="h2" className="section-title" text="Ce spun clienții." />
+          <div className="section-head reveal-on-scroll">
+            <p className="kicker reveal-child">Testimoniale</p>
+            <h2 className="section-title reveal-child">Ce spun clienții.</h2>
           </div>
           <motion.figure
             className="voice"
@@ -712,9 +706,9 @@ export function HomePage({ onNavigate }) {
       {/* ── Books teaser ─────────────────────────────────────────────────── */}
       <section className="books gilt bg-marble" id="amazon-picks">
         <div className="shell books-grid">
-          <div>
-            <Reveal as="p" className="kicker">Aura Dobre · Author Universe</Reveal>
-            <Lines as="h2" className="section-title" text="Cărțile mele au acum pagina lor." />
+          <div className="reveal-on-scroll">
+            <p className="kicker reveal-child">Aura Dobre · Author Universe</p>
+            <h2 className="section-title reveal-child">Cărțile mele au acum pagina lor.</h2>
             <Rise delay={0.15}>
               <p className="section-lead">
                 Am separat vitrina literară într-o pagină dedicată, unde cărțile scrise de mine pot
@@ -748,9 +742,9 @@ export function HomePage({ onNavigate }) {
           <span className="contact-scrim" />
         </div>
         <div className="shell contact-grid">
-          <div className="contact-copy">
-            <Reveal as="p" className="kicker">Contact</Reveal>
-            <Lines as="h2" className="section-title" text="Hai să sculptăm împreună ideea ta." />
+          <div className="contact-copy reveal-on-scroll">
+            <p className="kicker reveal-child">Contact</p>
+            <h2 className="section-title reveal-child">Hai să sculptăm împreună ideea ta.</h2>
             <Rise delay={0.15}>
               <p>
                 Spune-mi ce vrei să construim, iar eu transform brief-ul într-o direcție clară:
