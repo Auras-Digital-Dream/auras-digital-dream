@@ -36,9 +36,13 @@ export function useScrollExperience(pageKey = "home") {
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
     const cursor = document.querySelector(".custom-cursor");
     const cursorRing = document.querySelector(".custom-cursor-ring");
+    /* The stylesheet hides the native cursor for anything carrying
+       .cursor-ready, so that class must never be set unless both
+       replacements are actually in the document. The optional chaining
+       below meant a missing pair failed silently: no error, no cursor. */
+    const finePointer = window.matchMedia("(pointer: fine)").matches && cursor && cursorRing;
     let ringX = -100;
     let ringY = -100;
     let targetX = -100;

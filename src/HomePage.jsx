@@ -220,6 +220,8 @@ export function HomePage({ onNavigate }) {
   return (
     <main className="home">
       <GoldLine />
+      <div className="custom-cursor" aria-hidden="true" />
+      <div className="custom-cursor-ring" aria-hidden="true" />
       <Progress />
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
