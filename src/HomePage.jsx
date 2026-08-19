@@ -124,10 +124,21 @@ export function HomePage({ onNavigate }) {
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
 
-  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroScale = useTransform(heroProgress, [0, 1], [1, 1.12]);
-  const heroFade = useTransform(heroProgress, [0, 0.85], [1, 0]);
-  const heroLift = useTransform(heroProgress, [0, 1], ["0%", "-14%"]);
+  /* The hero is the site's opening move: the footage starts as a held card
+     and grows into the whole screen, then the headline settles down into the
+     lower third and the rest of the copy arrives. The section is pinned and
+     tall enough to give that its own beat. */
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end end"] });
+  /* One scalar drives the frame; the start size lives in CSS so it can be
+     set per breakpoint. Interpolating vw/vh strings here would have locked
+     a 33vw card on phones, where it reads as a sliver. */
+  const frameOpen = useTransform(heroProgress, [0, 0.52], [0, 1]);
+  const frameScrim = useTransform(heroProgress, [0.3, 0.62], [0, 1]);
+  const titleScale = useTransform(heroProgress, [0.5, 0.92], [1, 0.58]);
+  const titleShift = useTransform(heroProgress, [0.5, 0.92], ["0vh", "11vh"]);
+  const bodyReveal = useTransform(heroProgress, [0.62, 0.88], [0, 1]);
+  const bodyShift = useTransform(heroProgress, [0.62, 0.88], [28, 0]);
+  const cueFade = useTransform(heroProgress, [0, 0.12], [1, 0]);
 
   function togglePrice(title) {
     setSelectedPrices((c) => (c.includes(title) ? c.filter((t) => t !== title) : [...c, title]));
@@ -229,25 +240,45 @@ export function HomePage({ onNavigate }) {
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="hero" ref={heroRef} id="acasa">
-        <motion.div className="hero-media" style={reduced ? undefined : { scale: heroScale }}>
-          <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-            <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
-          </video>
-          <span className="hero-scrim" aria-hidden="true" />
-        </motion.div>
-        <motion.div className="hero-body shell" style={reduced ? undefined : { opacity: heroFade, y: heroLift }}>
-          <Reveal as="p" className="kicker" delay={0.15}>Marketing · Design · Web</Reveal>
-          <Lines as="h1" className="hero-title" text="Brandul tău merită să fie simțit, nu doar văzut." delay={0.3} />
-          <Reveal as="p" className="hero-lead" delay={0.6}>
-            Construiesc identități vizuale, website-uri și campanii pentru antreprenori care vor
-            o prezență clară, coerentă și memorabilă.
-          </Reveal>
-          <Rise delay={0.8} className="hero-actions">
-            <button className="button primary" onClick={() => scrollToId("contact")}>Începe un proiect <ArrowRight size={16} /></button>
-            <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
-          </Rise>
-        </motion.div>
-        <ScrollCue />
+        <div className="hero-pin">
+          <motion.div
+            className="hero-frame"
+            style={reduced ? undefined : { "--open": frameOpen }}
+          >
+            <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+              <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
+            </video>
+            <motion.span
+              className="hero-frame-scrim"
+              aria-hidden="true"
+              style={reduced ? undefined : { opacity: frameScrim }}
+            />
+          </motion.div>
+
+          <motion.div
+            className="hero-headline"
+            style={reduced ? undefined : { scale: titleScale, y: titleShift }}
+          >
+            <Reveal as="p" className="kicker" delay={0.15}>Marketing · Design · Web</Reveal>
+            <Lines as="h1" className="hero-title" text="Brandul tău merită să fie simțit, nu doar văzut." delay={0.3} />
+          </motion.div>
+
+          <motion.div
+            className="hero-body shell"
+            style={reduced ? undefined : { opacity: bodyReveal, y: bodyShift }}
+          >
+            <p className="hero-lead">
+              Construiesc identități vizuale, website-uri și campanii pentru antreprenori care vor
+              o prezență clară, coerentă și memorabilă.
+            </p>
+            <div className="hero-actions">
+              <button className="button primary" onClick={() => scrollToId("contact")}>Începe un proiect <ArrowRight size={16} /></button>
+              <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
+            </div>
+          </motion.div>
+
+          <motion.div style={reduced ? undefined : { opacity: cueFade }}><ScrollCue /></motion.div>
+        </div>
       </section>
 
       {/* ── Manifesto ────────────────────────────────────────────────────── */}
@@ -545,7 +576,7 @@ export function HomePage({ onNavigate }) {
                 <li>Materiale care nu se leagă între ele când le pui unul lângă altul.</li>
               </ul>
               <figure className="difference-figure">
-                <video autoPlay muted loop playsInline preload="none" aria-hidden="true">
+                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
                   <source src="/video/stone-hand-dust.mp4" type="video/mp4" />
                 </video>
               </figure>
@@ -560,7 +591,7 @@ export function HomePage({ onNavigate }) {
                 <li>Fiecare material se recunoaște ca parte din același brand.</li>
               </ul>
               <figure className="difference-figure">
-                <video autoPlay muted loop playsInline preload="none" aria-hidden="true">
+                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
                   <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
                 </video>
               </figure>

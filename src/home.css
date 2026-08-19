@@ -220,48 +220,118 @@
 
 .menu-close { position: absolute; top: 24px; right: 24px; }
 
-/* ── Hero ─────────────────────────────────────────────────────────────── */
+/* ── Hero ─────────────────────────────────────────────────────────────────
+   The ground is ink, not the footage. That is what makes the white type
+   safe: contrast comes from the section's own background, so the video
+   never has to be dimmed into a grey slab to keep the headline readable.
+   The previous scrim composited to ~87% and buried the film entirely. */
 
 .hero {
-  display: grid;
-  align-items: end;
-  min-height: 100svh;
-  padding-block: 140px clamp(64px, 12vh, 120px);
+  height: 260vh;
+  padding: 0;
+  background: var(--ink);
   color: #fff;
 }
 
-.hero-media { position: absolute; inset: 0; z-index: -1; will-change: transform; }
-
-.hero-media video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: brightness(.82) saturate(.96);
+.hero-pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: clip;
 }
 
-/* The hero footage runs very high-key (white marble, blown highlights), so
-   the scrim has to be heavy enough that white type holds everywhere the copy
-   block reaches — not just at the top and bottom. Measured on the live frame:
-   white on the lightest point sits at ~7:1 with these two layers. */
-.hero-scrim {
+.hero-frame {
+  --fw-start: 33vw;
+  --fh-start: 54vh;
+  grid-area: 1 / 1;
+  position: relative;
+  width: calc(var(--fw-start) + (100vw - var(--fw-start)) * var(--open, 0));
+  height: calc(var(--fh-start) + (100svh - var(--fh-start)) * var(--open, 0));
+  overflow: hidden;
+  border-radius: calc(20px * (1 - var(--open, 0)));
+  box-shadow: 0 60px 120px -50px rgba(0,0,0,.75);
+  will-change: width, height;
+}
+
+@media (max-width: 860px) { .hero-frame { --fw-start: 74vw; --fh-start: 42vh; } }
+
+.hero-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Only the bottom band is darkened, and only once the frame has opened —
+   just enough to carry the lead paragraph and the buttons. */
+/* Darken only the lower half, where the headline settles and the copy sits.
+   The top half of the footage stays clean — that is the whole point of
+   opening the frame in the first place. */
+.hero-frame-scrim {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(45,53,60,.72), rgba(45,53,60,.55) 38%, rgba(45,53,60,.9)),
-    linear-gradient(90deg, rgba(45,53,60,.72), rgba(45,53,60,.42) 68%, rgba(45,53,60,.2));
+    radial-gradient(ellipse 76% 46% at 50% 84%, rgba(45,53,60,.88), transparent 72%),
+    linear-gradient(180deg,
+      transparent 14%,
+      rgba(45,53,60,.34) 38%,
+      rgba(45,53,60,.72) 58%,
+      rgba(45,53,60,.93) 76%,
+      rgba(45,53,60,.97));
 }
 
-.hero-body { max-width: 940px; }
-.hero-title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 7vw, 104px); line-height: .98; letter-spacing: 1px; }
-.hero-lead { max-width: 54ch; margin: 26px 0 0; font-size: clamp(15px, 1.3vw, 19px); line-height: 1.55; color: rgba(255,255,255,.84); }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-.hero .kicker { color: var(--frost); }
+.hero-headline {
+  grid-area: 1 / 1;
+  z-index: 2;
+  width: min(100% - var(--gutter) * 2, 1180px);
+  text-align: center;
+  will-change: transform;
+}
+
+.hero-headline .kicker { color: var(--frost); }
+
+.hero-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(38px, 6.6vw, 108px);
+  line-height: .96;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 30px rgba(45,53,60,.85), 0 1px 3px rgba(45,53,60,.5);
+}
+
+.hero-body {
+  grid-area: 1 / 1;
+  z-index: 3;
+  align-self: end;
+  margin-bottom: clamp(36px, 6vh, 72px);
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+.hero-lead {
+  max-width: 52ch;
+  margin: 0 auto;
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.55;
+  color: rgba(255,255,255,.86);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 26px;
+}
 
 .scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: 28px;
-  z-index: 2;
+  bottom: 26px;
+  z-index: 4;
   display: grid;
   justify-items: center;
   gap: 10px;
@@ -269,12 +339,12 @@
   font-size: 11.5px;
   letter-spacing: .3em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.7);
+  color: rgba(255,255,255,.72);
 }
 
 .scroll-cue i {
   width: 1px; height: 42px;
-  background: linear-gradient(180deg, rgba(255,255,255,.7), transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,.75), transparent);
   animation: cueDrift 2.4s var(--ease) infinite;
 }
 
@@ -283,6 +353,13 @@
   45% { transform: scaleY(1); transform-origin: top; }
   55% { transform: scaleY(1); transform-origin: bottom; }
   100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero { height: auto; min-height: 100svh; }
+  .hero-frame { --fw-start: 100vw; --fh-start: 100svh; border-radius: 0; }
+  .hero-frame-scrim { opacity: 1; }
+  .hero-body { opacity: 1; }
 }
 
 /* ── Manifesto ────────────────────────────────────────────────────────── */
@@ -939,7 +1016,7 @@
 .clarity,
 .voices,
 .books,
-.difference { background-image: var(--drafting); background-color: inherit; }
+.difference { background-image: var(--drafting); }
 
 .home {
   --drafting:
@@ -963,7 +1040,10 @@
    FAN — numbered cards opening along an arc
    ══════════════════════════════════════════════════════════════════════════ */
 
-.fan { background: var(--surface); }
+/* Dark ground under the fan: the cards read as objects lifted off a
+   surface instead of paper on paper. This is also the page's contrast
+   beat between the services block and the archive. */
+.fan { background: var(--ink); }
 
 /* The arc's width grows with the pivot distance, so on a narrow screen the
    outer cards would run past both edges. Scaling the whole stage keeps the
@@ -1003,10 +1083,22 @@
   position: relative;
   margin: 0;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 8px;
   aspect-ratio: 3 / 4;
   background: var(--mist);
-  box-shadow: 0 28px 60px -30px rgba(45,53,60,.55);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.14) inset,
+    0 40px 80px -28px rgba(0,0,0,.7),
+    0 8px 20px -10px rgba(0,0,0,.5);
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+}
+
+.fan-card a:hover figure {
+  transform: translateY(-14px) scale(1.04);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.24) inset,
+    0 60px 110px -30px rgba(0,0,0,.8),
+    0 0 0 1px var(--frost);
 }
 
 .fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1163,3 +1255,59 @@
 }
 
 @media (max-width: 560px) { .home { --fan-scale: .44; } }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CONTRAST RHYTHM
+
+   The middle of the page ran as one long beige stretch. These two sections
+   invert to ink so the eye gets a beat between them, and so the paper
+   sections read as paper rather than as the only possible ground.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.difference,
+.clarity {
+  --accent: var(--frost);
+  --muted: rgba(255,255,255,.7);
+  background-color: var(--ink);
+  background-image: none;
+  color: #fff;
+}
+
+.difference :is(h2, h3, p, li, summary, strong, th, td),
+.clarity :is(h2, h3, p, li, summary, strong, th, td) { color: inherit; }
+
+.difference .section-lead,
+.clarity .section-lead { color: rgba(255,255,255,.72); }
+
+.difference-list li { border-top-color: rgba(255,255,255,.16); color: rgba(255,255,255,.62); }
+.difference-col.is-mine > p,
+.difference-col.is-mine .difference-list li { color: #fff; }
+.difference-col.is-mine .difference-list li::before { background: var(--frost); }
+.difference-col > p { color: rgba(255,255,255,.72); }
+
+.clarity .faq-item {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.16);
+}
+.clarity .faq-item[open] { border-color: var(--frost); }
+.clarity .faq-number { background: rgba(255,255,255,.1); color: rgba(255,255,255,.72); }
+.clarity .faq-item p { color: rgba(255,255,255,.68); }
+
+.clarity .compare {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.16);
+}
+.clarity .compare-table th,
+.clarity .compare-table td { border-bottom-color: rgba(255,255,255,.14); }
+.clarity .compare-table thead th { color: rgba(255,255,255,.6); }
+.clarity .compare-table td,
+.clarity .compare-note { color: rgba(255,255,255,.7); }
+
+/* The work intro sits directly above the dark fan — carry the ink up so the
+   two read as one movement rather than a light strip stapled on top. */
+.work-intro {
+  background-color: var(--ink);
+  background-image: none;
+  color: #fff;
+  --accent: var(--frost);
+}
