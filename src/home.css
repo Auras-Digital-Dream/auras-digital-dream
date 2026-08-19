@@ -1990,6 +1990,76 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+   THE GOLD THREAD — one line down the page, drawn as you go
+
+   Driven by src/goldline.jsx. The drawn length is a scaleY on a one-pixel
+   bar, not a dash offset on an SVG path: the same picture, but it stays on
+   the compositor, so a line the height of the whole document costs nothing
+   to redraw while the page is moving.
+
+   It sits in the gutter and never crosses the text column, so it needs no
+   stacking games with the sections it passes — and it is one element with
+   nothing inside it, so hiding it changes nothing else.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.goldline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: max(14px, calc(var(--gutter) * .38));
+  z-index: 2;
+  width: 2px;
+  pointer-events: none;
+}
+
+.goldline-track,
+.goldline-draw {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border-radius: 2px;
+}
+
+/* The path, waiting to be walked. */
+.goldline-track { background: color-mix(in srgb, var(--gold-line), transparent 74%); }
+
+/* The part already walked. */
+.goldline-draw {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--gold), transparent 30%),
+    var(--gold-line));
+  transform: scaleY(var(--draw, 0));
+  transform-origin: 50% 0;
+}
+
+.goldline-seal {
+  position: absolute;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold), transparent 78%);
+  opacity: 0;
+  scale: .4;
+  transition: opacity .3s ease-out, scale .3s ease-out;
+}
+
+.goldline-seal.is-lit { opacity: 1; scale: 1; }
+
+/* Below this the gutter is too narrow to carry it without crowding the
+   content, so it goes. Nothing else depends on it. */
+@media (max-width: 900px) {
+  .goldline { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goldline-draw { transform: none; }
+  .goldline-seal { opacity: 1; scale: 1; transition: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
    AMORESA — how a joining script has to be set
 
    Two things break this face and both were in the old rules:

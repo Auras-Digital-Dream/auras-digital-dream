@@ -3,6 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { useRevealOnScroll } from "./reveal.js";
+import { GoldLine } from "./goldline.jsx";
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -216,6 +217,7 @@ export function HomePage({ onNavigate }) {
 
   return (
     <main className="home">
+      <GoldLine />
       <Progress />
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
