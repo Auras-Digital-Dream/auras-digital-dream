@@ -74,9 +74,9 @@ const chapters = [
   { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
 ];
 const frameClips = [
-  "/video/branding-elements-montage-hero.mp4",
+  "/video/kintsugi-hand-touch.mp4",
+  "/video/stone-hand-dust.mp4",
   "/video/about-renaissance-studio.mp4",
-  "/video/story-construiesc-modern-office.mp4",
 ];
 const processSteps = [
   ["01", "Descoperire", "Înțeleg obiectivele tale, publicul şi provocările brandului. Ascult înainte să propun."],
@@ -684,7 +684,7 @@ export function HomePage({ onNavigate }) {
       <section className="contact" id="contact">
         <div className="contact-media" aria-hidden="true">
           <video autoPlay muted loop playsInline preload="metadata">
-            <source src="/video/story-imaginez-golden-hand.mp4" type="video/mp4" />
+            <source src="/video/atelier-statue-seams.mp4" type="video/mp4" />
           </video>
           <span className="contact-scrim" />
         </div>
