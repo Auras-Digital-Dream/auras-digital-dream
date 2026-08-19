@@ -394,7 +394,7 @@ export function HomePage({ onNavigate }) {
           </div>
           <div className="service-grid reveal-on-scroll">
             {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
-              <div key={title} className="service-card glass-panel reveal-child">
+              <div key={title} className="service-card glass-panel is-tilted reveal-child">
                 <span className="service-icon"><Icon size={24} /></span>
                 <h3>{title}</h3>
                 <p className="service-subtitle">{subtitle}</p>
@@ -455,7 +455,7 @@ export function HomePage({ onNavigate }) {
                   <button
                     key={item.title}
                     type="button"
-                    className={"price-item glass-panel is-silver reveal-child" + (on ? " is-on" : "")}
+                    className={"price-item glass-panel is-silver is-tilted reveal-child" + (on ? " is-on" : "")}
                     aria-pressed={on}
                     onClick={() => togglePrice(item.title)}
                   >

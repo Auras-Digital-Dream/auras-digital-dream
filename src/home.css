@@ -742,8 +742,6 @@
 }
 
 .service-card:hover {
-  box-shadow: 0 28px 60px -40px var(--shadow);
-  transform: translateY(-4px);
 }
 
 .service-icon {
@@ -1812,6 +1810,18 @@
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
   box-shadow: 0 18px 44px -30px var(--shadow);
+  transition: rotate .38s ease-out, translate .38s ease-out, box-shadow .38s ease-out;
+}
+
+/* Gold on the edge as you reach for it. A hover transition on a light
+   shadow, not a running animation — it repaints a card for a third of a
+   second and never while the page is moving. */
+.glass-panel:hover,
+.glass-panel:focus-within {
+  box-shadow:
+    0 22px 52px -32px var(--shadow),
+    0 0 0 1px color-mix(in srgb, var(--gold), transparent 56%),
+    0 0 22px -2px color-mix(in srgb, var(--gold), transparent 64%);
 }
 
 /* The 1px ring. Two masks composited so only the padding box survives. */
@@ -1909,6 +1919,37 @@
     transition: none;
     transition-delay: 0s;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   .is-tilted — the wheel's language on a card that sits still
+
+   Every card lands at a slight angle and straightens when you reach for it.
+
+   The angles are fixed and cycled by position rather than drawn at random.
+   A truly random tilt would be re-drawn on every React render and the card
+   would twitch; this is the same reason the wheel derives its scatter from
+   the card's index. Seven values, so the run never lines up with a grid of
+   six or a list of twelve.
+
+   Written as `rotate` and `translate` rather than `transform`: the reveal
+   already owns `transform` on these very elements, and two rules on one
+   property means the more specific one wins outright — which is exactly how
+   the card hover had gone dead. As separate properties they compose.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.is-tilted:nth-child(7n+1) { rotate: -1.8deg; }
+.is-tilted:nth-child(7n+2) { rotate:  1.2deg; }
+.is-tilted:nth-child(7n+3) { rotate: -0.7deg; }
+.is-tilted:nth-child(7n+4) { rotate:  2deg; }
+.is-tilted:nth-child(7n+5) { rotate: -1.3deg; }
+.is-tilted:nth-child(7n+6) { rotate:  0.6deg; }
+.is-tilted:nth-child(7n+7) { rotate: -2deg; }
+
+.is-tilted:hover,
+.is-tilted:focus-within {
+  rotate: 0deg;
+  translate: 0 -6px;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
