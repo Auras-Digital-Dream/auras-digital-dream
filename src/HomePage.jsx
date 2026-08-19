@@ -282,15 +282,29 @@ export function HomePage({ onNavigate }) {
 
       {/* ── Manifesto ────────────────────────────────────────────────────── */}
       <section className="manifesto" aria-label="Manifest">
-        <div className="shell">
-          <Lines
-            as="p"
-            className="manifesto-text"
-            text="Sunt Aura — designer, marketer și sculptor digital. Nu creez proiecte. Modelez identități."
-          />
-          <Rise delay={0.2} className="manifesto-meta">
-            <span>Aura Dobre</span>
-            <span>Designer & strateg digital</span>
+        <div className="shell manifesto-grid">
+          <div className="manifesto-copy">
+            <Lines
+              as="p"
+              className="manifesto-text"
+              text="Sunt Aura — designer, marketer și sculptor digital. Nu creez proiecte. Modelez identități."
+            />
+            <Rise delay={0.2} className="manifesto-meta">
+              <span>Aura Dobre</span>
+              <span>Designer & strateg digital</span>
+            </Rise>
+          </div>
+
+          <Rise delay={0.15} className="manifesto-figure" y={40}>
+            <div className="manifesto-frame">
+              <video
+                autoPlay muted loop playsInline preload="metadata" aria-hidden="true"
+                poster="/video/poster/identity-forge.jpg"
+              >
+                <source src="/video/identity-forge.mp4" type="video/mp4" />
+              </video>
+              <span className="manifesto-seam" aria-hidden="true" />
+            </div>
           </Rise>
         </div>
       </section>
