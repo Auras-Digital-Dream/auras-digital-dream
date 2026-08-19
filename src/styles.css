@@ -32,15 +32,17 @@
   /* Warm paper, the way Scout's ground reads: off-white with a little
      body to it, so the cool charcoal ink sits on something alive rather
      than on a screen-blue field. */
-  --paper:#EFEDE8;       /* page background             */
-  --surface:#E7E4DD;     /* raised section background   */
-  --surface-2:#F4F2EE;   /* alternate section           */
+  /* Sampled off the handmade sheet she supplied: the stock is a warm cream,
+     not the cooler off-white this used to be. Ink on it measures 11.49:1. */
+  --paper:#F9EFE4;       /* page background             */
+  --surface:#F1E7DA;     /* raised section background   */
+  --surface-2:#FCF7F0;   /* alternate section           */
   --mist:#D4DFE1;        /* cool fill                   */
   --sky:#BECED1;         /* cool accent                 */
   --frost:#D9EAEE;       /* accent over dark media      */
   --line:#D8D3CB;        /* borders                     */
-  --pearl:#E9E6E1;       /* neutral card                */
-  --shell:#EFEAE4;       /* warm-neutral card           */
+  --pearl:#F3EDE4;       /* neutral card                */
+  --shell:#F5EDE1;       /* warm-neutral card           */
   --sand:#CEC0AE;        /* warm accent, used sparingly */
   --sand-soft:#DFD5CA;
   --stone:#C2BBB2;

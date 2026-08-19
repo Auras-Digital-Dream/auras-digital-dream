@@ -1155,14 +1155,21 @@
 .work-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   PAPER GROUND — texture
+   PAPER GROUND — real stock, and the gilding on it
 
-   The page does not sit on flat colour: there is a speckle in the stock, a
-   decorative layer pinned inside .home that scrolls with the page and never
-   intercepts a pointer. The diagonal construction lines that used to run
-   with it are gone — at 1.02:1 they were not visible enough to read as
-   design, only enough to read as dirt, and behind the marquee they fought
-   the letterforms. The grain carries the texture on its own.
+   The light sections used to be flat colour with a synthetic noise filter
+   over them, which is what read as cheap: fabricated grain has no grain
+   direction and no flaws, so the eye files it as a screen effect.
+
+   This is the actual sheet she supplied. A 440px patch of its flat centre,
+   mirrored into a tile so opposite edges match by construction, multiplied
+   over the paper colour: 9.5KB, and it carries the fibre, the laid lines
+   and the odd fleck that a filter cannot invent.
+
+   The gilding is the ornament from the same sheet, lifted off the paper by
+   comparing each pixel with a blurred copy of its own surroundings, so the
+   thin strokes survive without a haze of fibre coming with them. It is
+   spent sparingly — filigree everywhere is how this goes cheap again.
    ══════════════════════════════════════════════════════════════════════════ */
 
 .home {
@@ -1176,9 +1183,36 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: .5;
+  opacity: .62;
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23s)' opacity='.36'/%3E%3C/svg%3E");
+  background-image: url("/textures/paper.webp");
+  background-size: 440px 440px;
+}
+
+/* Gilded corner. Placed on the section, never on the copy, and always
+   behind it — the ornament is the room, not the furniture. */
+.gilt { position: relative; isolation: isolate; }
+
+.gilt::before,
+.gilt::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: clamp(190px, 26vw, 420px);
+  aspect-ratio: 620 / 560;
+  background: url("/textures/flourish.webp") no-repeat center / contain;
+  pointer-events: none;
+  opacity: .5;
+}
+
+.gilt::before { top: 0; left: 0; }
+/* The same sheet corner turned through 180°, so the pair reads as one frame
+   rather than as the same stamp used twice. */
+.gilt::after { right: 0; bottom: 0; rotate: 180deg; }
+
+@media (max-width: 720px) {
+  .gilt::before,
+  .gilt::after { width: 44vw; opacity: .34; }
 }
 
 .home > section,

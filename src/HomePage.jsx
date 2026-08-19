@@ -281,7 +281,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Manifesto ────────────────────────────────────────────────────── */}
-      <section className="manifesto" aria-label="Manifest">
+      <section className="manifesto gilt" aria-label="Manifest">
         <div className="shell manifesto-grid">
           <div className="manifesto-copy">
             <Lines
@@ -366,7 +366,7 @@ export function HomePage({ onNavigate }) {
       />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
-      <section className="services" id="servicii">
+      <section className="services gilt" id="servicii">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Servicii</Reveal>
@@ -697,7 +697,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Books teaser ─────────────────────────────────────────────────── */}
-      <section className="books" id="amazon-picks">
+      <section className="books gilt" id="amazon-picks">
         <div className="shell books-grid">
           <div>
             <Reveal as="p" className="kicker">Aura Dobre · Author Universe</Reveal>
