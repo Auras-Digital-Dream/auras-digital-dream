@@ -291,3 +291,104 @@ export function Progress() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 180, damping: 40, mass: 0.3 });
   return <motion.div className="progress-rail" style={{ scaleX }} aria-hidden="true" />;
 }
+
+/* ── Fan ───────────────────────────────────────────────────────────────────
+   Numbered cards stacked face-on, then fanned open along an arc as the
+   section scrolls. The pivot sits well below the stage (set in CSS via
+   transform-origin), so the cards swing like a hand of cards rather than
+   spinning in place.
+
+   Each card is its own component: the rotation is driven by hooks, and hooks
+   cannot be called from inside a map callback. */
+function FanCard({ index, offset, open, spread, count, children }) {
+  const rotate = useTransform(open, [0, 1], [0, offset * spread]);
+  const y = useTransform(open, [0, 1], [0, -Math.abs(offset) * 14]);
+  const scale = useTransform(open, [0, 1], [0.92, 1]);
+  return (
+    <motion.div
+      className="fan-card"
+      style={{ rotate, y, scale, zIndex: count - Math.abs(offset) }}
+    >
+      <span className="fan-card-index">{String(index + 1).padStart(2, "0")}</span>
+      {children}
+    </motion.div>
+  );
+}
+
+export function Fan({ items, renderCard, className = "", id, label, spread = 9 }) {
+  const ref = useRef(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const open = useSpring(useTransform(scrollYProgress, [0.08, 0.6], [0, 1]), {
+    stiffness: 90, damping: 26, mass: 0.5,
+  });
+  const count = items.length;
+  const mid = (count - 1) / 2;
+
+  if (reduced) {
+    return (
+      <section id={id} className={`fan fan-static ${className}`} aria-label={label}>
+        <div className="fan-rail">
+          {items.map((item, i) => (
+            <div className="fan-card" key={item.key ?? i}>
+              <span className="fan-card-index">{String(i + 1).padStart(2, "0")}</span>
+              {renderCard(item, i)}
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      id={id}
+      ref={ref}
+      className={`fan ${className}`}
+      aria-label={label}
+      style={{ height: `${140 + count * 22}vh` }}
+    >
+      <div className="fan-stage">
+        {items.map((item, i) => (
+          <FanCard
+            key={item.key ?? i}
+            index={i}
+            offset={i - mid}
+            open={open}
+            spread={spread}
+            count={count}
+          >
+            {renderCard(item, i)}
+          </FanCard>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── Marquee ───────────────────────────────────────────────────────────────
+   A band of oversized outlined type set on a slant, sliding as the section
+   passes. Decorative only — the text is repeated for the visual and hidden
+   from assistive tech. */
+export function Marquee({ text, className = "", angle = -7, speed = 0.5, repeat = 4 }) {
+  const ref = useRef(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const x = useSpring(useTransform(scrollYProgress, [0, 1], ["8%", `${-speed * 100}%`]), {
+    stiffness: 110, damping: 30, mass: 0.4,
+  });
+  return (
+    <div
+      ref={ref}
+      className={`marquee ${className}`}
+      style={{ "--marquee-angle": `${angle}deg` }}
+      aria-hidden="true"
+    >
+      <motion.div className="marquee-rail" style={reduced ? undefined : { x }}>
+        {Array.from({ length: repeat }, (_, i) => (
+          <span className="marquee-item" key={i}>{text}</span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}

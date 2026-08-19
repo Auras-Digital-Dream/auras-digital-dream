@@ -16,16 +16,19 @@
 
   /* Colour — Rainy July */
   --ink:#2D353C;         /* primary text, dark anchor   */
-  --ink-soft:#747A7E;    /* secondary text              */
-  --steel:#BABCBF;       /* tertiary text, dividers     */
-  --paper:#F2F8F9;       /* page background             */
-  --surface:#E6F1F4;     /* raised section background   */
-  --surface-2:#EAEFF0;   /* alternate section           */
+  --ink-soft:#6F6B66;    /* secondary text              */
+  --steel:#BDB8B1;       /* tertiary text, dividers     */
+  /* Warm paper, the way Scout's ground reads: off-white with a little
+     body to it, so the cool charcoal ink sits on something alive rather
+     than on a screen-blue field. */
+  --paper:#EFEDE8;       /* page background             */
+  --surface:#E7E4DD;     /* raised section background   */
+  --surface-2:#F4F2EE;   /* alternate section           */
   --mist:#D4DFE1;        /* cool fill                   */
   --sky:#BECED1;         /* cool accent                 */
   --frost:#D9EAEE;       /* accent over dark media      */
-  --line:#D3CFCC;        /* borders                     */
-  --pearl:#E9E7E5;       /* neutral card                */
+  --line:#D8D3CB;        /* borders                     */
+  --pearl:#E9E6E1;       /* neutral card                */
   --shell:#EFEAE4;       /* warm-neutral card           */
   --sand:#CEC0AE;        /* warm accent, used sparingly */
   --sand-soft:#DFD5CA;

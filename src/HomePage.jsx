@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
-import { Chapters, Depth, Lines, Progress, Reveal, Rise, ScrollCue, Track } from "./scroll.jsx";
+import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 
 // ── Static data ──────────────────────────────────────────────────────────────
 const projects = [
@@ -265,6 +265,10 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
+      <section className="marquee-band" aria-hidden="true">
+        <Marquee text="CREAȚIE · IDENTITATE · STRATEGIE · " angle={-7} speed={0.55} />
+      </section>
+
       {/* ── Chapters: the working method ─────────────────────────────────── */}
       <Chapters
         id="proces"
@@ -288,7 +292,14 @@ export function HomePage({ onNavigate }) {
         )}
       />
 
-      {/* ── Featured work, horizontal ────────────────────────────────────── */}
+      {/* ── Full-bleed film: no scrim, no type, pure breath ──────────────── */}
+      <section className="film" aria-label="Mâna care atinge piatra">
+        <video autoPlay muted loop playsInline preload="metadata">
+          <source src="/video/kintsugi-hand-touch.mp4" type="video/mp4" />
+        </video>
+      </section>
+
+      {/* ── Featured work, fanned ────────────────────────────────────────── */}
       <section className="work-intro" id="portofoliu">
         <div className="shell">
           <Reveal as="p" className="kicker">Selecție curatorială</Reveal>
@@ -296,26 +307,20 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
-      <Track className="work-track" label="Proiecte reprezentative">
-        {featured.map((project, index) => (
-          <a
-            className="work-frame"
-            key={project.slug}
-            href={"/portofoliu/" + project.slug}
-            onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
-          >
-            <span className="work-frame-index">{String(index + 1).padStart(2, "0")}</span>
-            <span className="work-frame-media">
+      <Fan
+        className="work-fan"
+        spread={13}
+        label="Proiecte reprezentative"
+        items={featured.map((p) => ({ ...p, key: p.slug }))}
+        renderCard={(project) => (
+          <a href={"/portofoliu/" + project.slug} onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}>
+            <figure>
               <img src={project.image} alt={project.title} loading="lazy" />
-            </span>
-            <span className="work-frame-copy">
-              <span className="work-frame-tags">{project.category.join(" · ")}</span>
-              <span className="work-frame-title">{project.title}</span>
-              <span className="work-frame-cta">Vezi proiectul <ArrowRight size={14} /></span>
-            </span>
+              <figcaption>{project.title.split(" — ")[0]}</figcaption>
+            </figure>
           </a>
-        ))}
-      </Track>
+        )}
+      />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
       <section className="services" id="servicii">
@@ -515,23 +520,51 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
-      {/* ── Why me ───────────────────────────────────────────────────────── */}
-      <section className="why" id="de-ce-eu">
+      {/* ── Difference: what you get elsewhere vs here ───────────────────── */}
+      <section className="difference" id="de-ce-eu">
         <div className="shell">
           <div className="section-head">
-            <Reveal as="p" className="kicker">Încredere & direcție</Reveal>
-            <Lines as="h2" className="section-title" text="De ce să lucrezi cu mine" />
+            <Reveal as="p" className="kicker">Diferența</Reveal>
+            <Lines as="h2" className="section-title" text="Un livrabil se termină. Un sistem rămâne." />
+            <Rise delay={0.15}>
+              <p className="section-lead">
+                Cei mai mulți îți trimit fișierele și dispar. Eu îți las în urmă o structură
+                pe care o poți folosi și fără mine, peste șase luni, când apare materialul
+                la care nimeni nu se gândise.
+              </p>
+            </Rise>
           </div>
-          <div className="why-grid">
-            {[
-              "Sunt specialist în marketing digital, design şi web, cu peste 15 proiecte finalizate în branding, campanii, website-uri şi documente profesionale.",
-              "Lucrez cu antreprenori şi companii care vor rezultate reale, nu doar vizibilitate.",
-              "Fiecare proiect este construit cu atenție la detalii, strategie clară şi o estetică premium care diferențiază brandul tău.",
-            ].map((copy, index) => (
-              <Rise key={copy} delay={index * 0.08}>
-                <p className="why-item">{copy}</p>
-              </Rise>
-            ))}
+          <div className="difference-grid">
+            <Rise className="difference-col">
+              <h3>De obicei primești</h3>
+              <p>Un livrabil. Atât.</p>
+              <ul className="difference-list">
+                <li>Un logo trimis pe email, fără nicio explicație despre cum se folosește.</li>
+                <li>Culori alese pentru că arătau bine în ziua aceea, nu pentru că spun ceva.</li>
+                <li>Un site care seamănă cu alte zece mii de site-uri.</li>
+                <li>Materiale care nu se leagă între ele când le pui unul lângă altul.</li>
+              </ul>
+              <figure className="difference-figure">
+                <video autoPlay muted loop playsInline preload="none" aria-hidden="true">
+                  <source src="/video/stone-hand-dust.mp4" type="video/mp4" />
+                </video>
+              </figure>
+            </Rise>
+            <Rise className="difference-col is-mine" delay={0.12}>
+              <h3>De la mine primești</h3>
+              <p>Un sistem care ține.</p>
+              <ul className="difference-list">
+                <li>O direcție argumentată: de ce culoarea asta, de ce fontul ăsta, de ce ritmul ăsta.</li>
+                <li>Reguli scrise, pe care le poți aplica singură oricând.</li>
+                <li>Storytelling construit pe ce te diferențiază pe tine, nu pe ce e la modă.</li>
+                <li>Fiecare material se recunoaște ca parte din același brand.</li>
+              </ul>
+              <figure className="difference-figure">
+                <video autoPlay muted loop playsInline preload="none" aria-hidden="true">
+                  <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
+                </video>
+              </figure>
+            </Rise>
           </div>
         </div>
       </section>
