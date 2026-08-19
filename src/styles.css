@@ -8,6 +8,45 @@
    Previously these were declared `src: local(...)`, which resolves only if the
    font is installed on the visitor's machine. It was installed on nobody's —
    the site has been rendering in Georgia this whole time. */
+/* EB Garamond, self-hosted beside Amoresa: the site's own policy allows
+   fonts from this origin only, so a link to Google would simply be blocked.
+   One variable file per style covers 400 to 800 — the 600 Google serves is
+   the same bytes as the 400 — and the unicode ranges are Google's own, so a
+   browser fetches latin-ext only when a page actually needs ă, ș or ț.
+   Licensed under the OFL: free to self-host, commercially. */
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond-400-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond-400-latin-ext.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond-400i-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond-400i-latin-ext.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @font-face {
   font-family: "Amoresa";
   src: url("/fonts/amoresa.woff2") format("woff2");
@@ -22,7 +61,7 @@
      It carries the big statements only; everything structural stays neutral. */
   --font-display:"Amoresa",Georgia,serif;
   --font-serif:Georgia,"Times New Roman",serif;
-  --font-body:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-body:"EB Garamond",Georgia,serif;
   --font-sans:system-ui,-apple-system,"Segoe UI",sans-serif;
 
   /* Colour — Rainy July */

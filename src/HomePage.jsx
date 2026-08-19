@@ -4,6 +4,7 @@ import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { useRevealOnScroll } from "./reveal.js";
 import { GoldLine } from "./goldline.jsx";
+import { useNavTone } from "./navtone.js";
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -133,6 +134,7 @@ export function HomePage({ onNavigate }) {
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
 
   useRevealOnScroll([]);
+  useNavTone();
 
   /* The hero is the site's opening move: the footage starts as a held card
      and grows into the whole screen, then the headline settles down into the
