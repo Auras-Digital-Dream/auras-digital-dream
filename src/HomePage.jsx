@@ -393,7 +393,7 @@ export function HomePage({ onNavigate }) {
           </div>
           <div className="service-grid">
             {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
-              <Rise key={title} delay={(index % 3) * 0.08} className="service-card">
+              <Rise key={title} delay={(index % 3) * 0.08} className="service-card glass-panel">
                 <span className="service-icon"><Icon size={24} /></span>
                 <h3>{title}</h3>
                 <p className="service-subtitle">{subtitle}</p>
@@ -456,7 +456,7 @@ export function HomePage({ onNavigate }) {
                   <button
                     key={item.title}
                     type="button"
-                    className={"price-item" + (on ? " is-on" : "")}
+                    className={"price-item glass-panel is-silver" + (on ? " is-on" : "")}
                     aria-pressed={on}
                     onClick={() => togglePrice(item.title)}
                   >

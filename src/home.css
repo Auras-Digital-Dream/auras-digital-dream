@@ -738,14 +738,10 @@
   gap: 14px;
   height: 100%;
   padding: clamp(26px, 2.4vw, 36px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: #fff;
-  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 
 .service-card:hover {
-  border-color: var(--sky);
   box-shadow: 0 28px 60px -40px var(--shadow);
   transform: translateY(-4px);
 }
@@ -818,16 +814,22 @@
   align-items: center;
   width: 100%;
   padding: 18px 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #fff;
   text-align: left;
   cursor: pointer;
-  transition: border-color .3s var(--ease), background .3s var(--ease);
+  transition: background .3s var(--ease);
 }
 
-.price-item:hover { border-color: var(--sky); }
-.price-item.is-on { border-color: var(--ink); background: var(--surface); }
+/* Chosen rows step out of the glass and go solid, so the selection is never
+   ambiguous against whatever is behind the panel. */
+.price-item.is-on {
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+
+.price-item.is-on.glass-panel::before {
+  background: var(--ink);
+  opacity: 1;
+}
 
 .price-check {
   display: grid;
@@ -1785,6 +1787,88 @@
       color-mix(in srgb, var(--sand-soft), transparent 40%), transparent 62%),
     conic-gradient(from 205deg at 66% 28%,
       var(--shell), var(--marble) 26%, var(--sand-soft) 51%, var(--marble) 72%, var(--shell));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   .glass-panel — a card that lets the stone through
+
+   The border is a gradient, which a border property cannot hold, so it is a
+   ring drawn on ::before and punched out with a mask. That also means hover
+   moves opacity rather than a colour, and the sweep is a transform: the two
+   properties a compositor can handle on its own, so neither can cost a
+   frame while the page is scrolling.
+
+   Silver is --sky at .4 alpha, which is the same colour by another name;
+   gold is --gold-line. Swap .is-silver on or off per section.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.glass-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--pearl), transparent 82%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 18px 44px -30px var(--shadow);
+}
+
+/* The 1px ring. Two masks composited so only the padding box survives. */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    var(--gold-line),
+    color-mix(in srgb, var(--sky), transparent 62%) 52%,
+    var(--gold-line));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .62;
+  transition: opacity .34s var(--ease);
+  pointer-events: none;
+}
+
+.glass-panel:hover::before,
+.glass-panel:focus-visible::before { opacity: 1; }
+
+.glass-panel.is-silver::before {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--sky), transparent 60%),
+    color-mix(in srgb, var(--pearl), transparent 30%) 52%,
+    color-mix(in srgb, var(--sky), transparent 60%));
+}
+
+/* The sweep. Parked off the left edge at zero opacity and only ever moved,
+   so it costs nothing until someone hovers. */
+.glass-panel::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  bottom: -60%;
+  left: 0;
+  width: 32%;
+  background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+  transform: translateX(-180%) rotate(18deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glass-panel:hover::after,
+.glass-panel:focus-visible::after {
+  animation: glassSweep .85s var(--ease) 1;
+}
+
+@keyframes glassSweep {
+  0%   { transform: translateX(-180%) rotate(18deg); opacity: 0; }
+  14%  { opacity: 1; }
+  86%  { opacity: 1; }
+  100% { transform: translateX(430%) rotate(18deg); opacity: 0; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
