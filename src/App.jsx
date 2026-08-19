@@ -399,8 +399,13 @@ function BooksPageCinematic({ onNavigate, onSection }) {
   );
 }
 
-export function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+/* `path` is only passed when rendering on the server, where there is no
+   window to read the route from. In the browser it stays undefined and the
+   component behaves exactly as before. */
+export function App({ path }) {
+  const [currentPath, setCurrentPath] = useState(
+    path ?? (typeof window === "undefined" ? "/" : window.location.pathname),
+  );
   useScrollExperience(currentPath);
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [testimonial, setTestimonial] = useState(0);
