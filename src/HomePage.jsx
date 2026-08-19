@@ -69,9 +69,9 @@ const packageComparison = [
   { feature: "SEO & claritate", start: "de bază", web: "structurat", premium: "extins + conținut" },
 ];
 const chapters = [
-  { key: "asculta", number: "01", title: "Ascult", video: "/video/story-ascult-workshop.mp4", headline: "Nu pornesc de la tendințe. Pornesc de la tine.", copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.", meta: "Atelier vechi · marmură" },
-  { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", headline: "Ideile tale devin formă, lumină și experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
-  { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
+  { key: "asculta", number: "01", title: "Ascult", video: "/video/story-ascult-workshop.mp4", poster: "/video/poster/story-ascult-workshop.jpg", headline: "Nu pornesc de la tendințe. Pornesc de la tine.", copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.", meta: "Atelier vechi · marmură" },
+  { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Ideile tale devin formă, lumină și experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
+  { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", poster: "/video/poster/story-construiesc-modern-office.jpg", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
 ];
 const processSteps = [
   ["01", "Descoperire", "Înțeleg obiectivele tale, publicul şi provocările brandului. Ascult înainte să propun."],
@@ -245,7 +245,7 @@ export function HomePage({ onNavigate }) {
             className="hero-frame"
             style={reduced ? undefined : { "--open": frameOpen }}
           >
-            <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+            <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/renaissance-sculptor-hero.jpg">
               <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
             </video>
             <motion.span
@@ -307,7 +307,7 @@ export function HomePage({ onNavigate }) {
         items={chapters}
         renderMedia={(item) => (
           <>
-            <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+            <video autoPlay muted loop playsInline preload="metadata" poster={item.poster} aria-hidden="true">
               <source src={item.video} type="video/mp4" />
             </video>
             <span className="chapter-scrim" aria-hidden="true" />
@@ -325,7 +325,7 @@ export function HomePage({ onNavigate }) {
 
       {/* ── Full-bleed film: no scrim, no type, pure breath ──────────────── */}
       <section className="film" aria-label="Mâna care atinge piatra">
-        <video autoPlay muted loop playsInline preload="metadata">
+        <video autoPlay muted loop playsInline preload="metadata" poster="/video/poster/kintsugi-hand-touch.jpg">
           <source src="/video/kintsugi-hand-touch.mp4" type="video/mp4" />
         </video>
       </section>
@@ -517,7 +517,7 @@ export function HomePage({ onNavigate }) {
         <Depth speed={0.18} className="editorial-media">
           <video
             autoPlay muted loop playsInline preload="metadata"
-            poster="/assets/editorial/golden-portrait-clean.jpg"
+            poster="/video/poster/aura-creative-showreel.jpg"
             aria-hidden="true"
           >
             <source src="/video/aura-creative-showreel.mp4" type="video/mp4" />
@@ -576,7 +576,7 @@ export function HomePage({ onNavigate }) {
                 <li>Materiale care nu se leagă între ele când le pui unul lângă altul.</li>
               </ul>
               <figure className="difference-figure">
-                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/stone-hand-dust.jpg">
                   <source src="/video/stone-hand-dust.mp4" type="video/mp4" />
                 </video>
               </figure>
@@ -591,7 +591,7 @@ export function HomePage({ onNavigate }) {
                 <li>Fiecare material se recunoaște ca parte din același brand.</li>
               </ul>
               <figure className="difference-figure">
-                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/about-renaissance-studio.jpg">
                   <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
                 </video>
               </figure>
@@ -717,7 +717,7 @@ export function HomePage({ onNavigate }) {
       {/* ── Contact ──────────────────────────────────────────────────────── */}
       <section className="contact" id="contact">
         <div className="contact-media" aria-hidden="true">
-          <video autoPlay muted loop playsInline preload="metadata">
+          <video autoPlay muted loop playsInline preload="metadata" poster="/video/poster/atelier-statue-seams.jpg">
             <source src="/video/atelier-statue-seams.mp4" type="video/mp4" />
           </video>
           <span className="contact-scrim" />
