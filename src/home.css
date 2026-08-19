@@ -1356,3 +1356,73 @@
   color: #fff;
   --accent: var(--frost);
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   AMORESA — how a joining script has to be set
+
+   Two things break this face and both were in the old rules:
+
+   letter-spacing pulls the joins apart, so a connected script turns into
+   loose disconnected letters. It has to be zero wherever Amoresa is used.
+
+   The family ships one weight. Asking for 500 or 600 makes the browser
+   synthesise a bold, which thickens the hairlines unevenly and muddies the
+   fine strokes. Everything display-set is 400.
+
+   The face also stays off small text: at 17–26px a script this fine is
+   decorative rather than readable, so cards, prices, table cells and UI
+   labels use the neutral serif or the sans instead.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.hero-title,
+.section-title,
+.manifesto-text,
+.chapter-headline,
+.marquee-item,
+.difference-col > p,
+.voice blockquote,
+.contact-cinematic-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* Amoresa's ascenders and descenders interlock; it needs more room than a
+   text face at the same size. */
+.hero-title { line-height: 1.06; }
+.section-title { line-height: 1.12; }
+.manifesto-text { line-height: 1.2; }
+.chapter-headline { line-height: 1.14; font-weight: 400; letter-spacing: 0; }
+.voice blockquote { font-style: normal; line-height: 1.3; }
+
+/* Structural type: legibility over flourish. */
+.service-card h3,
+.process-step h3,
+.skill-card h3,
+.archive-group-head h3,
+.compare h3,
+.archive-card-title,
+.work-frame-title,
+.faq-item summary,
+.footer-brand strong,
+.masthead-brand,
+.menu-sheet a,
+.menu-sheet button {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+.service-price,
+.price-value,
+.price-total strong,
+.process-number,
+.chapter-index,
+.fan-card figcaption {
+  font-family: var(--font-sans);
+  letter-spacing: .02em;
+}
+
+.service-price,
+.price-total strong { font-weight: 600; }
+.process-number { font-weight: 300; }

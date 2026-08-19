@@ -1,18 +1,29 @@
-@font-face { font-family:"Morgelora"; src:local("Morgelora"),local("Morgelora Regular"); font-weight:400; font-style:normal; font-display:swap; }
-@font-face { font-family:"Morgelora"; src:local("Morgelora Italic"); font-weight:400; font-style:italic; font-display:swap; }
-@font-face { font-family:"Amoresa"; src:local("Amoresa"),local("Amoresa Regular"); font-weight:400; font-style:normal; font-display:swap; }
-@font-face { font-family:"Amoresa"; src:local("Amoresa Italic"); font-weight:400; font-style:italic; font-display:swap; }
-@font-face { font-family:"Geogira"; src:local("Geogira"),local("Geogira Regular"); font-weight:400; font-style:normal; font-display:swap; }
-@font-face { font-family:"Geogira"; src:local("Geogira Medium"); font-weight:500; font-style:normal; font-display:swap; }
-@font-face { font-family:"Geogira"; src:local("Geogira Semi Bold"),local("Geogira SemiBold"); font-weight:600; font-style:normal; font-display:swap; }
-@font-face { font-family:"Geogira"; src:local("Geogira Bold"); font-weight:700; font-style:normal; font-display:swap; }
+/* Amoresa — Andrey Sharonov, self-hosted.
+
+   Patched to add the Romanian glyphs the original lacks: a-breve, s-comma and
+   t-comma, in both cases. The comma below is the face's own comma; the breve
+   is drawn to sit in the same optical zone the designer used for the acute.
+   Source and build script are kept alongside the project.
+
+   Previously these were declared `src: local(...)`, which resolves only if the
+   font is installed on the visitor's machine. It was installed on nobody's —
+   the site has been rendering in Georgia this whole time. */
+@font-face {
+  font-family: "Amoresa";
+  src: url("/fonts/amoresa.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Typography — luxury system */
-  --font-display:"Amoresa","Morgelora",Georgia,serif;
-  --font-body:"Morgelora","Amoresa",system-ui,sans-serif;
-  --font-serif:"Amoresa",Georgia,serif;
-  --font-sans:"Morgelora",system-ui,sans-serif;
+  /* Amoresa is a joining script: gorgeous at display size, illegible as UI.
+     It carries the big statements only; everything structural stays neutral. */
+  --font-display:"Amoresa",Georgia,serif;
+  --font-serif:Georgia,"Times New Roman",serif;
+  --font-body:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-sans:system-ui,-apple-system,"Segoe UI",sans-serif;
 
   /* Colour — Rainy July */
   --ink:#2D353C;         /* primary text, dark anchor   */
