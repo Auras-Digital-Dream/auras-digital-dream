@@ -288,7 +288,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Manifesto ────────────────────────────────────────────────────── */}
-      <section className="manifesto gilt" aria-label="Manifest">
+      <section className="manifesto gilt bg-marble" aria-label="Manifest">
         <div className="shell manifesto-grid">
           <div className="manifesto-copy">
             <Lines
@@ -351,7 +351,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Featured work, fanned ────────────────────────────────────────── */}
-      <section className="work-intro" id="portofoliu">
+      <section className="work-intro bg-ink-marble" id="portofoliu">
         <div className="shell">
           <Reveal as="p" className="kicker">Selecție curatorială</Reveal>
           <Lines as="h2" className="section-title" text="Creez proiecte care nu doar arată bine. Spun ceva." />
@@ -503,7 +503,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Portfolio archive ────────────────────────────────────────────── */}
-      <section className="archive">
+      <section className="archive bg-marble">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Portofoliu organizat</Reveal>
@@ -559,7 +559,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Skills ───────────────────────────────────────────────────────── */}
-      <section className="skills" id="skills">
+      <section className="skills bg-marble" id="skills">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Skills & competențe</Reveal>
@@ -577,7 +577,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Difference: what you get elsewhere vs here ───────────────────── */}
-      <section className="difference" id="de-ce-eu">
+      <section className="difference bg-ink-marble" id="de-ce-eu">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Diferența</Reveal>
@@ -626,7 +626,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Clarity: FAQ + comparison ────────────────────────────────────── */}
-      <section className="clarity" id="claritate">
+      <section className="clarity bg-ink-marble" id="claritate">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Claritate înainte de ofertă</Reveal>
@@ -678,7 +678,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────────────────── */}
-      <section className="voices">
+      <section className="voices bg-marble">
         <div className="shell">
           <div className="section-head">
             <Reveal as="p" className="kicker">Testimoniale</Reveal>
@@ -710,7 +710,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Books teaser ─────────────────────────────────────────────────── */}
-      <section className="books gilt" id="amazon-picks">
+      <section className="books gilt bg-marble" id="amazon-picks">
         <div className="shell books-grid">
           <div>
             <Reveal as="p" className="kicker">Aura Dobre · Author Universe</Reveal>

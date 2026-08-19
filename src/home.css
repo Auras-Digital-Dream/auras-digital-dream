@@ -1679,6 +1679,66 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+   MARBLE GROUNDS — .bg-marble / .bg-ink-marble
+
+   Two reusable grounds, pure CSS, no new image and no new custom property.
+
+   The veins are slices of very large ellipses: a radial-gradient with a
+   narrow band of stops draws an arc, which is the only way to get a curve
+   out of a gradient. Each one is anchored off-canvas so only a gentle bend
+   of it crosses the section, and the stops fade in and out rather than
+   stopping hard, so the line reads as drawn into the stone.
+
+   Nothing here animates, so nothing here can cost a frame while scrolling.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.bg-marble,
+.bg-ink-marble {
+  /* Grain last in the list means first in the stack: 4.5%, under the 5%
+     ceiling, enough to stop the gradient reading as a perfect digital ramp. */
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 180px 180px, auto, auto, auto, auto, auto;
+  background-position: 0 0, center, center, center, center, center;
+}
+
+.bg-marble {
+  background-color: var(--paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.03'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 155% 95% at 6% 16%,
+      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 52%) 47.88% 47.98%, transparent 48.10%),
+    radial-gradient(ellipse 125% 150% at 97% 64%,
+      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 62%) 41.40% 41.50%, transparent 41.62%),
+    radial-gradient(ellipse 190% 75% at 38% 111%,
+      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 56%) 38.90% 39.00%, transparent 39.12%),
+    radial-gradient(ellipse 85% 95% at 91% 88%,
+      color-mix(in srgb, var(--sand-soft), transparent 58%), transparent 62%),
+    conic-gradient(from 205deg at 66% 28%,
+      var(--surface-2), var(--paper) 26%, var(--marble) 51%, var(--paper) 72%, var(--surface-2));
+}
+
+/* The same stone read the other way up. The base runs from --ink to a
+   deeper mix of itself, and the veins are pulled back further because gold
+   on a dark ground carries much more than gold on paper. */
+.bg-ink-marble {
+  background-color: var(--ink);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.045'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 155% 95% at 8% 14%,
+      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 62%) 47.88% 47.98%, transparent 48.10%),
+    radial-gradient(ellipse 125% 150% at 95% 66%,
+      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 72%) 41.40% 41.50%, transparent 41.62%),
+    radial-gradient(ellipse 190% 75% at 40% 109%,
+      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 66%) 38.90% 39.00%, transparent 39.12%),
+    radial-gradient(ellipse 85% 95% at 12% 90%,
+      color-mix(in srgb, var(--ink), black 22%), transparent 62%),
+    conic-gradient(from 205deg at 70% 26%,
+      color-mix(in srgb, var(--ink), black 16%), var(--ink) 30%,
+      color-mix(in srgb, var(--ink), black 24%) 56%, var(--ink) 78%,
+      color-mix(in srgb, var(--ink), black 16%));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
    AMORESA — how a joining script has to be set
 
    Two things break this face and both were in the old rules:
