@@ -514,11 +514,11 @@ export function HomePage({ onNavigate }) {
                 <h3>{group.title}</h3>
                 <p>{group.copy}</p>
               </div>
-              <div className="archive-grid reveal-on-scroll">
+              <div className="archive-grid">
                 {group.projects.map((project, index) => (
                   <a
                     key={project.slug}
-                    className="archive-card reveal-child"
+                    className="archive-card is-tilted is-subtle reveal-on-scroll"
                     href={"/portofoliu/" + project.slug}
                     onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
                   >
