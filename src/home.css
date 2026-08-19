@@ -108,8 +108,23 @@
 
 /* Reveal/Lines wrappers must clip their own overflow, nothing else. */
 .reveal-mask { display: block; overflow: hidden; }
+/* The reveal mask clips each word to its line box so it can slide up from
+   nothing. Amoresa paints well outside that box — the circumflex on Î sat
+   above it and came out looking like a caron, and the descenders of j, g and
+   f were sheared off. The mask is grown with padding and pulled back with an
+   equal negative margin, so it clips wider without moving a single line.
+   The hidden offset in Lines() is 170% to clear the taller mask. */
 .lines { display: block; }
-.lines-word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.lines-word {
+  --mask-x: .12em;
+  --mask-top: .42em;
+  --mask-bottom: .38em;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: var(--mask-top) var(--mask-x) var(--mask-bottom);
+  margin: calc(var(--mask-top) * -1) calc(var(--mask-x) * -1) calc(var(--mask-bottom) * -1);
+}
 .lines-word > span { display: inline-block; white-space: pre; will-change: transform; }
 
 .depth { position: relative; overflow: clip; height: 100%; }

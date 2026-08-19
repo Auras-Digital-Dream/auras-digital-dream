@@ -87,7 +87,7 @@ export function Lines({ text, className = "", as = "h2", delay = 0, style }) {
         <span className="lines-word" key={`${word}-${index}`} aria-hidden="true">
           <motion.span
             variants={{
-              hidden: { y: "108%" },
+              hidden: { y: "170%" },
               visible: { y: "0%", transition: { duration: 0.9, delay: delay + index * 0.045, ease: EASE } },
             }}
           >
