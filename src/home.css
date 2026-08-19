@@ -286,15 +286,37 @@
       rgba(45,53,60,.97));
 }
 
+/* Each copy block carries its own ground.
+
+   A viewport-percentage gradient on the frame cannot work here: the copy
+   moves as you scroll and the frame's proportions change with the window,
+   so on a short screen the text ends up exactly where the gradient is
+   weakest — over the brightest part of the marble. A plate anchored to the
+   text itself travels with it and holds at every size. */
 .hero-headline {
   grid-area: 1 / 1;
+  position: relative;
   z-index: 2;
   width: min(100% - var(--gutter) * 2, 1180px);
   text-align: center;
   will-change: transform;
 }
 
-.hero-headline .kicker { color: var(--frost); }
+.hero-headline::before,
+.hero-body::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-headline::before {
+  inset: -18% -8%;
+  background: radial-gradient(ellipse 58% 54% at 50% 50%,
+    rgba(45,53,60,.9), rgba(45,53,60,.62) 52%, rgba(45,53,60,.2) 76%, transparent 88%);
+}
+
+.hero-headline .kicker { color: var(--frost); text-shadow: 0 1px 10px rgba(45,53,60,.9); }
 
 .hero-title {
   margin: 0;
@@ -303,11 +325,12 @@
   font-size: clamp(38px, 6.6vw, 108px);
   line-height: .96;
   letter-spacing: 1px;
-  text-shadow: 0 2px 30px rgba(45,53,60,.85), 0 1px 3px rgba(45,53,60,.5);
+  text-shadow: 0 2px 26px rgba(45,53,60,.9), 0 1px 2px rgba(45,53,60,.7);
 }
 
 .hero-body {
   grid-area: 1 / 1;
+  position: relative;
   z-index: 3;
   align-self: end;
   margin-bottom: clamp(36px, 6vh, 72px);
@@ -315,12 +338,18 @@
   will-change: transform, opacity;
 }
 
+.hero-body::before {
+  inset: -40% -10%;
+  background: radial-gradient(ellipse 56% 60% at 50% 54%,
+    rgba(45,53,60,.92), rgba(45,53,60,.66) 50%, rgba(45,53,60,.22) 74%, transparent 88%);
+}
+
 .hero-lead {
   max-width: 52ch;
   margin: 0 auto;
   font-size: clamp(15px, 1.15vw, 18px);
   line-height: 1.55;
-  color: rgba(255,255,255,.86);
+  color: #fff;
 }
 
 .hero-actions {
