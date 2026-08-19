@@ -375,11 +375,19 @@ export function Marquee({ text, className = "", angle = -7, speed = 0.5, repeat 
   const x = useSpring(useTransform(scrollYProgress, [0, 1], ["8%", `${-speed * 100}%`]), {
     stiffness: 110, damping: 30, mass: 0.4,
   });
+  // The frieze leans toward the viewer on the way in and away on the way
+  // out, so the band has a face rather than being a flat strip of type.
+  const tilt = useTransform(scrollYProgress, [0, 0.5, 1], ["9deg", "0deg", "-9deg"]);
+  // A MotionValue is only subscribed on a motion component; on a plain div it
+  // stringifies to [object Object], which invalidates the whole transform
+  // declaration — including the -7deg swing that was already there.
   return (
-    <div
+    <motion.div
       ref={ref}
       className={`marquee ${className}`}
-      style={{ "--marquee-angle": `${angle}deg` }}
+      style={reduced
+        ? { "--marquee-angle": `${angle}deg` }
+        : { "--marquee-angle": `${angle}deg`, "--marquee-tilt": tilt }}
       aria-hidden="true"
     >
       <motion.div className="marquee-rail" style={reduced ? undefined : { x }}>
@@ -387,6 +395,6 @@ export function Marquee({ text, className = "", angle = -7, speed = 0.5, repeat 
           <span className="marquee-item" key={i}>{text}</span>
         ))}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

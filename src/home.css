@@ -1155,12 +1155,14 @@
 .work-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   PAPER GROUND — texture and construction lines
+   PAPER GROUND — texture
 
-   Scout's page does not sit on flat colour: there is a speckle in the stock
-   and faint drafting lines running behind the content. Both are decorative
-   layers pinned inside .home, so they scroll with the page and never
-   intercept a pointer.
+   The page does not sit on flat colour: there is a speckle in the stock, a
+   decorative layer pinned inside .home that scrolls with the page and never
+   intercepts a pointer. The diagonal construction lines that used to run
+   with it are gone — at 1.02:1 they were not visible enough to read as
+   design, only enough to read as dirt, and behind the marquee they fought
+   the letterforms. The grain carries the texture on its own.
    ══════════════════════════════════════════════════════════════════════════ */
 
 .home {
@@ -1177,25 +1179,6 @@
   opacity: .5;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23s)' opacity='.36'/%3E%3C/svg%3E");
-}
-
-/* Drafting lines: two very faint diagonals, only on the paper sections. */
-.manifesto,
-.services,
-.process,
-.estimator,
-.archive,
-.skills,
-.why,
-.clarity,
-.voices,
-.books,
-.difference { background-image: var(--drafting); }
-
-.home {
-  --drafting:
-    repeating-linear-gradient(64deg, transparent 0 232px, rgba(45,53,60,.055) 232px 233px),
-    repeating-linear-gradient(-64deg, transparent 0 384px, rgba(45,53,60,.03) 384px 385px);
 }
 
 .home > section,
@@ -1334,26 +1317,56 @@
 .marquee {
   position: relative;
   overflow: clip;
-  padding-block: clamp(30px, 6vw, 74px);
-  transform: rotate(var(--marquee-angle, -7deg));
+  padding-block: clamp(36px, 6.5vw, 88px);
+  /* Tilted in depth first, then swung in the plane, so it reads as a frieze
+     running along a wall rather than a line of type lying flat. */
+  transform: rotate(var(--marquee-angle, -7deg)) rotateX(var(--marquee-tilt, 0deg));
+  transform-style: preserve-3d;
 }
 
 .marquee-rail { display: flex; gap: 0; width: max-content; will-change: transform; }
 
+/* Amoresa is a joining script. At 210px, hollowed out to a 1px outline, its
+   loops cross each other and the word stops being a word — and the outline
+   measured 1.3:1 against the paper, so there was nothing to read anyway.
+   This is the one place the display face has to step aside: a roman with
+   real weight, cut in relief the way a renaissance inscription is. */
 .marquee-item {
-  padding-right: .35em;
-  font-family: var(--font-display);
-  font-size: clamp(64px, 15vw, 210px);
-  font-weight: 600;
-  line-height: .9;
-  letter-spacing: 1px;
+  padding-right: .32em;
+  font-family: var(--font-serif);
+  font-size: clamp(56px, 13vw, 190px);
+  font-weight: 700;
+  line-height: .95;
+  letter-spacing: .04em;
   white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(45,53,60,.28);
+  color: var(--ink);
+  /* Light from above: gilding catches the top edge, the body extrudes down
+     and to the right, and the whole letter drops one soft shadow onto the
+     stone. Ink on marble is 9.58:1, so the face reads before the relief does. */
+  text-shadow:
+    0 -2px 0 var(--gold),
+    1px 1px 0 rgba(201,168,106,.42),
+    2px 3px 0 rgba(45,53,60,.30),
+    3px 5px 0 rgba(45,53,60,.22),
+    4px 7px 0 rgba(45,53,60,.15),
+    5px 9px 0 rgba(45,53,60,.09),
+    7px 14px 20px rgba(45,53,60,.28);
 }
 
-.marquee-band { background: var(--paper); overflow: clip; }
-.marquee-band .marquee { margin-inline: -6vw; }
+/* The band is stone, not paper: it separates the paper storey above from
+   the ink one below the way a cornice does. The veining is three very wide
+   gradients, not a repeating rule — marble has no repeat. */
+.marquee-band {
+  overflow: clip;
+  perspective: 1400px;
+  background:
+    linear-gradient(103deg, transparent 0 38%, rgba(255,255,255,.55) 41% 42%, transparent 45%),
+    linear-gradient(97deg, transparent 0 62%, rgba(45,53,60,.05) 64% 65%, transparent 68%),
+    linear-gradient(108deg, transparent 0 74%, rgba(255,255,255,.4) 76% 77%, transparent 80%),
+    linear-gradient(168deg, var(--shell), var(--marble) 48%, var(--sand-soft));
+}
+
+.marquee-band .marquee { margin-inline: -8vw; }
 
 /* ══════════════════════════════════════════════════════════════════════════
    FULL-BLEED FILM — no scrim, no type, just the footage
@@ -1537,7 +1550,6 @@
 .section-title,
 .manifesto-text,
 .chapter-headline,
-.marquee-item,
 .difference-col > p,
 .voice blockquote,
 .contact-cinematic-title {
