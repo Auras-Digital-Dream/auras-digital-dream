@@ -2206,8 +2206,15 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* The glass ring turns cool on the cards that sell. */
+/* #EEF8FD is #A8DCF4 lifted 20% toward white, so the card separates by
+   lightness as well as by hue — the marble and the pure blue sit at almost
+   the same luminance, and a separation that depends only on colour is one
+   that disappears in bright light or for a colour-weak eye.
+   Held at 94% rather than solid: at full opacity the backdrop-filter has
+   nothing left to filter and the glass would die quietly. The 6% costs
+   0.01 of the separation. */
 .glass-panel.is-frost {
-  background: color-mix(in srgb, var(--frost), transparent 80%);
+  background: rgba(238, 248, 253, .94);
 }
 
 .glass-panel.is-frost::before {
@@ -2217,6 +2224,12 @@
     var(--frost));
   opacity: .78;
 }
+
+/* The shared hover brightens the ring, but .is-frost sets its opacity lower
+   and is declared after it, so on these cards the ring had stopped lifting.
+   Restated here at equal weight. */
+.glass-panel.is-frost:hover::before,
+.glass-panel.is-frost:focus-within::before { opacity: 1; }
 
 .glass-panel.is-frost:hover,
 .glass-panel.is-frost:focus-within {
