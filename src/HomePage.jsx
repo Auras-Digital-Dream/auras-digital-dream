@@ -317,7 +317,7 @@ export function HomePage({ onNavigate }) {
             className="hero-headline"
             style={reduced ? undefined : { scale: titleScale, y: titleShift }}
           >
-            <Reveal as="p" className="kicker" delay={0.15}>Marketing · Design · Web</Reveal>
+            <Reveal as="p" className="kicker" delay={0.15}><span className="eyebrow-text">Marketing · Design · Web</span></Reveal>
             <Lines as="h1" className="hero-title" text="Îți transform ideea brută într-o experiență șlefuită cu grijă." delay={0.3} />
           </motion.div>
 
@@ -386,7 +386,7 @@ export function HomePage({ onNavigate }) {
         )}
         renderCopy={(item) => (
           <>
-            <p className="kicker">{item.number} — {item.title}</p>
+            <p className="kicker"><span className="eyebrow-text">{item.number} — {item.title}</span></p>
             <h2 className="chapter-headline">{item.headline}</h2>
             <p className="chapter-body">{item.copy}</p>
             <span className="chapter-meta">{item.meta}</span>
@@ -404,7 +404,7 @@ export function HomePage({ onNavigate }) {
       {/* ── Featured work, fanned ────────────────────────────────────────── */}
       <section className="work-intro bg-ink-marble" id="portofoliu">
         <div className="shell reveal-on-scroll">
-          <p className="kicker reveal-child">Selecție curatorială</p>
+          <p className="kicker reveal-child"><span className="eyebrow-text">Selecție curatorială</span></p>
           <h2 className="section-title reveal-child">Creez proiecte care nu doar arată bine. Spun ceva.</h2>
         </div>
       </section>
@@ -433,7 +433,7 @@ export function HomePage({ onNavigate }) {
       <section className="services gilt bg-marble is-deep" id="servicii">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Servicii</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Servicii</span></p>
             <h2 className="section-title reveal-child">Nu livrez servicii. Livrez transformări.</h2>
             <p className="section-lead reveal-child">
                 Adun sub un singur acoperiș tot ce dă viață unei prezențe: identitate,
@@ -445,7 +445,7 @@ export function HomePage({ onNavigate }) {
               <div key={title} className="service-card glass-panel is-frost is-tilted reveal-child">
                 <span className="service-icon"><Icon size={24} /></span>
                 <h3>{title}</h3>
-                <p className="service-subtitle">{subtitle}</p>
+                <p className="service-subtitle"><span className="eyebrow-text">{subtitle}</span></p>
                 <p className="service-copy">{copy}</p>
                 <ul className="service-list">
                   {list.map((item) => <li key={item}><Check size={12} weight="bold" /> {item}</li>)}
@@ -467,7 +467,7 @@ export function HomePage({ onNavigate }) {
       <section className="process bg-marble">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Proces de lucru</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Proces de lucru</span></p>
             <h2 className="section-title reveal-child">De la idee, la realitate.</h2>
           </div>
           <ol className="process-grid">
@@ -488,7 +488,7 @@ export function HomePage({ onNavigate }) {
       <section className="estimator bg-marble is-deep" id="estimator">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Estimator de cost</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Estimator de cost</span></p>
             <h2 className="section-title reveal-child">Estimează-ți bugetul.</h2>
             <p className="section-lead reveal-child">
                 Selectează serviciile de care ai nevoie şi obții imediat o estimare orientativă.
@@ -521,7 +521,7 @@ export function HomePage({ onNavigate }) {
               })}
             </div>
             <aside className="price-summary" aria-live="polite">
-              <p className="kicker">Estimare totală</p>
+              <p className="kicker"><span className="eyebrow-text">Estimare totală</span></p>
               {selectedPriceItems.length === 0 ? (
                 <p className="price-empty">Selectează serviciile pentru a vedea estimarea.</p>
               ) : (
@@ -553,7 +553,7 @@ export function HomePage({ onNavigate }) {
       <section className="archive bg-marble">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Portofoliu organizat</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Portofoliu organizat</span></p>
             <h2 className="section-title reveal-child">Alege direcția care te reprezintă.</h2>
           </div>
           {groupedProjects.map((group) => (
@@ -596,7 +596,7 @@ export function HomePage({ onNavigate }) {
         </Depth>
         <span className="editorial-scrim" aria-hidden="true" />
         <div className="shell editorial-body reveal-on-scroll">
-          <p className="kicker reveal-child">Behind the Dream</p>
+          <p className="kicker reveal-child"><span className="eyebrow-text">Behind the Dream</span></p>
           <h2 className="section-title reveal-child">Imaginile vorbesc înaintea cuvintelor.</h2>
           <Rise delay={0.2}>
             <p>Am pornit dintr-o dorință simplă: să transform ideile în experiențe care se simt, nu doar se văd.</p>
@@ -608,7 +608,7 @@ export function HomePage({ onNavigate }) {
       <section className="skills bg-marble" id="skills">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Skills & competențe</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Skills & competențe</span></p>
             <h2 className="section-title reveal-child">Instrumente stăpânite.</h2>
           </div>
           <div className="skill-grid">
@@ -626,7 +626,7 @@ export function HomePage({ onNavigate }) {
       <section className="difference bg-ink-marble" id="de-ce-eu">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Diferența</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Diferența</span></p>
             <h2 className="section-title reveal-child">Un livrabil se termină. Un sistem rămâne.</h2>
             <p className="section-lead reveal-child">
                 Cei mai mulți îți trimit fișierele și dispar. Eu îți las în urmă o structură
@@ -673,7 +673,7 @@ export function HomePage({ onNavigate }) {
       <section className="clarity bg-ink-marble" id="claritate">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Claritate înainte de ofertă</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Claritate înainte de ofertă</span></p>
             <h2 className="section-title reveal-child">Nu te las să alegi la întâmplare. Îți arăt drumul.</h2>
             <p className="section-lead reveal-child">
                 Fiecare secțiune din site răspunde unei întrebări reale: ce primești, cât costă,
@@ -723,7 +723,7 @@ export function HomePage({ onNavigate }) {
       <section className="voices bg-marble">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child">Testimoniale</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Testimoniale</span></p>
             <h2 className="section-title reveal-child">Ce spun clienții.</h2>
           </div>
           <motion.figure
@@ -755,7 +755,7 @@ export function HomePage({ onNavigate }) {
       <section className="books gilt bg-marble" id="amazon-picks">
         <div className="shell books-grid">
           <div className="reveal-on-scroll">
-            <p className="kicker reveal-child">Aura Dobre · Author Universe</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Aura Dobre · Author Universe</span></p>
             <h2 className="section-title reveal-child">Cărțile mele au acum pagina lor.</h2>
             <Rise delay={0.15}>
               <p className="section-lead">
@@ -791,7 +791,7 @@ export function HomePage({ onNavigate }) {
         </div>
         <div className="shell contact-grid">
           <div className="contact-copy reveal-on-scroll">
-            <p className="kicker reveal-child">Contact</p>
+            <p className="kicker reveal-child"><span className="eyebrow-text">Contact</span></p>
             <h2 className="section-title reveal-child">Hai să sculptăm împreună ideea ta.</h2>
             <Rise delay={0.15}>
               <p>
