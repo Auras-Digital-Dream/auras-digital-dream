@@ -101,20 +101,29 @@ function scrollToId(id) {
 
 function SkillBar({ name, value }) {
   const reduced = useReducedMotion();
+  /* The trigger cannot live on the fill. It starts at scaleX(0), which makes
+     its box zero pixels wide, and IntersectionObserver reports a ratio of 0
+     for a zero-area target — so `amount: 0.6` was a threshold the element
+     could never reach, whatever the scroll position. The row is watched
+     instead, and the fill follows it through a variant. Same trap that had
+     the headings stuck behind their masks. */
   return (
-    <div className="skill-row">
+    <motion.div
+      className="skill-row"
+      initial={reduced ? false : "empty"}
+      whileInView="filled"
+      viewport={{ once: true, amount: 0.6 }}
+    >
       <div className="skill-label"><span>{name}</span><span>{value}%</span></div>
       <div className="skill-bar">
         <motion.div
           className="skill-fill"
-          initial={reduced ? false : { scaleX: 0 }}
-          whileInView={{ scaleX: value / 100 }}
-          viewport={{ once: true, amount: 0.6 }}
+          variants={{ empty: { scaleX: 0 }, filled: { scaleX: value / 100 } }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
           style={{ transformOrigin: "left", scaleX: reduced ? value / 100 : undefined }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -400,7 +409,7 @@ export function HomePage({ onNavigate }) {
           </div>
           <div className="service-grid reveal-on-scroll">
             {services.map(({ icon: Icon, title, subtitle, copy, list, benefits, price }, index) => (
-              <div key={title} className="service-card glass-panel is-tilted reveal-child">
+              <div key={title} className="service-card glass-panel is-frost is-tilted reveal-child">
                 <span className="service-icon"><Icon size={24} /></span>
                 <h3>{title}</h3>
                 <p className="service-subtitle">{subtitle}</p>

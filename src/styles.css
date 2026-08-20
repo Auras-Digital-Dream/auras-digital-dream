@@ -90,7 +90,12 @@
      colour on the dark sections and a drawn line everywhere else. */
   --gold:#C9A86A;
   --gold-line:rgba(201,168,106,.55);
-  --marble:#E8DCC0;      /* premium sections; ink on it is 9.58:1 */
+  --marble:#E8DCC0;
+  /* --ink lifted 8% toward --frost. Enough to stop the estimate panel
+     reading as a flat rectangle, not enough to cost its text: white sits at
+     10.06:1 on it and the 60% secondary at 4.82:1. At 12% the secondary
+     drops to 4.41:1, which is why it stops here. */
+  --ink-frost:#3B434A;      /* premium sections; ink on it is 9.58:1 */
   --shadow:rgba(45,53,60,.16);
   --highlight:rgba(255,255,255,.7);
 

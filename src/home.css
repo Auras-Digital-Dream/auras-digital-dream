@@ -57,34 +57,85 @@
   color: var(--accent);
 }
 
-/* The gold accent on a heading: drawn, not written. On paper gold is 1.92:1
-   as text, so it comes in as a hairline in front of the kicker; on the ink
-   sections the kicker text is gold itself and the line simply matches. */
-.kicker {
-  display: flex;
+/* ── Eyebrow: a chip of glass ──────────────────────────────────────────
+   The label stops being loose type and becomes an object, matching the
+   navigation bar and the service cards, which are already glass. Light
+   blue: --frost where the ground is ink, and --ink-frost where it is
+   paper — the same hue, taken down far enough to read, because a literal
+   light blue on cream is about 1.3:1.
+
+   The glow breathes on opacity alone, so it stays on the compositor and
+   cannot cost a frame while the page is scrolling. */
+.kicker,
+.section-kicker,
+.service-subtitle {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 9px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--sky), transparent 46%);
+  background: color-mix(in srgb, var(--frost), transparent 84%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  color: var(--ink-frost);
 }
 
-.kicker::before {
+.kicker::before,
+.section-kicker::before,
+.service-subtitle::before {
   content: "";
   flex: 0 0 auto;
-  width: 28px;
-  height: 1px;
-  background: var(--gold);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sky);
 }
 
-/* Centred blocks need the rule on both sides or the text sits off-axis. */
+.kicker::after,
+.section-kicker::after,
+.service-subtitle::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 0 0 14px 1px color-mix(in srgb, var(--frost), transparent 62%);
+  animation: eyebrowPulse 3s ease-in-out infinite;
+}
+
+@keyframes eyebrowPulse {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+
+/* Over ink the label goes light blue and the dot brightens with it. */
 .hero-headline .kicker,
-.marquee-lead .kicker { justify-content: center; }
-.hero-headline .kicker::after,
-.marquee-lead .kicker::after {
-  content: "";
-  flex: 0 0 auto;
-  width: 28px;
-  height: 1px;
-  background: var(--gold);
+.chapter-copy .kicker,
+.work-intro .kicker,
+.editorial .kicker,
+.contact .kicker,
+.difference .kicker,
+.clarity .kicker,
+.price-summary .kicker {
+  color: var(--frost);
+  background: color-mix(in srgb, var(--frost), transparent 90%);
 }
+
+.hero-headline .kicker::before,
+.chapter-copy .kicker::before,
+.work-intro .kicker::before,
+.editorial .kicker::before,
+.contact .kicker::before,
+.difference .kicker::before,
+.clarity .kicker::before,
+.price-summary .kicker::before { background: var(--frost); }
+
+/* Centred blocks: an inline-flex pill has to be pushed to the middle. */
+.hero-headline .kicker,
+.marquee-lead .kicker { margin-inline: auto; }
 
 .section-title {
   margin: 0;
@@ -299,9 +350,11 @@
     0 14px 40px -18px rgba(20,26,31,.7);
 }
 
+/* A tablet reaches this bar with a thumb, not a pointer, so the links have
+   to clear 40px of height — at 9px of padding they sat at 34. */
 .masthead-nav a,
 .masthead-nav button {
-  padding: 9px 14px;
+  padding: 12px 14px;
   border: 0;
   border-radius: 999px;
   background: none;
@@ -321,7 +374,7 @@
 /* The CTA is the one thing that does not invert: it stays the solid
    opposite of the bar, so it reads as the button in both states. */
 .masthead-cta {
-  padding: 9px 20px !important;
+  padding: 12px 20px !important;
   background: var(--nav-ink) !important;
   color: var(--ink) !important;
   font-weight: 600;
@@ -329,7 +382,17 @@
 
 .masthead[data-tone="light"] .masthead-cta { color: var(--paper) !important; }
 .masthead-cta:hover { filter: brightness(1.08); }
-.masthead-toggle { display: none; border: 0; background: none; color: var(--nav-ink); cursor: pointer; }
+/* The icon stays 24px; the hit area does not. 24x24 is well under what a
+   thumb needs, and this is the only way into the menu on a phone. */
+.masthead-toggle {
+  display: none;
+  border: 0;
+  background: none;
+  color: var(--nav-ink);
+  cursor: pointer;
+  padding: 10px;
+  margin: -10px;
+}
 
 .menu-sheet {
   position: fixed;
@@ -452,7 +515,6 @@
     rgba(45,53,60,.9), rgba(45,53,60,.62) 52%, rgba(45,53,60,.2) 76%, transparent 88%);
 }
 
-.hero-headline .kicker { color: var(--gold); text-shadow: 0 1px 10px rgba(45,53,60,.9); }
 
 .hero-title {
   margin: 0;
@@ -673,7 +735,6 @@
 }
 
 .chapter-copy[data-active="true"] { opacity: 1; transform: none; pointer-events: auto; }
-.chapter-copy .kicker { color: var(--gold); }
 .chapter-headline { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.06; letter-spacing: 1px; }
 .chapter-body { max-width: 46ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.78); }
 .chapter-meta { display: block; margin-top: 26px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.62); }
@@ -797,7 +858,7 @@
 }
 
 .service-card h3 { margin: 0; font-family: var(--font-display); font-size: clamp(21px, 1.7vw, 26px); font-weight: 600; letter-spacing: 1px; }
-.service-subtitle { margin: -6px 0 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.service-subtitle { margin: -6px 0 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
 .service-copy { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-soft-strong); }
 
 .service-list,
@@ -898,7 +959,7 @@
   color: #fff;
 }
 
-.price-summary .kicker { color: var(--gold); margin-bottom: 0; }
+.price-summary .kicker { margin-bottom: 0; }
 .price-empty { margin: 0; font-size: 14px; color: rgba(255,255,255,.68); }
 .price-chosen { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .price-chosen li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; font-size: 13px; color: rgba(255,255,255,.78); }
@@ -981,7 +1042,6 @@
     rgba(45,53,60,.92));
 }
 
-.editorial .kicker { color: var(--gold); }
 .editorial-body { max-width: 720px; }
 .editorial-body p { max-width: 52ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.82); }
 
@@ -1115,7 +1175,6 @@
     linear-gradient(90deg, rgba(45,53,60,.9) 0 28%, rgba(45,53,60,.55) 58%, rgba(45,53,60,.32)),
     linear-gradient(180deg, rgba(45,53,60,.5), transparent 34%, transparent 66%, rgba(45,53,60,.6));
 }
-.contact .kicker { color: var(--gold); }
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
 .contact-copy p { max-width: 50ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.8); }
 .contact-links { display: grid; gap: 12px; margin-top: 32px; }
@@ -2100,6 +2159,83 @@
 @media (prefers-reduced-motion: reduce) {
   .goldline-draw { transform: none; }
   .goldline-seal { opacity: 1; scale: 1; transition: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COOL ACCENT — the frost family, used where the eye is deciding
+
+   Blue is the second voice, not a replacement: gold still carries the
+   kickers, the frieze, the thread down the page, the corner ornaments and
+   the calls to action. What blue does is mark the three places a visitor
+   is weighing something up — the packages, the estimate and the skills.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* The glass ring turns cool on the cards that sell. */
+.glass-panel.is-frost::before {
+  background: linear-gradient(135deg,
+    var(--frost),
+    var(--sky) 52%,
+    var(--frost));
+  opacity: .78;
+}
+
+.glass-panel.is-frost:hover,
+.glass-panel.is-frost:focus-within {
+  box-shadow:
+    0 22px 52px -32px var(--shadow),
+    0 0 0 1px color-mix(in srgb, var(--sky), transparent 46%),
+    0 0 24px -2px color-mix(in srgb, var(--frost), transparent 52%);
+}
+
+/* The estimate panel: ink with a cool lift across it, so it reads as a
+   surface rather than a filled box, and a hairline of --sky to close it. */
+.price-summary {
+  background:
+    linear-gradient(152deg, var(--ink-frost), var(--ink) 58%, var(--ink-frost));
+  border: 1px solid color-mix(in srgb, var(--sky), transparent 62%);
+}
+
+/* Skill cards take the same cool ring, drawn the same way as the glass —
+   a border property cannot hold a gradient. */
+.skill-card {
+  position: relative;
+  isolation: isolate;
+  border: 0;
+}
+
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--frost), var(--sky) 52%, var(--frost));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Each category name sits on a rule that runs cool into warm — the two
+   accents meeting, rather than one replacing the other. */
+.skill-card h3 {
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.skill-card h3::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--frost), var(--gold-line) 72%, transparent);
+}
+
+/* And the bars run the same way: cool at the start, gold at the value. */
+.skill-fill {
+  background: linear-gradient(90deg, var(--sky), var(--gold));
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
