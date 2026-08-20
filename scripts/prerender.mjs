@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { ORIGIN, routes } from "./routes.mjs";
@@ -49,6 +50,24 @@ function pageFor(route, markup) {
     .replace('<div id="root"></div>', `<div id="root">${markup}</div>`);
 }
 
+/* When a page last actually changed.
+ *
+ * git cannot answer this where the build runs: the CLI uploads the working
+ * tree without .git, and a CI clone is shallow, so every file reports the
+ * same commit — which is how the sitemap ended up claiming all eighteen
+ * pages changed on the same day, every deploy. Google ignores lastmod once
+ * it reads like that.
+ *
+ * So the page dates itself. Its markup is hashed; if the hash differs from
+ * the one recorded last time, the content really did change and the date
+ * moves to today. Otherwise it keeps the date it already had. The record is
+ * committed, so it survives a build that has no history to consult.
+ */
+const stampsFile = path.join(root, "scripts", "content-dates.json");
+const stamps = existsSync(stampsFile) ? JSON.parse(readFileSync(stampsFile, "utf8")) : {};
+const today = new Date().toISOString().slice(0, 10);
+const moved = [];
+
 const all = routes();
 let written = 0;
 let smallest = { chars: Infinity };
@@ -58,6 +77,14 @@ for (const route of all) {
   const chars = markup.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
   if (chars < 400) throw new Error(`${route.url} rendered only ${chars} characters of text`);
   if (chars < smallest.chars) smallest = { url: route.url, chars };
+
+  const hash = createHash("sha1").update(markup).digest("hex").slice(0, 16);
+  const seen = stamps[route.url];
+  if (!seen || seen.hash !== hash) {
+    stamps[route.url] = { hash, date: today };
+    if (seen) moved.push(route.url);
+  }
+  route.lastmod = stamps[route.url].date;
 
   const dir = route.url === "/" ? client : path.join(client, route.url);
   mkdirSync(dir, { recursive: true });
@@ -71,5 +98,8 @@ writeFileSync(
     all.map((r) => `  <url>\n    <loc>${ORIGIN}${r.url}</loc>\n    <lastmod>${r.lastmod}</lastmod>\n    <priority>${r.priority}</priority>\n  </url>`).join("\n")
   }\n</urlset>\n`,
 );
+
+writeFileSync(stampsFile, JSON.stringify(stamps, null, 2) + "\n");
+if (moved.length) console.log(`Content changed on ${moved.length} route(s): ${moved.slice(0, 4).join(", ")}${moved.length > 4 ? "…" : ""}`);
 
 console.log(`Prerendered ${written} routes + sitemap.xml (leanest: ${smallest.url}, ${smallest.chars} chars)`);
