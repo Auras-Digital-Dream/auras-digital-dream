@@ -95,6 +95,53 @@ const skillGroups = [
   ["Marketing & AI", [["Meta Business Suite", 92], ["Copywriting", 95], ["AI avansat (prompting)", 96]]],
 ];
 
+/* Two blocks rather than one: a ProfessionalService describing the studio,
+ * and a separate FAQPage. The questions used to hang off the service as
+ * mainEntity, which is not what either type means — a FAQPage is the shape
+ * that answer engines actually read.
+ *
+ * Everything here is taken from what the site already states in public.
+ * There is no postal address because there is no public one to give, and an
+ * invented one would be worse than none.
+ */
+const SERVICE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://aurastudios.ro/#studio",
+  name: "Aura's Digital Dream",
+  url: "https://aurastudios.ro/",
+  image: "https://aurastudios.ro/og-cover.jpg",
+  logo: "https://aurastudios.ro/assets/logo.jpg",
+  description:
+    "Marketing, branding, design și experiențe web create cu strategie și suflet.",
+  founder: { "@type": "Person", name: "Aura Dobre" },
+  areaServed: "România",
+  inLanguage: "ro-RO",
+  telephone: "+40762509423",
+  priceRange: "400–6000 RON",
+  serviceType: ["Branding", "Web design", "Marketing digital", "Documente profesionale"],
+  sameAs: [
+    "https://www.instagram.com/aurasdigitaldream",
+    "https://www.linkedin.com/in/aurelia-dobre-a033b2104",
+    "https://aurasdigitaldream.gumroad.com/",
+    "https://www.amazon.co.uk/stores/author/B0DSJP6MX8",
+    "https://www.goodreads.com/user/show/203519366-aura-dobre",
+  ],
+};
+
+/* Mapped one to one off clientQuestions, so the schema and the accordion
+ * can never say different things. */
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://aurastudios.ro/#faq",
+  mainEntity: clientQuestions.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
 function scrollToId(id) {
   document.getElementById(id === "estimare" ? "estimator" : id)?.scrollIntoView({ behavior: "smooth" });
 }
@@ -198,36 +245,22 @@ export function HomePage({ onNavigate }) {
   }
 
   useEffect(() => {
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      name: "Aura's Digital Dream",
-      url: "https://aurastudios.ro/",
-      founder: { "@type": "Person", name: "Aura Dobre" },
-      areaServed: "România",
-      serviceType: ["Branding", "Web design", "Marketing digital", "Documente profesionale"],
-      mainEntity: clientQuestions.map((item) => ({
-        "@type": "Question",
-        name: item.q,
-        acceptedAnswer: { "@type": "Answer", text: item.a },
-      })),
-    };
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.id = "homepage-service-faq-schema";
-    script.textContent = JSON.stringify(structuredData);
-    document.head.querySelector("#homepage-service-faq-schema")?.remove();
-    document.head.appendChild(script);
-    return () => script.remove();
-  }, []);
-
-  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
   return (
     <main className="home">
+      <script
+        type="application/ld+json"
+        // The value is built from the same constants the page renders, so it
+        // cannot drift from what a reader actually sees.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
       <GoldLine />
       <div className="custom-cursor" aria-hidden="true" />
       <div className="custom-cursor-ring" aria-hidden="true" />
