@@ -239,7 +239,7 @@
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   backdrop-filter: blur(24px) saturate(140%);
   box-shadow:
-    0 8px 35px rgba(135,206,235,.25),
+    0 8px 35px 10px rgba(135,206,235,.25),
     inset 0 1px 0 rgba(255,255,255,.35);
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease),
               border-color var(--dur) var(--ease), transform .25s var(--ease);
@@ -2299,7 +2299,7 @@
   -webkit-backdrop-filter: blur(30px) saturate(150%);
   backdrop-filter: blur(30px) saturate(150%);
   box-shadow:
-    0 14px 45px rgba(135,206,235,.34),
+    0 14px 45px 12px rgba(135,206,235,.34),
     inset 0 1px 0 rgba(255,255,255,.45);
 }
 
@@ -2312,7 +2312,6 @@
 
 .button.primary {
   background: rgba(255,255,255,.2);
-  font-weight: 500;
 }
 
 .button.ghost { border-color: color-mix(in srgb, var(--glass-edge), transparent 34%); }
@@ -2336,8 +2335,8 @@ footer .button,
 /* The pulse she asked for earlier, now in the button's own colour rather
    than gold — a gold aura on a sky-blue edge was two accents arguing. */
 @keyframes ctaGlow {
-  0%, 100% { box-shadow: 0 8px 35px rgba(135,206,235,.22), inset 0 1px 0 rgba(255,255,255,.35); }
-  50%      { box-shadow: 0 10px 42px rgba(135,206,235,.42), inset 0 1px 0 rgba(255,255,255,.45); }
+  0%, 100% { box-shadow: 0 8px 35px 8px rgba(135,206,235,.22), inset 0 1px 0 rgba(255,255,255,.35); }
+  50%      { box-shadow: 0 10px 42px 12px rgba(135,206,235,.42), inset 0 1px 0 rgba(255,255,255,.45); }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
