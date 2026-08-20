@@ -95,7 +95,11 @@
      reading as a flat rectangle, not enough to cost its text: white sits at
      10.06:1 on it and the 60% secondary at 4.82:1. At 12% the secondary
      drops to 4.41:1, which is why it stops here. */
-  --ink-frost:#3B434A;      /* premium sections; ink on it is 9.58:1 */
+  --ink-frost:#3B434A;
+  /* The sky blue she specified for the button glass. Lighter and more
+     saturated than --sky (#BECED1), which is a surface tone; this one is an
+     edge and a light. */
+  --glass-edge:#87CEEB;      /* premium sections; ink on it is 9.58:1 */
   --shadow:rgba(45,53,60,.16);
   --highlight:rgba(255,255,255,.7);
 
@@ -229,7 +233,6 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .lightbox img { max-width:94vw; max-height:90vh; object-fit:contain; }
 .books-page { background:radial-gradient(circle at 52% 0,#2D353C 0,#2D353C 52%,#2D353C 100%); color:#F2F8F9; min-height:100vh; overflow:hidden; }
 .books-header { background:rgba(45,53,60,.72); backdrop-filter:blur(18px); }
-.books-page .button.ghost { color:#F2F8F9; border-color:rgba(190,206,209,.32); }
 .books-hero { min-height:100vh; padding:140px max(7vw,24px) 90px; display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(45px,7vw,110px); align-items:center; position:relative; isolation:isolate; }
 .books-hero::before { content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(circle at 75% 30%,rgba(190,206,209,.18),transparent 31%),linear-gradient(118deg,transparent 0 48%,rgba(190,206,209,.14) 48.2% 48.35%,transparent 48.6%); }
 .books-hero h1,.books-section h2,.books-final-cta h2 { font-family:var(--font-display); font-size:clamp(46px,5.6vw,86px); font-weight:400; line-height:1; letter-spacing:-.02em; margin:18px 0 26px; }
@@ -516,13 +519,6 @@ body { background: var(--paper); color: var(--ink); }
 /* The estimate panel stays dark: it is the one anchor the palette
    needs, and it makes the total read as the decisive number. */
 
-/* Base button colours live in home.css; only the dark-ground exceptions
-   belong here, and they need the extra specificity to win. */
-footer .button.ghost{ border-color: rgba(255,255,255,.4); color: #fff; }
-.books-page .button.primary,
-.detail-page .button.primary { background:var(--frost); color:var(--ink); }
-.books-page .button.primary:hover,
-.detail-page .button.primary:hover { background:#fff; color:var(--ink); }
 
 .scroll-progress { background: var(--ink); box-shadow: 0 0 18px var(--shadow); }
 .custom-cursor { background: var(--ink); mix-blend-mode: normal; }

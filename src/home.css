@@ -221,14 +221,26 @@
   gap: 9px;
   min-height: 50px;
   padding: 0 26px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: .06em;
+  border: 1px solid var(--glass-edge);
+  border-radius: 24px;
+  /* system-ui resolves to SF Pro on Apple and Segoe elsewhere, which is the
+     brief's face without a third webfont to download. */
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 400;
+  letter-spacing: .04em;
   text-transform: uppercase;
   cursor: pointer;
+
+  /* Frosted glass, floating. The shadow is a light rather than a dark: it
+     is the border colour, thrown downward and wide, so the button reads as
+     suspended over the page instead of pressed into it. */
+  background: rgba(255,255,255,.12);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    0 8px 35px rgba(135,206,235,.25),
+    inset 0 1px 0 rgba(255,255,255,.35);
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease),
               border-color var(--dur) var(--ease), transform .25s var(--ease);
 }
@@ -237,8 +249,6 @@
 .button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .button.small { min-height: 42px; padding: 0 20px; font-size: 12px; }
 
-.button.primary { background: var(--ink); color: var(--paper); }
-.button.primary:hover { background: var(--ink-soft); }
 .button.primary:disabled { opacity: .55; cursor: not-allowed; transform: none; animation: none; }
 
 /* A slow gold breath on the calls to action. It stays a glow and never a
@@ -256,20 +266,12 @@
 .button.primary:hover,
 .masthead-cta:hover { animation: none; }
 
-.button.ghost { border-color: var(--line); color: var(--ink); background: transparent; }
-.button.ghost:hover { border-color: var(--ink); background: var(--surface); }
 
-/* Over dark media the ghost button inverts. */
+/* The edge is the same sky blue everywhere; over dark media it simply runs
+   at full strength instead of held back. */
 .hero .button.ghost,
 .contact .button.ghost,
-.editorial .button.ghost { border-color: rgba(255,255,255,.45); color: #fff; }
-.hero .button.ghost:hover,
-.contact .button.ghost:hover,
-.editorial .button.ghost:hover { background: rgba(255,255,255,.12); border-color: #fff; }
-.hero .button.primary,
-.contact .button.primary { background: var(--paper); color: var(--ink); }
-.hero .button.primary:hover,
-.contact .button.primary:hover { background: #fff; }
+.editorial .button.ghost { border-color: var(--glass-edge); }
 
 /* ── Progress rail ────────────────────────────────────────────────────── */
 
@@ -2273,6 +2275,69 @@
 /* And the bars run the same way: cool at the start, gold at the value. */
 .skill-fill {
   background: linear-gradient(90deg, var(--sky), var(--gold));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTONS — frosted glass, suspended
+
+   One shell for all twenty-five. The two variants differ only by how much
+   light they hold: the main action carries the fill and the glow at full
+   strength, the secondary sits back. That keeps the family she asked for
+   without the two actions weighing the same.
+
+   Text colour is the one thing that cannot be shared. White type on 12%
+   white glass reads at 7.6:1 over ink and about 1.2:1 over paper, so the
+   light sections take ink type on the same glass — the surface is
+   identical, only the ink changes.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-2px);
+  border-color: #A5DBF2;
+  background: rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(30px) saturate(150%);
+  box-shadow:
+    0 14px 45px rgba(135,206,235,.34),
+    inset 0 1px 0 rgba(255,255,255,.45);
+}
+
+/* Light ground: same glass, ink type. */
+.button.primary,
+.button.ghost {
+  color: var(--ink);
+  background: rgba(255,255,255,.12);
+}
+
+.button.primary {
+  background: rgba(255,255,255,.2);
+  font-weight: 500;
+}
+
+.button.ghost { border-color: color-mix(in srgb, var(--glass-edge), transparent 34%); }
+
+/* Dark ground: same glass, paper type. */
+.hero .button,
+.contact .button,
+.difference .button,
+.clarity .button,
+.price-summary .button,
+.books-page .button,
+.detail-page .button,
+footer .button,
+.site-footer .button {
+  color: var(--paper);
+}
+
+.price-summary .button.primary,
+.hero .button.primary { background: rgba(255,255,255,.22); }
+
+/* The pulse she asked for earlier, now in the button's own colour rather
+   than gold — a gold aura on a sky-blue edge was two accents arguing. */
+@keyframes ctaGlow {
+  0%, 100% { box-shadow: 0 8px 35px rgba(135,206,235,.22), inset 0 1px 0 rgba(255,255,255,.35); }
+  50%      { box-shadow: 0 10px 42px rgba(135,206,235,.42), inset 0 1px 0 rgba(255,255,255,.45); }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
