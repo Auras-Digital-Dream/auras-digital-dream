@@ -157,11 +157,9 @@ em { font-family:var(--font-display); color:var(--accent); font-style:italic; fo
 
 .section-kicker{ text-transform:uppercase; letter-spacing:.28em; font-size:12px; font-weight:600; }
 
-.section-kicker { color:var(--accent); margin-bottom:20px; }
+.section-kicker { margin-bottom:20px; }
 /* The gold accent on a light heading has to be drawn, not written: a
    hairline in front of the kicker, and a rule under the section title. */
-.section-kicker { display:flex; align-items:center; gap:14px; }
-.section-kicker::before { content:""; flex:0 0 auto; width:28px; height:1px; background:var(--gold); }
 
 .literary-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
 .literary-chips span { padding:7px 12px; border:1px solid rgba(212,223,225,.28); border-radius:999px; color:var(--muted); background:rgba(255,255,255,.035); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
@@ -406,7 +404,6 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 /* Homepage layout — premium renaissance direction */
 body { background:var(--paper); }
 
-.section-kicker{ color:var(--accent); }
 em{ color:var(--accent); }
 
 .floating-whatsapp { background:var(--accent); color:var(--paper); }
@@ -494,7 +491,6 @@ em{ color:var(--accent); }
   -webkit-mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #2D353C 52%, rgba(45,53,60,.78) 100%);
   mask-image: radial-gradient(ellipse 78% 78% at 50% 50%, #2D353C 52%, rgba(45,53,60,.78) 100%);
 }
-
 
 /* ── Premium renaissance finish ─────────────────────────────
    Gold accents on headings, marble surfaces on premium sections.

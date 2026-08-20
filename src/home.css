@@ -125,6 +125,8 @@
 
 /* Over ink there is headroom, so the sweep can use its real colours. */
 /* Over ink there is headroom, so the sweep uses its real colours. */
+.books-page .eyebrow-text,
+.detail-page .eyebrow-text,
 .hero-headline .eyebrow-text,
 .chapter-copy .eyebrow-text,
 .work-intro .eyebrow-text,
@@ -141,6 +143,8 @@
   background-clip: text;
 }
 
+.books-page .section-kicker,
+.detail-page .section-kicker,
 .hero-headline .kicker,
 .chapter-copy .kicker,
 .work-intro .kicker,
