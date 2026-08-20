@@ -2,6 +2,19 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/client",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aurastudios.ro"
+        }
+      ],
+      "destination": "https://aurastudios.ro/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

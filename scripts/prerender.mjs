@@ -65,11 +65,10 @@ for (const route of all) {
   written += 1;
 }
 
-const today = new Date().toISOString().slice(0, 10);
 writeFileSync(
   path.join(client, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${
-    all.map((r) => `  <url>\n    <loc>${ORIGIN}${r.url}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${r.priority}</priority>\n  </url>`).join("\n")
+    all.map((r) => `  <url>\n    <loc>${ORIGIN}${r.url}</loc>\n    <lastmod>${r.lastmod}</lastmod>\n    <priority>${r.priority}</priority>\n  </url>`).join("\n")
   }\n</urlset>\n`,
 );
 

@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,10 +28,32 @@ function projects() {
   return found;
 }
 
+/* The date a page last actually changed, taken from the commit that last
+ * touched the file its content comes from. A sitemap where every entry
+ * carries the build date tells a crawler nothing — Google says as much, and
+ * ignores lastmod once it looks fabricated.
+ */
+function lastChanged(file) {
+  try {
+    const out = execFileSync("git", ["log", "-1", "--format=%cs", "--", file], {
+      cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(out)) return out;
+  } catch {
+    /* no git history here — fall through */
+  }
+  return new Date().toISOString().slice(0, 10);
+}
+
 export function routes() {
+  const homeDate = lastChanged("src/HomePage.jsx");
+  const booksDate = lastChanged("src/App.jsx");
+  const projectDate = lastChanged("src/projectDetails.js");
+
   const home = {
     url: "/",
     priority: "1.0",
+    lastmod: homeDate,
     title: `${SITE} — Marketing, Design & Web`,
     description: "Marketing, branding, design și experiențe web create cu strategie și suflet.",
     image: DEFAULT_IMAGE,
@@ -38,6 +61,7 @@ export function routes() {
   const books = {
     url: "/cartile-mele",
     priority: "0.8",
+    lastmod: booksDate,
     title: `Cărțile mele — Aura Dobre`,
     description: "Dark romance, thrillere psihologice și povești care se citesc ca un film.",
     image: DEFAULT_IMAGE,
@@ -48,6 +72,9 @@ export function routes() {
     ...projects().map((p) => ({
       url: `/portofoliu/${p.slug}`,
       priority: "0.6",
+      // A project page is written from both files, so it is as new as the
+      // later of the two.
+      lastmod: projectDate > homeDate ? projectDate : homeDate,
       title: `${p.title.split(" — ")[0]} — ${SITE}`,
       description: p.description,
       image: p.image,
