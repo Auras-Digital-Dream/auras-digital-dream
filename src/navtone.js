@@ -32,7 +32,7 @@ export function useNavTone(selector = ".masthead") {
       bands = [...document.querySelectorAll("main.home > section, main.home > footer")].map((el) => {
         const rect = el.getBoundingClientRect();
         const top = rect.top + window.scrollY;
-        return { top, bottom: top + rect.height, dark: luminance(getComputedStyle(el).color) > LIGHT_TEXT };
+        return { el, top, bottom: top + rect.height };
       });
     };
 
@@ -45,7 +45,11 @@ export function useNavTone(selector = ".masthead") {
       let tone = "dark";
       for (const band of bands) {
         if (probe >= band.top && probe < band.bottom) {
-          tone = band.dark ? "dark" : "light";
+          // Read live rather than from the cache: the hero crosses from ink
+          // type on white paper to white type on film inside one section, so
+          // a tone measured once at layout time would be wrong for half of
+          // it. One getComputedStyle per frame, on one element.
+          tone = luminance(getComputedStyle(band.el).color) > LIGHT_TEXT ? "dark" : "light";
           break;
         }
       }

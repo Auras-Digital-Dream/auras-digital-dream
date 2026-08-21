@@ -207,6 +207,16 @@ export function HomePage({ onNavigate }) {
   const bodyReveal = useTransform(heroProgress, [0.62, 0.88], [0, 1]);
   const bodyShift = useTransform(heroProgress, [0.62, 0.88], [28, 0]);
   const cueFade = useTransform(heroProgress, [0, 0.12], [1, 0]);
+  /* The headline crosses the frame the whole way down, so the moment it
+     stops being ink on paper and starts being white on film has to be late
+     and quick: at 0.39 the footage already fills 75% of the width, and by
+     0.49 it is at the edges. Anywhere in between the type would be a grey
+     that suits neither ground, which is why this window is narrow.
+     --lit drives everything that has to turn over with it - the plates
+     behind the copy and both halos on the title - so they can never drift
+     out of step with the colour. */
+  const heroLit = useTransform(heroProgress, [0.39, 0.49], [0, 1]);
+  const heroInk = useTransform(heroProgress, [0.39, 0.49], ["#2D353C", "#FFFFFF"]);
 
   function togglePrice(title) {
     setSelectedPrices((c) => (c.includes(title) ? c.filter((t) => t !== title) : [...c, title]));
@@ -297,12 +307,19 @@ export function HomePage({ onNavigate }) {
       )}
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="hero" ref={heroRef} id="acasa">
+      {/* --open moves up from the frame to the section so the copy can read
+          it too: the plates behind the type fade in exactly as the footage
+          takes the screen. The colour is driven rather than swapped, because
+          the type crosses from white paper onto full-bleed film mid-scroll,
+          and a hard switch would flash. */}
+      <motion.section
+        className="hero bg-marble"
+        ref={heroRef}
+        id="acasa"
+        style={reduced ? undefined : { "--open": frameOpen, "--lit": heroLit, color: heroInk }}
+      >
         <div className="hero-pin">
-          <motion.div
-            className="hero-frame"
-            style={reduced ? undefined : { "--open": frameOpen }}
-          >
+          <div className="hero-frame">
             <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/renaissance-sculptor-hero.jpg">
               <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
             </video>
@@ -311,7 +328,7 @@ export function HomePage({ onNavigate }) {
               aria-hidden="true"
               style={reduced ? undefined : { opacity: frameScrim }}
             />
-          </motion.div>
+          </div>
 
           <motion.div
             className="hero-headline"
@@ -336,7 +353,7 @@ export function HomePage({ onNavigate }) {
 
           <motion.div style={reduced ? undefined : { opacity: cueFade }}><ScrollCue /></motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ── Manifesto ────────────────────────────────────────────────────── */}
       <section className="manifesto gilt bg-marble" aria-label="Manifest">
@@ -503,7 +520,7 @@ export function HomePage({ onNavigate }) {
                   <button
                     key={item.title}
                     type="button"
-                    className={"price-item glass-panel is-silver is-tilted reveal-child" + (on ? " is-on" : "")}
+                    className={"price-item glass-panel is-frost is-tilted reveal-child" + (on ? " is-on" : "")}
                     aria-pressed={on}
                     onClick={() => togglePrice(item.title)}
                   >
