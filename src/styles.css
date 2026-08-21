@@ -66,31 +66,30 @@
 
   /* Colour — Rainy July */
   --ink:#2D353C;         /* primary text, dark anchor   */
-  --ink-soft:#6F6B66;    /* secondary text              */
-  --steel:#BDB8B1;       /* tertiary text, dividers     */
-  /* Warm paper, the way Scout's ground reads: off-white with a little
-     body to it, so the cool charcoal ink sits on something alive rather
-     than on a screen-blue field. */
-  /* Sampled off the handmade sheet she supplied: the stock is a warm cream,
-     not the cooler off-white this used to be. Ink on it measures 11.49:1. */
-  --paper:#F9EFE4;       /* page background             */
-  --surface:#F1E7DA;     /* raised section background   */
-  --surface-2:#FCF7F0;   /* alternate section           */
-  --mist:#D4DFE1;        /* cool fill                   */
+  --ink-soft:#5E6970;    /* secondary text              */
+  --steel:#C3CFD6;       /* tertiary text, dividers     */
+  /* White is the ground now, at her direction: the warm cream read as
+     butter and the greys read as dirt against it. Everything that used to
+     be a warm tint is the same step expressed in porcelain — a blue-white
+     ladder, so the ground never goes yellow and never goes grey. The steps
+     are deliberately tiny: --surface-2 is 1.04:1 off white, --surface 1.12:1.
+     They seat a small fill without ever breaking the white. */
+  --paper:#FFFFFF;       /* page background, and type on ink */
+  --surface:#EBF2F7;     /* raised fills, tracks, chips */
+  --surface-2:#F9FCFD;   /* alternate section           */
+  --mist:#E4EFF5;        /* cool fill                   */
   --sky:#BECED1;         /* cool accent                 */
   --frost:#D9EAEE;       /* accent over dark media      */
-  --line:#D8D3CB;        /* borders                     */
-  --pearl:#F3EDE4;       /* neutral card                */
-  --shell:#F5EDE1;       /* warm-neutral card           */
-  --sand:#CEC0AE;        /* warm accent, used sparingly */
-  --sand-soft:#DFD5CA;
-  --stone:#C2BBB2;
-  /* Gold measures 1.92:1 on --paper and 1.68:1 on --marble: unusable as
-     text on anything light. It reads 5.71:1 on --ink, so it is the accent
-     colour on the dark sections and a drawn line everywhere else. */
+  --line:#DFE7EC;        /* borders                     */
+  --pearl:#F4FAFC;       /* neutral card                */
+  --shell:#EBF4F9;       /* cool-neutral card           */
+  --sand-soft:#D6E5EE;   /* the soft wash in the veins  */
+  /* Gold measures 2.26:1 on white: better than the 1.92:1 it had on cream,
+     still far under 4.5, so it stays what it has always been — a drawn line
+     and the accent on ink, never type on a light ground. The line reads
+     *better* on white, which is why the veins survive the change intact. */
   --gold:#C9A86A;
   --gold-line:rgba(201,168,106,.55);
-  --marble:#E8DCC0;
   /* --ink lifted 8% toward --frost. Enough to stop the estimate panel
      reading as a flat rectangle, not enough to cost its text: white sits at
      10.06:1 on it and the 60% secondary at 4.82:1. At 12% the secondary
@@ -108,9 +107,9 @@
   --accent:#2D353C;
   --muted:#5A6066;
   /* Small copy carries less ink per glyph than body text, so it needs more
-     room than the 4.5:1 floor. This clears 7.14:1 on --paper and 5.95:1 on
-     --marble, the darkest light ground on the page. */
-  --ink-soft-strong:#544F49;
+     room than the 4.5:1 floor. On white it clears 7.89:1, and 7.34:1 on
+     --surface, the darkest light ground left on the page. */
+  --ink-soft-strong:#48535A;
 }
 
 /* Sections backed by video or full-bleed imagery keep light type on a
@@ -195,22 +194,30 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .detail-hero-visual img { position:absolute; inset:0; width:100%; height:100%; }
 .detail-hero-backdrop { object-fit:cover; transform:scale(1.1); filter:blur(30px) brightness(.42) saturate(.9); opacity:.7; }
 .detail-hero-main { z-index:1; object-fit:contain; padding:clamp(12px,2vw,28px); filter:drop-shadow(0 24px 38px rgba(45,53,60,.32)); }
+/* .detail-page below declares --accent and --muted for the ink ground it
+   opens on. These two sections are white, and on white that gold accent is
+   2.26:1 and that 74%-white --muted is 1.01:1 - a line colour and an
+   invisible one. Both restate the roles for the ground they actually have.
+   This was already wrong on the old cream; white only made it obvious. */
+.detail-content,
+.detail-cta { --accent:var(--ink); --muted:var(--ink-soft-strong); }
+
 .detail-content { background:var(--paper); color:var(--ink); padding:110px max(7vw,24px); }
 .detail-intro { display:grid; grid-template-columns:.35fr 1.65fr; gap:5vw; align-items:start; }
 .detail-intro h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(28px,3.4vw,50px); line-height:1.35; margin:0; }
-.project-facts { display:grid; grid-template-columns:repeat(4,1fr); margin-top:76px; border-block:1px solid rgba(211,207,204,.16); }
-.project-facts article { padding:27px 22px; border-right:1px solid rgba(211,207,204,.16); }
+.project-facts { display:grid; grid-template-columns:repeat(4,1fr); margin-top:76px; border-block:1px solid var(--line); }
+.project-facts article { padding:27px 22px; border-right:1px solid var(--line); }
 .project-facts article:last-child { border-right:0; }
 .project-facts small,.project-facts strong { display:block; }
 .project-facts small { color:var(--muted); text-transform:uppercase; letter-spacing:.14em; font-size:9px; margin-bottom:9px; }
 .project-facts strong { font-family:var(--font-display); font-weight:400; font-size:18px; }
-.detail-columns { display:grid; grid-template-columns:1fr 1fr; gap:7vw; margin-top:95px; border-top:1px solid rgba(211,207,204,.16); padding-top:55px; }
+.detail-columns { display:grid; grid-template-columns:1fr 1fr; gap:7vw; margin-top:95px; border-top:1px solid var(--line); padding-top:55px; }
 .detail-columns article > span { color:var(--accent); font-size:12px; letter-spacing:.15em; }
 .detail-columns h3,.video-section h3 { font-family:var(--font-display); font-weight:400; font-size:36px; margin:17px 0; }
 .detail-columns p { color:var(--muted); line-height:1.9; font-size:16px; }
 .detail-results { margin-top:90px; }
 .detail-results > div { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.detail-results article { padding:18px 20px; background:#fff; border:1px solid rgba(211,207,204,.16); display:flex; align-items:center; gap:12px; }
+.detail-results article { padding:18px 20px; background:color-mix(in srgb,var(--frost),transparent 70%); border:1px solid color-mix(in srgb,var(--glass-edge),transparent 62%); backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; gap:12px; }
 .detail-results article svg { color:var(--accent); flex:0 0 auto; }
 .detail-gallery { padding:110px max(5vw,24px); background:#2D353C; }
 .detail-gallery > h2 { font-family:var(--font-display); font-size:clamp(42px,5vw,70px); font-weight:400; margin-bottom:55px; }
@@ -444,7 +451,7 @@ em{ color:var(--accent); }
   .abstract-story-card { min-height:480px; }
   .scattered-word { font-size:28px; }
 }
-@media (max-width:1050px) { .project-facts{grid-template-columns:repeat(2,1fr)}.project-facts article:nth-child(2){border-right:0}.project-facts article:nth-child(-n+2){border-bottom:1px solid rgba(211,207,204,.16)} }
+@media (max-width:1050px) { .project-facts{grid-template-columns:repeat(2,1fr)}.project-facts article:nth-child(2){border-right:0}.project-facts article:nth-child(-n+2){border-bottom:1px solid var(--line)} }
 @media (max-width:760px) {
   
   .brand img { width:40px; height:40px; }.brand span{font-size:15px}
@@ -466,7 +473,7 @@ em{ color:var(--accent); }
   
   
   
-  .project-facts{grid-template-columns:1fr}.project-facts article,.project-facts article:nth-child(2){border-right:0;border-bottom:1px solid rgba(211,207,204,.16)}.project-facts article:last-child{border-bottom:0}
+  .project-facts{grid-template-columns:1fr}.project-facts article,.project-facts article:nth-child(2){border-right:0;border-bottom:1px solid var(--line)}.project-facts article:last-child{border-bottom:0}
   
   
   

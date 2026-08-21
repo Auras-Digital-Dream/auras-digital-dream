@@ -123,7 +123,6 @@
   50% { opacity: 1; }
 }
 
-/* Over ink there is headroom, so the sweep can use its real colours. */
 /* Over ink there is headroom, so the sweep uses its real colours. */
 .books-page .eyebrow-text,
 .detail-page .eyebrow-text,
@@ -141,6 +140,25 @@
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+/* .detail-page is an ink page with two white sections cut into it, so the
+   rule above caught eyebrows that do not sit on ink at all - the label read
+   at about 1.1:1 there. These two put the light sweep back. */
+.detail-content .eyebrow-text,
+.detail-cta .eyebrow-text {
+  background: linear-gradient(100deg,
+    var(--ink-frost) 0%, #443E33 18%, var(--ink) 36%,
+    var(--ink-frost) 54%, #443E33 72%, var(--ink) 90%, var(--ink-frost) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.detail-content .section-kicker,
+.detail-cta .section-kicker {
+  background: color-mix(in srgb, var(--frost), transparent 84%);
+  border-color: color-mix(in srgb, var(--sky), transparent 46%);
 }
 
 .books-page .section-kicker,
@@ -251,14 +269,10 @@
 
 .button.primary:disabled { opacity: .55; cursor: not-allowed; transform: none; animation: none; }
 
-/* A slow gold breath on the calls to action. It stays a glow and never a
-   scale: a button that changes size nudges its neighbours every cycle. The
-   global reduced-motion rule switches it off with everything else. */
-@keyframes ctaGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,106,0), 0 8px 22px -14px rgba(20,26,31,.5); }
-  50%      { box-shadow: 0 0 0 6px rgba(201,168,106,.16), 0 0 26px -2px rgba(201,168,106,.44); }
-}
-
+/* A slow breath on the calls to action. It stays a glow and never a scale:
+   a button that changes size nudges its neighbours every cycle. The global
+   reduced-motion rule switches it off with everything else. The keyframes
+   live further down, with the rest of the glass button. */
 .button.primary,
 .masthead-cta { animation: ctaGlow 3.6s var(--ease) infinite; }
 
@@ -628,7 +642,7 @@
 
 /* ── Manifesto ────────────────────────────────────────────────────────── */
 
-.manifesto { padding-block: clamp(110px, 18vh, 220px); background: var(--paper); }
+.manifesto { padding-block: clamp(110px, 18vh, 220px); }
 
 /* The statement used to sit alone at max-width:20ch — 657px of a 1280px
    shell, so half the section was empty paper. It now shares the row with
@@ -803,7 +817,6 @@
 
 .work-intro { padding-block: var(--rhythm) clamp(36px, 5vw, 64px); }
 
-.track { background: var(--surface); }
 .track-stage { position: sticky; top: 0; display: flex; align-items: center; height: 100svh; overflow: hidden; }
 
 /* `flex: 0 0 auto` is load-bearing: as a flex item the rail would otherwise
@@ -861,7 +874,7 @@
 /* The two sections that sell go on marble: warmer and a shade deeper than
    paper, so they read as a premium band without leaving the light scheme.
    Ink on marble is 9.58:1. */
-.services { padding-block: var(--rhythm); background: var(--marble); }
+.services { padding-block: var(--rhythm); }
 
 .service-grid {
   display: grid;
@@ -878,15 +891,11 @@
   transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 
-.service-card:hover {
-}
-
 .service-icon {
   display: grid;
   place-items: center;
   width: 46px; height: 46px;
   border-radius: 50%;
-  background: var(--surface);
   color: var(--ink);
 }
 
@@ -907,7 +916,7 @@
 
 /* ── Process ──────────────────────────────────────────────────────────── */
 
-.process { padding-block: var(--rhythm); background: var(--surface-2); }
+.process { padding-block: var(--rhythm); }
 
 .process-grid {
   display: grid;
@@ -928,7 +937,7 @@
 
 /* ── Estimator ────────────────────────────────────────────────────────── */
 
-.estimator { padding-block: var(--rhythm); background: var(--marble); }
+.estimator { padding-block: var(--rhythm); }
 
 .estimator-grid {
   display: grid;
@@ -970,7 +979,6 @@
   display: grid;
   place-items: center;
   width: 24px; height: 24px;
-  border: 1px solid var(--steel);
   border-radius: 6px;
   color: transparent;
 }
@@ -1004,7 +1012,7 @@
 
 /* ── Archive ──────────────────────────────────────────────────────────── */
 
-.archive { padding-block: var(--rhythm); background: var(--surface-2); }
+.archive { padding-block: var(--rhythm); }
 .archive-group + .archive-group { margin-top: clamp(52px, 7vw, 96px); }
 
 .archive-group-head {
@@ -1080,7 +1088,7 @@
 
 /* ── Skills ───────────────────────────────────────────────────────────── */
 
-.skills { padding-block: var(--rhythm); background: var(--paper); }
+.skills { padding-block: var(--rhythm); }
 
 .skill-grid {
   display: grid;
@@ -1088,28 +1096,16 @@
   gap: clamp(16px, 2vw, 28px);
 }
 
-.skill-card { padding: clamp(24px, 2.2vw, 34px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; height: 100%; }
+.skill-card { padding: clamp(24px, 2.2vw, 34px); height: 100%; }
 .skill-card h3 { margin: 0 0 22px; font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: 1px; }
 .skill-row + .skill-row { margin-top: 16px; }
 .skill-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; font-size: 13.5px; color: var(--ink-soft-strong); }
-.skill-bar { height: 3px; border-radius: 999px; background: var(--surface); overflow: hidden; }
+.skill-bar { height: 3px; border-radius: 999px; overflow: hidden; }
 .skill-fill { height: 100%; border-radius: inherit; background: var(--ink); will-change: transform; }
-
-/* ── Why ──────────────────────────────────────────────────────────────── */
-
-.why { padding-block: var(--rhythm); background: var(--surface); }
-
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: clamp(20px, 2.4vw, 36px);
-}
-
-.why-item { margin: 0; padding-top: 20px; border-top: 1px solid var(--steel); font-size: 15px; line-height: 1.6; color: var(--ink); }
 
 /* ── Clarity ──────────────────────────────────────────────────────────── */
 
-.clarity { padding-block: var(--rhythm); background: var(--paper); }
+.clarity { padding-block: var(--rhythm); }
 
 .clarity-grid {
   display: grid;
@@ -1120,12 +1116,7 @@
 
 .faq { display: grid; gap: 10px; }
 
-.faq-item {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #fff;
-  overflow: hidden;
-}
+.faq-item { border-radius: var(--radius); }
 
 .faq-item summary {
   display: grid;
@@ -1142,11 +1133,10 @@
 }
 
 .faq-item summary::-webkit-details-marker { display: none; }
-.faq-number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--surface); font-size: 12px; color: var(--muted); }
+.faq-number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; font-size: 12px; color: var(--muted); }
 .faq-item p { margin: 0; padding: 0 22px 22px 76px; font-size: 14px; line-height: 1.65; color: var(--muted); }
-.faq-item[open] { border-color: var(--sky); }
 
-.compare { padding: clamp(24px, 2.4vw, 36px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.compare { padding: clamp(24px, 2.4vw, 36px); }
 .compare h3 { margin: 0 0 20px; font-family: var(--font-display); font-size: clamp(20px, 2vw, 27px); font-weight: 600; letter-spacing: 1px; }
 .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
 .compare-table th,
@@ -1162,19 +1152,18 @@
 
 .voices { padding-block: var(--rhythm); background: var(--surface-2); }
 .voice { margin: 0; max-width: 780px; }
-.voice-tag { display: inline-block; margin-bottom: 20px; padding: 6px 14px; border-radius: 999px; background: var(--mist); font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; }
+.voice-tag { display: inline-block; margin-bottom: 20px; padding: 6px 14px; border-radius: 999px; font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; }
 .voice blockquote { margin: 0; font-family: var(--font-serif); font-style: italic; font-size: clamp(20px, 2.4vw, 32px); line-height: 1.35; letter-spacing: 1px; }
 .voice figcaption { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
 .voice-avatar { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 13px; letter-spacing: 1px; }
 .voice figcaption strong { display: block; font-size: 14px; font-weight: 500; }
 .voice figcaption small { display: block; font-size: 12.5px; color: var(--muted); }
 .voice-controls { display: flex; align-items: center; gap: 14px; margin-top: 32px; font-size: 12px; color: var(--muted); }
-.voice-controls button { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; transition: border-color .3s var(--ease), background .3s var(--ease); }
-.voice-controls button:hover { border-color: var(--ink); background: #fff; }
+.voice-controls button { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: var(--ink); cursor: pointer; transition: border-color .3s var(--ease), background .3s var(--ease); }
 
 /* ── Books ────────────────────────────────────────────────────────────── */
 
-.books { padding-block: var(--rhythm); background: var(--paper); }
+.books { padding-block: var(--rhythm); }
 .books-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
 .books-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .books-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -1684,7 +1673,7 @@
     linear-gradient(103deg, transparent 0 38%, rgba(255,255,255,.55) 41% 42%, transparent 45%),
     linear-gradient(97deg, transparent 0 62%, rgba(45,53,60,.05) 64% 65%, transparent 68%),
     linear-gradient(108deg, transparent 0 74%, rgba(255,255,255,.4) 76% 77%, transparent 80%),
-    linear-gradient(168deg, var(--shell), var(--marble) 48%, var(--sand-soft));
+    linear-gradient(168deg, var(--paper), var(--surface-2) 48%, var(--shell));
 }
 
 .marquee-band .marquee { margin-inline: -8vw; }
@@ -1823,17 +1812,21 @@
 .difference-col.is-mine .difference-list li::before { background: var(--frost); }
 .difference-col > p { color: rgba(255,255,255,.72); }
 
-.clarity .faq-item {
-  background: rgba(255,255,255,.05);
-  border-color: rgba(255,255,255,.16);
-}
-.clarity .faq-item[open] { border-color: var(--frost); }
-.clarity .faq-number { background: rgba(255,255,255,.1); color: rgba(255,255,255,.72); }
+/* On the ink section the panels invert: white at 7% instead of frost, and
+   a ring drawn in white, because gold there would be the only warm thing
+   left on a cool page. */
+.clarity .faq-item { background: rgba(255,255,255,.07); }
+.clarity .faq-number { color: rgba(255,255,255,.72); }
 .clarity .faq-item p { color: rgba(255,255,255,.68); }
 
-.clarity .compare {
-  background: rgba(255,255,255,.05);
-  border-color: rgba(255,255,255,.16);
+.clarity .compare { background: rgba(255,255,255,.07); }
+
+.clarity .faq-item::before,
+.clarity .compare::before {
+  background: linear-gradient(135deg,
+    rgba(255,255,255,.30),
+    color-mix(in srgb, var(--glass-edge), transparent 46%) 52%,
+    rgba(255,255,255,.30));
 }
 .clarity .compare-table th,
 .clarity .compare-table td { border-bottom-color: rgba(255,255,255,.14); }
@@ -1878,15 +1871,15 @@
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.03'/%3E%3C/svg%3E"),
     radial-gradient(ellipse 155% 95% at 6% 16%,
-      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 52%) 47.88% 47.98%, transparent 48.10%),
+      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 40%) 47.88% 47.98%, transparent 48.10%),
     radial-gradient(ellipse 125% 150% at 97% 64%,
-      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 62%) 41.40% 41.50%, transparent 41.62%),
+      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 52%) 41.40% 41.50%, transparent 41.62%),
     radial-gradient(ellipse 190% 75% at 38% 111%,
-      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 56%) 38.90% 39.00%, transparent 39.12%),
+      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 46%) 38.90% 39.00%, transparent 39.12%),
     radial-gradient(ellipse 85% 95% at 91% 88%,
-      color-mix(in srgb, var(--sand-soft), transparent 58%), transparent 62%),
+      color-mix(in srgb, var(--sand-soft), transparent 74%), transparent 62%),
     conic-gradient(from 205deg at 66% 28%,
-      var(--surface-2), var(--paper) 26%, var(--marble) 51%, var(--paper) 72%, var(--surface-2));
+      var(--paper), var(--surface-2) 26%, var(--pearl) 51%, var(--surface-2) 72%, var(--paper));
 }
 
 /* The same stone read the other way up. The base runs from --ink to a
@@ -1910,24 +1903,27 @@
       color-mix(in srgb, var(--ink), black 16%));
 }
 
-/* .services and .estimator read as a warmer band than the rest of the light
-   page, and that distinction is doing work — they are the two sections that
-   sell. This is the same stone cut deeper: the base runs through --marble,
-   --shell and --sand-soft instead of --surface-2, --paper and --marble. */
+/* .services and .estimator are the two sections that sell, so they keep a
+   band of their own - but on a white page the band cannot be a tint any
+   more, or it would be exactly the cream she threw out. The ground is the
+   same white as every other section; what marks these two is the veining,
+   which runs at roughly double the strength it has elsewhere, and the blue
+   cards sitting on it. Tinting the band would also have cost the cards a
+   tenth of their separation, which is the whole point of the section. */
 .bg-marble.is-deep {
-  background-color: var(--marble);
+  background-color: var(--paper);
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.03'/%3E%3C/svg%3E"),
     radial-gradient(ellipse 155% 95% at 6% 16%,
-      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 46%) 47.88% 47.98%, transparent 48.10%),
+      transparent 0 47.76%, color-mix(in srgb, var(--gold-line), transparent 30%) 47.88% 47.98%, transparent 48.10%),
     radial-gradient(ellipse 125% 150% at 97% 64%,
-      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 56%) 41.40% 41.50%, transparent 41.62%),
+      transparent 0 41.28%, color-mix(in srgb, var(--gold-line), transparent 42%) 41.40% 41.50%, transparent 41.62%),
     radial-gradient(ellipse 190% 75% at 38% 111%,
-      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 50%) 38.90% 39.00%, transparent 39.12%),
+      transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 36%) 38.90% 39.00%, transparent 39.12%),
     radial-gradient(ellipse 85% 95% at 91% 88%,
-      color-mix(in srgb, var(--sand-soft), transparent 40%), transparent 62%),
+      color-mix(in srgb, var(--mist), transparent 52%), transparent 62%),
     conic-gradient(from 205deg at 66% 28%,
-      var(--shell), var(--marble) 26%, var(--sand-soft) 51%, var(--marble) 72%, var(--shell));
+      var(--paper), var(--surface-2) 26%, var(--shell) 51%, var(--surface-2) 72%, var(--paper));
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1943,52 +1939,73 @@
    gold is --gold-line. Swap .is-silver on or off per section.
    ══════════════════════════════════════════════════════════════════════════ */
 
-.glass-panel {
+.glass-panel,
+.skill-card,
+.faq-item,
+.compare {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   border: 0;
   border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--pearl), transparent 82%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  box-shadow: 0 18px 44px -30px var(--shadow);
+  /* On cream a panel could separate by being paler than its ground. On
+     white there is nothing paler, so the whole job moves to the edge and
+     the shadow: a cool fill you can barely name, a ring that is now the
+     loudest thing on the card, and a two-part shadow - a wide soft one for
+     the float and a tight one right under the edge, which is what actually
+     lifts the card off white. */
+  background: color-mix(in srgb, var(--frost), transparent 76%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow:
+    0 18px 40px -26px var(--shadow),
+    0 2px 6px -3px color-mix(in srgb, var(--shadow), transparent 40%);
   transition: rotate .38s ease-out, translate .38s ease-out, box-shadow .38s ease-out;
 }
 
 /* Gold on the edge as you reach for it. A hover transition on a light
    shadow, not a running animation — it repaints a card for a third of a
    second and never while the page is moving. */
-.glass-panel:hover,
-.glass-panel:focus-within {
+.glass-panel:hover, .glass-panel:focus-within,
+.skill-card:hover,  .skill-card:focus-within,
+.faq-item:hover,    .faq-item:focus-within,
+.compare:hover,     .compare:focus-within {
   box-shadow:
-    0 22px 52px -32px var(--shadow),
-    0 0 0 1px color-mix(in srgb, var(--gold), transparent 56%),
-    0 0 22px -2px color-mix(in srgb, var(--gold), transparent 64%);
+    0 22px 50px -28px var(--shadow),
+    0 2px 6px -3px color-mix(in srgb, var(--shadow), transparent 40%),
+    0 0 0 1px color-mix(in srgb, var(--gold), transparent 48%),
+    0 0 22px -2px color-mix(in srgb, var(--gold), transparent 58%);
 }
 
 /* The 1px ring. Two masks composited so only the padding box survives. */
-.glass-panel::before {
+.glass-panel::before,
+.skill-card::before,
+.faq-item::before,
+.compare::before {
   content: "";
   position: absolute;
   inset: 0;
   padding: 1px;
   border-radius: inherit;
+  /* --sky at 38% alpha was invisible against white. --glass-edge is the
+     same family two steps up in saturation, and it survives the change. */
   background: linear-gradient(135deg,
     var(--gold-line),
-    color-mix(in srgb, var(--sky), transparent 62%) 52%,
+    color-mix(in srgb, var(--glass-edge), transparent 48%) 52%,
     var(--gold-line));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: .62;
+  opacity: .78;
   transition: opacity .34s var(--ease);
   pointer-events: none;
 }
 
-.glass-panel:hover::before,
-.glass-panel:focus-visible::before { opacity: 1; }
+.glass-panel:hover::before, .glass-panel:focus-visible::before,
+.skill-card:hover::before,  .skill-card:focus-within::before,
+.faq-item:hover::before,    .faq-item[open]::before,
+.compare:hover::before,     .compare:focus-within::before { opacity: 1; }
 
 .glass-panel.is-silver::before {
   background: linear-gradient(135deg,
@@ -1999,7 +2016,10 @@
 
 /* The sweep. Parked off the left edge at zero opacity and only ever moved,
    so it costs nothing until someone hovers. */
-.glass-panel::after {
+.glass-panel::after,
+.skill-card::after,
+.faq-item::after,
+.compare::after {
   content: "";
   position: absolute;
   top: -60%;
@@ -2012,8 +2032,10 @@
   pointer-events: none;
 }
 
-.glass-panel:hover::after,
-.glass-panel:focus-visible::after {
+.glass-panel:hover::after, .glass-panel:focus-visible::after,
+.skill-card:hover::after,  .skill-card:focus-within::after,
+.faq-item:hover::after,    .faq-item:focus-within::after,
+.compare:hover::after,     .compare:focus-within::after {
   animation: glassSweep .85s var(--ease) 1;
 }
 
@@ -2022,6 +2044,39 @@
   14%  { opacity: 1; }
   86%  { opacity: 1; }
   100% { transform: translateX(430%) rotate(18deg); opacity: 0; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GLASS CHIPS - the small round things
+
+   The panels above carry a masked gradient ring, a sweep and a shadow.
+   None of that is proportionate on a 34px circle, so the small pieces get
+   the short version: the same translucent fill and blur, one flat cool
+   border, nothing that animates. Same material, less of it.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.service-icon,
+.faq-number,
+.voice-tag,
+.voice-controls button,
+.price-check {
+  border: 1px solid color-mix(in srgb, var(--glass-edge), transparent 62%);
+  background: color-mix(in srgb, var(--frost), transparent 62%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+
+.voice-controls button:hover { border-color: var(--glass-edge); background: color-mix(in srgb, var(--frost), transparent 40%); }
+
+/* The bar behind a skill fill is 3px tall, so a border would be the whole
+   thing. It gets the fill alone. */
+.skill-bar { background: color-mix(in srgb, var(--glass-edge), transparent 74%); }
+
+/* On ink the chip keeps its shape and swaps its fill, exactly as the panels
+   do above. */
+.clarity .faq-number {
+  border-color: color-mix(in srgb, var(--glass-edge), transparent 52%);
+  background: rgba(255,255,255,.10);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -2206,23 +2261,23 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* The glass ring turns cool on the cards that sell. */
-/* #EEF8FD is #A8DCF4 lifted 20% toward white, so the card separates by
-   lightness as well as by hue — the marble and the pure blue sit at almost
-   the same luminance, and a separation that depends only on colour is one
-   that disappears in bright light or for a colour-weak eye.
-   Held at 94% rather than solid: at full opacity the backdrop-filter has
-   nothing left to filter and the glass would die quietly. The 6% costs
-   0.01 of the separation. */
+/* The ground moved to white, so this had to move with it. #EEF8FD was
+   chosen to beat a cream marble and cleared it by 1.19:1; against white it
+   would clear by 1.08:1, which is the complaint that started all this.
+   #D6ECFA is the same blue two steps down — 1.22:1 off white, better than
+   the number it replaces, and ink on it still reads 10.22:1.
+   Held at 92% rather than solid: at full opacity the backdrop-filter has
+   nothing left to filter and the glass would die quietly. */
 .glass-panel.is-frost {
-  background: rgba(238, 248, 253, .94);
+  background: rgba(214, 236, 250, .92);
 }
 
 .glass-panel.is-frost::before {
   background: linear-gradient(135deg,
-    var(--frost),
-    var(--sky) 52%,
-    var(--frost));
-  opacity: .78;
+    var(--glass-edge),
+    color-mix(in srgb, var(--glass-edge), white 46%) 52%,
+    var(--glass-edge));
+  opacity: .72;
 }
 
 /* The shared hover brightens the ring, but .is-frost sets its opacity lower
@@ -2234,9 +2289,10 @@
 .glass-panel.is-frost:hover,
 .glass-panel.is-frost:focus-within {
   box-shadow:
-    0 22px 52px -32px var(--shadow),
-    0 0 0 1px color-mix(in srgb, var(--sky), transparent 46%),
-    0 0 24px -2px color-mix(in srgb, var(--frost), transparent 52%);
+    0 22px 50px -28px var(--shadow),
+    0 2px 6px -3px color-mix(in srgb, var(--shadow), transparent 40%),
+    0 0 0 1px color-mix(in srgb, var(--glass-edge), transparent 40%),
+    0 0 24px -2px color-mix(in srgb, var(--glass-edge), transparent 62%);
 }
 
 /* The estimate panel: ink with a cool lift across it, so it reads as a
