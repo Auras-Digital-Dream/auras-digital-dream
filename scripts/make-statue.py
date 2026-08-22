@@ -12,7 +12,9 @@ The result lands in public/models/<output-name>.glb, meshopt-compressed,
 normalised to exactly one unit tall and centred on its own middle so a
 position of [0,0,0] frames the figure rather than its ankles.
 """
+import json
 import os
+import struct
 import subprocess
 import sys
 
@@ -31,6 +33,50 @@ def load(path):
         # belong to the same body.
         return trimesh.util.concatenate(list(scene.geometry.values()))
     return scene
+
+
+
+def strip_textures(path):
+    """Take the placeholder texture back out of the GLB.
+
+    The exporter insists on giving every mesh a material, and a material it
+    cannot leave bare gets a one-pixel base colour image. The page overrides
+    the material anyway, so the image is never seen — but three.js still
+    hands it to the loader as a blob: URL, and the site's Content-Security-
+    Policy refuses blob: connections. Rather than widen the policy for an
+    image nobody looks at, the image goes.
+    """
+    with open(path, "rb") as f:
+        blob = f.read()
+
+    magic, version, _ = struct.unpack("<III", blob[:12])
+    assert magic == 0x46546C67, "not a GLB"
+    json_len, json_tag = struct.unpack("<II", blob[12:20])
+    doc = json.loads(blob[20:20 + json_len])
+    rest = blob[20 + json_len:]
+
+    for key in ("images", "textures", "samplers"):
+        doc.pop(key, None)
+    for material in doc.get("materials", []):
+        for slot in list(material):
+            if slot.endswith("Texture"):
+                material.pop(slot)
+        pbr = material.get("pbrMetallicRoughness", {})
+        for slot in list(pbr):
+            if slot.endswith("Texture"):
+                pbr.pop(slot)
+    for key in ("extensionsUsed", "extensionsRequired"):
+        if key in doc:
+            doc[key] = [e for e in doc[key] if e != "KHR_texture_transform"]
+            if not doc[key]:
+                doc.pop(key)
+
+    chunk = json.dumps(doc, separators=(",", ":")).encode("utf-8")
+    chunk += b" " * (-len(chunk) % 4)
+    out = struct.pack("<II", len(chunk), json_tag) + chunk + rest
+    out = struct.pack("<III", magic, version, len(out) + 12) + out
+    with open(path, "wb") as f:
+        f.write(out)
 
 
 def main():
@@ -78,17 +124,23 @@ def main():
     # what takes the file from most of a megabyte down to something a phone
     # would not notice. The uncompressed GLB is scaffolding and does not
     # survive.
-    # gltfpack both simplifies and compresses. Its simplifier is topology
-    # aware, where a plain quadric collapse on a photogrammetry mesh leaves
-    # flipped triangles all over the drapery; and meshopt compression takes
-    # the file down to something a phone would not notice.
+    # gltfpack simplifies and quantises. Its simplifier is topology aware,
+    # where a plain quadric collapse on a photogrammetry mesh leaves flipped
+    # triangles all over the drapery.
+    #
+    # Deliberately no -c/-cc: meshopt compression would halve the file, but
+    # its decoder is WebAssembly, and the site's Content-Security-Policy
+    # allows neither wasm-unsafe-eval nor blob: connections. Quantisation
+    # alone needs no decoder, so the model loads under the policy the rest
+    # of the site already keeps.
     ratio = min(1.0, TARGET_FACES / len(m.faces))
     subprocess.run(
-        ["npx", "--yes", "gltfpack", "-i", raw, "-o", out, "-cc", "-si", f"{ratio:.4f}"],
+        ["npx", "--yes", "gltfpack", "-i", raw, "-o", out, "-si", f"{ratio:.4f}"],
         check=True, shell=os.name == "nt",
     )
     print(f"      simplified to {ratio:.0%}")
     os.remove(raw)
+    strip_textures(out)
     print(f"{out}  {os.path.getsize(out) / 1e3:.0f} KB")
 
 

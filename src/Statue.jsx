@@ -52,7 +52,11 @@ function sample(t) {
 function Figure({ still }) {
   const group = useRef();
   const last = useRef(-1);
-  const { scene } = useGLTF(MODEL, false);
+    /* Draco and meshopt both switched off: their decoders are WebAssembly, and
+     the site's Content-Security-Policy allows neither wasm-unsafe-eval nor
+     blob: connections. The model is quantised instead, which needs no
+     decoder at all — see scripts/make-statue.py. */
+  const { scene } = useGLTF(MODEL, false, false);
   const canvas = useThree((state) => state.gl.domElement);
 
   /* Marble is a dielectric, so no metalness; the roughness is high enough to
@@ -217,4 +221,4 @@ export default function Statue({ className = "" }) {
   );
 }
 
-useGLTF.preload(MODEL, false);
+useGLTF.preload(MODEL, false, false);
