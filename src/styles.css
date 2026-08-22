@@ -373,7 +373,14 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .video-section video { width:100%; max-height:620px; background:#2D353C; }
 .detail-cta { padding:120px 24px; text-align:center; background:var(--paper); color:var(--ink); }
 .detail-cta > p { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:12px; }
+/* Two voices in one sentence: the script says it, the serif answers. They
+   were the same ink, so the second voice only registered as "a different
+   shape", not as a different speaker. Softer ink separates them without
+   reaching for a hue - gold is 2.26:1 on white and the sky blue 1.90:1,
+   both under the 3:1 that type this size needs, so neither can carry
+   words here. This one measures 7.89:1. */
 .detail-cta h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(42px,5vw,72px); max-width:850px; margin:20px auto 38px; }
+.detail-cta h2 em { color:var(--ink-soft-strong); }
 .detail-cta .button { width:auto; }
 .lightbox { position:fixed; inset:0; z-index:100; background:rgba(45,53,60,.94); display:grid; place-items:center; padding:48px; cursor:zoom-out; }
 .lightbox > button { position:absolute; top:20px; right:20px; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.25); background:#2D353C; color:#fff; display:grid; place-items:center; cursor:pointer; }

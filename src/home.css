@@ -2464,12 +2464,18 @@
 .button.ghost { border-color: color-mix(in srgb, var(--glass-edge), transparent 34%); }
 
 /* Dark ground: same glass, paper type. */
+/* .detail-page used to be on this list and had no business being here. A
+   project page carries exactly one button - the call to action at the foot
+   of it - and that button sits on .detail-cta, which is white. So the rule
+   never once applied to something dark: it just painted the only call to
+   action on sixteen pages white on white, at 1.00:1. Removed rather than
+   patched with another exception, because there is no dark button on a
+   project page to keep it for. */
 .contact .button,
 .difference .button,
 .clarity .button,
 .price-summary .button,
 .books-page .button,
-.detail-page .button,
 footer .button,
 .site-footer .button {
   color: var(--paper);
