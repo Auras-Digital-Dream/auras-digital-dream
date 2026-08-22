@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
   ArrowsOutSimple,
   Sparkle,
+  Play,
+  Pause,
   BookOpen,
   Check,
   CaretLeft,
@@ -52,6 +54,60 @@ const supplementalPortfolioAssets = {
     "/portfolio/auras-trend-vault/editorial-2026/trend-vault-motion-04.mp4",
   ],
 };
+/* What plays inside a device frame on each case study.
+ *
+ * The device is not guessed from the video's shape. Shape gets it wrong in
+ * exactly the case that matters: the AI-generated product clips are 1280x720,
+ * which is the shape of a laptop screen, and framing one that way would tell
+ * a visitor "this is a website I built" about a video of a bottle. So each
+ * clip says what it is, and the frame follows from that.
+ *
+ * kind "site" is a recording of a real website scrolling. kind "social" is
+ * campaign content, which genuinely lives on a phone - the frame is the same,
+ * the label is not, and neither claims to be the other.
+ *
+ * Files are built by scripts/make-scroll-videos.py: cropped free of the
+ * recording phone's own status bar, capped at forty seconds and re-encoded
+ * from 136 MB down to 18. Originals are untouched on disk.
+ */
+const deviceShowcase = {
+  "adi-ecoo-2009-sa": [
+    { device: "laptop", kind: "site", name: "site-desktop", ratio: 2.1695, caption: "adiecoo2009sa.ro, derulat pe desktop" },
+    { device: "phone", kind: "social", name: "social-story", ratio: 0.5625, caption: "Story de campanie pentru colectarea separată" },
+  ],
+  "lupul-and-brici": [
+    { device: "laptop", kind: "site", name: "site-desktop", ratio: 1.4953, caption: "Site-ul de prezentare, derulat pe desktop" },
+  ],
+  "auras-trend-vault": [
+    { device: "phone", kind: "site", name: "site-mobil", ratio: 0.5039, caption: "Platforma, derulată pe telefon" },
+  ],
+  "magazine-online-e-commerce": [
+    { device: "phone", kind: "site", name: "site-mobil", ratio: 0.4922, caption: "Magazinul, derulat pe telefon" },
+  ],
+  "real-estate-co": [
+    { device: "phone", kind: "site", name: "site-mobil", ratio: 0.5835, caption: "Site-ul agenției, derulat pe telefon" },
+  ],
+  "verde-bean": [
+    { device: "phone", kind: "social", name: "social-mobil", ratio: 0.5625, caption: "Conținut de campanie pentru social media" },
+  ],
+  "lumina-botanica": [
+    { device: "phone", kind: "social", name: "social-mobil", ratio: 0.5624, caption: "Conținut de campanie pentru social media" },
+  ],
+};
+
+/* The heavy originals now have a light, cropped version playing in a frame,
+ * so nothing should still point a visitor at the 59 MB file. */
+const showcasedSources = new Set([
+  "/portfolio/adi-ecoo-2009-sa/877bd41c8_nregistrareecran2026-02-05123949.mp4",
+  "/portfolio/adi-ecoo-2009-sa/89fb91d78_InstagramVideoStory1080x1920px2.mp4",
+  "/portfolio/lupul-and-brici/a45070a4f_nregistrare2026-07-01114857.mp4",
+  "/portfolio/auras-trend-vault/b2db01172_aurastrendvault.mp4",
+  "/portfolio/magazine-online-e-commerce/2df41b79e_ClipvideoWhatsApp2025-01-13la153146_9b0b1b8f.mp4",
+  "/portfolio/real-estate-co/610ce2e53_ClipvideoWhatsApp2025-10-27la231531_f9cbb1e1.mp4",
+  "/portfolio/verde-bean/96848f026_WhatsAppVideo2026-07-02at090552.mp4",
+  "/portfolio/lumina-botanica/45639281f_WhatsAppVideo2026-07-02at090147.mp4",
+]);
+
 const excludedPortfolioAssets = new Set([
   "/portfolio/arta-digitala-materiale-grafice/76bc483af_freepik__genereazaa-o-imagine-realistica-a-unor-deseuri-din__37852.jpg",
   "/portfolio/verde-bean/43d21e774_WhatsAppImage2026-07-02at090629.jpeg",
@@ -168,13 +224,88 @@ function scheduleScrollToId(id) {
   window.setTimeout(() => scrollToId(id), 120);
 }
 
+/* A screen recording, inside the machine it was recorded on.
+ *
+ * The frame is drawn in CSS - no mockup image to download, nothing to go
+ * blurry on a retina screen, and it is built from her own material: the ink
+ * body, the gold hairline, the glass edge already used everywhere else.
+ *
+ * Nothing is fetched until the frame is on screen: preload="none" means the
+ * browser holds off, and the observer only calls play() when at least a third
+ * of it is visible, then pauses again on the way out. A visitor who never
+ * scrolls this far downloads the poster and nothing more. Reduced motion
+ * keeps the poster and offers a control instead of starting on its own.
+ */
+function DeviceFrame({ slug, clip }) {
+  const ref = useRef(null);
+  const reduced = useReducedMotion();
+  const [playing, setPlaying] = useState(false);
+  const base = `/portfolio/${slug}/scroll/${clip.name}`;
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || reduced) return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().then(() => setPlaying(true)).catch(() => {});
+        } else {
+          video.pause();
+          setPlaying(false);
+        }
+      },
+      { threshold: 0.34 },
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, [reduced]);
+
+  function toggle() {
+    const video = ref.current;
+    if (!video) return;
+    if (video.paused) video.play().then(() => setPlaying(true)).catch(() => {});
+    else { video.pause(); setPlaying(false); }
+  }
+
+  return (
+    <figure className={`device device-${clip.device}`} data-reveal style={{ "--screen-ratio": clip.ratio }}>
+      <div className="device-shell">
+        <div className="device-screen">
+          <video
+            ref={ref}
+            muted
+            loop
+            playsInline
+            preload="none"
+            poster={`${base}.jpg`}
+            aria-label={clip.caption}
+          >
+            <source src={`${base}.mp4`} type="video/mp4" />
+          </video>
+          <button type="button" className="device-play" onClick={toggle} aria-pressed={playing}>
+            {playing ? <Pause size={17} weight="fill" /> : <Play size={17} weight="fill" />}
+            <span>{playing ? "Oprește" : "Pornește"}</span>
+          </button>
+        </div>
+      </div>
+      {clip.device === "laptop" && <div className="device-base" aria-hidden="true" />}
+      <figcaption>
+        <span className={`device-kind is-${clip.kind}`}>{clip.kind === "site" ? "Website" : "Social media"}</span>
+        {clip.caption}
+      </figcaption>
+    </figure>
+  );
+}
+
 function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = [...new Set([
     ...(portfolioAssets[project.slug] || []),
     ...(supplementalPortfolioAssets[project.slug] || []),
   ])];
-  const curatedAssets = assets.filter((asset) => !excludedPortfolioAssets.has(asset));
+  const curatedAssets = assets.filter(
+    (asset) => !excludedPortfolioAssets.has(asset) && !showcasedSources.has(asset),
+  );
   const images = curatedAssets.filter((asset) => !asset.toLowerCase().endsWith(".mp4"));
   const videos = curatedAssets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
   const heroImage = detailHeroAssets[project.slug] || images[0] || project.image;
@@ -214,6 +345,18 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
         {details.services && <div className="detail-results detail-services"><p className="section-kicker"><span className="eyebrow-text">Servicii livrate</span></p><div>{details.services.map((service) => <article key={service}><Sparkle size={17} weight="fill" /><span>{service}</span></article>)}</div></div>}
         <div className="detail-results"><p className="section-kicker"><span className="eyebrow-text">Rezultate</span></p><div>{details.results.map((result) => <article key={result}><Check size={18} weight="bold" /><span>{result}</span></article>)}</div></div>
       </section>
+
+      {(deviceShowcase[project.slug] || []).length > 0 && (
+        <section className="detail-devices">
+          <p className="section-kicker"><span className="eyebrow-text">În funcțiune</span></p>
+          <h2>Cum arată <em>pe ecranul tău.</em></h2>
+          <div className="device-row">
+            {deviceShowcase[project.slug].map((clip) => (
+              <DeviceFrame key={clip.name} slug={project.slug} clip={clip} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="detail-gallery">
         <p className="section-kicker"><span className="eyebrow-text">Galerie</span></p><h2>Proiectul <em>în imagini.</em></h2>

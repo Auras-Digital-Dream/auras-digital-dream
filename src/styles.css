@@ -188,7 +188,11 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .detail-hero-copy { max-width:820px; }
 .detail-meta { display:flex; gap:12px; margin:30px 0 20px; }
 .detail-meta span { border:1px solid rgba(255,255,255,.17); border-radius:999px; padding:8px 13px; color:#BABCBF; text-transform:uppercase; letter-spacing:.11em; font-size:10px; }
-.detail-hero h1 { font-family:var(--font-display); font-size:clamp(50px,5.2vw,72px); font-weight:400; line-height:1.02; letter-spacing:-.035em; margin-bottom:22px; }
+/* overflow-wrap only acts when a word genuinely cannot fit, so ordinary
+   titles are untouched. One of them ends in www.adiecoo2009sa.ro, which at
+   50px is a single 448px token in a 350px column - it pushed that page
+   sideways on every phone, and had done since the page existed. */
+.detail-hero h1 { font-family:var(--font-display); font-size:clamp(50px,5.2vw,72px); font-weight:400; line-height:1.02; letter-spacing:-.035em; margin-bottom:22px; overflow-wrap:anywhere; }
 .detail-hero-copy > p { color:var(--muted); font-size:16px; }
 .detail-hero-visual { position:relative; width:100%; height:min(62vw,720px); border-radius:16px; margin-top:45px; overflow:hidden; background:#2D353C; transform:translate3d(0,var(--parallax-y,0),0); will-change:transform; }
 .detail-hero-visual img { position:absolute; inset:0; width:100%; height:100%; }
@@ -230,6 +234,117 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
    and they are two or three words each rather than a sentence. */
 .detail-services > div { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .detail-services article { padding:13px 16px; font-size:14.5px; }
+
+/* ── Device frames ─────────────────────────────────────────────────────────
+   A recording of a site, shown inside the machine it was recorded on.
+
+   Drawn entirely in CSS. A mockup image would be another megabyte to
+   download, would go soft on a retina screen, and would arrive carrying
+   somebody else's visual language; this one is built from the tokens the
+   rest of the site already uses - the ink body, the gold hairline, the sky
+   edge - so it belongs here rather than looking imported.
+
+   The aspect ratios are the real ones: 16/10 for the laptop screen, 9/19.5
+   for the phone. The recordings were made at those shapes, so nothing is
+   stretched to fit.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.detail-devices { padding:0 max(7vw,24px) 20px; background:var(--paper); color:var(--ink); }
+.detail-devices { --accent:var(--ink); --muted:var(--ink-soft-strong); }
+.detail-devices h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3vw,44px); margin:14px 0 40px; }
+.detail-devices h2 em { font-style:normal; color:var(--muted); }
+
+.device-row { display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,64px); align-items:flex-start; justify-content:center; }
+.device { margin:0; display:grid; gap:16px; justify-items:center; }
+/* The base flares wider than the lid, the way a laptop does. That flare has
+   to live somewhere: the figure reserves exactly its width as padding, so
+   the base fills the padding box and never a pixel more. A percentage here
+   would be circular - the flare would depend on a width that depends on the
+   flare - so it is a fixed 22px on each side. */
+.device-laptop { flex:1 1 520px; max-width:820px; min-width:0; padding-inline:22px; }
+.device-phone { flex:0 1 268px; }
+
+.device-shell { position:relative; width:100%; }
+
+/* The laptop: a lid with a thin bezel, and a base that is nothing but a
+   trapezoid drawn with a border - lighter than an image and it scales. */
+.device-laptop .device-shell {
+  padding:12px 12px 12px;
+  border-radius:14px 14px 4px 4px;
+  background:linear-gradient(160deg,#3B434A,#22282D);
+  box-shadow:0 34px 70px -40px rgba(45,53,60,.7), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.device-laptop .device-shell::after {
+  content:""; position:absolute; left:50%; top:5px; translate:-50% 0;
+  width:44px; height:3px; border-radius:2px; background:rgba(255,255,255,.16);
+}
+/* The screen is whatever shape the recording is. A fixed 16/10 cropped the
+   desktop capture, which is 2.17 wide, straight through its headline. */
+.device-laptop .device-screen { aspect-ratio:var(--screen-ratio,1.6); border-radius:5px; }
+.device-laptop .device-base {
+  width:calc(100% + 44px); margin-left:-22px; height:13px; border-radius:0 0 12px 12px;
+  background:linear-gradient(180deg,#394148,#242A2F);
+  box-shadow:0 12px 22px -14px rgba(45,53,60,.6);
+  clip-path:polygon(2% 0, 98% 0, 100% 100%, 0 100%);
+}
+.device-laptop .device-base::after {
+  content:""; display:block; width:16%; height:3px; margin:0 auto; border-radius:0 0 3px 3px;
+  background:rgba(255,255,255,.14);
+}
+
+/* The phone: one rounded body, a hairline of sky on the edge and a camera
+   that is a single dot. */
+.device-phone .device-shell {
+  padding:9px;
+  border-radius:34px;
+  background:linear-gradient(160deg,#3B434A,#20262B);
+  box-shadow:0 30px 60px -36px rgba(45,53,60,.72),
+    inset 0 0 0 1px color-mix(in srgb,var(--glass-edge),transparent 74%),
+    inset 0 1px 0 rgba(255,255,255,.16);
+}
+.device-phone .device-shell::after {
+  content:""; position:absolute; left:50%; top:15px; translate:-50% 0;
+  width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.28);
+  box-shadow:0 0 0 1px rgba(0,0,0,.4);
+}
+.device-phone .device-screen { aspect-ratio:var(--screen-ratio,.4615); border-radius:26px; }
+
+.device-screen { position:relative; overflow:hidden; background:#11151A; }
+.device-screen video { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* The control sits inside the screen, bottom right, and only shows itself
+   when someone is reaching for it or using a keyboard. */
+.device-play {
+  position:absolute; right:10px; bottom:10px;
+  display:inline-flex; align-items:center; gap:7px;
+  padding:7px 12px; border-radius:999px; cursor:pointer;
+  border:1px solid color-mix(in srgb,var(--glass-edge),transparent 52%);
+  background:rgba(20,26,31,.6);
+  -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%);
+  color:#fff; font-family:var(--font-sans); font-size:11.5px; letter-spacing:.04em;
+  opacity:0; transition:opacity .28s ease-out;
+}
+.device-shell:hover .device-play,
+.device-play:focus-visible { opacity:1; }
+
+.device figcaption { display:grid; gap:7px; justify-items:center; text-align:center; max-width:34ch;
+  font-size:13.5px; line-height:1.5; color:var(--ink-soft-strong); }
+.device-kind {
+  display:inline-block; padding:4px 11px; border-radius:999px;
+  font-family:var(--font-sans); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  border:1px solid color-mix(in srgb,var(--glass-edge),transparent 58%);
+  background:color-mix(in srgb,var(--frost),transparent 72%);
+  color:var(--ink);
+}
+.device-kind.is-social {
+  border-color:color-mix(in srgb,var(--gold),transparent 58%);
+  background:color-mix(in srgb,var(--gold),transparent 88%);
+}
+
+/* Nothing starts on its own, and the control is always there to be found. */
+@media (prefers-reduced-motion:reduce) {
+  .device-play { opacity:1; }
+}
 
 /* Related work. Every case study used to end in a call to action and nothing
    else, so all sixteen were leaves - no way across the portfolio for a
@@ -458,7 +573,7 @@ em{ color:var(--accent); }
   
   
   footer{grid-template-columns:1fr}.floating-whatsapp{right:16px;bottom:16px}
-  .detail-header { height:76px; padding:0 20px; }.detail-header nav{display:none}.detail-hero{padding:112px 20px 70px;min-height:auto}.detail-hero h1{font-size:50px}.detail-hero-visual{height:390px;margin-top:42px;border-radius:10px}.detail-meta{margin-top:34px}.detail-content{padding:76px 20px}.detail-intro,.detail-columns{grid-template-columns:1fr}.detail-intro{gap:15px}.detail-intro h2{font-size:29px}.detail-columns{gap:45px;margin-top:65px}.detail-results{margin-top:65px}.detail-results > div{grid-template-columns:1fr}.detail-services > div{grid-template-columns:1fr 1fr}.detail-related{padding:0 20px 72px}.detail-gallery{padding:76px 20px}.gallery-grid{grid-template-columns:1fr}.gallery-grid button{grid-column:auto;min-height:360px}.video-section > div{grid-template-columns:1fr}.lightbox{padding:16px}.detail-cta{padding:85px 20px}.book-feature {grid-template-columns:1fr}.cinematic-hero{min-height:760px}.cinematic-label{letter-spacing:.25em}.cinematic-label i{width:28px}.cinematic-hero h1{font-size:64px}.cinematic-hero-copy > p:not(.cinematic-subtitle){font-size:17px}.cinematic-universe-inner,.cinematic-feature-inner{grid-template-columns:1fr}.cinematic-universe,.cinematic-library,.cinematic-reader,.cinematic-final{padding:82px 20px}.cinematic-feature{min-height:auto;padding:90px 20px}.cinematic-trailer-card{transform:none}.cinematic-published-grid,.cinematic-coming-grid{grid-template-columns:1fr}.cinematic-published-card,.cinematic-upcoming-card{min-height:auto}.cinematic-published-card img,.cinematic-upcoming-card img{max-height:420px}.cinematic-quote{min-height:520px}.cinematic-quote blockquote{font-size:42px}.cinematic-author{min-height:620px;padding:90px 20px}.film-grain{display:none}
+  .detail-header { height:76px; padding:0 20px; }.detail-header nav{display:none}.detail-hero{padding:112px 20px 70px;min-height:auto}.detail-hero h1{font-size:50px}.detail-hero-visual{height:390px;margin-top:42px;border-radius:10px}.detail-meta{margin-top:34px}.detail-content{padding:76px 20px}.detail-intro,.detail-columns{grid-template-columns:1fr}.detail-intro{gap:15px}.detail-intro h2{font-size:29px}.detail-columns{gap:45px;margin-top:65px}.detail-results{margin-top:65px}.detail-results > div{grid-template-columns:1fr}.detail-services > div{grid-template-columns:1fr 1fr}.detail-related{padding:0 20px 72px}.detail-devices{padding:0 20px 12px}.device-row{gap:34px}.device-laptop .device-shell{padding:8px}.device-phone{flex-basis:230px}.detail-gallery{padding:76px 20px}.gallery-grid{grid-template-columns:1fr}.gallery-grid button{grid-column:auto;min-height:360px}.video-section > div{grid-template-columns:1fr}.lightbox{padding:16px}.detail-cta{padding:85px 20px}.book-feature {grid-template-columns:1fr}.cinematic-hero{min-height:760px}.cinematic-label{letter-spacing:.25em}.cinematic-label i{width:28px}.cinematic-hero h1{font-size:64px}.cinematic-hero-copy > p:not(.cinematic-subtitle){font-size:17px}.cinematic-universe-inner,.cinematic-feature-inner{grid-template-columns:1fr}.cinematic-universe,.cinematic-library,.cinematic-reader,.cinematic-final{padding:82px 20px}.cinematic-feature{min-height:auto;padding:90px 20px}.cinematic-trailer-card{transform:none}.cinematic-published-grid,.cinematic-coming-grid{grid-template-columns:1fr}.cinematic-published-card,.cinematic-upcoming-card{min-height:auto}.cinematic-published-card img,.cinematic-upcoming-card img{max-height:420px}.cinematic-quote{min-height:520px}.cinematic-quote blockquote{font-size:42px}.cinematic-author{min-height:620px;padding:90px 20px}.film-grain{display:none}
 }
 
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}[data-reveal]{opacity:1!important;transform:none!important}[data-parallax]{transform:none!important}.custom-cursor,.custom-cursor-ring{display:none}::view-transition-old(root),::view-transition-new(root){animation:none!important}}
