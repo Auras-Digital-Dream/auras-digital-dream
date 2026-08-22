@@ -26,10 +26,10 @@ export const OG_SIZE = { width: 1200, height: 630 };
  * there rather than kept in a second list that would drift. The sitemap and
  * the prerender walk the same routes and share the same titles.
  */
-function projects() {
-  const source = readFileSync(path.join(root, "src", "HomePage.jsx"), "utf8");
+function parse(file) {
+  const source = readFileSync(path.join(root, "src", file), "utf8");
   const block = source.match(/const projects = \[([\s\S]*?)\n\];/);
-  if (!block) throw new Error("Could not find the projects array in HomePage.jsx");
+  if (!block) throw new Error(`Could not find the projects array in ${file}`);
 
   const found = [];
   const entry = /\{\s*slug:\s*"([a-z0-9-]+)",\s*title:\s*"((?:[^"\\]|\\.)*)"[\s\S]*?image:\s*"((?:[^"\\]|\\.)*)"[\s\S]*?description:\s*"((?:[^"\\]|\\.)*)"/g;
@@ -37,8 +37,41 @@ function projects() {
   while ((match = entry.exec(block[1])) !== null) {
     found.push({ slug: match[1], title: match[2], image: match[3], description: match[4] });
   }
-  if (!found.length) throw new Error("No projects parsed from HomePage.jsx");
+  if (!found.length) throw new Error(`No projects parsed from ${file}`);
   return found;
+}
+
+/* The same sixteen projects are declared twice - once in HomePage.jsx for
+ * the cards on the home page, once in App.jsx for the detail pages - and
+ * only the HomePage copy feeds the titles, descriptions, sitemap, llms.txt
+ * and schema. So when the two drift, the page says one thing and every
+ * machine reading the site is told another, silently.
+ *
+ * They had drifted: seventy-one legacy cedilla characters, one curly
+ * apostrophe, and a misspelling - the description Google and the answer
+ * engines were given for the bakery project said "bratarie" where the page
+ * itself said "brutarie". Nothing failed. It just shipped.
+ *
+ * This makes the next drift impossible to ship. A guard rather than a
+ * merge, because merging the two lists changes how the app is assembled,
+ * and this catches the same class of bug for the price of one comparison.
+ */
+function projects() {
+  const home = parse("HomePage.jsx");
+  const detail = parse("App.jsx");
+  const line = (p) => [p.slug, p.title, p.image, p.description].join(" |#| ");
+  const a = home.map(line).sort();
+  const b = detail.map(line).sort();
+  const drift = a.filter((x, i) => x !== b[i]);
+  if (a.length !== b.length || drift.length) {
+    const shown = drift.slice(0, 3).map((x) => "  HomePage.jsx: " + x.slice(0, 110)).join(String.fromCharCode(10));
+    throw new Error(
+      "The projects array in HomePage.jsx and the one in App.jsx have drifted. " +
+      a.length + " vs " + b.length + " projects, " + drift.length + " differing." +
+      String.fromCharCode(10) + shown,
+    );
+  }
+  return home;
 }
 
 export function routes() {
