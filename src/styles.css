@@ -47,6 +47,18 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Marcellus, patched to hold the four Romanian letters it shipped without.
+   One file rather than two: at 16 KB there is nothing to gain by splitting
+   latin from latin-ext, and one fewer unicode-range is one fewer thing to
+   get wrong. Licensed under the OFL — free to self-host and to modify. */
+@font-face {
+  font-family: "Marcellus";
+  src: url("/fonts/marcellus-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Amoresa";
   src: url("/fonts/amoresa.woff2") format("woff2");
@@ -60,6 +72,15 @@
   /* Amoresa is a joining script: gorgeous at display size, illegible as UI.
      It carries the big statements only; everything structural stays neutral. */
   --font-display:"Amoresa",Georgia,serif;
+  /* Marcellus, for the headings inside a case study only. Amoresa is the
+     signature and stays on the home page and the books page; a project page
+     has a different job - it has to say plainly what was delivered, and one
+     of its titles ends in a URL, which a joining script cannot carry.
+     Marcellus is a Roman inscriptional letter, so it belongs to the same
+     world as the marble and the gold already on the page.
+     Patched before shipping: the face has no s-comma, t-comma, S-comma or
+     T-comma, only the Turkish cedillas. See scripts/patch-marcellus.py. */
+  --font-project:"Marcellus",Georgia,serif;
   --font-serif:Georgia,"Times New Roman",serif;
   --font-body:"EB Garamond",Georgia,serif;
   --font-sans:system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -192,7 +213,7 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
    titles are untouched. One of them ends in www.adiecoo2009sa.ro, which at
    50px is a single 448px token in a 350px column - it pushed that page
    sideways on every phone, and had done since the page existed. */
-.detail-hero h1 { font-family:var(--font-display); font-size:clamp(50px,5.2vw,72px); font-weight:400; line-height:1.02; letter-spacing:-.035em; margin-bottom:22px; overflow-wrap:anywhere; }
+.detail-hero h1 { font-family:var(--font-project); font-size:clamp(50px,5.2vw,72px); font-weight:400; line-height:1.06; letter-spacing:-.008em; margin-bottom:22px; overflow-wrap:anywhere; }
 .detail-hero-copy > p { color:var(--muted); font-size:16px; }
 .detail-hero-visual { position:relative; width:100%; height:min(62vw,720px); border-radius:16px; margin-top:45px; overflow:hidden; background:#2D353C; transform:translate3d(0,var(--parallax-y,0),0); will-change:transform; }
 .detail-hero-visual img { position:absolute; inset:0; width:100%; height:100%; }
@@ -209,20 +230,20 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 
 .detail-content { background:var(--paper); color:var(--ink); padding:110px max(7vw,24px); }
 .detail-intro { display:grid; grid-template-columns:.35fr 1.65fr; gap:5vw; align-items:start; }
-.detail-intro h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(28px,3.4vw,50px); line-height:1.35; margin:0; }
+.detail-intro h2 { font-family:var(--font-project); font-weight:400; font-size:clamp(28px,3.4vw,50px); line-height:1.35; margin:0; }
 .project-facts { display:grid; grid-template-columns:repeat(4,1fr); margin-top:76px; border-block:1px solid var(--line); }
 .project-facts article { padding:27px 22px; border-right:1px solid var(--line); }
 .project-facts article:last-child { border-right:0; }
 .project-facts small,.project-facts strong { display:block; }
 .project-facts small { color:var(--muted); text-transform:uppercase; letter-spacing:.14em; font-size:9px; margin-bottom:9px; }
-.project-facts strong { font-family:var(--font-display); font-weight:400; font-size:18px; }
+.project-facts strong { font-family:var(--font-project); font-weight:400; font-size:18px; }
 /* Three articles now - Provocarea, Soluția, Abordarea - so the track has to
    fit whatever it is given rather than being fixed at two. auto-fit is what
    the rest of the site uses for exactly this, and it keeps the phone rule
    below working unchanged. */
 .detail-columns { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr)); gap:clamp(32px,4vw,72px); margin-top:95px; border-top:1px solid var(--line); padding-top:55px; }
 .detail-columns article > span { color:var(--accent); font-size:12px; letter-spacing:.15em; }
-.detail-columns h3,.video-section h3 { font-family:var(--font-display); font-weight:400; font-size:36px; margin:17px 0; }
+.detail-columns h3,.video-section h3 { font-family:var(--font-project); font-weight:400; font-size:36px; margin:17px 0; }
 .detail-columns p { color:var(--muted); line-height:1.9; font-size:16px; }
 .detail-results { margin-top:90px; }
 .detail-results > div { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -251,7 +272,7 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 
 .detail-devices { padding:0 max(7vw,24px) 20px; background:var(--paper); color:var(--ink); }
 .detail-devices { --accent:var(--ink); --muted:var(--ink-soft-strong); }
-.detail-devices h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3vw,44px); margin:14px 0 40px; }
+.detail-devices h2 { font-family:var(--font-project); font-weight:400; font-size:clamp(26px,3vw,44px); margin:14px 0 40px; }
 .detail-devices h2 em { font-style:normal; color:var(--muted); }
 
 .device-row { display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,64px); align-items:flex-start; justify-content:center; }
@@ -350,7 +371,7 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
    else, so all sixteen were leaves - no way across the portfolio for a
    reader, and no path between them for a crawler. */
 .detail-related { padding:0 max(7vw,24px) 96px; background:var(--paper); color:var(--ink); }
-.detail-related h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3vw,44px); margin:14px 0 34px; }
+.detail-related h2 { font-family:var(--font-project); font-weight:400; font-size:clamp(26px,3vw,44px); margin:14px 0 34px; }
 .detail-related h2 em { font-style:normal; color:var(--muted); }
 .related-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:clamp(14px,1.8vw,24px); }
 .related-grid a { display:grid; gap:12px; color:var(--ink); text-decoration:none; }
@@ -358,9 +379,9 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
   transition:transform .45s cubic-bezier(.2,.75,.2,1); }
 .related-grid a:hover img,.related-grid a:focus-visible img { transform:scale(1.03); }
 .related-grid small { display:block; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft-strong); margin-bottom:5px; }
-.related-grid strong { font-family:var(--font-display); font-weight:500; font-size:17px; line-height:1.25; letter-spacing:1px; }
+.related-grid strong { font-family:var(--font-project); font-weight:400; font-size:17px; line-height:1.25; letter-spacing:1px; }
 .detail-gallery { padding:110px max(5vw,24px); background:#2D353C; }
-.detail-gallery > h2 { font-family:var(--font-display); font-size:clamp(42px,5vw,70px); font-weight:400; margin-bottom:55px; }
+.detail-gallery > h2 { font-family:var(--font-project); font-size:clamp(42px,5vw,70px); font-weight:400; margin-bottom:55px; }
 .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-flow:dense; gap:16px; }
 .gallery-grid button { position:relative; border:0; padding:0; min-height:320px; background:#2D353C; overflow:hidden; cursor:zoom-in; }
 
@@ -379,7 +400,13 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
    reaching for a hue - gold is 2.26:1 on white and the sky blue 1.90:1,
    both under the 3:1 that type this size needs, so neither can carry
    words here. This one measures 7.89:1. */
-.detail-cta h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(42px,5vw,72px); max-width:850px; margin:20px auto 38px; }
+.detail-cta h2 { font-family:var(--font-project); font-weight:400; font-size:clamp(42px,5vw,72px); max-width:850px; margin:20px auto 38px; }
+/* A real italic instead of an accident. Amoresa has no italic cut, so this
+   em has been falling back to Georgia since the page was built - a face on
+   nobody's list. EB Garamond's italic is already loaded for the body text
+   and sits properly beside an inscriptional roman. */
+.detail-page h2 em,
+.detail-page h3 em { font-family:var(--font-body); font-style:italic; }
 .detail-cta h2 em { color:var(--ink-soft-strong); }
 .detail-cta .button { width:auto; }
 .lightbox { position:fixed; inset:0; z-index:100; background:rgba(45,53,60,.94); display:grid; place-items:center; padding:48px; cursor:zoom-out; }
