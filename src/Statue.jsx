@@ -22,12 +22,15 @@ const FRONT = Math.PI / 2;
    withdraws so she never fights the section that follows. Positions are in
    statue-heights: the model was normalised to exactly one unit tall. */
 const KEYS = [
-  { at: 0.00, pos: [0.46, -0.02, -1.35], turn: -1.10, scale: 0.94, fade: 0 },
-  { at: 0.18, pos: [0.40, 0.00, -0.70], turn: -0.78, scale: 1.00, fade: 1 },
-  { at: 0.52, pos: [0.34, 0.02, -0.18], turn: -0.34, scale: 1.06, fade: 1 },
-  { at: 0.78, pos: [0.31, 0.00, 0.16], turn: 0.08, scale: 1.11, fade: 1 },
-  { at: 0.93, pos: [0.36, -0.01, 0.02], turn: 0.34, scale: 1.08, fade: 1 },
-  { at: 1.00, pos: [0.44, -0.04, -0.60], turn: 0.66, scale: 1.01, fade: 0 },
+  { at: 0.00, pos: [0.46, -0.02, -1.35], turn: -1.10, scale: 0.94, fade: 0, credit: 0 },
+  { at: 0.14, pos: [0.41, 0.00, -0.78], turn: -0.82, scale: 1.00, fade: 1, credit: 0 },
+  { at: 0.38, pos: [0.35, 0.02, -0.22], turn: -0.40, scale: 1.06, fade: 1, credit: 0 },
+  { at: 0.58, pos: [0.31, 0.00, 0.16], turn: 0.06, scale: 1.11, fade: 1, credit: 0 },
+  /* The turn she gained: past meeting your eye she keeps rotating and
+     drops a little, as though settling back onto her plinth. */
+  { at: 0.78, pos: [0.33, -0.05, 0.24], turn: 0.52, scale: 1.14, fade: 1, credit: 0.35 },
+  { at: 0.92, pos: [0.36, -0.07, 0.04], turn: 0.82, scale: 1.09, fade: 1, credit: 1 },
+  { at: 1.00, pos: [0.42, -0.08, -0.34], turn: 1.02, scale: 1.04, fade: 0.92, credit: 1 },
 ];
 
 function sample(t) {
@@ -46,6 +49,7 @@ function sample(t) {
     rotY: FRONT + mix(a.turn, b.turn),
     scale: mix(a.scale, b.scale),
     fade: mix(a.fade, b.fade),
+    credit: mix(a.credit, b.credit),
   };
 }
 
@@ -135,6 +139,10 @@ function Figure({ still }) {
     group.current.rotation.set(lookY, frame.rotY + lookX, 0);
     group.current.scale.setScalar(frame.scale);
     stone.opacity = still ? 1 : frame.fade;
+
+    /* Her name belongs to the end of the walk, not to the whole of it: the
+       band publishes how far along she is, and the credit fades up on it. */
+    if (band) band.style.setProperty("--statue-in", still ? "1" : frame.credit.toFixed(3));
 
     /* Demand rendering: keep drawing only while something is still moving.
        Once the pose and the damped mouse have both settled the loop stops and
