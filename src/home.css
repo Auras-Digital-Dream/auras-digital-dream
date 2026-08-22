@@ -1699,10 +1699,16 @@
   position: relative;
   overflow: clip;
   padding-block: clamp(36px, 6.5vw, 88px);
-  /* Tilted in depth first, then swung in the plane, so it reads as a frieze
-     running along a wall rather than a line of type lying flat. */
-  transform: rotate(var(--marquee-angle, -7deg)) rotateX(var(--marquee-tilt, 0deg));
-  transform-style: preserve-3d;
+  /* Swung in the plane, and only in the plane.
+     It used to lean in depth as well - a rotateX driven by scroll, inside a
+     perspective. That put the band in a 3D rendering context, and a browser
+     resolves one of those by drawing its contents into a texture once and
+     then transforming the texture. On type set at 190px the resampling is
+     plainly visible: soft edges, a smeared gold line, the look of a picture
+     saved at the wrong size. Measured by removing one factor at a time -
+     dropping will-change changed nothing, dropping the 3D context fixed it.
+     A plain 2D rotation costs nothing and keeps the slant. */
+  transform: rotate(var(--marquee-angle, -7deg));
 }
 
 .marquee-rail { display: flex; gap: 0; width: max-content; will-change: transform; }
@@ -1723,15 +1729,22 @@
   color: var(--ink);
   /* Light from above: gilding catches the top edge, the body extrudes down
      and to the right, and the whole letter drops one soft shadow onto the
-     stone. Ink on marble is 9.58:1, so the face reads before the relief does. */
+     stone. Ink on marble is 9.58:1, so the face reads before the relief does.
+
+     Every offset is in em, not px. The face runs from 56px to 190px, and a
+     fixed 2px gold edge is a broad gilded lip on the small end and a dirty
+     hairline on the large one - which is most of what made the frieze look
+     like a low-resolution picture. In em the carving is the same carving at
+     every width, and the steps are wide enough at full size to read as
+     depth rather than as a fringe. */
   text-shadow:
-    0 -2px 0 var(--gold),
-    1px 1px 0 rgba(201,168,106,.42),
-    2px 3px 0 rgba(45,53,60,.30),
-    3px 5px 0 rgba(45,53,60,.22),
-    4px 7px 0 rgba(45,53,60,.15),
-    5px 9px 0 rgba(45,53,60,.09),
-    7px 14px 20px rgba(45,53,60,.28);
+    0 -.017em 0 var(--gold),
+    .006em .008em 0 rgba(201,168,106,.42),
+    .012em .018em 0 rgba(45,53,60,.30),
+    .019em .029em 0 rgba(45,53,60,.22),
+    .026em .040em 0 rgba(45,53,60,.15),
+    .033em .051em 0 rgba(45,53,60,.09),
+    .040em .078em .105em rgba(45,53,60,.28);
 }
 
 /* The band is stone, not paper: it separates the paper storey above from
@@ -1739,7 +1752,6 @@
    gradients, not a repeating rule — marble has no repeat. */
 .marquee-band {
   overflow: clip;
-  perspective: 1400px;
   background:
     linear-gradient(103deg, transparent 0 38%, rgba(255,255,255,.55) 41% 42%, transparent 45%),
     linear-gradient(97deg, transparent 0 62%, rgba(45,53,60,.05) 64% 65%, transparent 68%),
