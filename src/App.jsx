@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowsOutSimple,
+  Sparkle,
   BookOpen,
   Check,
   CaretLeft,
@@ -63,10 +64,10 @@ const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/verde-bean-hero-branding.jpeg",
   "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg",
   "lupul-and-brici": "/portfolio/lupul-and-brici/852b052a0_generated_image.png",
-  "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/0429b7c7f_WhatsAppImage2026-07-02at1127334.jpg",
-  "real-estate-co": "/portfolio/real-estate-co/7254652e3_Capturdeecran2025-10-27232250.png",
-  "carti-de-vizita": "/portfolio/carti-de-vizita/3cd5b72d3_adiecoo1.png",
-  "adi-ecoo-2009-sa": "/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.jpeg",
+  "luxury-hair-by-aura": "/portfolio/luxury-hair-by-aura/31d17cea7_generated_image.png",
+  "real-estate-co": "/portfolio/real-estate-co/d7b6e03d9_Capturdeecran2025-10-27234018.png",
+  "carti-de-vizita": "/portfolio/carti-de-vizita/12a649300_generated_image.png",
+  "adi-ecoo-2009-sa": "/portfolio/adi-ecoo-2009-sa/c989567bf_campanievoluminoase.png",
   "painea-de-acasa": "/portfolio/painea-de-acasa/painea-de-acasa-packaging.jpeg",
   "campanie-social-media-luxe": "/portfolio/campanie-social-media-luxe/65714e254_generated_image.png",
   "auras-trend-vault": "/portfolio/auras-trend-vault/84ce9f083_WhatsAppImage2026-07-01at120708.jpg",
@@ -74,7 +75,7 @@ const detailHeroAssets = {
   "invitatii-nunti-botezuri-evenimente": "/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png",
   "documente-corporatiste-licenta": "/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png",
   "arta-digitala-materiale-grafice": "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg",
-  "logo-design": "/portfolio/logo-design/3caeb0cc1_Untitled-design.png",
+  "logo-design": "/portfolio/logo-design/4403fa619_generated_image.png",
   "selectii-cromatice": "/portfolio/selectii-cromatice/olive-blush.jpeg",
 };
 
@@ -178,6 +179,16 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
   const videos = curatedAssets.filter((asset) => asset.toLowerCase().endsWith(".mp4"));
   const heroImage = detailHeroAssets[project.slug] || images[0] || project.image;
   const whatsappMessage = encodeURIComponent(`Bună, Aura! Am văzut proiectul ${project.title} și aș dori să discutăm despre un proiect asemănător.`);
+  /* Three ways out of a dead end. A case study used to link only back to
+   * the home page, which meant every one of the sixteen was a leaf: a
+   * reader who arrived from a search had nowhere to go, and a crawler saw
+   * no path between them. Same category first, so the suggestion is
+   * actually related, then whatever else is there to fill the row. */
+  const related = useMemo(() => {
+    const others = projects.filter((p) => p.slug !== project.slug);
+    const sameField = others.filter((p) => p.category.some((c) => project.category.includes(c)));
+    return [...sameField, ...others.filter((p) => !sameField.includes(p))].slice(0, 3);
+  }, [project.slug]);
 
   return (
     <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
@@ -199,7 +210,8 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
       <section className="detail-content">
         <div className="detail-intro" data-reveal><p className="section-kicker"><span className="eyebrow-text">Despre proiect</span></p><h2>{details.about}</h2></div>
         <div className="project-facts" data-reveal><article><small>Rol & servicii</small><strong>{project.category.join(" · ")}</strong></article><article><small>Client</small><strong>{details.client}</strong></article><article><small>Perioadă</small><strong>{details.date}</strong></article><article><small>Livrabile</small><strong>{details.results.length} rezultate-cheie</strong></article></div>
-        <div className="detail-columns"><article data-reveal><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article data-reveal><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article></div>
+        <div className="detail-columns"><article data-reveal><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article data-reveal><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article>{details.approach && <article data-reveal><span>03</span><h3>Abordarea</h3><p>{details.approach}</p></article>}</div>
+        {details.services && <div className="detail-results detail-services"><p className="section-kicker"><span className="eyebrow-text">Servicii livrate</span></p><div>{details.services.map((service) => <article key={service}><Sparkle size={17} weight="fill" /><span>{service}</span></article>)}</div></div>}
         <div className="detail-results"><p className="section-kicker"><span className="eyebrow-text">Rezultate</span></p><div>{details.results.map((result) => <article key={result}><Check size={18} weight="bold" /><span>{result}</span></article>)}</div></div>
       </section>
 
@@ -208,6 +220,8 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
         <div className="gallery-grid">{images.map((image, index) => <button data-reveal key={image} className={index % 7 === 0 ? "gallery-wide" : ""} onClick={() => setZoomed(image)}><img src={image} alt={`${project.title} — imagine ${index + 1}`} loading="lazy" /><span><ArrowsOutSimple size={24} /> Click pentru zoom</span></button>)}</div>
         {videos.length > 0 && <div className="video-section"><h3>Video</h3><div>{videos.map((video) => <video controls preload="metadata" key={video}><source src={video} type="video/mp4" /></video>)}</div></div>}
       </section>
+
+      <section className="detail-related"><p className="section-kicker"><span className="eyebrow-text">Continuă</span></p><h2>Alte proiecte <em>din aceeași lume.</em></h2><div className="related-grid">{related.map((other) => <a key={other.slug} href={`/portofoliu/${other.slug}`} onClick={(event) => onNavigate(event, `/portofoliu/${other.slug}`)} data-reveal><img src={detailHeroAssets[other.slug] || other.image} alt="" loading="lazy" /><div><small>{other.category.join(" · ")}</small><strong>{other.title.split(" — ")[0]}</strong></div></a>)}</div></section>
 
       <section className="detail-cta"><p>Îți place direcția?</p><h2>Putem crea o poveste la fel de <em>memorabilă pentru brandul tău.</em></h2><a className="button primary" href={`https://wa.me/40762509423?text=${whatsappMessage}`}>Vreau un proiect asemănător <WhatsappLogo size={19} /></a></section>
       <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura's Digital Dream</strong><p>Marketing, design și soluții digitale, cu suflet.</p></div></div><p>© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p></footer>

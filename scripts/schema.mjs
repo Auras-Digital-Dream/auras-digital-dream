@@ -11,6 +11,19 @@
  * rendered markup changes and nothing can shift on screen.
  */
 import { ORIGIN, SITE } from "./routes.mjs";
+import { projectDetails } from "../src/projectDetails.js";
+
+/* Every discipline named anywhere in the portfolio, deduplicated.
+ *
+ * The studio node used to declare four service types by hand - Branding,
+ * Web design, Marketing digital, Documente profesionale - while the
+ * sixteen case studies between them name dozens of distinct deliverables,
+ * from foil stamping to courier integrations. An answer engine asked what
+ * she does could only repeat the four. This reads the same list the pages
+ * render, so the catalogue and the visible text can never disagree. */
+const ALL_SERVICES = [...new Set(
+  Object.values(projectDetails).flatMap((d) => d.services || []),
+)].sort((a, b) => a.localeCompare(b, "ro"));
 
 const STUDIO = `${ORIGIN}/#studio`;
 const PERSON = `${ORIGIN}/#aura`;
@@ -88,6 +101,21 @@ export function graphFor(route) {
   const nodes = [website];
 
   if (route.url === "/") {
+    /* Same @id as the node the component renders, so the two merge into one
+     * studio rather than describing two. */
+    nodes.push({
+      "@type": "ProfessionalService",
+      "@id": STUDIO,
+      knowsAbout: ALL_SERVICES,
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servicii",
+        itemListElement: ALL_SERVICES.map((s) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: s, provider: { "@id": STUDIO }, areaServed: "România" },
+        })),
+      },
+    });
     nodes.push(person, {
       "@type": "WebPage",
       "@id": url + "#page",
@@ -150,6 +178,10 @@ export function graphFor(route) {
       provider: { "@id": STUDIO },
       inLanguage: "ro-RO",
       genre: "Design",
+      /* What was actually delivered here, from the same array the page
+       * prints under "Servicii livrate". */
+      keywords: (projectDetails[route.url.split("/").pop()]?.services || []).join(", "),
+      abstract: projectDetails[route.url.split("/").pop()]?.approach,
     },
   });
   return nodes;

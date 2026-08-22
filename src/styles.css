@@ -200,7 +200,8 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
    invisible one. Both restate the roles for the ground they actually have.
    This was already wrong on the old cream; white only made it obvious. */
 .detail-content,
-.detail-cta { --accent:var(--ink); --muted:var(--ink-soft-strong); }
+.detail-cta,
+.detail-related { --accent:var(--ink); --muted:var(--ink-soft-strong); }
 
 .detail-content { background:var(--paper); color:var(--ink); padding:110px max(7vw,24px); }
 .detail-intro { display:grid; grid-template-columns:.35fr 1.65fr; gap:5vw; align-items:start; }
@@ -211,7 +212,11 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .project-facts small,.project-facts strong { display:block; }
 .project-facts small { color:var(--muted); text-transform:uppercase; letter-spacing:.14em; font-size:9px; margin-bottom:9px; }
 .project-facts strong { font-family:var(--font-display); font-weight:400; font-size:18px; }
-.detail-columns { display:grid; grid-template-columns:1fr 1fr; gap:7vw; margin-top:95px; border-top:1px solid var(--line); padding-top:55px; }
+/* Three articles now - Provocarea, Soluția, Abordarea - so the track has to
+   fit whatever it is given rather than being fixed at two. auto-fit is what
+   the rest of the site uses for exactly this, and it keeps the phone rule
+   below working unchanged. */
+.detail-columns { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr)); gap:clamp(32px,4vw,72px); margin-top:95px; border-top:1px solid var(--line); padding-top:55px; }
 .detail-columns article > span { color:var(--accent); font-size:12px; letter-spacing:.15em; }
 .detail-columns h3,.video-section h3 { font-family:var(--font-display); font-weight:400; font-size:36px; margin:17px 0; }
 .detail-columns p { color:var(--muted); line-height:1.9; font-size:16px; }
@@ -219,6 +224,26 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .detail-results > div { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .detail-results article { padding:18px 20px; background:color-mix(in srgb,var(--frost),transparent 70%); border:1px solid color-mix(in srgb,var(--glass-edge),transparent 62%); backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; gap:12px; }
 .detail-results article svg { color:var(--accent); flex:0 0 auto; }
+
+/* Services delivered. The same glass tile as the results above, only denser:
+   there are six to eight of them per project against four or five results,
+   and they are two or three words each rather than a sentence. */
+.detail-services > div { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.detail-services article { padding:13px 16px; font-size:14.5px; }
+
+/* Related work. Every case study used to end in a call to action and nothing
+   else, so all sixteen were leaves - no way across the portfolio for a
+   reader, and no path between them for a crawler. */
+.detail-related { padding:0 max(7vw,24px) 96px; background:var(--paper); color:var(--ink); }
+.detail-related h2 { font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3vw,44px); margin:14px 0 34px; }
+.detail-related h2 em { font-style:normal; color:var(--muted); }
+.related-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:clamp(14px,1.8vw,24px); }
+.related-grid a { display:grid; gap:12px; color:var(--ink); text-decoration:none; }
+.related-grid img { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:var(--radius,12px); display:block;
+  transition:transform .45s cubic-bezier(.2,.75,.2,1); }
+.related-grid a:hover img,.related-grid a:focus-visible img { transform:scale(1.03); }
+.related-grid small { display:block; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft-strong); margin-bottom:5px; }
+.related-grid strong { font-family:var(--font-display); font-weight:500; font-size:17px; line-height:1.25; letter-spacing:1px; }
 .detail-gallery { padding:110px max(5vw,24px); background:#2D353C; }
 .detail-gallery > h2 { font-family:var(--font-display); font-size:clamp(42px,5vw,70px); font-weight:400; margin-bottom:55px; }
 .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-flow:dense; gap:16px; }
@@ -433,7 +458,7 @@ em{ color:var(--accent); }
   
   
   footer{grid-template-columns:1fr}.floating-whatsapp{right:16px;bottom:16px}
-  .detail-header { height:76px; padding:0 20px; }.detail-header nav{display:none}.detail-hero{padding:112px 20px 70px;min-height:auto}.detail-hero h1{font-size:50px}.detail-hero-visual{height:390px;margin-top:42px;border-radius:10px}.detail-meta{margin-top:34px}.detail-content{padding:76px 20px}.detail-intro,.detail-columns{grid-template-columns:1fr}.detail-intro{gap:15px}.detail-intro h2{font-size:29px}.detail-columns{gap:45px;margin-top:65px}.detail-results{margin-top:65px}.detail-results > div{grid-template-columns:1fr}.detail-gallery{padding:76px 20px}.gallery-grid{grid-template-columns:1fr}.gallery-grid button{grid-column:auto;min-height:360px}.video-section > div{grid-template-columns:1fr}.lightbox{padding:16px}.detail-cta{padding:85px 20px}.book-feature {grid-template-columns:1fr}.cinematic-hero{min-height:760px}.cinematic-label{letter-spacing:.25em}.cinematic-label i{width:28px}.cinematic-hero h1{font-size:64px}.cinematic-hero-copy > p:not(.cinematic-subtitle){font-size:17px}.cinematic-universe-inner,.cinematic-feature-inner{grid-template-columns:1fr}.cinematic-universe,.cinematic-library,.cinematic-reader,.cinematic-final{padding:82px 20px}.cinematic-feature{min-height:auto;padding:90px 20px}.cinematic-trailer-card{transform:none}.cinematic-published-grid,.cinematic-coming-grid{grid-template-columns:1fr}.cinematic-published-card,.cinematic-upcoming-card{min-height:auto}.cinematic-published-card img,.cinematic-upcoming-card img{max-height:420px}.cinematic-quote{min-height:520px}.cinematic-quote blockquote{font-size:42px}.cinematic-author{min-height:620px;padding:90px 20px}.film-grain{display:none}
+  .detail-header { height:76px; padding:0 20px; }.detail-header nav{display:none}.detail-hero{padding:112px 20px 70px;min-height:auto}.detail-hero h1{font-size:50px}.detail-hero-visual{height:390px;margin-top:42px;border-radius:10px}.detail-meta{margin-top:34px}.detail-content{padding:76px 20px}.detail-intro,.detail-columns{grid-template-columns:1fr}.detail-intro{gap:15px}.detail-intro h2{font-size:29px}.detail-columns{gap:45px;margin-top:65px}.detail-results{margin-top:65px}.detail-results > div{grid-template-columns:1fr}.detail-services > div{grid-template-columns:1fr 1fr}.detail-related{padding:0 20px 72px}.detail-gallery{padding:76px 20px}.gallery-grid{grid-template-columns:1fr}.gallery-grid button{grid-column:auto;min-height:360px}.video-section > div{grid-template-columns:1fr}.lightbox{padding:16px}.detail-cta{padding:85px 20px}.book-feature {grid-template-columns:1fr}.cinematic-hero{min-height:760px}.cinematic-label{letter-spacing:.25em}.cinematic-label i{width:28px}.cinematic-hero h1{font-size:64px}.cinematic-hero-copy > p:not(.cinematic-subtitle){font-size:17px}.cinematic-universe-inner,.cinematic-feature-inner{grid-template-columns:1fr}.cinematic-universe,.cinematic-library,.cinematic-reader,.cinematic-final{padding:82px 20px}.cinematic-feature{min-height:auto;padding:90px 20px}.cinematic-trailer-card{transform:none}.cinematic-published-grid,.cinematic-coming-grid{grid-template-columns:1fr}.cinematic-published-card,.cinematic-upcoming-card{min-height:auto}.cinematic-published-card img,.cinematic-upcoming-card img{max-height:420px}.cinematic-quote{min-height:520px}.cinematic-quote blockquote{font-size:42px}.cinematic-author{min-height:620px;padding:90px 20px}.film-grain{display:none}
 }
 
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}[data-reveal]{opacity:1!important;transform:none!important}[data-parallax]{transform:none!important}.custom-cursor,.custom-cursor-ring{display:none}::view-transition-old(root),::view-transition-new(root){animation:none!important}}

@@ -146,7 +146,8 @@
    rule above caught eyebrows that do not sit on ink at all - the label read
    at about 1.1:1 there. These two put the light sweep back. */
 .detail-content .eyebrow-text,
-.detail-cta .eyebrow-text {
+.detail-cta .eyebrow-text,
+.detail-related .eyebrow-text {
   background: linear-gradient(100deg,
     var(--ink-frost) 0%, #443E33 18%, var(--ink) 36%,
     var(--ink-frost) 54%, #443E33 72%, var(--ink) 90%, var(--ink-frost) 100%);
@@ -156,7 +157,8 @@
 }
 
 .detail-content .section-kicker,
-.detail-cta .section-kicker {
+.detail-cta .section-kicker,
+.detail-related .section-kicker {
   background: color-mix(in srgb, var(--frost), transparent 84%);
   border-color: color-mix(in srgb, var(--sky), transparent 46%);
 }
