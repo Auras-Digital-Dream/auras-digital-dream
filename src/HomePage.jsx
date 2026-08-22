@@ -1,10 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, WhatsappLogo, X } from "@phosphor-icons/react";
+import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { useRevealOnScroll } from "./reveal.js";
 import { GoldLine } from "./goldline.jsx";
 import { useNavTone } from "./navtone.js";
+
+/* Three.js and the scan only load once this band is on the way in — the rest
+   of the page never pays for them. */
+const Statue = lazy(() => import("./Statue.jsx"));
+
+/* The statue's band is hidden under 1024px, and a hidden canvas still costs a
+   three.js download and a WebGL context. This keeps the component from
+   mounting at all on the widths that would never show it. */
+function useWideEnough() {
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const apply = () => setWide(query.matches);
+    apply();
+    query.addEventListener("change", apply);
+    return () => query.removeEventListener("change", apply);
+  }, []);
+  return wide;
+}
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -122,6 +141,8 @@ const SERVICE_SCHEMA = {
   serviceType: ["Branding", "Web design", "Marketing digital", "Documente profesionale"],
   sameAs: [
     "https://www.instagram.com/aurasdigitaldream",
+    "https://www.facebook.com/auratrendvault",
+    "https://www.tiktok.com/@aurasdigitaldream",
     "https://www.linkedin.com/in/aurelia-dobre-a033b2104",
     "https://aurasdigitaldream.gumroad.com/",
     "https://www.amazon.co.uk/stores/author/B0DSJP6MX8",
@@ -180,6 +201,7 @@ export function HomePage({ onNavigate }) {
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedPrices, setSelectedPrices] = useState([]);
+  const wideEnough = useWideEnough();
 
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
@@ -381,6 +403,29 @@ export function HomePage({ onNavigate }) {
               <span className="manifesto-seam" aria-hidden="true" />
             </div>
           </Rise>
+        </div>
+      </section>
+
+      {/* ── The statue ───────────────────────────────────────────────────── */}
+      {/* Its own band, and nothing of the page's inside it. Every other
+          section is composed edge to edge, so there was no column to lend
+          her; giving her a stage of her own is also what keeps her from ever
+          sitting behind someone else's text. */}
+      <section className="statue bg-marble" aria-label="Sculptură" data-statue-band>
+        <div className="statue-pin">
+          {wideEnough && (
+            <Suspense fallback={null}>
+              <Statue />
+            </Suspense>
+          )}
+          {/* CC BY 4.0 cere numele lucrarii, al autorului si licenta. */}
+          <p className="statue-credit">
+            <a href="https://sketchfab.com/3d-models/statue-of-the-muse-thalia-ad93cfbdac2e4b83b860c065aecc2606" target="_blank" rel="noopener noreferrer">Statue of the Muse Thalia</a>
+            <span>
+              Samuel Francis Johnson ·{" "}
+              <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>
+            </span>
+          </p>
         </div>
       </section>
 
@@ -883,6 +928,8 @@ export function HomePage({ onNavigate }) {
           </div>
           <nav className="footer-social" aria-label="Rețele sociale">
             <a href="https://www.instagram.com/aurasdigitaldream" aria-label="Instagram"><InstagramLogo size={20} /></a>
+            <a href="https://www.facebook.com/auratrendvault" aria-label="Facebook"><FacebookLogo size={20} /></a>
+            <a href="https://www.tiktok.com/@aurasdigitaldream" aria-label="TikTok"><TiktokLogo size={20} /></a>
             <a href="https://www.linkedin.com/in/aurelia-dobre-a033b2104" aria-label="LinkedIn"><LinkedinLogo size={20} /></a>
             <a href="https://wa.me/40762509423" aria-label="WhatsApp"><WhatsappLogo size={20} /></a>
           </nav>

@@ -1331,7 +1331,7 @@
 .footer-brand img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
 .footer-brand strong { font-family: var(--font-display); font-size: 17px; letter-spacing: 1px; }
 .footer-brand p { margin: 4px 0 0; font-size: 12.5px; color: rgba(255,255,255,.62); }
-.footer-social { display: flex; gap: 10px; }
+.footer-social { display: flex; flex-wrap: wrap; gap: 10px; }
 .footer-social a { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; color: var(--paper); transition: border-color .3s var(--ease); }
 .footer-social a:hover { border-color: var(--paper); }
 .footer-legal { grid-column: 1 / -1; margin: 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.14); font-size: 13px; color: rgba(255,255,255,.68); }
@@ -2587,3 +2587,53 @@ footer .button,
 .service-price,
 .price-total strong { font-weight: 600; }
 .process-number { font-weight: 300; }
+
+/* ── The statue's band ─────────────────────────────────────────────────── */
+
+/* Taller than the screen so there is something to travel through; the pane
+   inside it holds still while the band slides past, which is what turns
+   scrolling into a camera move rather than a scroll. */
+.statue { position: relative; height: 210vh; }
+.statue-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.statue-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.statue-stage canvas { display: block; }
+
+.statue-credit {
+  position: absolute;
+  left: max(7vw, 24px);
+  bottom: clamp(28px, 6vh, 56px);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.statue-credit a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--gold-line); padding-bottom: 1px; }
+.statue-credit a:hover { border-bottom-color: currentColor; }
+.statue-credit > a:first-child { color: var(--ink); }
+
+/* The credit is the one thing in the band that must stay reachable. */
+.statue-pin { pointer-events: none; }
+.statue-credit { pointer-events: auto; }
+
+/* Below this the page is a single column and there is no room to stand.
+   The band goes entirely, rather than leaving 210vh of empty paper. */
+@media (max-width: 1023px) { .statue { display: none; } }
+
+/* Held in one pose, so there is a sculpture but no motion. */
+@media (prefers-reduced-motion: reduce) {
+  .statue { height: 100vh; }
+}
