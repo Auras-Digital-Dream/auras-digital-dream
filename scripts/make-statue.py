@@ -6,7 +6,7 @@ and dragging texture atlases we do not want — the statue on the site is lit
 as dark stone with a gold rim, so its own photographed colour would fight the
 page. This throws all of that away and keeps the silhouette.
 
-    python scripts/make-statue.py "<source .glb/.stl>" <output-name>
+    python scripts/make-statue.py "<source .glb/.stl>" <output-name> [faces]
 
 The result lands in public/models/<output-name>.glb, meshopt-compressed,
 normalised to exactly one unit tall and centred on its own middle so a
@@ -80,10 +80,11 @@ def strip_textures(path):
 
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         print(__doc__)
         raise SystemExit(2)
     src, name = sys.argv[1], sys.argv[2]
+    target = int(sys.argv[3]) if len(sys.argv) == 4 else TARGET_FACES
 
     m = load(src)
     print(f"in    {len(m.faces):,} faces")
@@ -133,7 +134,7 @@ def main():
     # allows neither wasm-unsafe-eval nor blob: connections. Quantisation
     # alone needs no decoder, so the model loads under the policy the rest
     # of the site already keeps.
-    ratio = min(1.0, TARGET_FACES / len(m.faces))
+    ratio = min(1.0, target / len(m.faces))
     subprocess.run(
         ["npx", "--yes", "gltfpack", "-i", raw, "-o", out, "-si", f"{ratio:.4f}"],
         check=True, shell=os.name == "nt",

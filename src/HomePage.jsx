@@ -10,11 +10,12 @@ import { useNavTone } from "./navtone.js";
    of the page never pays for them. */
 const Statue = lazy(() => import("./Statue.jsx"));
 
-/* The statue's band is hidden under 1024px, and a hidden canvas still costs a
-   three.js download and a WebGL context. This keeps the component from
-   mounting at all on the widths that would never show it. */
-function useWideEnough() {
-  const [wide, setWide] = useState(false);
+/* Wide screens stand her beside the words; narrow ones stand her behind
+   them, dimmer and lighter. Either way she only mounts in the browser, so
+   the server never renders a canvas and three.js stays out of the first
+   payload. Returns null until the first client render. */
+function useStatueLayout() {
+  const [wide, setWide] = useState(null);
   useEffect(() => {
     const query = window.matchMedia("(min-width: 1024px)");
     const apply = () => setWide(query.matches);
@@ -201,7 +202,7 @@ export function HomePage({ onNavigate }) {
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedPrices, setSelectedPrices] = useState([]);
-  const wideEnough = useWideEnough();
+  const statueWide = useStatueLayout();
 
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
@@ -403,9 +404,9 @@ export function HomePage({ onNavigate }) {
             </Rise>
           </div>
 
-          {wideEnough && (
+          {statueWide !== null && (
             <Suspense fallback={null}>
-              <Statue />
+              <Statue narrow={!statueWide} />
             </Suspense>
           )}
           {/* CC BY 4.0 cere numele lucrarii, al autorului si licenta. */}

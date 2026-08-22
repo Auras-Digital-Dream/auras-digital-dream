@@ -2580,6 +2580,7 @@ footer .button,
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: var(--statue-alpha, 1);
 }
 .statue-stage canvas { display: block; }
 
@@ -2611,9 +2612,31 @@ footer .button,
 .statue-pin { pointer-events: none; }
 .statue-credit { pointer-events: auto; }
 
-/* Below this there is no room for her to stand, so the figure and her credit
-   go and the words keep the band to themselves. */
-@media (max-width: 1023px) { .statue-credit { display: none; } }
+/* Below this there is no room beside the words, so she goes behind them.
+   Dimmed hard: the body text sits straight on top of her, and legibility
+   there is not negotiable — measured, not guessed. */
+@media (max-width: 1023px) {
+  .statue { --statue-alpha: .22; }
+
+  /* Every word in this band now sits on stone rather than on paper, and the
+     muted greys the rest of the site uses cannot survive that. Full ink is
+     the price of having her behind the text at all — measured against the
+     rendered pixels, not against the token. */
+  .statue-lead,
+  .statue-meta,
+  .statue-credit { color: var(--ink); }
+  .statue-pin { min-height: 92vh; display: grid; align-content: center; }
+  .statue-credit {
+    position: static;
+    margin: 44px 0 0;
+    align-items: flex-start;
+    text-align: left;
+    opacity: 1;                  /* CC BY: the credit travels with the work */
+    width: min(100%, 1280px);
+    margin-inline: auto;
+    padding-inline: max(7vw, 24px);
+  }
+}
 
 /* Held in one pose, so there is a sculpture but no motion. */
 @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {

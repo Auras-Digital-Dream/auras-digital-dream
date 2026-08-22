@@ -8,8 +8,12 @@ import * as THREE from "three";
    the stone is cut dark and raked from behind with the site's own gold, which
    is what lifts her off the page without asking the page to change colour. */
 
-/* CC BY 4.0 — uz comercial permis, cu creditul din .statue-credit. */
+/* CC BY 4.0 — uz comercial permis, cu creditul din .statue-credit.
+   Phones get a lighter cut of the same scan: at the size she is shown there
+   the two are indistinguishable, and it halves what a person on mobile data
+   has to fetch. */
 const MODEL = "/models/thalia.glb";
+const MODEL_NARROW = "/models/thalia-mobil.glb";
 
 /* The scan is modelled facing down its own +X axis, so a quarter turn is what
    brings her face to the camera. Every angle below is written as a distance
@@ -53,14 +57,14 @@ function sample(t) {
   };
 }
 
-function Figure({ still }) {
+function Figure({ still, narrow }) {
   const group = useRef();
   const last = useRef(-1);
     /* Draco and meshopt both switched off: their decoders are WebAssembly, and
      the site's Content-Security-Policy allows neither wasm-unsafe-eval nor
      blob: connections. The model is quantised instead, which needs no
      decoder at all — see scripts/make-statue.py. */
-  const { scene } = useGLTF(MODEL, false, false);
+  const { scene } = useGLTF(narrow ? MODEL_NARROW : MODEL, false, false);
   const canvas = useThree((state) => state.gl.domElement);
 
   /* Marble is a dielectric, so no metalness; the roughness is high enough to
@@ -122,8 +126,18 @@ function Figure({ still }) {
     let progress = 0.5;
     if (band && !still) {
       const rect = band.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
-      progress = travel > 0 ? Math.min(Math.max(-rect.top / travel, 0), 1) : 0;
+      const view = window.innerHeight;
+      /* Two shapes of band, one number. Taller than the screen, the pane is
+         sticky and progress is how far the band has slid under it. Shorter
+         than the screen — which is what a phone gets — nothing sticks, so
+         progress is the band's own passage across the viewport. Reading the
+         tall formula on a short band gives a negative travel, and she spends
+         the whole section at zero opacity. */
+      progress =
+        rect.height > view
+          ? -rect.top / (rect.height - view)
+          : (view - rect.top) / (view + rect.height);
+      progress = Math.min(Math.max(progress, 0), 1);
     }
     const frame = sample(progress);
 
@@ -135,7 +149,12 @@ function Figure({ still }) {
     const lookX = still ? 0 : now.current.x * 0.14;
     const lookY = still ? 0 : now.current.y * 0.07;
 
-    group.current.position.set(frame.pos[0], frame.pos[1], frame.pos[2]);
+    /* On a narrow screen she is not beside the words but behind them, so
+       she stands in the middle of the frame rather than off to one side —
+       and the frame is barely half a statue wide, which is why the offset
+       cannot simply be reused. */
+    const x = narrow ? 0 : frame.pos[0];
+    group.current.position.set(x, frame.pos[1], frame.pos[2]);
     group.current.rotation.set(lookY, frame.rotY + lookX, 0);
     group.current.scale.setScalar(frame.scale);
     stone.opacity = still ? 1 : frame.fade;
@@ -200,7 +219,7 @@ function Lights() {
   );
 }
 
-export default function Statue({ className = "" }) {
+export default function Statue({ className = "", narrow = false }) {
   const [still, setStill] = useState(false);
 
   useEffect(() => {
@@ -222,11 +241,10 @@ export default function Statue({ className = "" }) {
         <Lights />
         <WakeOnInput />
         <Suspense fallback={null}>
-          <Figure still={still} />
+          <Figure still={still} narrow={narrow} />
         </Suspense>
       </Canvas>
     </div>
   );
 }
 
-useGLTF.preload(MODEL, false, false);
