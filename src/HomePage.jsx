@@ -842,7 +842,7 @@ export function HomePage({ onNavigate }) {
                 <input required name="email" maxLength="120" type="email" autoComplete="email" placeholder="Email" />
               </motion.div>
               <motion.input variants={FIELD} name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" />
-              <motion.select variants={FIELD} name="service" defaultValue="">
+              <motion.select variants={FIELD} name="service" defaultValue="" aria-label="Pachetul care te interesează">
                 <option value="" disabled>Alege pachetul potrivit</option>
                 <option>Pachet Start-up</option>
                 <option>Pachet Rebranding</option>

@@ -1,4 +1,28 @@
+# Aura's Digital Dream — https://aurastudios.ro
+#
+# Everything here is public and meant to be read, by people and by machines
+# alike. The whole site is rendered on the server, so a crawler that runs no
+# JavaScript still gets the full text; llms.txt below is the short version,
+# written for answer engines rather than for indexers.
+
 User-agent: *
+Allow: /
+
+# Named explicitly rather than left to the wildcard, so the permission is a
+# decision on the record and can be withdrawn one line at a time.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+User-agent: Bingbot
+User-agent: Amazonbot
 Allow: /
 
 Sitemap: https://aurastudios.ro/sitemap.xml

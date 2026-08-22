@@ -8,6 +8,20 @@ export const ORIGIN = "https://aurastudios.ro";
 export const SITE = "Aura's Digital Dream";
 export const DEFAULT_IMAGE = "/og-cover.jpg";
 
+/* Two different images per route, because they answer different questions.
+ *
+ * `image` is the work itself, and it is what schema.org gets: an answer
+ * engine asking "what does this project look like" should be handed the
+ * photograph, at whatever shape it really is.
+ *
+ * `ogImage` is the card a link preview draws, and that has to be exactly
+ * 1200x630 or the crawler either crops through the middle of the work or
+ * drops the card. Twelve of the sixteen photographs are smaller than that
+ * and several are portrait, so scripts/make-og-cards.py builds one card per
+ * project - the same photograph, whole, on a blurred copy of itself - and
+ * they live in /og. Nothing on the site renders them. */
+export const OG_SIZE = { width: 1200, height: 630 };
+
 /* The projects live in one array in HomePage.jsx, so they are read from
  * there rather than kept in a second list that would drift. The sitemap and
  * the prerender walk the same routes and share the same titles.
@@ -34,6 +48,8 @@ export function routes() {
     title: `${SITE} — Marketing, Design & Web`,
     description: "Marketing, branding, design și experiențe web create cu strategie și suflet.",
     image: DEFAULT_IMAGE,
+    ogImage: DEFAULT_IMAGE,
+    ogImageAlt: "Sculptură de marmură cu vine de aur, ținută în palmă.",
   };
   const books = {
     url: "/cartile-mele",
@@ -41,6 +57,8 @@ export function routes() {
     title: `Cărțile mele — Aura Dobre`,
     description: "Dark romance, thrillere psihologice și povești care se citesc ca un film.",
     image: DEFAULT_IMAGE,
+    ogImage: DEFAULT_IMAGE,
+    ogImageAlt: "Sculptură de marmură cu vine de aur, ținută în palmă.",
   };
   return [
     home,
@@ -51,6 +69,8 @@ export function routes() {
       title: `${p.title.split(" — ")[0]} — ${SITE}`,
       description: p.description,
       image: p.image,
+      ogImage: `/og/${p.slug}.jpg`,
+      ogImageAlt: `${p.title.split(" — ")[0]} — proiect din portofoliul Aura's Digital Dream.`,
     })),
   ];
 }

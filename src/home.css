@@ -292,7 +292,6 @@
 .button.primary:hover,
 .masthead-cta:hover { animation: none; }
 
-
 /* The edge is the same sky blue everywhere; over dark media it simply runs
    at full strength instead of held back. */
 .hero .button.ghost,
@@ -602,7 +601,6 @@
   background: radial-gradient(ellipse 58% 54% at 50% 50%,
     rgba(45,53,60,.9), rgba(45,53,60,.62) 52%, rgba(45,53,60,.2) 76%, transparent 88%);
 }
-
 
 .hero-title {
   margin: 0;
@@ -1842,12 +1840,10 @@
   display: block;
 }
 
-
 @media (max-width: 860px) {
   .difference-grid { grid-template-columns: minmax(0, 1fr); }
   .difference-col:last-child { margin-top: 0; }
 }
-
 
 /* ══════════════════════════════════════════════════════════════════════════
    CONTRAST RHYTHM
