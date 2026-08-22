@@ -377,42 +377,32 @@ export function HomePage({ onNavigate }) {
         </div>
       </motion.section>
 
-      {/* ── Manifesto ────────────────────────────────────────────────────── */}
-      <section className="manifesto gilt bg-marble" aria-label="Manifest">
-        <div className="shell manifesto-grid">
-          <div className="manifesto-copy">
-            <Lines
-              as="p"
-              className="manifesto-text"
-              text="Sunt Aura — designer, marketer și sculptor digital. Nu creez proiecte. Modelez identități."
-            />
-            <Rise delay={0.2} className="manifesto-meta">
-              <span>Aura Dobre</span>
-              <span>Designer & strateg digital</span>
-            </Rise>
-          </div>
-
-          <Rise delay={0.15} className="manifesto-figure" y={40}>
-            <div className="manifesto-frame">
-              <video
-                autoPlay muted loop playsInline preload="metadata" aria-hidden="true"
-                poster="/video/poster/identity-forge.jpg"
-              >
-                <source src="/video/identity-forge.mp4" type="video/mp4" />
-              </video>
-              <span className="manifesto-seam" aria-hidden="true" />
-            </div>
-          </Rise>
-        </div>
-      </section>
-
       {/* ── The statue ───────────────────────────────────────────────────── */}
       {/* Its own band, and nothing of the page's inside it. Every other
           section is composed edge to edge, so there was no column to lend
           her; giving her a stage of her own is also what keeps her from ever
           sitting behind someone else's text. */}
-      <section className="statue bg-marble" aria-label="Sculptură" data-statue-band>
+      <section className="statue gilt bg-marble" aria-label="Manifest" data-statue-band>
         <div className="statue-pin">
+          <div className="statue-copy">
+            <Lines
+              as="h2"
+              className="statue-text"
+              text="Sunt Aura — designer, marketer și sculptor digital. Nu creez proiecte. Modelez identități."
+            />
+            <Rise delay={0.18}>
+              <p className="statue-lead">
+                Construiesc identități vizuale și website-uri pentru branduri din România — logo,
+                paletă cromatică, tipografie, materiale de brand, campanii și platforma pe care
+                rulează totul.
+              </p>
+            </Rise>
+            <Rise delay={0.28} className="statue-meta">
+              <span>Aura Dobre</span>
+              <span>Designer & strateg digital</span>
+            </Rise>
+          </div>
+
           {wideEnough && (
             <Suspense fallback={null}>
               <Statue />

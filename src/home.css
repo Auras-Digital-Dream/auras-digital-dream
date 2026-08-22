@@ -699,96 +699,6 @@
   .hero-body { opacity: 1; }
 }
 
-/* ── Manifesto ────────────────────────────────────────────────────────── */
-
-.manifesto { padding-block: clamp(110px, 18vh, 220px); }
-
-/* The statement used to sit alone at max-width:20ch — 657px of a 1280px
-   shell, so half the section was empty paper. It now shares the row with
-   the montage that carries the same gold the hero ends on. */
-.manifesto-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
-  gap: clamp(36px, 5vw, 84px);
-  align-items: center;
-}
-
-.manifesto-text {
-  margin: 0;
-  max-width: 13em;          /* em, so the measure tracks the display size */
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4.6vw, 62px);
-  line-height: 1.12;
-  text-wrap: balance;
-}
-
-.manifesto-figure {
-  position: relative;
-  align-self: stretch;
-  min-height: min(64vh, 560px);
-}
-
-/* Golden hollow highlight: the panel throws an offset gold outline instead
-   of a shadow, the way a drafting sheet shows its registration mark. */
-.manifesto-figure::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  translate: clamp(12px, 1.8vw, 26px) clamp(12px, 1.8vw, 26px);
-  border: 1px solid var(--gold-line);
-  border-radius: 22px;
-  pointer-events: none;
-}
-
-.manifesto-frame {
-  position: relative;
-  height: 100%;
-  border-radius: 22px;
-  overflow: clip;
-  background: linear-gradient(150deg, #3A434A, #232A30);
-}
-
-.manifesto-frame video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* The seam: a hairline of gold on the inside edge with the light bleeding
-   off it, so the frame glows from its own rim rather than from a filter
-   laid over the footage. */
-.manifesto-seam {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: inherit;
-  box-shadow:
-    inset 0 0 0 1px rgba(201,168,106,.55),
-    inset 0 0 34px 2px rgba(201,168,106,.20),
-    inset 0 0 clamp(60px, 9vw, 150px) clamp(14px, 2.2vw, 40px) rgba(20,26,31,.42);
-}
-
-@media (max-width: 900px) {
-  .manifesto-grid { grid-template-columns: minmax(0, 1fr); gap: clamp(36px, 8vw, 56px); }
-  .manifesto-text { max-width: none; }
-  .manifesto-figure { min-height: min(52vh, 380px); }
-}
-
-.manifesto-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  margin-top: 44px;
-  padding-top: 22px;
-  border-top: 1px solid var(--gold-line);
-  font-size: 12px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
 /* ── Chapters (pinned storytelling) ───────────────────────────────────── */
 
 .chapters { background: var(--ink); color: #fff; }
@@ -2527,7 +2437,7 @@ footer .button,
 
 .hero-title,
 .section-title,
-.manifesto-text,
+.statue-text,
 .chapter-headline,
 .difference-col > p,
 .voice blockquote,
@@ -2541,7 +2451,7 @@ footer .button,
    text face at the same size. */
 .hero-title { line-height: 1.06; }
 .section-title { line-height: 1.12; }
-.manifesto-text { line-height: 1.2; }
+.statue-text { line-height: 1.2; }
 .chapter-headline { line-height: 1.14; font-weight: 400; letter-spacing: 0; }
 .voice blockquote { font-style: normal; line-height: 1.3; }
 
@@ -2593,12 +2503,69 @@ footer .button,
 /* Taller than the screen so there is something to travel through; the pane
    inside it holds still while the band slides past, which is what turns
    scrolling into a camera move rather than a scroll. */
-.statue { position: relative; height: 210vh; }
-.statue-pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+.statue { position: relative; }
+.statue-pin { position: relative; padding-block: clamp(110px, 18vh, 220px); }
+
+/* The words hold still while she travels past them, which is the whole point
+   of the band. Only wide screens get the sticky pane: below that there is no
+   figure, so there is nothing to hold still for. */
+@media (min-width: 1024px) {
+  .statue { height: 210vh; }
+  .statue-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding-block: 0;
+    overflow: hidden;
+    display: grid;
+    align-content: center;
+  }
+}
+
+.statue-copy {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1280px);
+  margin-inline: auto;
+  padding-inline: max(7vw, 24px);
+}
+
+.statue-text {
+  margin: 0;
+  max-width: 13em;          /* em, so the measure tracks the display size */
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.6vw, 62px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.statue-lead {
+  margin: 28px 0 0;
+  font-size: clamp(16px, 1.3vw, 18.5px);
+  line-height: 1.66;
+  color: var(--ink-soft-strong);
+  text-wrap: pretty;
+}
+
+.statue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--gold-line);
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Keep to the left half: the figure stands in the right of the frame, and
+   the display face's own 13em measure is wider than the room she leaves. */
+@media (min-width: 1024px) {
+  .statue-text,
+  .statue-lead,
+  .statue-meta { max-width: 48%; }
 }
 .statue-stage {
   position: absolute;
@@ -2629,11 +2596,11 @@ footer .button,
 .statue-pin { pointer-events: none; }
 .statue-credit { pointer-events: auto; }
 
-/* Below this the page is a single column and there is no room to stand.
-   The band goes entirely, rather than leaving 210vh of empty paper. */
-@media (max-width: 1023px) { .statue { display: none; } }
+/* Below this there is no room for her to stand, so the figure and her credit
+   go and the words keep the band to themselves. */
+@media (max-width: 1023px) { .statue-credit { display: none; } }
 
 /* Held in one pose, so there is a sculpture but no motion. */
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
   .statue { height: 100vh; }
 }
