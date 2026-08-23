@@ -2096,8 +2096,18 @@
   will-change: opacity, transform;
 }
 
+/* The stagger stops counting after the sixth child. Unbounded, a twelve-item
+   list took 1.9s to finish arriving — the sequence stopped reading as
+   choreography and started reading as the page being slow. */
 .reveal-on-scroll > .reveal-child {
-  transition-delay: calc(var(--reveal-i, 0) * 100ms);
+  transition-delay: calc(min(var(--reveal-i, 0), 5) * 70ms);
+}
+
+/* The price list is information, not choreography: someone came here to read
+   a number. It arrives at roughly twice the speed of the rest. */
+.price-list.reveal-on-scroll > .reveal-child {
+  transition: opacity 460ms ease-out, transform 460ms ease-out;
+  transition-delay: calc(min(var(--reveal-i, 0), 5) * 42ms);
 }
 
 .reveal-on-scroll.is-revealed:not(:has(> .reveal-child)),
