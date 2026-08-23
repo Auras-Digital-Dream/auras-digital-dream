@@ -701,7 +701,7 @@
 
 /* ── Chapters (pinned storytelling) ───────────────────────────────────── */
 
-.chapters { background: var(--ink); color: #fff; }
+.chapters { background: var(--ink-ground); color: #fff; }
 
 .chapters-stage {
   position: sticky;
@@ -1183,6 +1183,41 @@
     linear-gradient(90deg, rgba(45,53,60,.9) 0 28%, rgba(45,53,60,.55) 58%, rgba(45,53,60,.32)),
     linear-gradient(180deg, rgba(45,53,60,.5), transparent 34%, transparent 66%, rgba(45,53,60,.6));
 }
+/* ── The portrait in the contact band ─────────────────────────────────── */
+
+.contact-portrait {
+  margin: 0 0 30px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.contact-portrait img {
+  flex: none;
+  width: clamp(132px, 12vw, 168px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 20px;
+  /* A hairline of the page's gold, and enough shadow to sit off the footage
+     behind rather than in it. */
+  box-shadow:
+    0 0 0 1px var(--gold-line),
+    0 22px 48px -28px rgba(12, 16, 20, .9);
+}
+
+.contact-portrait figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.contact-portrait strong { font-weight: 500; color: #fff; }
+.contact-portrait span { color: rgba(255, 255, 255, .68); }
+
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
 .contact-copy p { max-width: 50ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.8); }
 .contact-links { display: grid; gap: 12px; margin-top: 32px; }
@@ -1235,7 +1270,7 @@
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
 
-.site-footer { padding-block: clamp(44px, 6vw, 72px); background: var(--ink); color: var(--paper); }
+.site-footer { padding-block: clamp(44px, 6vw, 72px); background: var(--ink-ground); color: var(--paper); }
 .footer-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; }
 .footer-brand { display: flex; align-items: center; gap: 16px; }
 .footer-brand img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
@@ -1399,7 +1434,7 @@
 /* Dark ground under the fan: the cards read as objects lifted off a
    surface instead of paper on paper. This is also the page's contrast
    beat between the services block and the archive. */
-.fan { background: var(--ink); color: #fff; }
+.fan { background: var(--ink-ground); color: #fff; }
 
 /* The cards orbit a full turn rather than sweeping an arc. The ring is an
    ellipse, not a circle: the section has width to spare and very little
@@ -1886,7 +1921,7 @@
    deeper mix of itself, and the veins are pulled back further because gold
    on a dark ground carries much more than gold on paper. */
 .bg-ink-marble {
-  background-color: var(--ink);
+  background-color: var(--ink-ground);
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.045'/%3E%3C/svg%3E"),
     radial-gradient(ellipse 155% 95% at 8% 14%,
@@ -1896,11 +1931,11 @@
     radial-gradient(ellipse 190% 75% at 40% 109%,
       transparent 0 38.78%, color-mix(in srgb, var(--gold-line), transparent 66%) 38.90% 39.00%, transparent 39.12%),
     radial-gradient(ellipse 85% 95% at 12% 90%,
-      color-mix(in srgb, var(--ink), black 22%), transparent 62%),
+      color-mix(in srgb, var(--ink), transparent 58%), transparent 62%),
     conic-gradient(from 205deg at 70% 26%,
-      color-mix(in srgb, var(--ink), black 16%), var(--ink) 30%,
-      color-mix(in srgb, var(--ink), black 24%) 56%, var(--ink) 78%,
-      color-mix(in srgb, var(--ink), black 16%));
+      var(--ink-ground), color-mix(in srgb, var(--ink), var(--ink-ground) 42%) 30%,
+      var(--ink-ground) 56%, color-mix(in srgb, var(--ink), var(--ink-ground) 52%) 78%,
+      var(--ink-ground));
 }
 
 /* .services and .estimator are the two sections that sell, so they keep a
@@ -2651,4 +2686,73 @@ footer .button,
 /* Held in one pose, so there is a sculpture but no motion. */
 @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
   .statue { height: 100vh; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THE GARDEN — botanical plates in the outer margin
+
+   Two engravings, both long out of copyright, lifted off their paper by
+   scripts/make-botanical.py. Which one a section gets is decided by its
+   ground, not by hand: a rose on the dark bands, where old paper reads as
+   light, and a forget-me-not on the white ones — the same flower that stands
+   behind Aura in the portrait the palette was measured from.
+
+   The margin the shell leaves clear is 80px, measured rather than assumed —
+   so each drawing is small and runs off the trim, the way a botanical border
+   does in a printed book. They are drawn with ::after, which keeps them out
+   of the document entirely: nothing to read, nothing to focus, nothing to
+   announce.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.bloom-l,
+.bloom-r { position: relative; isolation: isolate; }
+
+.bloom-l::after,
+.bloom-r::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Fully inside the margin. Overhanging the trim would be prettier, but some
+   sections clip what leaves them and the drawing came back as a square. */
+.bloom-l::after { left: -22px; }
+.bloom-r::after { right: -22px; transform: scaleX(-1); }
+
+/* White ground: the forget-me-not, sitting as watercolour. */
+.bg-marble.bloom-l::after,
+.bg-marble.bloom-r::after {
+  background-image: url("/assets/nu-ma-uita.webp");
+  width: clamp(86px, 8vw, 118px);
+  aspect-ratio: 400 / 474;
+  top: 20%;
+  opacity: .92;
+}
+
+/* Dark ground: the rose, which the black lifts rather than swallows. */
+.bg-ink-marble.bloom-l::after,
+.bg-ink-marble.bloom-r::after,
+.chapters.bloom-l::after,
+.chapters.bloom-r::after {
+  background-image: url("/assets/roza.webp");
+  width: clamp(88px, 8.2vw, 122px);
+  aspect-ratio: 460 / 474;
+  top: 18%;
+  opacity: .78;
+}
+
+/* Everything a section holds sits above the drawing; the drawing only ever
+   has the margin to itself. */
+.bloom-l > *,
+.bloom-r > * { position: relative; z-index: 1; }
+
+/* Below this the shell runs edge to edge and there is no margin to stand in,
+   so the garden closes rather than growing over the words. */
+@media (max-width: 1023px) {
+  .bloom-l::after,
+  .bloom-r::after { display: none; }
 }

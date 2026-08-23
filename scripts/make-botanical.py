@@ -1,0 +1,166 @@
+"""Lift a botanical plate off its paper and bring it into the site's palette.
+
+The two drawings on the homepage are nineteenth-century engravings, both long
+in the public domain:
+
+  * Pierre-Joseph Redouté, *Rosa gallica regalis*, c.1820 — for the dark
+    sections, where old paper reads as light rather than as a stain.
+  * Edith S. Clements, *Rocky Mountain Flowers* pl. 21, 1914 — the forget-me-
+    not, for the white ones. Same flower as the one behind Aura in the
+    portrait the palette was measured from.
+
+Run it from the project root; it writes into public/assets/.
+"""
+import os
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+import json
+
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter
+from scipy import ndimage
+
+UA = "AuraStudiosBotanical/1.0 (https://aurastudios.ro; auraleobeatrice@gmail.com)"
+OUT_DIR = "public/assets"
+CACHE = os.path.join("tmp", "plates")
+
+
+def fetch(title):
+    """Commons only serves a fixed set of thumbnail widths, so ask the API for
+    the URL rather than assembling one."""
+    os.makedirs(CACHE, exist_ok=True)
+    local = os.path.join(CACHE, title.replace("File:", "").replace(" ", "_"))
+    if os.path.exists(local):
+        return local
+    api = ("https://commons.wikimedia.org/w/api.php?action=query&format=json"
+           "&prop=imageinfo&iiprop=url&iiurlwidth=1280&titles=" + urllib.parse.quote(title))
+    meta = json.load(urllib.request.urlopen(
+        urllib.request.Request(api, headers={"User-Agent": UA}), timeout=60))
+    page = next(iter(meta["query"]["pages"].values()))
+    url = page["imageinfo"][0]["thumburl"]
+    with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}),
+                                timeout=90) as r, open(local, "wb") as f:
+        f.write(r.read())
+    return local
+
+
+def paper_border(pixels, mask):
+    """The colour of this plate's own sheet, taken where it meets the edge."""
+    if not mask.any():
+        return np.array([246.0, 242.0, 228.0])
+    return pixels[mask].mean(axis=0)
+
+
+def lift(img):
+    """Key out the paper, from the edges inward.
+
+    A plain brightness threshold cannot do this. The sheet is a warm cream,
+    but the lit face of a pale petal is also bright and also nearly grey, so
+    any threshold loose enough to take the paper out of a leaf's shadow also
+    punches holes through the flower.
+
+    What separates them is not colour but connection: the paper runs to the
+    border of the plate, and the flower is an island in the middle of it. So
+    the mask is grown from the edges and only paper that reaches them is
+    lifted — a highlight enclosed by drawing keeps its place.
+    """
+    a = np.asarray(img.convert("RGB")).astype(float)
+    mx, mn = a.max(axis=2), a.min(axis=2)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1), 0)
+    paperish = (mx > 188) & (sat < 0.26)
+
+    labels, count = ndimage.label(paperish)
+    edge = np.concatenate([labels[0], labels[-1], labels[:, 0], labels[:, -1]])
+    keep = np.zeros(count + 1, bool)
+    keep[np.unique(edge[edge > 0])] = True
+
+    # Paper walled in by leaves never reaches an edge, and left alone it sits
+    # on the page as an opaque cream blob. Those go too — but the test has to
+    # be what colour this particular sheet is, not a number that happened to
+    # suit one plate: Redouté's paper is cooler than the Clements, and a fixed
+    # threshold that clears one leaves a stain on the other. So the sheet is
+    # measured at its own border and enclosed regions are matched to it. A
+    # bright fleck enclosed by petals is a highlight, reads pink or blue
+    # against the cream, and stays.
+    if count:
+        edge_paper = paper_border(a, keep[labels])
+        idx = np.arange(1, count + 1)
+        area = ndimage.sum(paperish, labels, idx)
+        dist = np.sqrt(sum(
+            (ndimage.mean(a[..., c], labels, idx) - edge_paper[c]) ** 2 for c in range(3)))
+        keep[idx[(area > 400) & (dist < 26)]] = True
+    paper = keep[labels]
+
+    # Connectivity alone leaves the sheet where it lies in shadow — too dark
+    # to have been called paper, but still paper, and along a crop edge it
+    # shows on the page as the corner of a rectangle. So the mask is finished
+    # by colour: anything close to this plate's own paper fades out, and the
+    # ramp is soft enough that the drawing keeps its edge. Nothing painted
+    # here comes near cream, so nothing painted here is touched.
+    sheet = paper_border(a, paper)
+    dist = np.sqrt(((a - sheet) ** 2).sum(axis=2))
+    ramp = np.clip((dist - 16) / 30, 0, 1)
+
+    alpha = np.where(paper, 0.0, ramp) * 255
+    alpha = Image.fromarray(alpha.astype(np.uint8))
+    # feather, or the engraving ends on a stair of hard pixels
+    alpha = alpha.filter(ImageFilter.GaussianBlur(1.2))
+    return Image.merge("RGBA", (*img.convert("RGB").split(), alpha))
+
+
+def tone(img, green_drop, lift_amount):
+    """Pull the plate toward the page: greens down to a shadow, everything up.
+
+    Aura's rule for the garden is that green is never an accent, only ever a
+    shadow — so the leaves lose most of their colour while the flower keeps
+    all of its.
+    """
+    b = np.asarray(img).astype(float)
+    rgb, alpha = b[..., :3], b[..., 3:]
+    grey = rgb.mean(axis=2, keepdims=True)
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    green = (rgb[..., 1] >= mx) & ((mx - mn) > 16)
+    weight = np.where(green[..., None], green_drop, 0.24)
+    out = grey * weight + rgb * (1 - weight)
+    out = 255 - (255 - out) * lift_amount
+    return Image.fromarray(
+        np.concatenate([np.clip(out, 0, 255), alpha], axis=2).astype(np.uint8), "RGBA")
+
+
+def save(img, name, width):
+    os.makedirs(OUT_DIR, exist_ok=True)
+    img = img.crop(img.getbbox())
+    h = round(img.height * width / img.width)
+    img = img.resize((width, h), Image.LANCZOS)
+    path = os.path.join(OUT_DIR, name)
+    img.save(path, "WEBP", quality=86, method=6, exact=True)
+    print(f"  {name:<26} {img.width}x{img.height}  {os.path.getsize(path) // 1024} KB")
+
+
+def main():
+    # ── the rose, whole plate ────────────────────────────────────────────
+    rose = Image.open(fetch("File:Redoute - Rosa gallica regalis.jpg")).convert("RGB")
+    # Tight on the bloom and the buds above it. The full plate is mostly
+    # foliage, and in a margin only a slice of it ever shows — a slice which
+    # then turns out to be leaves. Every part of this crop is flower.
+    rose = rose.crop((300, 40, 1010, 830))
+    save(tone(lift(rose), green_drop=0.62, lift_amount=0.88), "roza.webp", 460)
+
+    # ── the forget-me-not, one spray out of a nine-plant sheet ───────────
+    plate = Image.open(fetch("File:Flowers of mountain and plain (Plate 21) (8220462021).jpg"))
+    spray = plate.crop((840, 1318, 1120, 1650)).convert("RGB")
+    paint = ImageDraw.Draw(spray)
+    # the plate's own figure number, and a corner of the plant next door —
+    # both painted back to paper so the key lifts them with the sheet
+    for box in [(262, 108, 280, 152), (0, 0, 44, 54)]:
+        paint.rectangle(box, fill=(252, 250, 244))
+        # No lift at all here. The Clements watercolour is already pale, and on
+    # white paper any more of it turns the blue to nothing; the rose can take
+    # the opening because it is going onto black.
+    save(tone(lift(spray), green_drop=0.5, lift_amount=1.0), "nu-ma-uita.webp", 400)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -88,23 +88,31 @@
   /* Colour — Rainy July */
   --ink:#2D353C;         /* primary text, dark anchor   */
   --ink-soft:#5E6970;    /* secondary text              */
-  --steel:#C3CFD6;       /* tertiary text, dividers     */
+  --steel:#B8C1D6;       /* tertiary text, dividers     */
   /* White is the ground now, at her direction: the warm cream read as
      butter and the greys read as dirt against it. Everything that used to
      be a warm tint is the same step expressed in porcelain — a blue-white
      ladder, so the ground never goes yellow and never goes grey. The steps
-     are deliberately tiny: --surface-2 is 1.04:1 off white, --surface 1.12:1.
+     are deliberately tiny: --surface-2 sits 1.04:1 off white.
      They seat a small fill without ever breaking the white. */
   --paper:#FFFFFF;       /* page background, and type on ink */
-  --surface:#EBF2F7;     /* raised fills, tracks, chips */
   --surface-2:#F9FCFD;   /* alternate section           */
   --mist:#E4EFF5;        /* cool fill                   */
-  --sky:#BECED1;         /* cool accent                 */
+  --sky:#B0B9D1;         /* cool accent                 */
   --frost:#D9EAEE;       /* accent over dark media      */
   --line:#DFE7EC;        /* borders                     */
   --pearl:#F4FAFC;       /* neutral card                */
   --shell:#EBF4F9;       /* cool-neutral card           */
   --sand-soft:#D6E5EE;   /* the soft wash in the veins  */
+  /* The garden, measured out of the portrait rather than chosen: the hues are
+     the photograph's own — 354°, 223°, 69° — lifted in value and cut in
+     saturation so they live on white paper instead of in evening light.
+     They are for the botanical drawings and for nothing else; gold stays the
+     page's only working accent. */
+  --petal:#EBBCC0;       /* rose, dusty                 */
+  --bloom:#ACBCE3;       /* forget-me-not               */
+  --leaf:#ACB288;        /* foliage, only ever a shadow */
+  --stem:#6E7A5E;        /* the drawn line of a stem    */
   /* Gold measures 2.26:1 on white: better than the 1.92:1 it had on cream,
      still far under 4.5, so it stays what it has always been — a drawn line
      and the accent on ink, never type on a light ground. The line reads
@@ -115,6 +123,12 @@
      reading as a flat rectangle, not enough to cost its text: white sits at
      10.06:1 on it and the 60% secondary at 4.82:1. At 12% the secondary
      drops to 4.41:1, which is why it stops here. */
+  /* The dark sections used to be built out of --ink itself, which is a
+     blue-grey and read as grey rather than as dark. This is the same hue at
+     a tenth of the value: white on it goes from 12.5:1 to 18:1, and the gold
+     threads gain the ground they were always drawn for. --ink stays what it
+     was — type on paper, and the chips and controls that echo it. */
+  --ink-ground:#13171A;
   --ink-frost:#3B434A;
   /* The sky blue she specified for the button glass. Lighter and more
      saturated than --sky (#BECED1), which is a surface tone; this one is an

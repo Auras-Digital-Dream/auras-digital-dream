@@ -483,7 +483,7 @@ export function HomePage({ onNavigate }) {
       />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
-      <section className="services gilt bg-marble is-deep" id="servicii">
+      <section className="services gilt bg-marble is-deep bloom-r" id="servicii">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Servicii</span></p>
@@ -538,7 +538,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Estimator ────────────────────────────────────────────────────── */}
-      <section className="estimator bg-marble is-deep" id="estimator">
+      <section className="estimator bg-marble is-deep bloom-l" id="estimator">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Estimator de cost</span></p>
@@ -603,7 +603,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Portfolio archive ────────────────────────────────────────────── */}
-      <section className="archive bg-marble">
+      <section className="archive bg-marble bloom-r">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Portofoliu organizat</span></p>
@@ -676,7 +676,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Difference: what you get elsewhere vs here ───────────────────── */}
-      <section className="difference bg-ink-marble" id="de-ce-eu">
+      <section className="difference bg-ink-marble bloom-l" id="de-ce-eu">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Diferența</span></p>
@@ -773,7 +773,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────────────────── */}
-      <section className="voices bg-marble">
+      <section className="voices bg-marble bloom-r">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Testimoniale</span></p>
@@ -805,7 +805,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Books teaser ─────────────────────────────────────────────────── */}
-      <section className="books gilt bg-marble" id="amazon-picks">
+      <section className="books gilt bg-marble bloom-l" id="amazon-picks">
         <div className="shell books-grid">
           <div className="reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Aura Dobre · Author Universe</span></p>
@@ -844,6 +844,21 @@ export function HomePage({ onNavigate }) {
         </div>
         <div className="shell contact-grid">
           <div className="contact-copy reveal-on-scroll">
+            {/* A face before the promise of an answer: whoever writes here
+                should be able to see who reads it. */}
+            <figure className="contact-portrait reveal-child">
+              <img
+                src="/assets/aura-dobre.webp"
+                srcSet="/assets/aura-dobre-mic.webp 360w, /assets/aura-dobre.webp 720w"
+                sizes="(max-width: 720px) 132px, 168px"
+                width="720" height="720" loading="lazy" decoding="async"
+                alt="Aura Dobre"
+              />
+              <figcaption>
+                <strong>Aura Dobre</strong>
+                <span>Îți răspund personal</span>
+              </figcaption>
+            </figure>
             <p className="kicker reveal-child"><span className="eyebrow-text">Contact</span></p>
             <h2 className="section-title reveal-child">Hai să sculptăm împreună ideea ta.</h2>
             <Rise delay={0.15}>

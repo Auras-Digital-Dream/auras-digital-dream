@@ -12,3 +12,4 @@ dist/
 
 # Font source: licensed for personal use, not for redistribution
 scripts/amoresa-source.otf
+tmp/
