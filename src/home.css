@@ -2704,55 +2704,54 @@ footer .button,
    announce.
    ══════════════════════════════════════════════════════════════════════════ */
 
-.bloom-l,
-.bloom-r { position: relative; isolation: isolate; }
+.bloom { position: relative; isolation: isolate; }
 
-.bloom-l::after,
-.bloom-r::after {
+/* Each section says where its own drawing goes. The margins are 80px, which
+   is not room for a botanical — but every one of these sections has a whole
+   quadrant standing empty, and that is measured per section rather than
+   guessed, so the flower lands in the air the layout already leaves. */
+.bloom::after {
   content: "";
   position: absolute;
   z-index: 0;
   pointer-events: none;
+  left: var(--bloom-x);
+  top: var(--bloom-y);
+  width: var(--bloom-w);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
 
-/* Fully inside the margin. Overhanging the trim would be prettier, but some
-   sections clip what leaves them and the drawing came back as a square. */
-.bloom-l::after { left: -22px; }
-.bloom-r::after { right: -22px; transform: scaleX(-1); }
+.bloom.flip::after { transform: scaleX(-1); }
 
-/* White ground: the forget-me-not, sitting as watercolour. */
-.bg-marble.bloom-l::after,
-.bg-marble.bloom-r::after {
+/* White ground: the forget-me-not, the flower from the portrait. */
+.bg-marble.bloom::after {
   background-image: url("/assets/nu-ma-uita.webp");
-  width: clamp(86px, 8vw, 118px);
-  aspect-ratio: 400 / 474;
-  top: 20%;
-  opacity: .92;
+  aspect-ratio: 400 / 446;
+  opacity: .82;
 }
 
 /* Dark ground: the rose, which the black lifts rather than swallows. */
-.bg-ink-marble.bloom-l::after,
-.bg-ink-marble.bloom-r::after,
-.chapters.bloom-l::after,
-.chapters.bloom-r::after {
+.bg-ink-marble.bloom::after {
   background-image: url("/assets/roza.webp");
-  width: clamp(88px, 8.2vw, 122px);
   aspect-ratio: 460 / 474;
-  top: 18%;
-  opacity: .78;
+  opacity: .74;
 }
 
-/* Everything a section holds sits above the drawing; the drawing only ever
-   has the margin to itself. */
-.bloom-l > *,
-.bloom-r > * { position: relative; z-index: 1; }
+/* Measured empty quadrants, section by section. */
+.services.bloom   { --bloom-x: 49%; --bloom-y: 60%; --bloom-w: clamp(150px, 14vw, 210px); }
+.estimator.bloom  { --bloom-x: 66%; --bloom-y: 34%; --bloom-w: clamp(160px, 15vw, 225px); }
+.archive.bloom    { --bloom-x: 73%; --bloom-y: 33%; --bloom-w: clamp(130px, 12vw, 180px); }
+.difference.bloom { --bloom-x: 51%; --bloom-y: 19%; --bloom-w: clamp(140px, 13vw, 195px); }
+.voices.bloom     { --bloom-x: 66%; --bloom-y: 40%; --bloom-w: clamp(170px, 16vw, 245px); }
+.books.bloom      { --bloom-x: 44%; --bloom-y: 24%; --bloom-w: clamp(125px, 11vw, 170px); }
 
-/* Below this the shell runs edge to edge and there is no margin to stand in,
-   so the garden closes rather than growing over the words. */
+/* Everything a section holds sits above the drawing. */
+.bloom > * { position: relative; z-index: 1; }
+
+/* Below this every section is a single column with no air in it, and a
+   drawing would land on the words. The garden closes. */
 @media (max-width: 1023px) {
-  .bloom-l::after,
-  .bloom-r::after { display: none; }
+  .bloom::after { display: none; }
 }

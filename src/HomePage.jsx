@@ -483,7 +483,7 @@ export function HomePage({ onNavigate }) {
       />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
-      <section className="services gilt bg-marble is-deep bloom-r" id="servicii">
+      <section className="services gilt bg-marble is-deep bloom flip" id="servicii">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Servicii</span></p>
@@ -538,7 +538,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Estimator ────────────────────────────────────────────────────── */}
-      <section className="estimator bg-marble is-deep bloom-l" id="estimator">
+      <section className="estimator bg-marble is-deep bloom" id="estimator">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Estimator de cost</span></p>
@@ -603,7 +603,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Portfolio archive ────────────────────────────────────────────── */}
-      <section className="archive bg-marble bloom-r">
+      <section className="archive bg-marble bloom flip">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Portofoliu organizat</span></p>
@@ -676,7 +676,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Difference: what you get elsewhere vs here ───────────────────── */}
-      <section className="difference bg-ink-marble bloom-l" id="de-ce-eu">
+      <section className="difference bg-ink-marble bloom" id="de-ce-eu">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Diferența</span></p>
@@ -773,7 +773,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────────────────── */}
-      <section className="voices bg-marble bloom-r">
+      <section className="voices bg-marble bloom flip">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Testimoniale</span></p>
@@ -805,7 +805,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Books teaser ─────────────────────────────────────────────────── */}
-      <section className="books gilt bg-marble bloom-l" id="amazon-picks">
+      <section className="books gilt bg-marble bloom" id="amazon-picks">
         <div className="shell books-grid">
           <div className="reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Aura Dobre · Author Universe</span></p>

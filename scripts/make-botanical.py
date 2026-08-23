@@ -5,9 +5,12 @@ in the public domain:
 
   * Pierre-Joseph Redouté, *Rosa gallica regalis*, c.1820 — for the dark
     sections, where old paper reads as light rather than as a stain.
-  * Edith S. Clements, *Rocky Mountain Flowers* pl. 21, 1914 — the forget-me-
-    not, for the white ones. Same flower as the one behind Aura in the
-    portrait the palette was measured from.
+  * Otto Wilhelm Thomé, *Flora von Deutschland*, 1885 — Myosotis palustris,
+    the forget-me-not, for the white sections. Same flower as the one behind
+    Aura in the portrait the palette was measured from. Thomé drew it on a
+    clean sheet, one plant to a plate, which is what lets it come off the
+    paper at all; a denser plate leaves the sheet trapped between stems and
+    no amount of keying gets it out.
 
 Run it from the project root; it writes into public/assets/.
 """
@@ -24,6 +27,7 @@ from scipy import ndimage
 
 UA = "AuraStudiosBotanical/1.0 (https://aurastudios.ro; auraleobeatrice@gmail.com)"
 OUT_DIR = "public/assets"
+BLOOM = (172, 188, 227)   # --bloom #ACBCE3, measured off the portrait
 CACHE = os.path.join("tmp", "plates")
 
 
@@ -46,11 +50,21 @@ def fetch(title):
     return local
 
 
-def paper_border(pixels, mask):
-    """The colour of this plate's own sheet, taken where it meets the edge."""
-    if not mask.any():
+def sheet_colour(pixels, sat):
+    """The colour of this plate's own paper.
+
+    Taken from the brightest colourless pixels anywhere in the frame, not
+    from the border: a crop tight enough to be all flower has drawing on
+    every edge, and a border sample then returns a leaf. Paper is the one
+    thing on a plate that is both bright and grey, wherever it happens to
+    lie.
+    """
+    flat = pixels.reshape(-1, 3)
+    pale = flat[(sat.ravel() < 0.16) & (flat.max(axis=1) > 170)]
+    if len(pale) < 50:
         return np.array([246.0, 242.0, 228.0])
-    return pixels[mask].mean(axis=0)
+    bright = pale[pale.max(axis=1) >= np.percentile(pale.max(axis=1), 60)]
+    return bright.mean(axis=0)
 
 
 def lift(img):
@@ -85,7 +99,7 @@ def lift(img):
     # bright fleck enclosed by petals is a highlight, reads pink or blue
     # against the cream, and stays.
     if count:
-        edge_paper = paper_border(a, keep[labels])
+        edge_paper = sheet_colour(a, sat)
         idx = np.arange(1, count + 1)
         area = ndimage.sum(paperish, labels, idx)
         dist = np.sqrt(sum(
@@ -99,12 +113,18 @@ def lift(img):
     # by colour: anything close to this plate's own paper fades out, and the
     # ramp is soft enough that the drawing keeps its edge. Nothing painted
     # here comes near cream, so nothing painted here is touched.
-    sheet = paper_border(a, paper)
+    sheet = sheet_colour(a, sat)
     dist = np.sqrt(((a - sheet) ** 2).sum(axis=2))
-    ramp = np.clip((dist - 16) / 30, 0, 1)
+    # Nothing close to the sheet survives at all. A previous version let it
+    # through at low alpha, which composited as a pale box on a tinted ground
+    # — a cut square, which is exactly what a drawing must never look like.
+    ramp = np.clip((dist - 30) / 24, 0, 1)
+    # Anything left barely there is the pale wash between the drawing and the
+    # sheet, and across a whole plate it adds up to a visible film. It goes.
+    ramp[ramp < 0.22] = 0
 
-    alpha = np.where(paper, 0.0, ramp) * 255
-    alpha = Image.fromarray(alpha.astype(np.uint8))
+    alpha = np.where(paper, 0.0, ramp)
+    alpha = Image.fromarray((alpha * 255).astype(np.uint8))
     # feather, or the engraving ends on a stair of hard pixels
     alpha = alpha.filter(ImageFilter.GaussianBlur(1.2))
     return Image.merge("RGBA", (*img.convert("RGB").split(), alpha))
@@ -129,6 +149,31 @@ def tone(img, green_drop, lift_amount):
         np.concatenate([np.clip(out, 0, 255), alpha], axis=2).astype(np.uint8), "RGBA")
 
 
+def bloom_blue(img):
+    """Thomé's forget-me-not is drawn barely tinted, all but white.
+
+    The living flower is blue, the portrait's are blue, and the palette's
+    --bloom was measured off them — so the petals are carried back to it.
+    Only the petals, and the test that finds them is brightness in all three
+    channels at once. Thomé's petals are not white but a warm cream, saturated
+    enough to fail any low-saturation test and green enough in the middle to
+    be mistaken for a leaf — but every channel is pale. A leaf has a dark
+    channel, always, whatever its hue.
+    """
+    b = np.asarray(img).astype(float)
+    rgb, alpha = b[..., :3], b[..., 3]
+    mx, mn = rgb.max(axis=2), rgb.min(axis=2)
+    petal = (alpha > 40) & (mx > 205) & (mn > 168)
+    # A flat, firm blend. Keying the strength to brightness left the shift at
+    # a quarter, because these petals are pale in every channel to begin with
+    # — the very thing that identifies them also flattened the correction.
+    strength = 0.66
+    mixed = rgb * (1 - strength) + np.array(BLOOM) * strength
+    rgb = np.where(petal[..., None], mixed, rgb)
+    return Image.fromarray(
+        np.concatenate([np.clip(rgb, 0, 255), alpha[..., None]], axis=2).astype(np.uint8), "RGBA")
+
+
 def save(img, name, width):
     os.makedirs(OUT_DIR, exist_ok=True)
     img = img.crop(img.getbbox())
@@ -148,18 +193,13 @@ def main():
     rose = rose.crop((300, 40, 1010, 830))
     save(tone(lift(rose), green_drop=0.62, lift_amount=0.88), "roza.webp", 460)
 
-    # ── the forget-me-not, one spray out of a nine-plant sheet ───────────
-    plate = Image.open(fetch("File:Flowers of mountain and plain (Plate 21) (8220462021).jpg"))
-    spray = plate.crop((840, 1318, 1120, 1650)).convert("RGB")
-    paint = ImageDraw.Draw(spray)
-    # the plate's own figure number, and a corner of the plant next door —
-    # both painted back to paper so the key lifts them with the sheet
-    for box in [(262, 108, 280, 152), (0, 0, 44, 54)]:
-        paint.rectangle(box, fill=(252, 250, 244))
-        # No lift at all here. The Clements watercolour is already pale, and on
-    # white paper any more of it turns the blue to nothing; the rose can take
-    # the opening because it is going onto black.
-    save(tone(lift(spray), green_drop=0.5, lift_amount=1.0), "nu-ma-uita.webp", 400)
+    # ── the forget-me-not ────────────────────────────────────────────────
+    plate = Image.open(fetch("File:Illustration Myosotis scorpioides0.jpg"))
+    spray = plate.crop((300, 55, 700, 470)).convert("RGB")
+    # No lift here: the drawing goes onto white paper, and opening it further
+    # would take the flower with it.
+    save(tone(bloom_blue(lift(spray)), green_drop=0.5, lift_amount=1.0),
+         "nu-ma-uita.webp", 400)
 
 
 if __name__ == "__main__":
