@@ -166,12 +166,10 @@ function AppContent() {
   );
 }
 
-export default function App({ path = '/' }) {
-  const isServer = typeof window === 'undefined';
-  const Router = isServer ? MemoryRouter : BrowserRouter;
-  const routerProps = isServer ? { initialEntries: [path] } : {};
+export default function App() {
+  const Router = typeof window === 'undefined' ? MemoryRouter : BrowserRouter;
   return (
-    <Router {...routerProps}>
+    <Router>
       <ScrollToTop />
       <AppContent />
     </Router>
