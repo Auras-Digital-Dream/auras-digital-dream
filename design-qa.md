@@ -56,4 +56,27 @@ Nu au rămas diferențe P0, P1 sau P2 acționabile. Adaptările de copy, serif-u
 - [x] layout responsive și reduced motion
 - [x] build și verificare în browser
 
+## Actualizare QA — portretul autoarei
+
+- source visual truth path: `C:\Users\aural\OneDrive\Immagini\aura\IMAGINI EDITORIALE\aura in red.jpeg`
+- implementation screenshot path: `design-qa-author-implementation.png`
+- combined comparison path: `design-qa-author-comparison.png`
+- viewport: 1142 x 784 CSS px, densitate implicită Edge; verificare responsive suplimentară la 434 x 938 CSS px
+- source pixels: 1086 x 1448; implementation capture pixels: 1142 x 784; imaginile au fost normalizate proporțional în aceeași planșă
+- state: secțiunea `#despre` după reveal și stabilizarea parallaxului
+
+### Evidence și findings
+
+Planșa combinată confirmă păstrarea fidelă a portretului, a proporțiilor, culorii burgundy și a detaliilor aurii. Integrarea adaugă ramă decalată, lumină ambientală, caption editorial, orbită animată, reveal vertical, parallax și hover fără să altereze fotografia.
+
+Nu au rămas diferențe P0, P1 sau P2 acționabile. Prima captură a evidențiat contrast insuficient al textului peste filmarea cu pagini și tăierea elementului orbital. Filmarea a fost întunecată și colorată spre burgundy, iar clip-path-ul a fost mutat de pe întreaga figură pe imagine, astfel încât rama și orbita să rămână vizibile.
+
+- Fonts and typography: titlul serif, semnătura italică și microcopy-ul sans păstrează ierarhia editorială.
+- Spacing and layout: grila text-portret este echilibrată pe desktop și devine o singură coloană pe mobil, fără overflow orizontal.
+- Colors and tokens: burgundy, negru și auriu derivă direct din fotografie și se leagă de paleta cinematică existentă.
+- Image quality: fotografia originală este servită local, fără regenerare, deformare sau crop agresiv.
+- Copy and content: copy-ul existent al autoarei a fost păstrat; s-au adăugat doar semnătura și caption-ul editorial.
+- Accessibility and motion: alt text descriptiv, contrast corectat, hover opțional și dezactivarea reveal/parallax/rotație pentru `prefers-reduced-motion`.
+- Browser evidence: imagine vizibilă, fără overflow pe mobil și zero erori în consolă.
+
 final result: passed

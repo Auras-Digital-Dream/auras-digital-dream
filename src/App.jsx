@@ -402,6 +402,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
   const authorInView = useInView(authorRef, { once: true, margin: "-20% 0px" });
   const { scrollYProgress: authorProgress } = useScroll({ target: authorRef, offset: ["start end", "end start"] });
   const authorBgY = useTransform(authorProgress, [0, 1], ["-12%", "12%"]);
+  const authorPortraitY = useTransform(authorProgress, [0, 1], ["7%", "-7%"]);
   const finalRef = useRef(null);
   const { scrollYProgress: finalProgress } = useScroll({ target: finalRef, offset: ["start end", "center center"] });
   const finalScale = useTransform(finalProgress, [0, 1], [1.14, 1]);
@@ -532,7 +533,21 @@ function BooksPageCinematic({ onNavigate, onSection }) {
 
       <section className="cinematic-author" id="despre" ref={authorRef}>
         <motion.div className="cinematic-author-bg" style={{ y: authorBgY }}><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/book-pages.mp4" type="video/mp4" /></video></motion.div>
-        <div><motion.p className="section-kicker" initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8 }}><span className="eyebrow-text">05 — Autoarea</span></motion.p><motion.h2 initial={{ opacity: 0, x: -28 }} animate={authorInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}>În spatele poveștilor</motion.h2><motion.div initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.35 }}><p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p><p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p></motion.div><motion.div className="books-actions" initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.5 }}><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></motion.div></div>
+        <div className="cinematic-author-inner">
+          <motion.div className="cinematic-author-copy" initial={reducedMotion ? false : { opacity: 0, x: -46 }} animate={authorInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}>
+            <p className="section-kicker"><span className="eyebrow-text">05 — Autoarea</span></p>
+            <h2>În spatele poveștilor</h2>
+            <div className="author-signature">Aura Dobre</div>
+            <p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p>
+            <p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p>
+            <div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></div>
+          </motion.div>
+          <motion.figure className="author-portrait-stage" style={{ y: reducedMotion ? 0 : authorPortraitY }} initial={reducedMotion ? false : { opacity: 0, scale: 1.08 }} animate={authorInView ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 1.25, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}>
+            <motion.img src="/assets/books-cinematic/aura-in-red.jpeg" alt="Aura Dobre, autoare, într-un portret pe fundal roșu" initial={reducedMotion ? false : { clipPath: "inset(18% 0 18% 0)" }} animate={authorInView ? { clipPath: "inset(0% 0 0% 0)" } : {}} whileHover={reducedMotion ? undefined : { scale: 1.035 }} transition={{ duration: 1.2, delay: 0.12, ease: [0.16, 1, 0.3, 1] }} />
+            <motion.span className="author-orbit author-orbit-one" aria-hidden="true" animate={reducedMotion ? undefined : { rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>AUTHOR · STORYTELLER · DREAMER · </motion.span>
+            <span className="author-photo-caption">Portrait / Aura in red</span>
+          </motion.figure>
+        </div>
       </section>
 
       <section className="books-fan-section">
