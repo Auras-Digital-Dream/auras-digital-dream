@@ -80,9 +80,10 @@ const packageComparison = [
   { feature: "SEO & claritate", start: "de bază", web: "structurat", premium: "extins + conținut" },
 ];
 const chapters = [
-  { key: "asculta", number: "01", title: "Ascult", video: "/video/story-ascult-workshop.mp4", poster: "/video/poster/story-ascult-workshop.jpg", headline: "Nu pornesc de la tendințe. Pornesc de la tine.", copy: "Îți ascult ideea, contextul, publicul și tensiunea din spatele brandului înainte să desenez direcția.", meta: "Atelier vechi · marmură" },
-  { key: "imaginez", number: "02", title: "Imaginez", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Ideea ta devine formă. Forma devine lumină. Lumina devine experiență.", copy: "Transform informația în concept vizual: culori, ritm, ierarhie, atmosferă și primul fir de storytelling.", meta: "Palmă · lumină" },
-  { key: "construiesc", number: "03", title: "Construiesc", video: "/video/story-construiesc-modern-office.mp4", poster: "/video/poster/story-construiesc-modern-office.jpg", headline: "Construiesc sisteme care se simt vii.", copy: "Aduc totul într-o experiență clară, responsive și premium: identitate, website, campanie sau material digital.", meta: "Birou modern · lumină rece" },
+  { key: "aparitia", number: "01", title: "Apariția", video: "/video/story-ascult-workshop.mp4", poster: "/video/poster/story-ascult-workshop.jpg", headline: "Te ajut să apari.", copy: "Strategia și identitatea vizuală scot brandul din anonimat și îl așază exact în lumina potrivită.", meta: "Claritate · poziționare · identitate" },
+  { key: "povestea", number: "02", title: "Povestea", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Îi dau o poveste care rămâne.", copy: "Transform informația în concept, ritm și limbaj vizual — o prezență care se simte înainte să fie explicată.", meta: "Storytelling · direcție de artă · conținut" },
+  { key: "constructia", number: "03", title: "Construcția", video: "/video/story-construiesc-modern-office.mp4", poster: "/video/poster/story-construiesc-modern-office.jpg", headline: "Construiesc ce poate dura.", copy: "Website-uri, campanii și sisteme vizuale șlefuite ca un întreg: clare, responsive și pregătite să crească.", meta: "Design · web · experiență digitală" },
+  { key: "atelierul", number: "04", title: "Atelierul", video: "/video/about-renaissance-studio.mp4", poster: "/video/poster/about-renaissance-studio.jpg", headline: "Renaștere și tehnologie, la lucru.", copy: "Aici, strategia întâlnește estetica, iar ideea ta devine o experiență vie — creată împreună, nu livrată mecanic.", meta: "Aura's Digital Dream · atelier digital" },
 ];
 const processSteps = [
   ["01", "Descoperire", "Înțeleg obiectivele tale, publicul și provocările brandului. Ascult înainte să propun."],
@@ -360,13 +361,12 @@ export function HomePage({ onNavigate }) {
       {/* ── About: Renaissance material, futuristic rhythm ──────────────── */}
       <section className="home-about" id="despre-mine" aria-label="Despre Aura Dobre">
         <div className="home-about-atmosphere" aria-hidden="true" />
-        <div className="home-about-heading" aria-hidden="true">
-          <motion.span initial={reduced ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .8 }}>EU SUNT</motion.span>
-          <motion.strong initial={reduced ? false : { opacity: 0, scale: .92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.15, delay: .08, ease: [0.16, 1, 0.3, 1] }}>Aura</motion.strong>
-        </div>
-
         <motion.figure className="home-about-portrait" initial={reduced ? false : { opacity: 0, y: 80, scale: 1.08 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: .28 }} transition={{ duration: 1.35, ease: [0.16, 1, 0.3, 1] }}>
           <motion.img src="/assets/eu-in-renascentism.jpeg" alt="Aura Dobre într-un portret renascentist contemporan" whileHover={reduced ? undefined : { scale: 1.025, y: -8 }} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} />
+          <figcaption className="home-about-signature">
+            <motion.span initial={reduced ? false : { opacity: 0, x: -22 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: .8 }}>Eu sunt</motion.span>
+            <motion.strong initial={reduced ? false : { opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.05, delay: .08, ease: [0.16, 1, 0.3, 1] }}>Aura</motion.strong>
+          </figcaption>
         </motion.figure>
 
         <div className="home-about-motion" aria-label="Strategie, identitate, design și experiențe digitale">
@@ -405,7 +405,7 @@ export function HomePage({ onNavigate }) {
         )}
         renderCopy={(item) => (
           <>
-            <p className="kicker"><span className="eyebrow-text">{item.number} — {item.title}</span></p>
+            <p className="kicker"><span className="eyebrow-text">Scena {item.number} — {item.title}</span></p>
             <h2 className="chapter-headline">{item.headline}</h2>
             <p className="chapter-body">{item.copy}</p>
             <span className="chapter-meta">{item.meta}</span>

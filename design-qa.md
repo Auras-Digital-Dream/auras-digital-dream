@@ -133,3 +133,27 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 - Motion/accessibility: cuvintele intră secvențial și se repetă; pentru reduced motion rămân statice și complet vizibile.
 
 final result: passed
+
+## Actualizare QA — corecție portret și scrollytelling homepage
+
+- source visual truth paths: capturile furnizate de utilizatoare, `C:\Users\aural\Downloads\Recording 2026-08-24 215949.mp4`, `C:\Users\aural\Downloads\inspiratie animatii site.mp4`
+- implementation screenshot path: `design-qa-home-scrollytelling.png`
+- viewport: 1142 x 784 CSS px; verificare responsive suplimentară la 478 x 1000 CSS px
+- state: secțiunea `#despre-mine` după reveal și scenele 01–02 ale scrollytelling-ului activ la scroll
+
+### Evidence și comparison history
+
+1. P1 inițial: „Eu sunt Aura” era separat de fotografie, parțial ascuns și nu se citea ca parte din portret. Fix: titlul a fost ancorat în interiorul figurii, cu „Eu sunt” mic și „Aura” vizibil, scalat pentru a nu domina chipul.
+2. P1 inițial: cele patru cuvinte animate traversau fața și ochelarii. Fix: motion-textul a fost coborât sub zona feței, în două coloane pe desktop și într-o bandă verticală pe mobil.
+3. P2 inițial: motion-textul și descrierea se intersectau în viewporturi joase. Fix: secțiunea a primit un ritm vertical mai amplu, cu zone distincte pentru portret, cuvinte și descriere.
+4. Scrollytelling: referința arată un cadru cinematic fix, scene numerotate, imagine full-screen și copy care se schimbă la scroll. Implementarea reproduce mecanica în patru acte cu materialele video reale ale site-ului, fără a copia textul sau structura de rutare din codul atașat.
+5. Post-fix: zero overflow orizontal pe desktop și mobil, zero erori în consolă; titlurile, descrierile și indexul scenelor rămân lizibile pe ambele viewporturi.
+
+- Typography: ierarhia script/serif/sans păstrează caracterul editorial și contrastul față de video.
+- Spacing/layout: portretul, motion-textul și copy-ul au benzi verticale separate; scena full-screen își păstrează compoziția pe mobil.
+- Colors/tokens: secțiunea portret folosește paleta furnizată, iar scenele folosesc scrim-ul charcoal existent pentru contrast.
+- Image/video quality: toate materialele sunt asset-uri reale deja prezente în proiect; nu au fost introduse placeholder-e sau capturi degradate din TikTok.
+- Copy/content: toate cele patru acte descriu serviciile și procesul Aura's Digital Dream.
+- Accessibility/motion: reduced motion păstrează conținutul static și complet; indexul scenelor este decorativ, iar textele sunt conținut semantic.
+
+final result: passed
