@@ -42,7 +42,7 @@ export default function Footer() {
     <footer className="site-footer">
       {/* Background image #5 */}
       <div className="footer-bg">
-        <img src="/assets/editorial/creative-services-clean.jpg" alt="" />
+        <img src="/assets/footer-bg.jpg" alt="" />
         <div className="footer-bg-overlay" />
       </div>
 

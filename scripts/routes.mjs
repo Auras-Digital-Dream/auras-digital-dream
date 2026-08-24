@@ -57,8 +57,8 @@ function parse(file) {
  * and this catches the same class of bug for the price of one comparison.
  */
 function projects() {
-  const home = parse("LegacyHomePage.jsx");
-  const detail = parse("LegacyApp.jsx");
+  const home = parse("HomePage.jsx");
+  const detail = parse("App.jsx");
   const line = (p) => [p.slug, p.title, p.image, p.description].join(" |#| ");
   const a = home.map(line).sort();
   const b = detail.map(line).sort();

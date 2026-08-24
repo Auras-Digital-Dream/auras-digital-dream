@@ -91,7 +91,7 @@ export default function EditorialPage() {
 
   const images = [
     {
-      src: '/assets/aura-cinematic-portrait.jpeg',
+      src: '/assets/editorial-aura-red.jpg',
       alt: 'Aura in Red',
       title: 'Aura in Red',
       category: 'Portret Editorial',
@@ -100,7 +100,7 @@ export default function EditorialPage() {
       bw: false,
     },
     {
-      src: '/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.jpeg',
+      src: '/assets/editorial-details-face.jpg',
       alt: 'Details Over Face',
       title: 'Fragmente de Ego',
       category: 'Colaj Artistic',
@@ -109,7 +109,7 @@ export default function EditorialPage() {
       bw: false,
     },
     {
-      src: '/portfolio/auras-trend-vault/editorial-2026/editorial-black-white.jpeg',
+      src: '/assets/editorial-bw-portrait.jpg',
       alt: 'Black and White Portrait',
       title: 'Lumina și Umbra',
       category: 'Portret B&W',
@@ -118,7 +118,7 @@ export default function EditorialPage() {
       bw: true,
     },
     {
-      src: '/portfolio/auras-trend-vault/editorial-2026/editorial-city-motion.jpeg',
+      src: '/assets/editorial-contrast.jpg',
       alt: 'Contrast Portrait',
       title: 'Contrast',
       category: 'Portret Color',
@@ -127,7 +127,7 @@ export default function EditorialPage() {
       bw: true,
     },
     {
-      src: '/assets/editorial/golden-portrait-clean.jpg',
+      src: '/assets/editorial-elegant.jpg',
       alt: 'Elegant Photo',
       title: 'Eleganță Naturală',
       category: 'Lifestyle',
@@ -136,7 +136,7 @@ export default function EditorialPage() {
       bw: false,
     },
     {
-      src: '/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg',
+      src: '/assets/editorial-nyt.jpg',
       alt: 'New York Times',
       title: 'Breaking News',
       category: 'Art Direction',
@@ -145,7 +145,7 @@ export default function EditorialPage() {
       bw: false,
     },
     {
-      src: '/assets/editorial/creative-services-clean.jpg',
+      src: '/assets/editorial-upside-down.jpg',
       alt: 'Upside Down',
       title: 'Perspectivă Inversă',
       category: 'Conceptual',

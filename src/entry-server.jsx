@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { renderToString } from "react-dom/server";
-import App from "./App.jsx";
+import { App } from "./App.jsx";
 import "./styles.css";
 import "./home.css";
 
