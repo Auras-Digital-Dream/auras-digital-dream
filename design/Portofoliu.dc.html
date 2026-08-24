@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <style>
+    body { margin: 0; background: #FFFFFF; color: #2D353C;
+      font-family: "EB Garamond", Georgia, serif; -webkit-font-smoothing: antialiased; }
+    a { color: #48535A; } a:hover { color: #2D353C; }
+  </style>
+</helmet>
+
+<div style="padding: 52px 56px 64px; display: flex; flex-direction: column; gap: 40px;">
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #5A6066;">Pasul 05 — indexul de portofoliu, pe prima pagină</span>
+    <h2 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 30px;">Două grupe, ca fiecare să fie judecată după criteriul potrivit</h2>
+    <p style="margin: 0; max-width: 70ch; font-size: 16px; line-height: 1.62; color: #48535A;">Nimic nu dispare. Se schimbă doar sub ce titlu stă — și, la colecții, ce scrie sub numele lor.</p>
+  </div>
+
+  <sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 40px; align-items: baseline; padding-bottom: 16px; border-bottom: 1px solid #DFE7EC;">
+        <h3 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.15;">{{g.title}}</h3>
+        <p style="margin: 0; max-width: 60ch; font-size: 15.5px; line-height: 1.6; color: #5A6066;">{{g.blurb}}</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px;">
+        <sc-for list="{{g.cards}}" as="c" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; gap: 11px;">
+            <div style="aspect-ratio: 4 / 3; border-radius: 14px; background: {{c.fill}}; border: 1px solid rgba(135,206,235,.24); position: relative; display: grid; place-items: center;">
+              <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: #5A6066;">{{c.shot}}</span>
+              <sc-if value="{{c.own}}" hint-placeholder-val="{{ true }}">
+                <span style="position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 999px; background: rgba(201,168,106,.16); border: 1px solid rgba(201,168,106,.48); font-family: system-ui, -apple-system, sans-serif; font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase; color: #7A5F2E;">Proiect propriu</span>
+              </sc-if>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #48535A;">{{c.meta}}</span>
+              <span style="font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 17px; line-height: 1.25;">{{c.name}}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+
+  <div style="display: flex; gap: 18px; align-items: flex-start; padding: 22px 26px; border-radius: 16px; border: 1px solid #DFE7EC; background: #F9FCFD;">
+    <span style="display: inline-block; width: 3px; align-self: stretch; background: #C9A86A; border-radius: 2px;"></span>
+    <p style="margin: 0; max-width: 82ch; font-size: 15px; line-height: 1.62; color: #48535A;">Eticheta „proiect propriu” apare doar pe cele care chiar sunt. Nu ascunde nimic — spune adevărul, iar adevărul ajută: cine caută pe cineva de angajat vede imediat ce ai fost plătită să faci.</p>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1120,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const f1 = "linear-gradient(150deg, #EBF2F7, #D9EAEE)";
+    const f2 = "linear-gradient(150deg, #F4FAFC, #E4EFF5)";
+    const f3 = "linear-gradient(150deg, #EBF4F9, #D6E5EE)";
+    return {
+      groups: [
+        {
+          title: "Studii de caz",
+          blurb: "Un client, o problemă, o soluție. Fiecare are provocare, abordare, servicii livrate și galerie.",
+          cards: [
+            { name: "Verde Bean", meta: "Branding", shot: "ambalaj", fill: f1, own: false },
+            { name: "Pâinea de Acasă", meta: "Branding · Grafică", shot: "sistem de brand", fill: f2, own: false },
+            { name: "ADI ECOO 2009 S.A.", meta: "Identitate · Web", shot: "campanie", fill: f3, own: false },
+            { name: "Luxury Hair by Aura", meta: "Branding", shot: "flat-lay", fill: f1, own: false }
+          ]
+        },
+        {
+          title: "Colecții",
+          blurb: "Multe lucrări de același fel, adunate. Se răsfoiesc, nu se citesc — și e în regulă, atâta timp cât o spune cineva.",
+          cards: [
+            { name: "Logo Design", meta: "13 sigle", shot: "grilă de sigle", fill: f2, own: false },
+            { name: "Cărți de Vizită", meta: "15 seturi", shot: "cărți pe lemn", fill: f3, own: false },
+            { name: "Selecții Cromatice", meta: "5 direcții", shot: "moodboard", fill: f1, own: true },
+            { name: "Artă Digitală", meta: "36 lucrări", shot: "ilustrație", fill: f2, own: true }
+          ]
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

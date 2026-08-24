@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <style>
+    body { margin: 0; background: #FFFFFF; color: #2D353C;
+      font-family: "EB Garamond", Georgia, serif; -webkit-font-smoothing: antialiased; }
+    a { color: #48535A; } a:hover { color: #2D353C; }
+  </style>
+</helmet>
+
+<div>
+
+  <!-- hero, on ink, exactly like a project page opens -->
+  <div style="background: #2D353C; color: #ffffff; padding: 92px 64px 78px;">
+    <div style="display: flex; flex-direction: column; gap: 26px; max-width: 880px;">
+      <div style="display: flex; gap: 12px;">
+        <span style="border: 1px solid rgba(255,255,255,.17); border-radius: 999px; padding: 8px 13px; color: #BABCBF; text-transform: uppercase; letter-spacing: .11em; font-size: 10px; font-family: system-ui, -apple-system, sans-serif;">Slobozia, Ialomița</span>
+        <span style="border: 1px solid rgba(255,255,255,.17); border-radius: 999px; padding: 8px 13px; color: #BABCBF; text-transform: uppercase; letter-spacing: .11em; font-size: 10px; font-family: system-ui, -apple-system, sans-serif;">Din 2023</span>
+      </div>
+      <h1 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 62px; line-height: 1.06; letter-spacing: -.008em;">Aura Dobre</h1>
+      <p style="margin: 0; max-width: 54ch; font-size: 19px; line-height: 1.6; color: rgba(255,255,255,.78);">[TEXTUL TĂU — două-trei propoziții despre cine ești și de unde vii. Nu CV, ci punctul de vedere.]</p>
+    </div>
+  </div>
+
+  <!-- portrait + the long text -->
+  <div style="padding: 84px 64px 0; display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: 64px; align-items: start;">
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="aspect-ratio: 4 / 5; border-radius: 18px; background: linear-gradient(158deg, #EBF2F7, #D9EAEE 52%, #E4EFF5); border: 1px solid rgba(135,206,235,.38); display: grid; place-items: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: #5A6066;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#5A6066" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <circle cx="8.5" cy="9" r="1.8"></circle>
+            <path d="M21 15.5 15.5 10 6 19.5"></path>
+          </svg>
+          <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;">[FOTOGRAFIA TA]</span>
+        </div>
+      </div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #5A6066;">Una singură, bună. Un portret onest bate trei stilizate.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <span style="display: inline-flex; align-self: flex-start; align-items: center; padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(190,206,209,.54); background: rgba(217,234,238,.16); font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #48535A;">Cine sunt</span>
+      <h2 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.24; max-width: 22ch;">[O propoziție care spune ce faci și pentru cine.]</h2>
+      <p style="margin: 0; max-width: 60ch; font-size: 17px; line-height: 1.75; color: #48535A;">[Paragraful lung. De unde ai pornit, ce te-a adus aici, ce fel de clienți cauți. Aici e locul unde cineva decide dacă îți scrie — nu în portofoliu.]</p>
+      <p style="margin: 0; max-width: 60ch; font-size: 17px; line-height: 1.75; color: #48535A;">[Al doilea paragraf, dacă vrei: ce faci în afara muncii de client. Cărțile intră firesc aici, și fac legătura cu cealaltă pagină a site-ului.]</p>
+    </div>
+  </div>
+
+  <!-- facts strip, the same anatomy as .project-facts -->
+  <div style="margin: 76px 64px 0; border-top: 1px solid #DFE7EC; border-bottom: 1px solid #DFE7EC; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));">
+    <sc-for list="{{facts}}" as="f" hint-placeholder-count="4">
+      <div style="padding: 27px 22px; border-right: 1px solid #DFE7EC; display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-family: system-ui, -apple-system, sans-serif; color: #5A6066; text-transform: uppercase; letter-spacing: .14em; font-size: 9px;">{{f.k}}</span>
+        <span style="font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 18px; line-height: 1.3;">{{f.v}}</span>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- what she refuses / how she works, short -->
+  <div style="padding: 76px 64px 96px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 27px;">Lucrez bine cu</h3>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <sc-for list="{{fit}}" as="t" hint-placeholder-count="4">
+          <div style="display: flex; gap: 11px; align-items: flex-start;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C9A86A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px; flex: 0 0 auto;" aria-hidden="true"><path d="M4 12.6 9.2 18 20 6.4"></path></svg>
+            <span style="font-size: 16px; line-height: 1.55; color: #48535A;">{{t}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 27px;">Nu lucrez cu</h3>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <sc-for list="{{nofit}}" as="t" hint-placeholder-count="3">
+          <div style="display: flex; gap: 11px; align-items: flex-start;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5A6066" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" style="margin-top: 4px; flex: 0 0 auto;"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+            <span style="font-size: 16px; line-height: 1.55; color: #5A6066;">{{t}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.55; color: #5A6066;">Partea asta e opțională — dar e cea care face un studio să pară ales, nu disponibil. Spune-mi dacă o vrei.</p>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1120,"height":1520}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      facts: [
+        { k: "Bază", v: "Slobozia, Ialomița" },
+        { k: "Lucrez cu", v: "România și Anglia" },
+        { k: "Proiecte livrate", v: "[NUMĂRUL REAL]" },
+        { k: "Și", v: "autor publicat" }
+      ],
+      fit: [
+        "[Tipul de client cu care îți iese cel mai bine.]",
+        "[Ce fel de proiect te face să te trezești devreme.]",
+        "[Bugetul sau amploarea de la care începe.]",
+        "[Modul de lucru pe care îl ceri — timp, feedback, decizii.]"
+      ],
+      nofit: [
+        "[Ce nu faci, oricât ar plăti.]",
+        "[Ce ai încercat și ai renunțat.]",
+        "[Ce trimiți altcuiva.]"
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

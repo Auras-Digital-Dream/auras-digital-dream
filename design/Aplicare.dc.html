@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <style>
+    body { margin: 0; background: #2D353C; color: #ffffff;
+      font-family: "EB Garamond", Georgia, serif; -webkit-font-smoothing: antialiased; }
+    a { color: #D9EAEE; } a:hover { color: #ffffff; }
+  </style>
+</helmet>
+
+<div style="padding: 56px 56px 64px; display: flex; flex-direction: column; gap: 34px;">
+
+  <div style="display: flex; flex-direction: column; gap: 14px;">
+    <span style="display: inline-flex; align-self: flex-start; align-items: center; padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(135,206,235,.48); background: rgba(217,234,238,.10); font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #D9EAEE;">Pasul 04 — galeria</span>
+    <h2 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 42px; line-height: 1.12;">Sistemul <em style="font-style: italic; font-family: 'EB Garamond', Georgia, serif; color: rgba(255,255,255,.72);">în lume.</em></h2>
+    <p style="margin: 0; max-width: 62ch; font-size: 16.5px; line-height: 1.68; color: rgba(255,255,255,.74);">În loc de un grid alfabetic de 5–36 de imagini, trei-patru grupe cu titlu. Fiecare grupă spune ce demonstrează. Restul imaginilor rămân, sub un buton.</p>
+  </div>
+
+  <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; align-items: baseline; gap: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,.14);">
+        <span style="font-family: Marcellus, Georgia, serif; font-size: 15px; color: #C9A86A; letter-spacing: .06em;">{{g.n}}</span>
+        <h3 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 26px;">{{g.title}}</h3>
+        <span style="font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.62);">{{g.note}}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: {{g.cols}}; gap: 14px;">
+        <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="3">
+          <div style="aspect-ratio: {{t.ratio}}; border-radius: 12px; background: {{t.fill}}; border: 1px solid rgba(255,255,255,.10); display: grid; place-items: center;">
+            <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.42);">{{t.label}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 26px; border-radius: 16px; border: 1px solid rgba(135,206,235,.32); background: rgba(217,234,238,.07);">
+    <span style="font-size: 16px; line-height: 1.55; color: rgba(255,255,255,.78);">Încă 19 imagini din acest proiect — probe de tipar, variante, cadre de pe teren.</span>
+    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 0 24px; border: 1px solid #87CEEB; border-radius: 24px; font-family: system-ui, -apple-system, sans-serif; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: #ffffff; background: rgba(255,255,255,.12); white-space: nowrap;">
+      Vezi toate
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+    </a>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1120,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const a = "linear-gradient(152deg, #3B434A, #262C31)";
+    const b = "linear-gradient(152deg, #38424A, #22282D)";
+    const c = "linear-gradient(152deg, #404A52, #2A3036)";
+    return {
+      groups: [
+        {
+          n: "01",
+          title: "Semnul",
+          note: "logo, variante, versiunea de un centimetru",
+          cols: "repeat(3, minmax(0, 1fr))",
+          tiles: [
+            { ratio: "4 / 3", fill: a, label: "logo principal" },
+            { ratio: "4 / 3", fill: b, label: "variantă orizontală" },
+            { ratio: "4 / 3", fill: c, label: "monocrom, 1 cm" }
+          ]
+        },
+        {
+          n: "02",
+          title: "Pe hârtie",
+          note: "ce ține clientul în mână",
+          cols: "repeat(4, minmax(0, 1fr))",
+          tiles: [
+            { ratio: "1 / 1", fill: b, label: "ambalaj" },
+            { ratio: "1 / 1", fill: c, label: "etichetă" },
+            { ratio: "1 / 1", fill: a, label: "pungă" },
+            { ratio: "1 / 1", fill: b, label: "carte de vizită" }
+          ]
+        },
+        {
+          n: "03",
+          title: "Pe ecran",
+          note: "cum arată sistemul când nu poți atinge nimic",
+          cols: "repeat(2, minmax(0, 1fr))",
+          tiles: [
+            { ratio: "16 / 10", fill: c, label: "social media" },
+            { ratio: "16 / 10", fill: a, label: "site" }
+          ]
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

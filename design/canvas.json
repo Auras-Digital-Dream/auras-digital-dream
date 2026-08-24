@@ -1,0 +1,27 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Planul în cinci pași", "x": 0, "y": 0, "w": 1040, "h": 1180 },
+    { "file": "BandaDate.dc.html", "title": "01 — Banda de date", "x": 1140, "y": 0, "w": 1120, "h": 700 },
+    { "file": "Despre.dc.html", "title": "02 — Pagina Despre", "x": 1140, "y": 800, "w": 1120, "h": 1520 },
+    { "file": "Proces.dc.html", "title": "03 — Pagina Cum lucrez", "x": 2360, "y": 0, "w": 1120, "h": 1460 },
+    { "file": "Aplicare.dc.html", "title": "04 — Galerie curatoriată", "x": 2360, "y": 1560, "w": 1120, "h": 1180 },
+    { "file": "Portofoliu.dc.html", "title": "05 — Studii de caz / Colecții", "x": 0, "y": 1280, "w": 1120, "h": 1060 }
+  ],
+  "annotations": [
+    {
+      "id": "ordine",
+      "x": 0,
+      "y": -190,
+      "w": 520,
+      "text": "Ordinea e după risc, nu după mărime.\n\nPașii 02 și 03 sunt pagini noi — nu pot strica nimic din ce merge azi, oricât de mari par. Pasul 04 e prima atingere a unei componente existente, pasul 05 e singurul care ajunge pe prima pagină.\n\nTot ce e în paranteze pătrate așteaptă text de la tine."
+    },
+    {
+      "id": "unul-pe-rand",
+      "x": 1140,
+      "y": -190,
+      "w": 460,
+      "text": "Nu construiesc doi pași în paralel. Fiecare merge: cod → verificare pe toate cele 18 pagini → publicare → îți spun ce s-a schimbat. Abia apoi următorul."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

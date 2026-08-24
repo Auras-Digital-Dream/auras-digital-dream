@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <style>
+    body { margin: 0; background: #FFFFFF; color: #2D353C;
+      font-family: "EB Garamond", Georgia, serif; -webkit-font-smoothing: antialiased; }
+    a { color: #48535A; } a:hover { color: #2D353C; }
+  </style>
+</helmet>
+
+<div style="padding: 56px 60px 64px; display: flex; flex-direction: column; gap: 34px;">
+
+  <div style="display: flex; flex-direction: column; gap: 14px;">
+    <span style="display: inline-flex; align-self: flex-start; align-items: center; padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(190,206,209,.54); background: rgba(217,234,238,.16); font-family: system-ui, -apple-system, sans-serif; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #48535A;">Ordinea de lucru</span>
+    <h1 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 46px; line-height: 1.08; letter-spacing: -.008em;">Cinci pași, de la cel care nu poate strica nimic la cel care atinge prima pagină.</h1>
+    <p style="margin: 0; max-width: 62ch; font-size: 17px; line-height: 1.65; color: #48535A;">Ordinea nu e după cât de spectaculos e rezultatul, ci după cât de mult poate merge prost. Fiecare bug din sesiunea asta a apărut unde am atins ceva existent, niciodată unde am adăugat ceva nou. Deci pașii doi și trei — paginile noi — sunt mai siguri decât pasul patru, deși par mai mari.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 14px;">
+
+    <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+      <div style="display: grid; grid-template-columns: 62px minmax(0, 1fr) 176px; gap: 26px; align-items: start; padding: 24px 26px; border-radius: 18px; background: rgba(217,234,238,.30); border: 1px solid rgba(135,206,235,.38);">
+        <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start;">
+          <span style="font-family: Marcellus, Georgia, serif; font-size: 30px; line-height: 1; color: #2D353C;">{{s.n}}</span>
+          <span style="display: inline-block; width: 26px; height: 1px; background: #C9A86A;"></span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 9px;">
+          <h2 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 25px; line-height: 1.2;">{{s.title}}</h2>
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.62; color: #48535A;">{{s.why}}</p>
+          <p style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #5A6066;"><em style="font-style: italic;">De la tine:</em> {{s.need}}</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: #5A6066;">Ce ating</span>
+            <span style="font-size: 14px; line-height: 1.4; color: #2D353C;">{{s.touches}}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: #5A6066;">Risc</span>
+            <span style="font-size: 14px; line-height: 1.4; color: {{s.riskColor}};">{{s.risk}}</span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+
+  </div>
+
+  <div style="display: flex; gap: 18px; align-items: flex-start; padding: 22px 26px; border-radius: 18px; border: 1px solid #DFE7EC; background: #F9FCFD;">
+    <span style="display: inline-block; width: 3px; align-self: stretch; background: #C9A86A; border-radius: 2px;"></span>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h3 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 20px;">În afara șirului: cifrele</h3>
+      <p style="margin: 0; max-width: 74ch; font-size: 15px; line-height: 1.6; color: #48535A;">Cele șapte rezultate procentuale nu au nevoie de niciun pas — sunt text, nu cod. Se pot schimba oricând, între oricare doi pași, în cinci minute. Decizia e a ta: ori arăți dovada, ori dispar. Nu depinde de nimic altceva de aici.</p>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1040,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      steps: [
+        {
+          n: "01",
+          title: "Banda de date: sector, link live, credite",
+          why: "Trei câmpuri noi în banda de sub hero. Sectorul clientului („Brutărie”, „Salubritate”) e ce caută cineva care vrea pe cineva ce a mai lucrat în domeniul lui. Linkul live e cea mai puternică dovadă care există. Creditele arată că lucrezi într-o rețea, nu în bucătărie.",
+          need: "adresele site-urilor care mai sunt online, și numele tipografiei sau fotografului unde a fost cazul.",
+          touches: "un fișier de date și o singură bandă",
+          risk: "cel mai mic",
+          riskColor: "#48535A"
+        },
+        {
+          n: "02",
+          title: "Pagina „Despre”",
+          why: "Site-ul are exact două pagini în afara portofoliului. Nu există niciun loc unde cineva te întâlnește — iar la scara ta, unde omul e produsul, asta e cea mai mare gaură. O rută nouă nu poate strica nimic din ce funcționează azi.",
+          need: "textul tău despre tine, și o fotografie pe care o vrei publică.",
+          touches: "nimic — pagină nouă",
+          risk: "izolat prin construcție",
+          riskColor: "#48535A"
+        },
+        {
+          n: "03",
+          title: "Pagina „Cum lucrez”",
+          why: "Ascult / Imaginez / Construiesc e cel mai bun lucru de pe site și cel mai îngropat: trei propoziții pe prima pagină. Studiourile mari își fac din asta o pagină întreagă. Al tău e deja mai bine numit decât al lor.",
+          need: "ce se întâmplă concret la fiecare pas, și ce refuzi să faci.",
+          touches: "nimic — pagină nouă",
+          risk: "izolat prin construcție",
+          riskColor: "#48535A"
+        },
+        {
+          n: "04",
+          title: "Galerii curatoriate + capitolul „Aplicare”",
+          why: "Galeriile au între 5 și 36 de imagini, în ordine alfabetică de fișier. Diferența dintre un studiu de caz și un folder e că cineva a ales ordinea. Prima schimbare la o componentă existentă — de aici încolo verific pixel cu pixel după fiecare pas.",
+          need: "care 6–8 imagini contează la fiecare proiect. Pot alege eu și corectezi tu.",
+          touches: "galeria din paginile de proiect",
+          risk: "mediu",
+          riskColor: "#8A5A2B"
+        },
+        {
+          n: "05",
+          title: "Separarea studii de caz / colecții",
+          why: "Cinci proiecte sunt ale tale, șase sunt colecții. Amestecate, un vizitator nu poate distinge ce ai fost plătită să faci. Ultimul pe listă fiindcă e singurul care atinge prima pagină — partea de site la care ții cel mai mult.",
+          need: "confirmarea care proiect intră în care grupă.",
+          touches: "indexul de portofoliu de pe prima pagină",
+          risk: "mediu, pe zona sensibilă",
+          riskColor: "#8A5A2B"
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <style>
+    body { margin: 0; background: #FFFFFF; color: #2D353C;
+      font-family: "EB Garamond", Georgia, serif; -webkit-font-smoothing: antialiased; }
+    a { color: #48535A; } a:hover { color: #2D353C; }
+  </style>
+</helmet>
+
+<div style="padding: 44px 56px 52px; display: flex; flex-direction: column; gap: 30px;">
+
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #5A6066;">Pasul 01 — banda de sub hero, într-o pagină de proiect</span>
+    <h2 style="margin: 0; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 27px;">Trei câmpuri în plus, aceeași bandă</h2>
+  </div>
+
+  <!-- BEFORE -->
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: #5A6066;">Acum — patru câmpuri</span>
+    <div style="border-top: 1px solid #DFE7EC; border-bottom: 1px solid #DFE7EC; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); opacity: .58;">
+      <sc-for list="{{before}}" as="f" hint-placeholder-count="4">
+        <div style="padding: 22px 20px; border-right: 1px solid #DFE7EC; display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: system-ui, -apple-system, sans-serif; color: #5A6066; text-transform: uppercase; letter-spacing: .14em; font-size: 9px;">{{f.k}}</span>
+          <span style="font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 17px; line-height: 1.3;">{{f.v}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- AFTER -->
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: #2D353C;">Propunerea — șapte, pe două rânduri</span>
+    <div style="border-top: 1px solid #DFE7EC; border-bottom: 1px solid #DFE7EC; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));">
+      <sc-for list="{{after}}" as="f" hint-placeholder-count="8">
+        <div style="padding: 22px 20px; border-right: 1px solid #DFE7EC; border-top: 1px solid {{f.rowLine}}; display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: system-ui, -apple-system, sans-serif; color: {{f.keyColor}}; text-transform: uppercase; letter-spacing: .14em; font-size: 9px;">{{f.k}}</span>
+          <sc-if value="{{f.link}}" hint-placeholder-val="{{ true }}">
+            <a href="#" style="display: inline-flex; align-items: center; gap: 7px; font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 17px; line-height: 1.3; text-decoration: none; color: #2D353C; border-bottom: 1px solid rgba(201,168,106,.55); align-self: flex-start; padding-bottom: 2px;">
+              {{f.v}}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A86A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16 16 8"></path><path d="M9.5 8H16v6.5"></path></svg>
+            </a>
+          </sc-if>
+          <sc-if value="{{f.plain}}" hint-placeholder-val="{{ true }}">
+            <span style="font-family: Marcellus, Georgia, serif; font-weight: 400; font-size: 17px; line-height: 1.3;">{{f.v}}</span>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 26px; align-items: flex-start; padding: 20px 24px; border-radius: 16px; background: rgba(217,234,238,.30); border: 1px solid rgba(135,206,235,.38);">
+    <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+      <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #5A6066;">Ce e nou</span>
+      <span style="font-size: 15px; line-height: 1.55; color: #2D353C;">Sector, Site și Colaboratori. Sectorul e industria clientului, nu disciplina ta — e ce caută cineva din aceeași ramură.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
+      <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #5A6066;">Ce se schimbă vizual</span>
+      <span style="font-size: 15px; line-height: 1.55; color: #2D353C;">Banda trece de la un rând la două. Aceeași chenăruire, aceeași tipografie, aceleași linii. Nimic altceva de pe pagină nu se mișcă.</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1120,"height":700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const L = "#DFE7EC";
+    return {
+      before: [
+        { k: "Rol & servicii", v: "Identitate vizuală" },
+        { k: "Client", v: "Brutărie artizanală locală" },
+        { k: "Perioadă", v: "August 2026" },
+        { k: "Livrabile", v: "5 rezultate-cheie" }
+      ],
+      after: [
+        { k: "Rol & servicii", v: "Identitate vizuală", plain: true, link: false, keyColor: "#5A6066", rowLine: "transparent" },
+        { k: "Client", v: "Brutărie artizanală locală", plain: true, link: false, keyColor: "#5A6066", rowLine: "transparent" },
+        { k: "Sector", v: "Panificație", plain: true, link: false, keyColor: "#2D353C", rowLine: "transparent" },
+        { k: "Perioadă", v: "August 2026", plain: true, link: false, keyColor: "#5A6066", rowLine: "transparent" },
+        { k: "Livrabile", v: "5 rezultate-cheie", plain: true, link: false, keyColor: "#5A6066", rowLine: L },
+        { k: "Site", v: "paineadeacasa.ro", plain: false, link: true, keyColor: "#2D353C", rowLine: L },
+        { k: "Tipar", v: "[TIPOGRAFIA]", plain: true, link: false, keyColor: "#2D353C", rowLine: L },
+        { k: "Fotografie", v: "[FOTOGRAF, dacă e cazul]", plain: true, link: false, keyColor: "#2D353C", rowLine: L }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -102,8 +102,8 @@ const showcasedSources = new Set([
   "/portfolio/adi-ecoo-2009-sa/89fb91d78_InstagramVideoStory1080x1920px2.mp4",
   "/portfolio/lupul-and-brici/a45070a4f_nregistrare2026-07-01114857.mp4",
   "/portfolio/auras-trend-vault/b2db01172_aurastrendvault.mp4",
-  "/portfolio/magazine-online-e-commerce/2df41b79e_ClipvideoWhatsApp2025-01-13la153146_9b0b1b8f.mp4",
-  "/portfolio/real-estate-co/610ce2e53_ClipvideoWhatsApp2025-10-27la231531_f9cbb1e1.mp4",
+  "/portfolio/magazine-online-e-commerce/2df41b79e_ClipvideoWhatsApp2025-01-13la153142_c682764f.mp4",
+  "/portfolio/real-estate-co/610ce2e53_ClipvideoWhatsApp2025-10-27la231539_71ff5ca2.mp4",
   "/portfolio/verde-bean/96848f026_WhatsAppVideo2026-07-02at090552.mp4",
   "/portfolio/lumina-botanica/45639281f_WhatsAppVideo2026-07-02at090147.mp4",
 ]);
