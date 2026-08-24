@@ -201,7 +201,7 @@ function HeroSection() {
     <section className="hero" id="studio">
       <div className="hero-video-bg">
         <video ref={videoRef} muted playsInline preload="auto" loop>
-          <source src="/assets/books-cinematic/hero-waves.mp4" type="video/mp4" />
+          <source src="/assets/hero-statues.mp4" type="video/mp4" />
         </video>
         <div className="hero-video-overlay" />
       </div>
@@ -332,10 +332,10 @@ function PortfolioSection() {
   const ref = useRef(null);
   const revealed = useReveal(ref);
   const projects = [
-    { title: 'Lovera Brand', category: 'Identitate Vizuală', img: '/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.jpeg' },
-    { title: 'Renaissance Editorial', category: 'Fotografie', img: '/portfolio/auras-trend-vault/editorial-2026/editorial-black-white.jpeg' },
-    { title: 'Digital Dreams', category: 'Web Design', img: '/portfolio/auras-trend-vault/editorial-2026/editorial-city-motion.jpeg' },
-    { title: 'The New York Times', category: 'Art Direction', img: '/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg' },
+    { title: 'Lovera Brand', category: 'Identitate Vizuală', img: '/assets/editorial-1.jpg' },
+    { title: 'Renaissance Editorial', category: 'Fotografie', img: '/assets/editorial-2.jpg' },
+    { title: 'Digital Dreams', category: 'Web Design', img: '/assets/editorial-3.jpg' },
+    { title: 'The New York Times', category: 'Art Direction', img: '/assets/editorial-4.jpg' },
   ];
 
   return (
@@ -418,13 +418,13 @@ function AboutSectionInline() {
   return (
     <section id="despre-mine" className="about-section">
       <div className="about-bg">
-        <img src="/assets/hero.png" alt="" />
+        <img src="/assets/about-bg.jpg" alt="" />
         <div className="about-bg-overlay" />
       </div>
 
       <div ref={ref} className={`about-content ${revealed ? 'is-revealed' : ''}`}>
         <div className="about-portrait">
-          <img src="/assets/aura-cinematic-portrait.jpeg" alt="Aura" />
+          <img src="/assets/aura-red.jpg" alt="Aura" />
         </div>
 
         <div className="about-text" ref={textRef}>
@@ -469,7 +469,7 @@ function ProcessSection() {
         zIndex: 0,
       }}>
         <img
-          src="/assets/editorial/golden-portrait-clean.jpg"
+          src="/assets/process-bg.jpg"
           alt=""
           style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.7)' }}
         />
