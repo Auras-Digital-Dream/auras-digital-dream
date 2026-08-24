@@ -41,13 +41,13 @@ export default function AboutSection() {
   return (
     <section id="despre-mine" className="about-section">
       <div className="about-bg">
-        <img src="/assets/about-bg.jpg" alt="" />
+        <img src="/assets/hero.png" alt="" />
         <div className="about-bg-overlay" />
       </div>
 
       <div ref={ref} className={`about-content ${revealed ? 'is-revealed' : ''}`}>
         <div className="about-portrait">
-          <img src="/assets/aura-red.jpg" alt="Aura" />
+          <img src="/assets/aura-cinematic-portrait.jpeg" alt="Aura" />
         </div>
 
         <div className="about-text" ref={textRef}>
