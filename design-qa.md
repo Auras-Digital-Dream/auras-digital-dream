@@ -1,63 +1,59 @@
-# Design QA — Aura's Digital Dream
+# Design QA — secțiunile inferioare ale paginii de cărți
 
-- Source visual truth: `https://auras-digital-dream.base44.app/`
-- Source capture: `C:\Users\aural\AppData\Local\Temp\auras-source-mobile-ready.png`
-- Implementation capture: `C:\Users\aural\AppData\Local\Temp\auras-implementation-desktop.png`
-- Combined comparison: `C:\Users\aural\AppData\Local\Temp\auras-desktop-comparison.png`
-- Desktop viewport and captures: 1279 × 723 CSS px, 1279 × 723 image px, density 1:1
-- Mobile implementation capture: `C:\Users\aural\AppData\Local\Temp\auras-implementation-mobile-top2.png`, 390 × 844 CSS px
-- State: homepage hero, navigation closed, estimator initial state
+source visual truth path: `C:\Users\aural\Downloads\inspiratie carti.mp4` (cadru capturat în `design-qa-source.png`)
+
+implementation screenshot path: `design-qa-implementation.png`
+
+comparison image path: `design-qa-comparison.png`
+
+viewport: desktop implicit Edge, 1125 x 772 CSS px; verificare responsive suplimentară la override 390 x 844, randat de extensie la 434 x 938 CSS px
+
+pixel dimensions and density normalization: sursă 1142 x 784 px; implementare 1125 x 772 px; comparație 1142 x 784 px; capturi la densitatea implicită a browserului, scalate proporțional în aceeași planșă pentru comparație vizuală
+
+state: secțiunea de abonare și pilulele după intrarea în viewport; secțiunea cu evantaiul de cărți după animație; formular testat în starea de succes
 
 ## Full-view comparison evidence
 
-The combined desktop capture compares the Base44 source on the left and the local React implementation on the right. The implementation preserves the original dark abstract hero, circular brand mark, editorial display type, rose accent, centered hierarchy, dual CTAs, navigation density, and floating WhatsApp action.
+Planșa `design-qa-comparison.png` pune în același cadru secțiunea de abonare din videoclip și implementarea Aura Dobre. Structura, contrastul, formularul liniar, fundalul aproape negru și gruparea pilulelor colorate păstrează direcția vizuală a sursei, fără a copia identitatea sau textele site-ului din videoclip.
 
 ## Focused region comparison evidence
 
-The above-the-fold hero was reviewed at equal desktop dimensions because it contains the most fidelity-sensitive typography, image crop, navigation, and calls to action. The mobile hero was separately rendered and inspected at 390 × 844. No additional focused crop was required after the hero typography and control spacing were readable at full resolution.
-
-## Required fidelity surfaces
-
-- Fonts and typography: Italiana provides a close open-source match for the editorial display face; DM Sans matches the restrained UI typography and hierarchy.
-- Spacing and layout rhythm: desktop hero centering, header margins, CTA spacing, section padding, cards, and responsive single-column layouts are consistent with the source.
-- Colors and tokens: near-black, warm ivory, muted gray, and rose accent are represented as reusable CSS tokens.
-- Image quality and assets: the original Base44 logo, hero image, and all 14 portfolio thumbnails are copied locally at source resolution; there are no image placeholders or hotlinks.
-- Copy and content: navigation, hero, services, skills, portfolio categories and projects, estimator, process, testimonials, contact details, and social destinations are carried over.
-
-## Interaction checks
-
-- Smooth section navigation and mobile menu.
-- Portfolio filters; Marketing correctly reduced the visible project set to two cards.
-- Estimator selection; selecting the landing-page service updated the total to 1.200 RON.
-- Testimonial previous/next controls.
-- Contact form required fields and success state.
-- WhatsApp, telephone, and social links.
-- Browser console checked: no errors.
-
-## Comparison history
-
-1. P2: mobile page produced horizontal overflow because the off-canvas navigation remained in layout bounds. Fixed by hiding horizontal overflow and marking the closed navigation as invisible. Post-fix mobile capture shows a clean 390 px composition.
-2. P2: menu used text glyphs for open/close. Replaced with Phosphor icon components. Post-fix capture shows consistent iconography.
-3. P1: portfolio cards did not initially navigate to individual project pages. Added 14 real routes with the Base44 text, result lists, image galleries, videos, local assets, lightbox zoom, back navigation, and contact CTA.
-4. P1: the first detail-page implementation used a split hero while Base44 placed the project title above a wide cover image. Rebuilt the detail hero to match the source composition and assigned the exact Base44 cover asset for every project.
-
-## Detail-page verification
-
-- Detail source capture: `C:\Users\aural\AppData\Local\Temp\auras-source-detail-ready.png`
-- Final implementation capture: `C:\Users\aural\AppData\Local\Temp\auras-implementation-detail-final.png`
-- Final combined comparison: `C:\Users\aural\AppData\Local\Temp\auras-detail-comparison-final.png`
-- Mobile detail capture: `C:\Users\aural\AppData\Local\Temp\auras-detail-mobile.png`, 390 × 844 CSS px
-- All 14 routes were opened directly and returned the correct H1, gallery, and video count.
-- All rendered images reported valid natural dimensions; broken image count was zero.
-- Gallery lightbox open/close was tested and passed.
-- Detail-page browser console checked: no errors.
-- The final equal-size comparison confirms the Base44 hierarchy: shared navigation, back link, metadata pills, editorial project title, client line, and wide rounded cover image.
+Au fost inspectate separat zona formularului și a pilulelor, apoi evantaiul cu cele patru coperți. Verificarea focalizată a fost necesară pentru alinierea câmpului și butonului, lizibilitatea etichetelor, rotațiile pilulelor, crop-ul copertelor și suprapunerea cărților.
 
 ## Findings
 
-- No actionable P0, P1, or P2 mismatches remain.
-- P3: the local open-source display font has slightly different glyph proportions from the Base44 source font, but retains the same hierarchy and editorial character.
+Nu au rămas diferențe P0, P1 sau P2 acționabile. Adaptările de copy, serif-ul existent și paleta Aura Dobre sunt intenționate, pentru continuitatea brandului.
 
-## Final result
+- [P3] Pilulele din implementare sunt mai ordonate decât în referință. Acest lucru păstrează lizibilitatea pe mobil; efectul de cădere și rotațiile oferă în continuare impresia de acumulare.
+
+## Required fidelity surfaces
+
+- Fonts and typography: serif-ul cinematic existent este păstrat pentru titluri; textul UI folosește familia sans a proiectului, cu greutăți și contrast lizibile.
+- Spacing and layout rhythm: ierarhia abonare → pilule → autoare → evantai este clară; nu există overflow orizontal la verificarea mobilă.
+- Colors and visual tokens: fundal aproape negru, alb cald și accentele colorate corespund direcției sursei și rămân compatibile cu tema paginii.
+- Image quality and asset fidelity: sunt folosite coperțile reale deja existente în proiect, fără substituții sau ilustrații improvizate.
+- Copy and content: toate textele sunt rescrise pentru Aura Dobre și universul cărților ei; nu este preluat copy-ul site-ului de referință.
+
+## Interaction and accessibility evidence
+
+- Formularul acceptă un email valid și afișează local mesajul de succes.
+- Câmpul are etichetă accesibilă, imaginile au texte alternative, linkurile au denumiri explicite.
+- `prefers-reduced-motion` este respectat prin dezactivarea stărilor inițiale animate.
+- Consola browserului: zero erori.
+- Build de producție: trecut.
+
+## Comparison history
+
+1. P2 găsit: eticheta accesibilă era afișată și rupea grila formularului. Fix: eticheta vizuală a fost înlocuită cu `aria-label`; recapturarea arată câmpul și butonul pe același rând.
+2. P1 găsit: coperțile rămâneau invizibile deoarece fiecare element absolut depindea de propriul observer. Fix: animația a fost mutată pe containerul evantaiului, iar rotațiile finale sunt definite stabil în CSS; recapturarea arată toate cele patru coperți.
+3. Verificare după fix: fără probleme P0/P1/P2 pe desktop; fără overflow orizontal la viewport mobil.
+
+## Implementation checklist
+
+- [x] formular de abonare funcțional
+- [x] pilule animate la scroll
+- [x] evantai animat cu coperțile reale
+- [x] layout responsive și reduced motion
+- [x] build și verificare în browser
 
 final result: passed

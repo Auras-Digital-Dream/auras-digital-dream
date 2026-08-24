@@ -375,6 +375,8 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
 }
 
 function BooksPageCinematic({ onNavigate, onSection }) {
+  const reducedMotion = useReducedMotion();
+  const [newsletterStatus, setNewsletterStatus] = useState("idle");
   const authorAmazon = "https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0";
   const goodreads = "https://www.goodreads.com/user/show/203519366-aura-dobre";
   const { scrollY } = useScroll();
@@ -407,7 +409,22 @@ function BooksPageCinematic({ onNavigate, onSection }) {
     { title: "The Clockmaker's Curse", image: "/assets/amazon/clockmakers-curse.jpg", meta: "Thriller · Mystery", subtitle: "Time Holds The key", copy: "O poveste despre timp, obsesie și secrete îngropate adânc în mecanismele unui ceas. Fiecare tic-tac ascunde o minciună.", link: "https://amzn.eu/d/0bGKmBLR" },
     { title: "Lunaria's Secret Treasure", image: "/assets/amazon/lunaria-secret-treasure.jpg", meta: "Children's Fantasy · Adventure", subtitle: "in the Enchanted Forest", copy: "O aventură magică pentru cei mici — unde păduri fermecate ascund comori, iar curajul e singura hartă de care ai nevoie.", link: "https://a.co/d/0gsNh4wn" },
   ];
-  const chips = ["dark romance", "thriller psihologic", "villain energy", "literary dark fiction", "obsession stories", "morally grey heroes", "slow burn tension"];
+  const fallingGenres = [
+    ["dark romance", "#ff8fb7", "#231218", -8],
+    ["thriller psihologic", "#5388ff", "#f8fbff", 7],
+    ["fantasy", "#ffd34f", "#201c08", -5],
+    ["ficțiune literară", "#f06d45", "#fff8f1", 8],
+    ["mister", "#cf2dff", "#fff7ff", -7],
+    ["slow burn", "#9dd968", "#13200d", 5],
+    ["obsesie", "#ff6f91", "#fff8fb", -4],
+    ["eroi moralmente gri", "#7f73ff", "#fbfaff", 6],
+  ];
+  const footerBooks = [
+    ["/assets/amazon/clockmakers-curse.jpg", "The Clockmaker's Curse", "https://amzn.eu/d/0bGKmBLR", -20, -78],
+    ["/assets/amazon/lunaria-secret-treasure.jpg", "Lunaria's Secret Treasure", "https://a.co/d/0gsNh4wn", -8, -28],
+    ["/assets/amazon/unreachable.jpg", "Unreachable", "https://www.amazon.co.uk/dp/B0GXSLHRNY", 7, 28],
+    ["/assets/books-cinematic/echoes-of-eternity.png", "Echoes of Eternity", authorAmazon, 19, 78],
+  ];
   const fadeUp = {
     hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
     visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
@@ -485,14 +502,62 @@ function BooksPageCinematic({ onNavigate, onSection }) {
         </div>
       </section>
 
-      <section className="cinematic-reader" data-reveal><p className="section-kicker"><span className="eyebrow-text">04 — Cititoarea mea</span></p><h2>Pentru cine sunt cărțile mele</h2><p>Pentru cititoarea care iubește intensitatea — care vrea să simtă tensiunea de pe fiecare pagină, care nu se teme de eroi moralmente gri și care citește la 3 dimineața pentru că nu poate lăsa cartea jos.</p><div className="literary-chips">{chips.map((chip) => <span key={chip}>{chip}</span>)}</div></section>
+      <section className="cinematic-reader reader-subscribe" data-reveal>
+        <div className="reader-subscribe-card">
+          <p className="section-kicker"><span className="eyebrow-text">04 — Cititoarea mea</span></p>
+          <h2>Pentru cine sunt cărțile mele?</h2>
+          <p>Pentru cititoarea care iubește intensitatea — care vrea să simtă tensiunea de pe fiecare pagină, care nu se teme de eroi moralmente gri și care citește la 3 dimineața pentru că nu poate lăsa cartea jos.</p>
+          <div className="reader-newsletter-mark" aria-hidden="true"><BookOpen size={30} weight="thin" /></div>
+          <h3>Primește următorul capitol</h3>
+          <p className="reader-newsletter-note">Noutăți despre cărți, fragmente în premieră și universuri care se pregătesc să prindă viață.</p>
+          <form className="books-newsletter" onSubmit={(event) => { event.preventDefault(); setNewsletterStatus("success"); }}>
+            <input id="books-newsletter-email" aria-label="Adresa ta de email" type="email" placeholder="Adresa ta de email" required />
+            <button type="submit">Abonează-mă <ArrowRight size={16} /></button>
+          </form>
+          {newsletterStatus === "success" && <p className="books-newsletter-success" role="status"><Check size={16} /> Mulțumesc! Te voi ține la curent.</p>}
+          <div className="falling-genres" aria-label="Genurile și temele cărților">
+            {fallingGenres.map(([label, color, ink, rotation], index) => (
+              <motion.span
+                key={label}
+                style={{ "--genre-color": color, "--genre-ink": ink }}
+                initial={reducedMotion ? false : { opacity: 0, y: -180 - index * 22, rotate: rotation * 2.4 }}
+                whileInView={{ opacity: 1, y: 0, rotate: rotation }}
+                viewport={{ once: true, amount: 0.7 }}
+                transition={{ type: "spring", stiffness: 150, damping: 13, mass: 0.8, delay: index * 0.08 }}
+              >{label}</motion.span>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="cinematic-author" id="despre" ref={authorRef}>
         <motion.div className="cinematic-author-bg" style={{ y: authorBgY }}><video autoPlay muted loop playsInline><source src="/assets/books-cinematic/book-pages.mp4" type="video/mp4" /></video></motion.div>
         <div><motion.p className="section-kicker" initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8 }}><span className="eyebrow-text">05 — Autoarea</span></motion.p><motion.h2 initial={{ opacity: 0, x: -28 }} animate={authorInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}>În spatele poveștilor</motion.h2><motion.div initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.35 }}><p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p><p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p></motion.div><motion.div className="books-actions" initial={{ opacity: 0 }} animate={authorInView ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: 0.5 }}><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></motion.div></div>
       </section>
 
-      <motion.section className="cinematic-final" ref={finalRef} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}><motion.div className="cinematic-final-orb" style={{ scale: finalScale }} /><p className="section-kicker"><span className="eyebrow-text">06 — Finale</span></p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Intră în lumea ei și vei vrea să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></motion.section>
+      <section className="books-fan-section">
+        <motion.div className="books-fan-copy" initial={reducedMotion ? false : { opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }}>
+          <p className="section-kicker"><span className="eyebrow-text">06 — Biblioteca Aura Dobre</span></p>
+          <h2>Alege povestea care te cheamă.</h2>
+          <p>Patru lumi, patru atmosfere și aceeași promisiune: o lectură care continuă să trăiască după ultima pagină.</p>
+          <a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Descoperă toate cărțile <ArrowRight size={18} /></a>
+        </motion.div>
+        <motion.div className="books-fan" aria-label="Cărțile semnate de Aura Dobre" initial={reducedMotion ? false : { opacity: 0, y: 190, scale: 0.82 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: 0.12 }} transition={{ type: "spring", stiffness: 92, damping: 17, delay: 0.18 }}>
+          {footerBooks.map(([image, title, link, rotation, x], index) => (
+            <motion.a
+              key={title}
+              href={link}
+              target="_blank"
+              rel="sponsored noopener noreferrer"
+              aria-label={`${title} — deschide pagina cărții`}
+              style={{ zIndex: index + 1, "--book-x": `${x}%`, "--book-rotate": `${rotation}deg` }}
+              initial={false}
+            ><img src={image} alt={`Coperta ${title}`} /></motion.a>
+          ))}
+        </motion.div>
+      </section>
+
+      <motion.section className="cinematic-final" ref={finalRef} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}><motion.div className="cinematic-final-orb" style={{ scale: finalScale }} /><p className="section-kicker"><span className="eyebrow-text">07 — Finale</span></p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Intră în lumea ei și vei vrea să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></motion.section>
       <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura Dobre</strong><p>Cărți, lumi vizuale și povești cinematice.</p></div></div><p>© 2026 Aura Dobre. Toate drepturile rezervate.</p></footer>
     </main>
   );
