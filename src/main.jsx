@@ -4,6 +4,7 @@ import { inject } from "@vercel/analytics";
 import { App } from "./App.jsx";
 import "./styles.css";
 import "./home.css";
+import "./renaissance-refresh.css";
 
 /* Cookieless, and served from this origin — so it needs nothing added to the
    Content-Security-Policy, and nothing asked of the visitor. */

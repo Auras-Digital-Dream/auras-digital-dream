@@ -344,7 +344,7 @@ export function HomePage({ onNavigate }) {
         <div className="hero-pin">
           <div className="hero-frame">
             <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/renaissance-sculptor-hero.jpg">
-              <source src="/video/renaissance-sculptor-hero.mp4" type="video/mp4" />
+              <source src="/assets/hero-statues.mp4" type="video/mp4" />
             </video>
             <motion.span
               className="hero-frame-scrim"

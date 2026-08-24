@@ -1,0 +1,107 @@
+/* Selective Renaissance refresh.
+   This layer changes atmosphere without replacing the existing information
+   architecture, routes, project archive, books page, or working interactions. */
+
+.home {
+  --paper: #edede9;
+  --surface-2: #e7ece8;
+  --mist: #c3d4d2;
+  --sky: #bcd7d2;
+  --frost: #dce9e6;
+  --line: #c3bea4;
+  --pearl: #f4f2ed;
+  --shell: #dfe8e4;
+  --sand-soft: #d8d4c5;
+  --petal: #d4a5a5;
+  --bloom: #c3d4d2;
+  --leaf: #a79f83;
+  --stem: #6e4925;
+  --gold: #a79f83;
+  --gold-line: rgba(110, 73, 37, .38);
+  --ink: #34312d;
+  --ink-soft: #62645f;
+  --ink-soft-strong: #50534f;
+  --ink-ground: #1a1815;
+  --glass-edge: rgba(195, 212, 210, .58);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(195, 212, 210, .34), transparent 28%),
+    radial-gradient(circle at 86% 24%, rgba(195, 190, 164, .25), transparent 25%),
+    var(--paper);
+}
+
+.home .masthead {
+  border-color: rgba(167, 159, 131, .32);
+  box-shadow: 0 16px 45px rgba(52, 49, 45, .08);
+}
+
+.home .masthead-cta,
+.home .button.primary {
+  background: linear-gradient(135deg, #477473, #355c5b);
+  border-color: rgba(255, 255, 255, .18);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(71, 116, 115, .2);
+}
+
+.home .masthead-cta:hover,
+.home .button.primary:hover {
+  background: linear-gradient(135deg, #6e4925, #56371b);
+}
+
+.home .service-card,
+.home .price-card,
+.home .voice-card,
+.home .archive-card {
+  border-color: rgba(167, 159, 131, .32);
+  background: color-mix(in srgb, var(--paper), transparent 15%);
+  box-shadow: 0 22px 70px rgba(52, 49, 45, .08);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.home .process {
+  background:
+    linear-gradient(90deg, rgba(237, 237, 233, .97) 0%, rgba(237, 237, 233, .88) 52%, rgba(237, 237, 233, .4) 100%),
+    url('/assets/process-bg.jpg') center / cover no-repeat;
+}
+
+.home .process-grid {
+  padding: clamp(28px, 4vw, 56px);
+  border: 1px solid rgba(167, 159, 131, .3);
+  border-radius: var(--radius-lg);
+  background: rgba(237, 237, 233, .72);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.home .site-footer {
+  background:
+    linear-gradient(90deg, rgba(26, 24, 21, .96), rgba(26, 24, 21, .76)),
+    url('/assets/footer-bg.jpg') center 42% / cover no-repeat;
+}
+
+.home .site-footer .footer-grid {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 760px) {
+  .home .hero-title {
+    max-width: 9.5em;
+    margin-inline: auto;
+    font-size: clamp(30px, 9.5vw, 38px);
+    line-height: 1.02;
+  }
+
+  .home .process {
+    background:
+      linear-gradient(rgba(237, 237, 233, .9), rgba(237, 237, 233, .96)),
+      url('/assets/process-bg.jpg') 68% center / cover no-repeat;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home .masthead-cta,
+  .home .button.primary {
+    transition: none;
+  }
+}
