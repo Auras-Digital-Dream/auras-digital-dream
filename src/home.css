@@ -2543,7 +2543,64 @@ footer .button,
 .price-total strong { font-weight: 600; }
 .process-number { font-weight: 300; }
 
-/* ── The statue's band ─────────────────────────────────────────────────── */
+/* ── About: Renaissance material, futuristic rhythm ───────────────────── */
+.home-about {
+  --about-porcelain:#eeeae7;
+  --about-mist:#c6d0d1;
+  --about-sage:#c4c0a9;
+  --about-stone:#a3a5a2;
+  --about-olive:#8d8066;
+  --about-petrol:#5f797a;
+  --about-walnut:#74502d;
+  position:relative;
+  min-height:clamp(920px,118vh,1240px);
+  overflow:hidden;
+  isolation:isolate;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 18% 20%,rgba(198,208,209,.72),transparent 31%),
+    radial-gradient(circle at 84% 74%,rgba(116,80,45,.28),transparent 34%),
+    linear-gradient(135deg,var(--about-porcelain) 0%,#d8d5c5 34%,var(--about-sage) 58%,#a9a28a 100%);
+  color:#302d29;
+  scroll-margin-top:90px;
+}
+.home-about-atmosphere { position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(90deg,rgba(238,234,231,.64),transparent 24%,transparent 72%,rgba(95,121,122,.22)),radial-gradient(circle at 50% 42%,rgba(255,255,255,.48),transparent 34%); }
+.home-about-atmosphere::before,.home-about-atmosphere::after { content:""; position:absolute; width:clamp(220px,31vw,520px); aspect-ratio:1; border:1px solid rgba(48,45,41,.16); border-radius:50%; filter:blur(.2px); }
+.home-about-atmosphere::before { left:-12%; top:11%; box-shadow:0 0 90px rgba(95,121,122,.17),inset 0 0 70px rgba(255,255,255,.26); }
+.home-about-atmosphere::after { right:-11%; bottom:5%; border-color:rgba(116,80,45,.2); box-shadow:0 0 100px rgba(116,80,45,.16); }
+.home-about-heading { position:absolute; z-index:2; top:clamp(78px,10vh,116px); left:50%; transform:translateX(-50%); width:min(94%,1180px); display:grid; justify-items:center; pointer-events:none; }
+.home-about-heading span { font-family:var(--font-sans); font-size:clamp(13px,1.3vw,18px); font-weight:700; letter-spacing:.46em; text-transform:uppercase; color:rgba(48,45,41,.7); }
+.home-about-heading strong { margin-top:-.02em; font-family:var(--font-display); font-size:clamp(118px,22vw,330px); font-weight:500; line-height:.8; letter-spacing:-.055em; color:rgba(238,234,231,.8); text-shadow:0 1px rgba(255,255,255,.7),0 35px 80px rgba(48,45,41,.12); }
+.home-about-portrait { position:absolute; z-index:3; top:clamp(160px,18vh,220px); left:0; right:0; width:min(76vw,890px); height:clamp(610px,78vh,900px); margin:0 auto; pointer-events:auto; }
+.home-about-portrait::after { content:""; position:absolute; inset:8% 9% 3%; border:1px solid rgba(48,45,41,.18); box-shadow:0 32px 90px rgba(48,45,41,.18); pointer-events:none; }
+.home-about-portrait img { width:100%; height:100%; display:block; object-fit:cover; object-position:72% center; filter:saturate(.82) contrast(1.02); mix-blend-mode:multiply; -webkit-mask-image:radial-gradient(ellipse 76% 72% at 50% 48%,#000 62%,rgba(0,0,0,.94) 71%,transparent 100%); mask-image:radial-gradient(ellipse 76% 72% at 50% 48%,#000 62%,rgba(0,0,0,.94) 71%,transparent 100%); transform-origin:center; }
+.home-about-motion { position:absolute; z-index:5; left:max(4vw,22px); top:clamp(330px,43vh,470px); width:min(92%,980px); display:grid; gap:clamp(2px,.7vw,10px); pointer-events:none; }
+.home-about-motion-line { display:block; overflow:hidden; min-height:1em; }
+.home-about-motion-line b { display:block; width:max-content; font-family:"Bebas Neue","Arial Narrow",var(--font-sans); font-size:clamp(52px,8.2vw,126px); font-weight:700; line-height:.82; letter-spacing:.01em; color:#302d29; text-transform:uppercase; text-shadow:0 1px rgba(255,255,255,.54),0 8px 35px rgba(48,45,41,.18); }
+.home-about-motion-line:nth-child(2) b { color:#5f797a; }
+.home-about-motion-line:nth-child(3) b { color:#74502d; }
+.home-about-motion-line:nth-child(4) b { color:#8d8066; font-size:clamp(38px,6.6vw,96px); }
+.home-about-copy { position:absolute; z-index:6; left:max(5vw,24px); bottom:clamp(48px,7vh,78px); width:min(430px,40vw); padding:22px 24px; border-top:1px solid rgba(48,45,41,.32); border-left:1px solid rgba(48,45,41,.18); background:rgba(238,234,231,.5); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); text-align:left; }
+.home-about-copy p { margin:0; font-family:var(--font-serif); font-size:clamp(18px,1.8vw,25px); line-height:1.42; color:#302d29; }
+.home-about-copy span { display:block; margin-top:18px; font:700 10px/1.4 var(--font-sans); letter-spacing:.2em; text-transform:uppercase; color:rgba(48,45,41,.64); }
+
+@media (max-width:760px) {
+  .home-about { min-height:980px; }
+  .home-about-heading { top:86px; }
+  .home-about-heading strong { font-size:clamp(112px,39vw,180px); }
+  .home-about-portrait { top:185px; width:112vw; height:610px; }
+  .home-about-motion { top:385px; left:18px; width:calc(100% - 36px); gap:8px; }
+  .home-about-motion-line b { font-size:clamp(42px,13vw,64px); }
+  .home-about-motion-line:nth-child(4) b { font-size:clamp(29px,8.8vw,46px); }
+  .home-about-copy { left:22px; bottom:42px; width:calc(100% - 44px); padding:18px; }
+  .home-about-copy p { font-size:18px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .home-about-motion-line b { opacity:1!important; transform:none!important; }
+}
+
+/* ── The statue's former band ──────────────────────────────────────────── */
 
 /* Taller than the screen so there is something to travel through; the pane
    inside it holds still while the band slides past, which is what turns

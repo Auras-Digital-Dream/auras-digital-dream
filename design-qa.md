@@ -105,4 +105,31 @@ Captura cititoarei confirmă folosirea nuanței `#11111f`, margini laterale egal
 - Copy/content: textele existente au fost păstrate.
 - Accessibility/motion: contrastul textului rămâne lizibil, iar reduced motion continuă să fie respectat.
 
+## Actualizare QA — secțiunea Despre mine de pe homepage
+
+- source visual truth paths: `C:\Users\aural\OneDrive\Immagini\aura\portofoliu WEBSITE\eu in renascentism.jpeg`, `C:\Users\aural\Downloads\inspiratie text langa portret.mp4` și paleta atașată în conversație
+- implementation screenshot path: `design-qa-home-about-implementation.png`
+- combined comparison path: `design-qa-home-about-comparison.png`
+- viewport: 1142 x 784 CSS px, densitate implicită Edge; responsive verificat la 434 x 938 CSS px
+- source pixels: portret 1448 x 1086; video 826 x 608; implementare 1142 x 784
+- state: secțiunea `#despre-mine` după reveal, cu motion-text activ
+
+### Full-view și focused-region evidence
+
+Planșa combinată confirmă folosirea portretului original și continuitatea paletei: porțelan, ceață albăstruie, salvie, piatră, petrol, nuc și brun. Verificarea focalizată a confirmat ierarhia „EU SUNT” mic / „Aura” mare, portretul centrat, cuvintele motion suprapuse și blocul descriptiv separat în zona inferioară.
+
+### Findings și comparison history
+
+1. P1 inițial: transformarea Motion suprascria `translateX(-50%)`, împingând fotografia în afara centrului. Fix: centrare prin `left:0`, `right:0` și `margin:auto`, independentă de transformările animației.
+2. P2 inițial: motion-textul folosea fontul script al titlului și devenea greu de citit. Fix: cuvintele dinamice folosesc Bebas Neue condensat, conform mecanicii vizuale din video.
+3. P2 inițial: textul descriptiv se suprapunea peste portret și avea contrast slab. Fix: mutare în stânga jos, pe o peliculă porțelan semitransparentă cu blur.
+4. Post-fix: zero overflow orizontal pe desktop și mobil, zero erori în consolă, portret și text complet încadrate.
+
+- Typography: „Aura” folosește expresiv fontul display, iar motion-textul folosește o familie condensată clară.
+- Spacing/layout: portretul este centrat și se extinde intenționat pe mobil în interiorul unui container cu clipping controlat.
+- Colors/tokens: toate cele zece nuanțe ale paletei sunt reprezentate prin fundal, text și accente.
+- Image quality: este folosită fotografia originală, cu mască radială și blend discret, fără regenerarea chipului.
+- Copy/content: mesajele descriu serviciile generale ale studioului, fără legătură cu pagina cărților și fără copy preluat din videoclip.
+- Motion/accessibility: cuvintele intră secvențial și se repetă; pentru reduced motion rămân statice și complet vizibile.
+
 final result: passed

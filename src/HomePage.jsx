@@ -1,30 +1,10 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { useRevealOnScroll } from "./reveal.js";
 import { GoldLine } from "./goldline.jsx";
 import { useNavTone } from "./navtone.js";
-
-/* Three.js and the scan only load once this band is on the way in — the rest
-   of the page never pays for them. */
-const Statue = lazy(() => import("./Statue.jsx"));
-
-/* Wide screens stand her beside the words; narrow ones stand her behind
-   them, dimmer and lighter. Either way she only mounts in the browser, so
-   the server never renders a canvas and three.js stays out of the first
-   payload. Returns null until the first client render. */
-function useStatueLayout() {
-  const [wide, setWide] = useState(null);
-  useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
-    const apply = () => setWide(query.matches);
-    apply();
-    query.addEventListener("change", apply);
-    return () => query.removeEventListener("change", apply);
-  }, []);
-  return wide;
-}
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -33,6 +13,7 @@ const FIELD = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
 };
 const FORM_STAGGER = { visible: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } } };
+const ABOUT_MOTION_WORDS = ["STRATEGIE", "IDENTITATE", "DESIGN", "EXPERIENȚE DIGITALE"];
 
 // ── Static data ──────────────────────────────────────────────────────────────
 const projects = [
@@ -202,8 +183,6 @@ export function HomePage({ onNavigate }) {
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedPrices, setSelectedPrices] = useState([]);
-  const statueWide = useStatueLayout();
-
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
   const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
@@ -378,46 +357,33 @@ export function HomePage({ onNavigate }) {
         </div>
       </motion.section>
 
-      {/* ── The statue ───────────────────────────────────────────────────── */}
-      {/* Its own band, and nothing of the page's inside it. Every other
-          section is composed edge to edge, so there was no column to lend
-          her; giving her a stage of her own is also what keeps her from ever
-          sitting behind someone else's text. */}
-      <section className="statue gilt bg-marble" aria-label="Manifest" data-statue-band>
-        <div className="statue-pin">
-          <div className="statue-copy">
-            <Lines
-              as="h2"
-              className="statue-text"
-              text="Sunt Aura — designer, marketer și sculptor digital. Nu creez proiecte. Modelez identități."
-            />
-            <Rise delay={0.18}>
-              <p className="statue-lead">
-                Construiesc identități vizuale și website-uri pentru branduri din România — logo,
-                paletă cromatică, tipografie, materiale de brand, campanii și platforma pe care
-                rulează totul.
-              </p>
-            </Rise>
-            <Rise delay={0.28} className="statue-meta">
-              <span>Aura Dobre</span>
-              <span>Designer & strateg digital</span>
-            </Rise>
-          </div>
-
-          {statueWide !== null && (
-            <Suspense fallback={null}>
-              <Statue narrow={!statueWide} />
-            </Suspense>
-          )}
-          {/* CC BY 4.0 cere numele lucrarii, al autorului si licenta. */}
-          <p className="statue-credit">
-            <a href="https://sketchfab.com/3d-models/statue-of-the-muse-thalia-ad93cfbdac2e4b83b860c065aecc2606" target="_blank" rel="noopener noreferrer">Statue of the Muse Thalia</a>
-            <span>
-              Samuel Francis Johnson ·{" "}
-              <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>
-            </span>
-          </p>
+      {/* ── About: Renaissance material, futuristic rhythm ──────────────── */}
+      <section className="home-about" id="despre-mine" aria-label="Despre Aura Dobre">
+        <div className="home-about-atmosphere" aria-hidden="true" />
+        <div className="home-about-heading" aria-hidden="true">
+          <motion.span initial={reduced ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .8 }}>EU SUNT</motion.span>
+          <motion.strong initial={reduced ? false : { opacity: 0, scale: .92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.15, delay: .08, ease: [0.16, 1, 0.3, 1] }}>Aura</motion.strong>
         </div>
+
+        <motion.figure className="home-about-portrait" initial={reduced ? false : { opacity: 0, y: 80, scale: 1.08 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: .28 }} transition={{ duration: 1.35, ease: [0.16, 1, 0.3, 1] }}>
+          <motion.img src="/assets/eu-in-renascentism.jpeg" alt="Aura Dobre într-un portret renascentist contemporan" whileHover={reduced ? undefined : { scale: 1.025, y: -8 }} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} />
+        </motion.figure>
+
+        <div className="home-about-motion" aria-label="Strategie, identitate, design și experiențe digitale">
+          {ABOUT_MOTION_WORDS.map((word, index) => (
+            <span className="home-about-motion-line" key={word}>
+              <motion.b
+                animate={reduced ? undefined : { x: ["-108%", "0%", "0%", "8%"], opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 6.4, delay: index * .28, repeat: Infinity, repeatDelay: .8, ease: [0.16, 1, 0.3, 1], times: [0, .16, .78, 1] }}
+              >{word}</motion.b>
+            </span>
+          ))}
+        </div>
+
+        <motion.div className="home-about-copy" initial={reduced ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .9, delay: .25 }}>
+          <p>Designer, marketer și sculptor digital. Modelez identități care unesc strategia, estetica și tehnologia.</p>
+          <span>Aura Dobre · fondator Aura&apos;s Digital Dream</span>
+        </motion.div>
       </section>
 
       <section className="marquee-band" aria-hidden="true">
