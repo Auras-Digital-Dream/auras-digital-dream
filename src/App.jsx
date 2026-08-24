@@ -420,6 +420,16 @@ function BooksPageCinematic({ onNavigate, onSection }) {
     ["obsesie", "#ff6f91", "#fff8fb", -4],
     ["eroi moralmente gri", "#7f73ff", "#fbfaff", 6],
   ];
+  const genreDropVariants = {
+    hidden: ({ index, rotation }) => ({ opacity: 0, y: -360 - index * 46, rotate: rotation * 3.2, scale: .86 }),
+    visible: ({ index, rotation }) => ({
+      opacity: 1,
+      y: 0,
+      rotate: rotation,
+      scale: 1,
+      transition: { type: "spring", stiffness: 128, damping: 11, mass: .92, delay: index * .13 },
+    }),
+  };
   const footerBooks = [
     ["/assets/amazon/clockmakers-curse.jpg", "The Clockmaker's Curse", "https://amzn.eu/d/0bGKmBLR", -20, -78],
     ["/assets/amazon/lunaria-secret-treasure.jpg", "Lunaria's Secret Treasure", "https://a.co/d/0gsNh4wn", -8, -28],
@@ -508,6 +518,17 @@ function BooksPageCinematic({ onNavigate, onSection }) {
           <p className="section-kicker"><span className="eyebrow-text">04 — Cititoarea mea</span></p>
           <h2>Pentru cine sunt cărțile mele?</h2>
           <p>Pentru cititoarea care iubește intensitatea — care vrea să simtă tensiunea de pe fiecare pagină, care nu se teme de eroi moralmente gri și care citește la 3 dimineața pentru că nu poate lăsa cartea jos.</p>
+          <motion.div className="falling-genres" aria-label="Genurile și temele cărților" initial={reducedMotion ? false : "hidden"} whileInView="visible" viewport={{ once: true, amount: .38 }}>
+            {fallingGenres.map(([label, color, ink, rotation], index) => (
+              <motion.span
+                key={label}
+                custom={{ index, rotation }}
+                variants={genreDropVariants}
+                style={{ "--genre-color": color, "--genre-ink": ink }}
+              >{label}</motion.span>
+            ))}
+          </motion.div>
+          <div className="reader-newsletter-separator" aria-hidden="true" />
           <div className="reader-newsletter-mark" aria-hidden="true"><BookOpen size={30} weight="thin" /></div>
           <h3>Primește următorul capitol</h3>
           <p className="reader-newsletter-note">Noutăți despre cărți, fragmente în premieră și universuri care se pregătesc să prindă viață.</p>
@@ -516,18 +537,6 @@ function BooksPageCinematic({ onNavigate, onSection }) {
             <button type="submit">Abonează-mă <ArrowRight size={16} /></button>
           </form>
           {newsletterStatus === "success" && <p className="books-newsletter-success" role="status"><Check size={16} /> Mulțumesc! Te voi ține la curent.</p>}
-          <div className="falling-genres" aria-label="Genurile și temele cărților">
-            {fallingGenres.map(([label, color, ink, rotation], index) => (
-              <motion.span
-                key={label}
-                style={{ "--genre-color": color, "--genre-ink": ink }}
-                initial={reducedMotion ? false : { opacity: 0, y: -180 - index * 22, rotate: rotation * 2.4 }}
-                whileInView={{ opacity: 1, y: 0, rotate: rotation }}
-                viewport={{ once: true, amount: 0.7 }}
-                transition={{ type: "spring", stiffness: 150, damping: 13, mass: 0.8, delay: index * 0.08 }}
-              >{label}</motion.span>
-            ))}
-          </div>
         </div>
       </section>
 

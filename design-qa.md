@@ -134,6 +134,23 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 
 final result: passed
 
+## Actualizare QA - textul legat de portret si pilulele drop
+
+- source visual truth: capturile utilizatoarei pentru sectiunea Despre mine si `C:\Users\aural\Downloads\inspiratie carti.mp4` pentru mecanica pilulelor
+- implementation screenshots: `design-qa-home-about-neck-text.png`, `design-qa-books-drop-pills.png`
+- viewport: 1142 x 784 CSS px, Edge
+- state: portretul dupa reveal; pilulele dupa intrarea completa in viewport
+
+### Findings si corectii
+
+1. P1: eticheta "Eu sunt" era ascunsa de semnatura mare. A fost mutata intr-o eticheta translucida, distincta si lizibila, pastrand legatura vizuala cu numele Aura.
+2. P1: cuvintele animate erau separate de fotografie. Au fost mutate peste portret, incepand din zona gatului si continuand pe jacheta, fara sa acopere fata sau ochelarii.
+3. P1: pilulele aveau doar un reveal vertical si pareau ordonate in rand. Acum folosesc o animatie spring decalata, cad de la inaltimi diferite si se suprapun prin margini negative si z-index variabil.
+4. P2: pilulele apareau dupa formularul de subscribe. Au fost mutate imediat dupa descrierea cititoarei, iar formularul este separat printr-o linie luminoasa discreta.
+5. Post-fix: zero erori in consola pe homepage si pagina cartilor; continutul, scena 01-04 si sectiunile literare existente au fost pastrate.
+
+final result: passed
+
 ## Actualizare QA — footer cu arcadă antică
 
 - source visual truth path: `public/assets/footer-bg.jpg` și cerința utilizatoarei privind vizibilitatea imaginii, soclul pentru informații și conturul de arcadă
