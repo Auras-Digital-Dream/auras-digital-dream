@@ -93,8 +93,18 @@ export function routes() {
     ogImage: DEFAULT_IMAGE,
     ogImageAlt: "Sculptură de marmură cu vine de aur, ținută în palmă.",
   };
+  const editorial = {
+    url: "/editorial",
+    priority: "0.8",
+    title: `Editorial - ${SITE}`,
+    description: "Portrete editoriale si directie de arta create de Aura's Digital Dream.",
+    image: "/assets/editorial-aura-red.jpg",
+    ogImage: "/assets/editorial-aura-red.jpg",
+    ogImageAlt: "Portret editorial Aura Dobre.",
+  };
   return [
     home,
+    editorial,
     books,
     ...projects().map((p) => ({
       url: `/portofoliu/${p.slug}`,
