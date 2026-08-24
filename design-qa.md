@@ -134,6 +134,29 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 
 final result: passed
 
+## Actualizare QA — footer cu arcadă antică
+
+- source visual truth path: `public/assets/footer-bg.jpg` și cerința utilizatoarei privind vizibilitatea imaginii, soclul pentru informații și conturul de arcadă
+- implementation screenshot path: `design-qa-footer-arch.png`
+- viewport: 1142 x 784 CSS px; verificare dimensională mobilă la 478 x 1000 CSS px
+- state: intrarea în footer, urmată de vizualizarea completă a imaginii și a soclului inferior
+
+### Findings și comparison history
+
+1. P1 inițial: overlay-ul charcoal acoperea aproape întreaga fotografie. Fix: imaginea este acum un strat real, luminos, cu umbrire graduală doar spre baza secțiunii.
+2. P1 inițial: textul și iconițele concurau direct cu personajele. Fix: informațiile au fost mutate într-un soclu inferior cu blur, care acoperă zona mesei și păstrează chipurile vizibile.
+3. P2 inițial: footerul avea o muchie superioară dreaptă, fără continuitate cu direcția antică. Fix: conturul secțiunii formează o arcadă eliptică amplă, cu o linie luminoasă discretă.
+4. Post-fix: imaginea rămâne clară, toate cele cinci linkuri sociale sunt lizibile și interactive, iar layoutul nu produce overflow pe desktop sau mobil.
+
+- Typography: brandul și microcopy-ul rămân lizibile pe soclul întunecat.
+- Spacing/layout: arcada are amplitudine responsive; soclul trece pe rânduri separate pe mobil.
+- Colors/tokens: nuanțele fotografiei sunt păstrate, cu contrast adăugat doar în zona informațională.
+- Image quality: este folosit asset-ul original la rezoluție completă, cu crop controlat și fără întunecare globală.
+- Copy/content: textele și destinațiile sociale existente sunt păstrate.
+- Accessibility/motion: linkurile își păstrează etichetele accesibile și stările hover; nu a fost adăugată mișcare obligatorie.
+
+final result: passed
+
 ## Actualizare QA — corecție portret și scrollytelling homepage
 
 - source visual truth paths: capturile furnizate de utilizatoare, `C:\Users\aural\Downloads\Recording 2026-08-24 215949.mp4`, `C:\Users\aural\Downloads\inspiratie animatii site.mp4`
