@@ -503,7 +503,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
         </div>
       </section>
 
-      <section className="cinematic-reader reader-subscribe" data-reveal>
+      <section className="cinematic-reader reader-subscribe" id="cititoarea" data-reveal>
         <div className="reader-subscribe-card">
           <p className="section-kicker"><span className="eyebrow-text">04 — Cititoarea mea</span></p>
           <h2>Pentru cine sunt cărțile mele?</h2>

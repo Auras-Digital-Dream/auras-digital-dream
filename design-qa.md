@@ -79,4 +79,30 @@ Nu au rămas diferențe P0, P1 sau P2 acționabile. Prima captură a evidențiat
 - Accessibility and motion: alt text descriptiv, contrast corectat, hover opțional și dezactivarea reveal/parallax/rotație pentru `prefers-reduced-motion`.
 - Browser evidence: imagine vizibilă, fără overflow pe mobil și zero erori în consolă.
 
+## Actualizare QA — paleta unitară și reîncadrarea finală
+
+- source visual truth path: cele două capturi atașate de utilizatoare în conversație, cu nuanța bleumarin-negru și problemele de încadrare marcate vizual
+- implementation screenshot paths: `design-qa-books-palette-reader.png`, `design-qa-books-palette-author.png`
+- viewport: 1142 x 784 CSS px, densitate implicită Edge; verificare responsive la 434 x 938 CSS px
+- state: secțiunea cititoarei după animația pilulelor și secțiunea autoarei după reveal/parallax
+- normalization: capturile de implementare au fost evaluate la scara naturală a browserului; referința a fost folosită pentru culoare, margini și vizibilitatea filmării, nu pentru reproducere pixel-perfect a întregii pagini
+
+### Full-view și focused-region evidence
+
+Captura cititoarei confirmă folosirea nuanței `#11111f`, margini laterale egale, padding vertical echilibrat, formular aliniat și pilule complet încadrate. Captura autoarei confirmă insigna circulară și caption-ul în interiorul portretului, rama vizibilă, precum și filmarea cu pagini păstrată clar în spatele textului și în spațiul dintre coloane.
+
+### Findings și history
+
+1. P2 inițial: paleta era fragmentată între gri-albăstrui, negru și burgundy. Fix: a fost introdusă o bază `#11111f` cu gradiente bleumarin, reflexe violet și tranziții specifice pentru hero, univers, bibliotecă, cititoare, autoare, fan, final și footer.
+2. P2 inițial: cadrul cititoarei și elementele portretului păreau tăiate. Fix: cardul a primit lățime maximă și padding simetric, iar orbita și caption-ul au fost mutate complet în interiorul fotografiei.
+3. P2 inițial: filmarea autoarei era excesiv întunecată. Fix: luminozitatea video a crescut la `.68`, saturația la `.72`, iar overlay-ul a fost redus și localizat gradual pentru păstrarea contrastului textului.
+4. Post-fix: zero overflow orizontal pe desktop și mobil, zero erori în consolă, fără elemente tăiate în capturile finale.
+
+- Typography: ierarhia serif/sans rămâne coerentă, cu wrapping controlat.
+- Spacing/layout: cadrele și elementele decorative sunt complet încadrate; grila devine o coloană pe mobil.
+- Colors/tokens: întreaga pagină folosește acum aceeași familie bleumarin-negru, cu variații de lumină și profunzime.
+- Image/video quality: portretul original rămâne intact; filmarea este mai luminoasă și mai ușor de perceput.
+- Copy/content: textele existente au fost păstrate.
+- Accessibility/motion: contrastul textului rămâne lizibil, iar reduced motion continuă să fie respectat.
+
 final result: passed
