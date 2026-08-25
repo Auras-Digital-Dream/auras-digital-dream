@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
 import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
-import { useRevealOnScroll } from "./reveal.js";
 import { GoldLine } from "./goldline.jsx";
 import { useNavTone } from "./navtone.js";
 
@@ -192,7 +191,6 @@ export function HomePage({ onNavigate }) {
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
 
-  useRevealOnScroll([]);
   useNavTone();
 
   /* The hero is the site's opening move: the footage starts as a held card

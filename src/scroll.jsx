@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { ScrollTrigger, useGSAP } from "./gsap.js";
 
@@ -13,26 +13,6 @@ import { ScrollTrigger, useGSAP } from "./gsap.js";
    ══════════════════════════════════════════════════════════════════════════ */
 
 const EASE = [0.16, 1, 0.3, 1];
-
-/** Measures an element without causing layout thrash on resize. */
-function useMeasure(ref, deps = []) {
-  const [box, setBox] = useState({ width: 0, height: 0 });
-  useLayoutEffect(() => {
-    const node = ref.current;
-    if (!node) return undefined;
-    const observer = new ResizeObserver(() => {
-      // Border-box, not contentRect: the rail has horizontal padding and
-      // contentRect would under-report the travel by both gutters.
-      const width = node.offsetWidth;
-      const height = node.offsetHeight;
-      setBox((prev) => (prev.width === width && prev.height === height ? prev : { width, height }));
-    });
-    observer.observe(node);
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-  return box;
-}
 
 /* ── Reveal ────────────────────────────────────────────────────────────────
    Wipes content in from below a mask.
@@ -228,56 +208,6 @@ function ChapterIndex({ count, active }) {
       </span>
       <span className="chapter-index-total">{String(count).padStart(2, "0")}</span>
     </div>
-  );
-}
-
-/* ── Track ─────────────────────────────────────────────────────────────────
-   Horizontal gallery driven by vertical scroll. The section's height is
-   derived from the measured overflow, so the track always ends exactly when
-   the last frame reaches the right edge — no dead scroll, no cut-off frame.
-
-   Under reduced motion it becomes an ordinary swipeable row. */
-export function Track({ children, className = "", id, label }) {
-  const ref = useRef(null);
-  const railRef = useRef(null);
-  const reduced = useReducedMotion();
-  const { width: railWidth } = useMeasure(railRef, []);
-  const [viewport, setViewport] = useState(0);
-
-  useEffect(() => {
-    const update = () => setViewport(window.innerWidth);
-    update();
-    window.addEventListener("resize", update, { passive: true });
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  const distance = Math.max(0, railWidth - viewport);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const raw = useTransform(scrollYProgress, [0, 1], [0, -distance]);
-  const x = useSpring(raw, { stiffness: 140, damping: 32, mass: 0.5 });
-
-  if (reduced) {
-    return (
-      <section id={id} className={`track track-static ${className}`} aria-label={label}>
-        <div className="track-rail">{children}</div>
-      </section>
-    );
-  }
-
-  return (
-    <section
-      id={id}
-      ref={ref}
-      className={`track ${className}`}
-      aria-label={label}
-      style={{ height: `calc(100vh + ${distance}px)` }}
-    >
-      <div className="track-stage">
-        <motion.div ref={railRef} className="track-rail" style={{ x }}>
-          {children}
-        </motion.div>
-      </div>
-    </section>
   );
 }
 
