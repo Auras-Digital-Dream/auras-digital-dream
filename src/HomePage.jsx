@@ -35,9 +35,11 @@ const PROJECT_PREVIEWS = {
 
 function ProjectIndex({ items, onNavigate }) {
   const [activeSlug, setActiveSlug] = useState(items[0]?.slug);
+  const archiveRef = useRef(null);
 
   return (
-    <section className="project-index" aria-label="Toate proiectele">
+    <section ref={archiveRef} className="project-index" aria-label="Toate proiectele">
+      <ProjectDisintegrationField rootRef={archiveRef} />
       <div className="project-index-head">
         <p className="kicker"><span className="eyebrow-text">Arhiva vie</span></p>
         <p>Identități, spații digitale și obiecte grafice construite ca fragmente din aceeași lume.</p>
@@ -68,6 +70,100 @@ function ProjectIndex({ items, onNavigate }) {
       </div>
     </section>
   );
+}
+
+function ProjectDisintegrationField({ rootRef }) {
+  const canvasRef = useRef(null);
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const canvas = canvasRef.current;
+    if (!root || !canvas || reduced || !window.matchMedia("(pointer:fine)").matches) return undefined;
+
+    const context = canvas.getContext("2d", { alpha: true });
+    const particles = [];
+    const palette = ["#f3ead2", "#d9c58f", "#8aa0a0", "#f8f5ee"];
+    let frame = 0;
+    let activeRow = null;
+
+    function resize() {
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.round(root.clientWidth * ratio);
+      canvas.height = Math.round(root.clientHeight * ratio);
+      canvas.style.width = `${root.clientWidth}px`;
+      canvas.style.height = `${root.clientHeight}px`;
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function dissolve(event) {
+      const rootRect = root.getBoundingClientRect();
+      const x = event.clientX - rootRect.left;
+      const y = event.clientY - rootRect.top;
+      const row = event.target.closest(".project-index-row");
+      if (activeRow && activeRow !== row) activeRow.classList.remove("is-dissolving");
+      activeRow = row;
+      if (row) {
+        const rowRect = row.getBoundingClientRect();
+        row.classList.add("is-dissolving");
+        row.style.setProperty("--dissolve-x", `${event.clientX - rowRect.left}px`);
+        row.style.setProperty("--dissolve-y", `${event.clientY - rowRect.top}px`);
+      }
+      for (let index = 0; index < 32; index += 1) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = .35 + Math.random() * 1.65;
+        particles.push({
+          x: x + (Math.random() - .5) * 42,
+          y: y + (Math.random() - .5) * 42,
+          vx: Math.cos(angle) * speed - .3,
+          vy: Math.sin(angle) * speed - .35,
+          life: 1,
+          decay: .009 + Math.random() * .014,
+          size: 1.4 + Math.random() * 4.8,
+          color: palette[Math.floor(Math.random() * palette.length)],
+        });
+      }
+      if (particles.length > 620) particles.splice(0, particles.length - 620);
+    }
+
+    function clearRow() {
+      activeRow?.classList.remove("is-dissolving");
+      activeRow = null;
+    }
+
+    function render() {
+      context.clearRect(0, 0, root.clientWidth, root.clientHeight);
+      for (let index = particles.length - 1; index >= 0; index -= 1) {
+        const particle = particles[index];
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.vy += .008;
+        particle.life -= particle.decay;
+        if (particle.life <= 0) { particles.splice(index, 1); continue; }
+        context.globalAlpha = particle.life;
+        context.fillStyle = particle.color;
+        const size = particle.size * (.45 + particle.life);
+        context.fillRect(particle.x, particle.y, size, size);
+      }
+      context.globalAlpha = 1;
+      frame = requestAnimationFrame(render);
+    }
+
+    resize();
+    frame = requestAnimationFrame(render);
+    root.addEventListener("pointermove", dissolve, { passive: true });
+    root.addEventListener("pointerleave", clearRow, { passive: true });
+    window.addEventListener("resize", resize, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      root.removeEventListener("pointermove", dissolve);
+      root.removeEventListener("pointerleave", clearRow);
+      window.removeEventListener("resize", resize);
+      clearRow();
+    };
+  }, [rootRef, reduced]);
+
+  return <canvas ref={canvasRef} className="project-disintegration" aria-hidden="true" />;
 }
 
 // ── Static data ──────────────────────────────────────────────────────────────

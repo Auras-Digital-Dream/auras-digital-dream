@@ -134,6 +134,25 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 
 final result: passed
 
+## Actualizare QA - dezintegrare la cursor in arhiva proiectelor
+
+- source visual truth: `C:\Users\aural\Downloads\pagini proiect inspiratie.mp4`
+- focused source contact sheet: `cursor-effect-2.jpg`
+- implementation screenshot: `design-qa-home-cursor-disintegration.png`
+- viewport: 1142 x 784 CSS px, pointer fin
+- state: cursorul traverseaza titlul proiectului Lupul & Brici
+
+### Findings
+
+1. P1 initial: prima implementare reproducea indexul editorial, dar omitea campul granular care dezintegreaza suprafata atinsa.
+2. Fix: randul activ foloseste o masca radiala care elimina temporar textul, imaginile si liniile exact in jurul cursorului.
+3. Fix: un canvas suprapus emite pixeli de portelan, auriu si petrol din zona erodata, cu inertie si disipare progresiva.
+4. Efectul se reface la iesirea cursorului, este limitat la arhiva homepage si nu blocheaza linkurile.
+5. Pe touch si `prefers-reduced-motion`, canvas-ul si masca sunt dezactivate complet.
+6. Captura finala confirma fragmentarea titlului si roiul de particule; consola browserului are zero erori.
+
+final result: passed
+
 ## Actualizare QA - arhiva homepage si pagini de proiect sticky
 
 - source visual truth: `C:\Users\aural\Downloads\pagini proiect inspiratie.mp4`
