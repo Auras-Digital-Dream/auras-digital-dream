@@ -134,6 +134,22 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 
 final result: passed
 
+## Actualizare QA - fundatie GSAP pentru Scene 01-04
+
+- source visual truth: scrollytelling-ul Scene 01-04 deja aprobat si materialele video furnizate de utilizatoare
+- implementation screenshot: `design-qa-gsap-scene-02.png`
+- viewport: 1142 x 784 CSS px, Edge
+- state: tranzitie prin scroll de la Scena 01 la Scena 02
+
+### Verificari
+
+1. Controlul scenei active foloseste acum GSAP ScrollTrigger cu `scrub`, refresh responsive si cleanup React automat prin `useGSAP`.
+2. Structura vizuala, textele, materialele video si lungimea sectiunii au fost pastrate.
+3. `prefers-reduced-motion` continua sa afiseze toate scenele static, fara continut ascuns.
+4. Scena 01 si Scena 02 au fost verificate in browser; schimbarea se produce corect la scroll si consola are zero erori.
+
+final result: passed
+
 ## Actualizare QA - textul legat de portret si pilulele drop
 
 - source visual truth: capturile utilizatoarei pentru sectiunea Despre mine si `C:\Users\aural\Downloads\inspiratie carti.mp4` pentru mecanica pilulelor

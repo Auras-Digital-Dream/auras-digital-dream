@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { ScrollTrigger, useGSAP } from "./gsap.js";
 
 /* ══════════════════════════════════════════════════════════════════════════
    Scroll primitives.
@@ -146,17 +147,26 @@ export function Depth({ children, speed = 0.12, className = "" }) {
 export function Chapters({ items, renderMedia, renderCopy, className = "", id }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [active, setActive] = useState(0);
   const count = items.length;
 
-  useEffect(() => {
-    if (reduced) return undefined;
-    return scrollYProgress.on("change", (progress) => {
-      const index = Math.min(count - 1, Math.max(0, Math.floor(progress * count)));
-      setActive((prev) => (prev === index ? prev : index));
+  useGSAP(() => {
+    if (reduced || !ref.current) return undefined;
+
+    const storyTrigger = ScrollTrigger.create({
+      trigger: ref.current,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      invalidateOnRefresh: true,
+      onUpdate: ({ progress }) => {
+        const index = Math.min(count - 1, Math.max(0, Math.floor(progress * count)));
+        setActive((previous) => (previous === index ? previous : index));
+      },
     });
-  }, [scrollYProgress, count, reduced]);
+
+    return () => storyTrigger.kill();
+  }, { scope: ref, dependencies: [count, reduced], revertOnUpdate: true });
 
   if (reduced) {
     return (
