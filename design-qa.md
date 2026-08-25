@@ -134,6 +134,22 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 
 final result: passed
 
+## Actualizare QA - cursor soft si particule glitter
+
+- source: feedbackul vizual al utilizatoarei asupra primei versiuni de dezintegrare
+- implementation screenshot: `design-qa-home-cursor-soft-glitter.png`
+- state: cursorul traverseaza titlul Lupul & Brici
+
+### Corectii
+
+1. Cercul standard a fost redus de la 36px la 26px, iar starea interactiva de la 56px la 38px.
+2. Conturul este mai subtire si umbrele compacte au fost inlocuite cu puncte luminoase discrete.
+3. Masca de dezintegrare a fost redusa de la 78px la 54px si are o margine mai progresiva.
+4. Particulele sunt mai mici, mai putine si includ sclipiri in forma de diamant/cruce, cu disipare fina.
+5. Captura finala confirma un efect vizibil, dar delicat; consola browserului are zero erori.
+
+final result: passed
+
 ## Actualizare QA - dezintegrare la cursor in arhiva proiectelor
 
 - source visual truth: `C:\Users\aural\Downloads\pagini proiect inspiratie.mp4`

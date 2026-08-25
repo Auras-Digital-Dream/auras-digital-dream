@@ -109,7 +109,7 @@ function ProjectDisintegrationField({ rootRef }) {
         row.style.setProperty("--dissolve-x", `${event.clientX - rowRect.left}px`);
         row.style.setProperty("--dissolve-y", `${event.clientY - rowRect.top}px`);
       }
-      for (let index = 0; index < 32; index += 1) {
+      for (let index = 0; index < 20; index += 1) {
         const angle = Math.random() * Math.PI * 2;
         const speed = .35 + Math.random() * 1.65;
         particles.push({
@@ -118,8 +118,9 @@ function ProjectDisintegrationField({ rootRef }) {
           vx: Math.cos(angle) * speed - .3,
           vy: Math.sin(angle) * speed - .35,
           life: 1,
-          decay: .009 + Math.random() * .014,
-          size: 1.4 + Math.random() * 4.8,
+          decay: .012 + Math.random() * .016,
+          size: .55 + Math.random() * 2.15,
+          sparkle: Math.random() > .72,
           color: palette[Math.floor(Math.random() * palette.length)],
         });
       }
@@ -143,7 +144,17 @@ function ProjectDisintegrationField({ rootRef }) {
         context.globalAlpha = particle.life;
         context.fillStyle = particle.color;
         const size = particle.size * (.45 + particle.life);
-        context.fillRect(particle.x, particle.y, size, size);
+        if (particle.sparkle) {
+          context.save();
+          context.translate(particle.x, particle.y);
+          context.rotate(Math.PI / 4);
+          context.fillRect(-size * .45, -size * .45, size * .9, size * .9);
+          context.fillRect(-size * 1.5, -size * .16, size * 3, size * .32);
+          context.fillRect(-size * .16, -size * 1.5, size * .32, size * 3);
+          context.restore();
+        } else {
+          context.fillRect(particle.x, particle.y, size, size);
+        }
       }
       context.globalAlpha = 1;
       frame = requestAnimationFrame(render);
