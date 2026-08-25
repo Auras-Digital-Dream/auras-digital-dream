@@ -233,6 +233,58 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .detail-hero-visual img { position:absolute; inset:0; width:100%; height:100%; }
 .detail-hero-backdrop { object-fit:cover; transform:scale(1.1); filter:blur(30px) brightness(.42) saturate(.9); opacity:.7; }
 .detail-hero-main { z-index:1; object-fit:contain; padding:clamp(12px,2vw,28px); filter:drop-shadow(0 24px 38px rgba(45,53,60,.32)); }
+
+/* Sticky project narrative. The image remains architectural and still while
+   each glass chapter travels over it; the gold scan marks every transition. */
+.project-story { position:relative; height:400vh; background:#101211; color:#f4f0e8; }
+.project-story-stage { position:sticky; top:0; height:100vh; overflow:hidden; }
+.project-story-backgrounds,.project-story-bg,.project-story-bg img,.project-story-veil { position:absolute; inset:0; width:100%; height:100%; }
+.project-story-bg { margin:0; opacity:0; transition:opacity .8s cubic-bezier(.16,1,.3,1); }
+.project-story-bg[data-active="true"] { opacity:1; }
+.project-story-bg img { object-fit:cover; transform:scale(1.035); filter:saturate(.82) contrast(1.04) brightness(.72); will-change:transform; }
+.project-story-veil { background:linear-gradient(90deg,rgba(10,12,12,.9) 0%,rgba(10,12,12,.66) 42%,rgba(10,12,12,.18) 71%,rgba(10,12,12,.34)),linear-gradient(180deg,rgba(10,12,12,.26),transparent 34%,rgba(10,12,12,.56)); }
+.project-story-scan { position:absolute; z-index:3; top:0; bottom:0; left:0; width:1px; opacity:0; background:linear-gradient(180deg,transparent 4%,#d9c58f 24%,#fff4cc 50%,#d9c58f 76%,transparent 96%); box-shadow:0 0 20px rgba(217,197,143,.82),0 0 70px rgba(217,197,143,.35); will-change:transform; }
+.project-story-chrome { position:absolute; z-index:5; left:max(4vw,24px); right:max(4vw,24px); bottom:26px; display:grid; grid-template-columns:max-content minmax(80px,200px) max-content; gap:18px; align-items:center; color:rgba(244,240,232,.68); font:700 9px/1 var(--font-sans); letter-spacing:.16em; text-transform:uppercase; }
+.project-story-chrome i { height:1px; background:rgba(244,240,232,.25); overflow:hidden; }
+.project-story-chrome i b { display:block; width:100%; height:100%; background:#d9c58f; transform-origin:left; transition:transform .65s cubic-bezier(.16,1,.3,1); }
+.project-story-track { position:relative; z-index:6; margin-top:-100vh; }
+.project-story-sentinel { min-height:100vh; pointer-events:none; }
+.project-story-card-stack { position:absolute; z-index:7; left:max(5vw,28px); top:50%; width:min(590px,46vw); transform:translateY(-50%); perspective:1200px; }
+.project-story-card { position:absolute; inset:0; margin:auto; height:max-content; opacity:0; pointer-events:none; --float-x:0px; --float-y:0px; --float-rx:0deg; --float-ry:0deg; transition:opacity .45s ease; }
+.project-story-card[data-active="true"] { position:relative; opacity:1; pointer-events:auto; }
+.project-story-card-inner { position:relative; padding:clamp(30px,4vw,58px); overflow:hidden; border:1px solid rgba(255,255,255,.19); border-radius:2px 38px 2px 38px; background:linear-gradient(145deg,rgba(38,42,40,.68),rgba(18,20,20,.38)); box-shadow:0 36px 95px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.11); -webkit-backdrop-filter:blur(22px) saturate(1.18); backdrop-filter:blur(22px) saturate(1.18); transform:translate3d(var(--float-x),var(--float-y),0) rotateX(var(--float-rx)) rotateY(var(--float-ry)); transform-style:preserve-3d; transition:opacity .55s ease,transform .65s cubic-bezier(.16,1,.3,1),border-color .45s ease,background .45s ease; }
+.project-story-card-inner::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 85% 8%,rgba(217,197,143,.16),transparent 26%),linear-gradient(115deg,transparent 25%,rgba(255,255,255,.08) 46%,transparent 65%); opacity:.8; }
+.project-story-card:not([data-active="true"]) .project-story-card-inner { opacity:0; transform:translate3d(-36px,42px,0) scale(.96); }
+.project-story-card-inner > span { position:relative; color:#d9c58f; font:700 9px/1 var(--font-sans); letter-spacing:.2em; }
+.project-story-card-inner > p:not(.project-story-body) { position:relative; margin:42px 0 12px; color:rgba(244,240,232,.62); font:700 10px/1 var(--font-sans); letter-spacing:.18em; text-transform:uppercase; }
+.project-story-card h2 { position:relative; margin:0; font:500 clamp(48px,6vw,86px)/.9 var(--font-project); letter-spacing:-.045em; }
+.project-story-rule { position:relative; width:76px; height:1px; margin:30px 0; background:#d9c58f; box-shadow:0 0 18px rgba(217,197,143,.45); }
+.project-story-body { position:relative; max-width:46ch; margin:0; color:rgba(244,240,232,.78); font:400 clamp(16px,1.35vw,20px)/1.68 var(--font-body); }
+
+@media (max-width:760px) {
+  .project-story { height:400svh; }
+  .project-story-stage { height:100svh; }
+  .project-story-track { margin-top:-100svh; }
+  .project-story-sentinel { min-height:100svh; }
+  .project-story-card-stack { left:18px; right:18px; top:auto; bottom:66px; width:auto; transform:none; }
+  .project-story-card-inner { padding:28px 24px 32px; border-radius:2px 28px 2px 28px; }
+  .project-story-card h2 { font-size:clamp(46px,15vw,70px); }
+  .project-story-card-inner > p:not(.project-story-body) { margin-top:24px; }
+  .project-story-body { font-size:16px; line-height:1.55; max-height:30vh; overflow:auto; }
+  .project-story-veil { background:linear-gradient(180deg,rgba(10,12,12,.26),rgba(10,12,12,.3) 40%,rgba(10,12,12,.88) 72%,rgba(10,12,12,.95)); }
+  .project-story-chrome { left:18px; right:18px; bottom:18px; grid-template-columns:1fr 70px max-content; }
+  .project-story-chrome > span:first-child { max-width:34vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .project-story { height:auto; }
+  .project-story-stage { position:relative; height:auto; overflow:visible; }
+  .project-story-backgrounds,.project-story-chrome { display:none; }
+  .project-story-track { display:none; }
+  .project-story-card-stack { position:relative; inset:auto; display:grid; width:auto; padding:24px 20px; transform:none; background:#171918; }
+  .project-story-card { position:relative; inset:auto; opacity:1; pointer-events:auto; margin:10px 0; }
+  .project-story-card:not([data-active="true"]) .project-story-card-inner { opacity:1; transform:none; }
+}
 /* .detail-page below declares --accent and --muted for the ink ground it
    opens on. These two sections are white, and on white that gold accent is
    2.26:1 and that 74%-white --muted is 1.01:1 - a line colour and an

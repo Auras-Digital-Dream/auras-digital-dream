@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
-import { Chapters, Depth, Fan, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
+import { Chapters, Depth, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { GoldLine } from "./goldline.jsx";
 import { useNavTone } from "./navtone.js";
 
@@ -13,6 +13,62 @@ const FIELD = {
 };
 const FORM_STAGGER = { visible: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } } };
 const ABOUT_MOTION_WORDS = ["STRATEGIE", "IDENTITATE", "DESIGN", "EXPERIENȚE DIGITALE"];
+
+const PROJECT_PREVIEWS = {
+  "selectii-cromatice": ["/portfolio/selectii-cromatice/olive-blush.jpeg", "/portfolio/selectii-cromatice/smokey-blue-merlot-red.jpeg", "/portfolio/selectii-cromatice/warm-orange-dusty-yellow.jpeg"],
+  "verde-bean": ["/portfolio/verde-bean/verde-bean-hero-branding.jpeg", "/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg", "/portfolio/verde-bean/verde-bean-brand-system.jpeg"],
+  "painea-de-acasa": ["/portfolio/painea-de-acasa/painea-de-acasa-hero.jpeg", "/portfolio/painea-de-acasa/painea-de-acasa-packaging.jpeg", "/portfolio/painea-de-acasa/painea-de-acasa-brand-board.jpeg"],
+  "lumina-botanica": ["/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg", "/portfolio/lumina-botanica/2f1230ad6_WhatsAppImage2026-07-02at090309.jpg", "/portfolio/lumina-botanica/69944db3b_WhatsAppImage2026-07-02at090156.jpg"],
+  "lupul-and-brici": ["/portfolio/lupul-and-brici/852b052a0_generated_image.png", "/portfolio/lupul-and-brici/19cd4610c_generated_image.png", "/portfolio/lupul-and-brici/2f028c963_generated_image.png"],
+  "luxury-hair-by-aura": ["/portfolio/luxury-hair-by-aura/0429b7c7f_WhatsAppImage2026-07-02at1127334.jpg", "/portfolio/luxury-hair-by-aura/31d17cea7_generated_image.png", "/portfolio/luxury-hair-by-aura/2e4e765e2_WhatsAppImage2026-07-02at1127333.jpg"],
+  "real-estate-co": ["/portfolio/real-estate-co/d7b6e03d9_Capturdeecran2025-10-27234018.png", "/portfolio/real-estate-co/257a93cd6_wwwrealestatecom.png", "/portfolio/real-estate-co/420192b72_Capturdeecran2025-10-27231821.png"],
+  "carti-de-vizita": ["/portfolio/carti-de-vizita/12a649300_generated_image.png", "/portfolio/carti-de-vizita/12003543f_generated_image.png", "/portfolio/carti-de-vizita/31e5aed9a_generated_image.png"],
+  "adi-ecoo-2009-sa": ["/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.jpeg", "/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.png", "/portfolio/adi-ecoo-2009-sa/1f620d631_greenfact-octombrie.png"],
+  "campanie-social-media-luxe": ["/portfolio/campanie-social-media-luxe/65714e254_generated_image.png", "/portfolio/campanie-social-media-luxe/150a726d7_generated_image.png", "/portfolio/campanie-social-media-luxe/64686f8af_generated_image.png"],
+  "auras-trend-vault": ["/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg", "/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.jpeg", "/portfolio/auras-trend-vault/editorial-2026/editorial-black-white.jpeg"],
+  "magazine-online-e-commerce": ["/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg", "/portfolio/magazine-online-e-commerce/66ff9fedd_WhatsAppImage2026-07-02at114431.jpeg", "/portfolio/magazine-online-e-commerce/85dbe451e_WhatsAppImage2026-07-02at114542.jpeg"],
+  "invitatii-nunti-botezuri-evenimente": ["/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png", "/portfolio/invitatii-nunti-botezuri-evenimente/174ce0fdf_WhatsAppImage2026-07-02at152155.jpeg", "/portfolio/invitatii-nunti-botezuri-evenimente/293e33e9b_generated_image.png"],
+  "documente-corporatiste-licenta": ["/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png", "/portfolio/documente-corporatiste-licenta/0aede3d97_Capturdeecran2026-07-02143741.png", "/portfolio/documente-corporatiste-licenta/2346f68b2_generated_image.png"],
+  "arta-digitala-materiale-grafice": ["/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", "/portfolio/arta-digitala-materiale-grafice/059a89151_WhatsAppImage2026-07-02at1140101.jpg", "/portfolio/arta-digitala-materiale-grafice/28cc11e17_WhatsAppImage2026-07-02at114012.jpeg"],
+  "logo-design": ["/portfolio/logo-design/3caeb0cc1_Untitled-design.png", "/portfolio/logo-design/00539c763_realestatelogo.png", "/portfolio/logo-design/3e75777fb_generated_image.png"],
+};
+
+function ProjectIndex({ items, onNavigate }) {
+  const [activeSlug, setActiveSlug] = useState(items[0]?.slug);
+
+  return (
+    <section className="project-index" aria-label="Toate proiectele">
+      <div className="project-index-head">
+        <p className="kicker"><span className="eyebrow-text">Arhiva vie</span></p>
+        <p>Identități, spații digitale și obiecte grafice construite ca fragmente din aceeași lume.</p>
+      </div>
+      <div className="project-index-list">
+        {items.map((project, index) => {
+          const previews = PROJECT_PREVIEWS[project.slug] || [project.image];
+          return (
+            <a
+              className="project-index-row"
+              data-active={project.slug === activeSlug}
+              key={project.slug}
+              href={`/portofoliu/${project.slug}`}
+              onMouseEnter={() => setActiveSlug(project.slug)}
+              onFocus={() => setActiveSlug(project.slug)}
+              onClick={(event) => onNavigate(event, `/portofoliu/${project.slug}`)}
+            >
+              <span className="project-index-number">{String(index + 1).padStart(2, "0")}</span>
+              <strong>{project.title.split(" — ")[0]}</strong>
+              <span className="project-index-tags">{project.category.map((tag) => <i key={tag}>{tag}</i>)}</span>
+              <span className="project-index-preview" aria-hidden="true">
+                {previews.slice(0, 3).map((image, imageIndex) => <img key={image} src={image} alt="" loading="lazy" style={{ "--preview-i": imageIndex }} />)}
+              </span>
+              <span className="project-index-open">Vezi proiectul <ArrowRight size={15} /></span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
 
 // ── Static data ──────────────────────────────────────────────────────────────
 const projects = [
@@ -426,25 +482,7 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
-      <Fan
-        className="work-fan bg-ink-marble"
-        label="Toate proiectele"
-        backdrop={(
-          <p className="fan-backdrop" aria-hidden="true">
-            <span>Modelez</span>
-            <span>identități</span>
-          </p>
-        )}
-        items={projects.map((p) => ({ ...p, key: p.slug }))}
-        renderCard={(project) => (
-          <a href={"/portofoliu/" + project.slug} onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}>
-            <figure>
-              <img src={project.image} alt={project.title} loading="lazy" />
-              <figcaption>{project.title.split(" — ")[0]}</figcaption>
-            </figure>
-          </a>
-        )}
-      />
+      <ProjectIndex items={projects} onNavigate={onNavigate} />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
       <section className="services gilt bg-marble is-deep bloom flip" id="servicii">

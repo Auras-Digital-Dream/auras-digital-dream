@@ -134,6 +134,34 @@ Planșa combinată confirmă folosirea portretului original și continuitatea pa
 
 final result: passed
 
+## Actualizare QA - arhiva homepage si pagini de proiect sticky
+
+- source visual truth: `C:\Users\aural\Downloads\pagini proiect inspiratie.mp4`
+- source contact sheet: `design-source-project-pages-contact-sheet.jpg`
+- implementation screenshots: `design-qa-home-project-index.png`, `design-qa-project-sticky-story.png`
+- viewports: 1142 x 784 CSS px desktop; 430 x 900 responsive override
+- states: indexul proiectelor la mijlocul arhivei; capitolul 03 Design-ul pe proiectul Verde Bean
+
+### Full-view si focused evidence
+
+Cadrele sursa au fost analizate ca index editorial: randuri orizontale dense, titlu si etichete in stanga, benzi de imagini in dreapta si fundal inchis. Implementarea pastreaza aceasta mecanica, dar foloseste serif-ul, auriul, textura si materialele reale Aura's Digital Dream. Pagina individuala a fost verificata separat pentru fundalul fix, cardul glass, schimbarea imaginii si progresul capitolelor.
+
+### Findings si corectii
+
+1. P1 initial: cardurile sticky se suprapuneau in timpul tranzitiei. Fix: cardurile sunt acum intr-un stack fix in stage, iar track-ul contine doar sentinelele de scroll; un singur card este vizibil si interactiv.
+2. P1 initial: capitolele lungi puteau iesi din viewport in starea intermediara. Fix: pozitionarea cardului este independenta de sentinela si ramane centrata pe desktop, respectiv ancorata jos pe mobil.
+3. P2: textura arhivei indica un asset inexistent. Fix: foloseste textura reala `public/textures/paper.webp`.
+4. P2: fundalurile proiectelor riscau sa para generice. Fix: fiecare proiect foloseste trei imagini existente, iar fiecare capitol individual foloseste materialele reale ale proiectului curent.
+5. Post-fix: zero erori in consola pe homepage si proiect; build client, SSR si 18 rute prerandate trecute.
+
+- Typography: serif editorial pentru numele proiectelor si titlurile capitolelor; sans condensat pentru index si metadata.
+- Layout: arhiva trece la doua randuri pe tableta si o coloana compacta pe mobil; cardul sticky ramane complet incadrat.
+- Motion: ScrollTrigger controleaza cele patru capitole, zoom-ul lent si scanarea aurie; cursorul misca sticla opus directiei sale.
+- Accessibility: linkurile raman semantice, focusul activeaza preview-ul, reduced motion transforma povestea intr-o lista statica.
+- Asset fidelity: nu au fost generate imagini noi si nu au fost preluate imagini din videoclipul de inspiratie.
+
+final result: passed
+
 ## Actualizare QA - fundatie GSAP pentru Scene 01-04
 
 - source visual truth: scrollytelling-ul Scene 01-04 deja aprobat si materialele video furnizate de utilizatoare

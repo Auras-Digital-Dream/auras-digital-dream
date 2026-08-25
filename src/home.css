@@ -1825,6 +1825,47 @@
   --accent: var(--gold);
 }
 
+/* Project archive: the dense editorial rhythm from the motion reference,
+   translated into the site's ink, porcelain and gilded-glass language. */
+.project-index { position:relative; z-index:3; padding:clamp(44px,6vw,82px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(circle at 82% 10%,rgba(188,168,126,.12),transparent 27%),linear-gradient(180deg,#161817,#0f1111 72%,#151718); color:#eeeae2; }
+.project-index::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.18; background-image:url("/textures/paper.webp"); background-size:720px auto; mix-blend-mode:soft-light; }
+.project-index-head { position:relative; width:min(100% - 8vw,1500px); margin:0 auto 38px; display:flex; justify-content:space-between; gap:28px; align-items:flex-end; }
+.project-index-head > p:last-child { width:min(480px,45vw); margin:0; color:rgba(238,234,226,.58); font:400 clamp(15px,1.3vw,19px)/1.55 var(--font-serif); }
+.project-index-list { position:relative; border-top:1px solid rgba(238,234,226,.14); }
+.project-index-row { position:relative; min-height:clamp(116px,10.5vw,166px); padding:24px max(4vw,28px); display:grid; grid-template-columns:52px minmax(210px,1fr) minmax(210px,.7fr) minmax(330px,1.15fr) 145px; gap:clamp(18px,2.3vw,42px); align-items:center; border-bottom:1px solid rgba(238,234,226,.14); color:inherit; text-decoration:none; isolation:isolate; }
+.project-index-row::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(238,234,226,.06),rgba(188,168,126,.035) 55%,transparent); opacity:0; transform:scaleY(.76); transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1); }
+.project-index-row[data-active="true"]::before,.project-index-row:hover::before,.project-index-row:focus-visible::before { opacity:1; transform:scaleY(1); }
+.project-index-number { color:#bca87e; font:700 10px/1 var(--font-sans); letter-spacing:.24em; }
+.project-index-row > strong { font:500 clamp(28px,3.1vw,52px)/.94 var(--font-serif); letter-spacing:-.035em; transition:transform .6s cubic-bezier(.16,1,.3,1),color .35s ease; }
+.project-index-row[data-active="true"] > strong { color:#fff; transform:translateX(8px); }
+.project-index-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.project-index-tags i { padding:6px 8px; border:1px solid rgba(238,234,226,.18); color:rgba(238,234,226,.62); font:700 8px/1 var(--font-sans); font-style:normal; letter-spacing:.13em; text-transform:uppercase; }
+.project-index-preview { height:clamp(78px,7vw,108px); display:flex; align-items:center; justify-content:flex-end; perspective:900px; }
+.project-index-preview img { width:clamp(94px,9vw,146px); height:100%; margin-left:-13px; object-fit:cover; border:1px solid rgba(238,234,226,.18); box-shadow:0 18px 40px rgba(0,0,0,.3); opacity:.56; filter:saturate(.7) brightness(.74); transform:translate3d(calc((2 - var(--preview-i))*9px),calc((var(--preview-i) - 1)*4px),0) rotate(calc((var(--preview-i) - 1)*3deg)); transition:opacity .55s ease,filter .55s ease,transform .75s cubic-bezier(.16,1,.3,1); }
+.project-index-row[data-active="true"] .project-index-preview img { opacity:1; filter:saturate(.92) brightness(.94); transform:translate3d(0,0,calc(var(--preview-i)*18px)) rotate(calc((var(--preview-i) - 1)*1.2deg)); }
+.project-index-open { display:flex; justify-content:flex-end; align-items:center; gap:8px; color:rgba(238,234,226,.65); font:700 9px/1 var(--font-sans); letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; }
+.project-index-row:focus-visible { outline:1px solid #d9c79b; outline-offset:-4px; }
+
+@media (max-width:900px) {
+  .project-index-head { align-items:flex-start; flex-direction:column; }
+  .project-index-head > p:last-child { width:min(100%,520px); }
+  .project-index-row { min-height:172px; grid-template-columns:34px 1fr auto; grid-template-rows:auto auto; gap:12px 16px; }
+  .project-index-row > strong { grid-column:2/4; }
+  .project-index-tags { grid-column:2; }
+  .project-index-preview { position:absolute; right:22px; bottom:16px; height:58px; opacity:.7; }
+  .project-index-preview img { width:74px; }
+  .project-index-open { grid-column:3; align-self:end; }
+}
+
+@media (max-width:560px) {
+  .project-index-row { min-height:184px; padding:24px 18px; grid-template-columns:28px 1fr; }
+  .project-index-row > strong { grid-column:2; font-size:31px; }
+  .project-index-tags { grid-column:2; padding-right:0; }
+  .project-index-preview { right:14px; bottom:14px; height:54px; max-width:46vw; overflow:hidden; }
+  .project-index-preview img { width:66px; }
+  .project-index-open { grid-column:2; justify-content:flex-start; margin-top:4px; }
+}
+
 /* ══════════════════════════════════════════════════════════════════════════
    MARBLE GROUNDS — .bg-marble / .bg-ink-marble
 

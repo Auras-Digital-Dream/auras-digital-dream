@@ -25,6 +25,7 @@ import {
 import { projectDetails } from "./projectDetails";
 import { useScrollExperience } from "./useScrollExperience";
 import { HomePage } from "./HomePage";
+import { gsap, ScrollTrigger, useGSAP } from "./gsap.js";
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const supplementalPortfolioAssets = {
   "adi-ecoo-2009-sa": [
@@ -297,6 +298,99 @@ function DeviceFrame({ slug, clip }) {
   );
 }
 
+function ProjectStoryCard({ chapter, index, active }) {
+  function floatCard(event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - .5;
+    const y = (event.clientY - rect.top) / rect.height - .5;
+    event.currentTarget.style.setProperty("--float-x", `${x * -16}px`);
+    event.currentTarget.style.setProperty("--float-y", `${y * -12}px`);
+    event.currentTarget.style.setProperty("--float-rx", `${y * 2.4}deg`);
+    event.currentTarget.style.setProperty("--float-ry", `${x * -3.2}deg`);
+  }
+
+  function resetCard(event) {
+    event.currentTarget.style.setProperty("--float-x", "0px");
+    event.currentTarget.style.setProperty("--float-y", "0px");
+    event.currentTarget.style.setProperty("--float-rx", "0deg");
+    event.currentTarget.style.setProperty("--float-ry", "0deg");
+  }
+
+  return (
+    <article className="project-story-card" data-active={active} onPointerMove={floatCard} onPointerLeave={resetCard}>
+      <div className="project-story-card-inner">
+        <span>{String(index + 1).padStart(2, "0")} / 04</span>
+        <p>{chapter.eyebrow}</p>
+        <h2>{chapter.title}</h2>
+        <div className="project-story-rule" aria-hidden="true" />
+        <p className="project-story-body">{chapter.body}</p>
+      </div>
+    </article>
+  );
+}
+
+function ProjectStory({ project, details, images, heroImage }) {
+  const ref = useRef(null);
+  const reduced = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const backgrounds = [heroImage, images[1] || heroImage, images[2] || images[0] || heroImage, images[3] || images[1] || heroImage];
+  const chapters = [
+    { eyebrow: "Context", title: "Provocarea", body: details.challenge },
+    { eyebrow: "Direcție", title: "Soluția", body: details.solution },
+    { eyebrow: "Limbaj vizual", title: "Design-ul", body: details.approach || `Am construit un sistem coerent de ${project.category.join(", ").toLowerCase()}, în care fiecare material susține aceeași poveste.` },
+    { eyebrow: "Impact", title: "Rezultatul", body: details.results.join(" · ") },
+  ];
+
+  useGSAP(() => {
+    if (reduced || !ref.current) return undefined;
+    const trigger = ScrollTrigger.create({
+      trigger: ref.current,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      invalidateOnRefresh: true,
+      onUpdate: ({ progress }) => {
+        const next = Math.min(3, Math.max(0, Math.floor(progress * 4)));
+        setActive((current) => current === next ? current : next);
+      },
+    });
+    return () => trigger.kill();
+  }, { scope: ref, dependencies: [reduced], revertOnUpdate: true });
+
+  useGSAP(() => {
+    if (reduced || !ref.current) return;
+    const currentBackground = ref.current.querySelector(`.project-story-bg[data-index="${active}"] img`);
+    const scan = ref.current.querySelector(".project-story-scan");
+    if (currentBackground) gsap.fromTo(currentBackground, { scale: 1.13 }, { scale: 1.035, duration: 2.2, ease: "power2.out" });
+    if (scan) gsap.fromTo(scan, { xPercent: -120, opacity: 0 }, { xPercent: 120, opacity: .82, duration: 1.15, ease: "power2.inOut" });
+  }, { scope: ref, dependencies: [active, reduced], revertOnUpdate: true });
+
+  return (
+    <section ref={ref} className="project-story" aria-label={`Povestea proiectului ${project.title}`}>
+      <div className="project-story-stage">
+        <div className="project-story-backgrounds" aria-hidden="true">
+          {backgrounds.map((image, index) => (
+            <figure className="project-story-bg" data-active={index === active} data-index={index} key={`${image}-${index}`}><img src={image} alt="" /></figure>
+          ))}
+          <div className="project-story-veil" />
+          <div className="project-story-scan" />
+        </div>
+        <div className="project-story-chrome" aria-hidden="true">
+          <span>{project.title.split(" — ")[0]}</span>
+          <i><b style={{ transform: `scaleX(${(active + 1) / 4})` }} /></i>
+          <span>{String(active + 1).padStart(2, "0")} — 04</span>
+        </div>
+        <div className="project-story-card-stack">
+          {chapters.map((chapter, index) => <ProjectStoryCard chapter={chapter} index={index} active={index === active} key={chapter.title} />)}
+        </div>
+      </div>
+      <div className="project-story-track">
+        {chapters.map((chapter) => <div className="project-story-sentinel" aria-hidden="true" key={chapter.title} />)}
+      </div>
+    </section>
+  );
+}
+
 function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = [...new Set([
@@ -338,10 +432,11 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
         <div className="detail-hero-visual" data-parallax="0.08"><img className="detail-hero-backdrop" src={heroImage} alt="" aria-hidden="true" /><img className="detail-hero-main" src={heroImage} alt={project.title} /></div>
       </section>
 
+      <ProjectStory project={project} details={details} images={images} heroImage={heroImage} />
+
       <section className="detail-content">
         <div className="detail-intro" data-reveal><p className="section-kicker"><span className="eyebrow-text">Despre proiect</span></p><h2>{details.about}</h2></div>
         <div className="project-facts" data-reveal><article><small>Rol & servicii</small><strong>{project.category.join(" · ")}</strong></article><article><small>Client</small><strong>{details.client}</strong></article><article><small>Perioadă</small><strong>{details.date}</strong></article><article><small>Livrabile</small><strong>{details.results.length} rezultate-cheie</strong></article></div>
-        <div className="detail-columns"><article data-reveal><span>01</span><h3>Provocarea</h3><p>{details.challenge}</p></article><article data-reveal><span>02</span><h3>Soluția</h3><p>{details.solution}</p></article>{details.approach && <article data-reveal><span>03</span><h3>Abordarea</h3><p>{details.approach}</p></article>}</div>
         {details.services && <div className="detail-results detail-services"><p className="section-kicker"><span className="eyebrow-text">Servicii livrate</span></p><div>{details.services.map((service) => <article key={service}><Sparkle size={17} weight="fill" /><span>{service}</span></article>)}</div></div>}
         <div className="detail-results"><p className="section-kicker"><span className="eyebrow-text">Rezultate</span></p><div>{details.results.map((result) => <article key={result}><Check size={18} weight="bold" /><span>{result}</span></article>)}</div></div>
       </section>
