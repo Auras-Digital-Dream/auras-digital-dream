@@ -1,278 +1,227 @@
-# Design QA — secțiunile inferioare ale paginii de cărți
+# Design QA — editorial archive homepage
 
-source visual truth path: `C:\Users\aural\Downloads\inspiratie carti.mp4` (cadru capturat în `design-qa-source.png`)
-
-implementation screenshot path: `design-qa-implementation.png`
-
-comparison image path: `design-qa-comparison.png`
-
-viewport: desktop implicit Edge, 1125 x 772 CSS px; verificare responsive suplimentară la override 390 x 844, randat de extensie la 434 x 938 CSS px
-
-pixel dimensions and density normalization: sursă 1142 x 784 px; implementare 1125 x 772 px; comparație 1142 x 784 px; capturi la densitatea implicită a browserului, scalate proporțional în aceeași planșă pentru comparație vizuală
-
-state: secțiunea de abonare și pilulele după intrarea în viewport; secțiunea cu evantaiul de cărți după animație; formular testat în starea de succes
+- Date: 2026-08-26
+- Source visual truth: user-provided desktop screenshots in the current conversation and the supplied `Kimi_Agent_Renaissance Futuristic Web.zip`
+- Implementation evidence: browser-rendered captures from the current QA session
+- Desktop viewport: 1663 × 889 requested; browser CSS viewport 1848 × 988 at extension scaling
+- Mobile viewport: 390 × 844 requested; browser CSS viewport 434 × 938 at extension scaling
+- State: homepage `/`, top of page and Manifest section after scroll
+- Density normalization: source and implementation were judged at their visible CSS composition; extension scaling was recorded rather than treated as a design mismatch
 
 ## Full-view comparison evidence
 
-Planșa `design-qa-comparison.png` pune în același cadru secțiunea de abonare din videoclip și implementarea Aura Dobre. Structura, contrastul, formularul liniar, fundalul aproape negru și gruparea pilulelor colorate păstrează direcția vizuală a sursei, fără a copia identitatea sau textele site-ului din videoclip.
+- The legacy `.hero { height: 260vh }` collision produced the oversized blank field and displaced artwork. The archive hero is now isolated at exactly `100svh`.
+- Desktop artwork now fills the useful hero width while preserving the editorial fade at the left edge.
+- The fixed rail remains within its own 108px column and no longer overlaps its six navigation labels.
+- Manifest labels and their secondary scripts now occupy separate horizontal lanes.
+- Mobile hero height is isolated from the legacy studio hero and has no horizontal overflow.
 
-## Focused region comparison evidence
+## Focused-region evidence
 
-Au fost inspectate separat zona formularului și a pilulelor, apoi evantaiul cu cele patru coperți. Verificarea focalizată a fost necesară pentru alinierea câmpului și butonului, lizibilitatea etichetelor, rotațiile pilulelor, crop-ul copertelor și suprapunerea cărților.
+- Hero: edition label, Studio CTA, title card, statement and artwork bounds inspected independently.
+- Archive rail: all six navigation labels inspected at 1663 × 889.
+- Manifest tabs: bounding boxes compared programmatically; no label/script intersections remain.
+- Motion: Hero elements transition to revealed state; Manifest image, mask and stagger elements change from opacity 0 before scroll to opacity 1 after scroll.
 
-## Findings
+## Findings and comparison history
 
-Nu au rămas diferențe P0, P1 sau P2 acționabile. Adaptările de copy, serif-ul existent și paleta Aura Dobre sunt intenționate, pentru continuitatea brandului.
-
-- [P3] Pilulele din implementare sunt mai ordonate decât în referință. Acest lucru păstrează lizibilitatea pe mobil; efectul de cădere și rotațiile oferă în continuare impresia de acumulare.
+- P1 — Hero inherited the studio homepage's 260vh height.
+  - Fix: route-qualified 100svh height, min-height and max-height rules.
+  - Post-fix evidence: desktop hero measures one viewport high; artwork is contained in the same frame.
+- P1 — Audit safeguard disabled original reveal transitions.
+  - Fix: removed permanent final-state overrides and restored route-scoped initial/revealed states.
+  - Post-fix evidence: below-fold reveal nodes are hidden before intersection and visible after scrolling.
+- P2 — Manifest title and script labels overlapped.
+  - Fix: separated label/script x positions and tightened rail navigation rhythm.
+  - Post-fix evidence: all four measured pairs report no intersection.
+- P2 — Hero artwork left excessive unused lateral space.
+  - Fix: increased desktop art width to 84%, softened the mask and moved the title card toward the visual axis.
+  - Post-fix evidence: image begins substantially earlier while the statement remains readable on a translucent paper panel.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: serif-ul cinematic existent este păstrat pentru titluri; textul UI folosește familia sans a proiectului, cu greutăți și contrast lizibile.
-- Spacing and layout rhythm: ierarhia abonare → pilule → autoare → evantai este clară; nu există overflow orizontal la verificarea mobilă.
-- Colors and visual tokens: fundal aproape negru, alb cald și accentele colorate corespund direcției sursei și rămân compatibile cu tema paginii.
-- Image quality and asset fidelity: sunt folosite coperțile reale deja existente în proiect, fără substituții sau ilustrații improvizate.
-- Copy and content: toate textele sunt rescrise pentru Aura Dobre și universul cărților ei; nu este preluat copy-ul site-ului de referință.
-
-## Interaction and accessibility evidence
-
-- Formularul acceptă un email valid și afișează local mesajul de succes.
-- Câmpul are etichetă accesibilă, imaginile au texte alternative, linkurile au denumiri explicite.
-- `prefers-reduced-motion` este respectat prin dezactivarea stărilor inițiale animate.
-- Consola browserului: zero erori.
-- Build de producție: trecut.
-
-## Comparison history
-
-1. P2 găsit: eticheta accesibilă era afișată și rupea grila formularului. Fix: eticheta vizuală a fost înlocuită cu `aria-label`; recapturarea arată câmpul și butonul pe același rând.
-2. P1 găsit: coperțile rămâneau invizibile deoarece fiecare element absolut depindea de propriul observer. Fix: animația a fost mutată pe containerul evantaiului, iar rotațiile finale sunt definite stabil în CSS; recapturarea arată toate cele patru coperți.
-3. Verificare după fix: fără probleme P0/P1/P2 pe desktop; fără overflow orizontal la viewport mobil.
-
-## Implementation checklist
-
-- [x] formular de abonare funcțional
-- [x] pilule animate la scroll
-- [x] evantai animat cu coperțile reale
-- [x] layout responsive și reduced motion
-- [x] build și verificare în browser
-
-## Actualizare QA — portretul autoarei
-
-- source visual truth path: `C:\Users\aural\OneDrive\Immagini\aura\IMAGINI EDITORIALE\aura in red.jpeg`
-- implementation screenshot path: `design-qa-author-implementation.png`
-- combined comparison path: `design-qa-author-comparison.png`
-- viewport: 1142 x 784 CSS px, densitate implicită Edge; verificare responsive suplimentară la 434 x 938 CSS px
-- source pixels: 1086 x 1448; implementation capture pixels: 1142 x 784; imaginile au fost normalizate proporțional în aceeași planșă
-- state: secțiunea `#despre` după reveal și stabilizarea parallaxului
-
-### Evidence și findings
-
-Planșa combinată confirmă păstrarea fidelă a portretului, a proporțiilor, culorii burgundy și a detaliilor aurii. Integrarea adaugă ramă decalată, lumină ambientală, caption editorial, orbită animată, reveal vertical, parallax și hover fără să altereze fotografia.
-
-Nu au rămas diferențe P0, P1 sau P2 acționabile. Prima captură a evidențiat contrast insuficient al textului peste filmarea cu pagini și tăierea elementului orbital. Filmarea a fost întunecată și colorată spre burgundy, iar clip-path-ul a fost mutat de pe întreaga figură pe imagine, astfel încât rama și orbita să rămână vizibile.
-
-- Fonts and typography: titlul serif, semnătura italică și microcopy-ul sans păstrează ierarhia editorială.
-- Spacing and layout: grila text-portret este echilibrată pe desktop și devine o singură coloană pe mobil, fără overflow orizontal.
-- Colors and tokens: burgundy, negru și auriu derivă direct din fotografie și se leagă de paleta cinematică existentă.
-- Image quality: fotografia originală este servită local, fără regenerare, deformare sau crop agresiv.
-- Copy and content: copy-ul existent al autoarei a fost păstrat; s-au adăugat doar semnătura și caption-ul editorial.
-- Accessibility and motion: alt text descriptiv, contrast corectat, hover opțional și dezactivarea reveal/parallax/rotație pentru `prefers-reduced-motion`.
-- Browser evidence: imagine vizibilă, fără overflow pe mobil și zero erori în consolă.
-
-## Actualizare QA — paleta unitară și reîncadrarea finală
-
-- source visual truth path: cele două capturi atașate de utilizatoare în conversație, cu nuanța bleumarin-negru și problemele de încadrare marcate vizual
-- implementation screenshot paths: `design-qa-books-palette-reader.png`, `design-qa-books-palette-author.png`
-- viewport: 1142 x 784 CSS px, densitate implicită Edge; verificare responsive la 434 x 938 CSS px
-- state: secțiunea cititoarei după animația pilulelor și secțiunea autoarei după reveal/parallax
-- normalization: capturile de implementare au fost evaluate la scara naturală a browserului; referința a fost folosită pentru culoare, margini și vizibilitatea filmării, nu pentru reproducere pixel-perfect a întregii pagini
-
-### Full-view și focused-region evidence
-
-Captura cititoarei confirmă folosirea nuanței `#11111f`, margini laterale egale, padding vertical echilibrat, formular aliniat și pilule complet încadrate. Captura autoarei confirmă insigna circulară și caption-ul în interiorul portretului, rama vizibilă, precum și filmarea cu pagini păstrată clar în spatele textului și în spațiul dintre coloane.
-
-### Findings și history
-
-1. P2 inițial: paleta era fragmentată între gri-albăstrui, negru și burgundy. Fix: a fost introdusă o bază `#11111f` cu gradiente bleumarin, reflexe violet și tranziții specifice pentru hero, univers, bibliotecă, cititoare, autoare, fan, final și footer.
-2. P2 inițial: cadrul cititoarei și elementele portretului păreau tăiate. Fix: cardul a primit lățime maximă și padding simetric, iar orbita și caption-ul au fost mutate complet în interiorul fotografiei.
-3. P2 inițial: filmarea autoarei era excesiv întunecată. Fix: luminozitatea video a crescut la `.68`, saturația la `.72`, iar overlay-ul a fost redus și localizat gradual pentru păstrarea contrastului textului.
-4. Post-fix: zero overflow orizontal pe desktop și mobil, zero erori în consolă, fără elemente tăiate în capturile finale.
-
-- Typography: ierarhia serif/sans rămâne coerentă, cu wrapping controlat.
-- Spacing/layout: cadrele și elementele decorative sunt complet încadrate; grila devine o coloană pe mobil.
-- Colors/tokens: întreaga pagină folosește acum aceeași familie bleumarin-negru, cu variații de lumină și profunzime.
-- Image/video quality: portretul original rămâne intact; filmarea este mai luminoasă și mai ușor de perceput.
-- Copy/content: textele existente au fost păstrate.
-- Accessibility/motion: contrastul textului rămâne lizibil, iar reduced motion continuă să fie respectat.
-
-## Actualizare QA — secțiunea Despre mine de pe homepage
-
-- source visual truth paths: `C:\Users\aural\OneDrive\Immagini\aura\portofoliu WEBSITE\eu in renascentism.jpeg`, `C:\Users\aural\Downloads\inspiratie text langa portret.mp4` și paleta atașată în conversație
-- implementation screenshot path: `design-qa-home-about-implementation.png`
-- combined comparison path: `design-qa-home-about-comparison.png`
-- viewport: 1142 x 784 CSS px, densitate implicită Edge; responsive verificat la 434 x 938 CSS px
-- source pixels: portret 1448 x 1086; video 826 x 608; implementare 1142 x 784
-- state: secțiunea `#despre-mine` după reveal, cu motion-text activ
-
-### Full-view și focused-region evidence
-
-Planșa combinată confirmă folosirea portretului original și continuitatea paletei: porțelan, ceață albăstruie, salvie, piatră, petrol, nuc și brun. Verificarea focalizată a confirmat ierarhia „EU SUNT” mic / „Aura” mare, portretul centrat, cuvintele motion suprapuse și blocul descriptiv separat în zona inferioară.
-
-### Findings și comparison history
-
-1. P1 inițial: transformarea Motion suprascria `translateX(-50%)`, împingând fotografia în afara centrului. Fix: centrare prin `left:0`, `right:0` și `margin:auto`, independentă de transformările animației.
-2. P2 inițial: motion-textul folosea fontul script al titlului și devenea greu de citit. Fix: cuvintele dinamice folosesc Bebas Neue condensat, conform mecanicii vizuale din video.
-3. P2 inițial: textul descriptiv se suprapunea peste portret și avea contrast slab. Fix: mutare în stânga jos, pe o peliculă porțelan semitransparentă cu blur.
-4. Post-fix: zero overflow orizontal pe desktop și mobil, zero erori în consolă, portret și text complet încadrate.
-
-- Typography: „Aura” folosește expresiv fontul display, iar motion-textul folosește o familie condensată clară.
-- Spacing/layout: portretul este centrat și se extinde intenționat pe mobil în interiorul unui container cu clipping controlat.
-- Colors/tokens: toate cele zece nuanțe ale paletei sunt reprezentate prin fundal, text și accente.
-- Image quality: este folosită fotografia originală, cu mască radială și blend discret, fără regenerarea chipului.
-- Copy/content: mesajele descriu serviciile generale ale studioului, fără legătură cu pagina cărților și fără copy preluat din videoclip.
-- Motion/accessibility: cuvintele intră secvențial și se repetă; pentru reduced motion rămân statice și complet vizibile.
-
-final result: passed
-
-## Actualizare QA - cursor soft si particule glitter
-
-- source: feedbackul vizual al utilizatoarei asupra primei versiuni de dezintegrare
-- implementation screenshot: `design-qa-home-cursor-soft-glitter.png`
-- state: cursorul traverseaza titlul Lupul & Brici
-
-### Corectii
-
-1. Cercul standard a fost redus de la 36px la 26px, iar starea interactiva de la 56px la 38px.
-2. Conturul este mai subtire si umbrele compacte au fost inlocuite cu puncte luminoase discrete.
-3. Masca de dezintegrare a fost redusa de la 78px la 54px si are o margine mai progresiva.
-4. Particulele sunt mai mici, mai putine si includ sclipiri in forma de diamant/cruce, cu disipare fina.
-5. Captura finala confirma un efect vizibil, dar delicat; consola browserului are zero erori.
-
-final result: passed
-
-## Actualizare QA - dezintegrare la cursor in arhiva proiectelor
-
-- source visual truth: `C:\Users\aural\Downloads\pagini proiect inspiratie.mp4`
-- focused source contact sheet: `cursor-effect-2.jpg`
-- implementation screenshot: `design-qa-home-cursor-disintegration.png`
-- viewport: 1142 x 784 CSS px, pointer fin
-- state: cursorul traverseaza titlul proiectului Lupul & Brici
-
-### Findings
-
-1. P1 initial: prima implementare reproducea indexul editorial, dar omitea campul granular care dezintegreaza suprafata atinsa.
-2. Fix: randul activ foloseste o masca radiala care elimina temporar textul, imaginile si liniile exact in jurul cursorului.
-3. Fix: un canvas suprapus emite pixeli de portelan, auriu si petrol din zona erodata, cu inertie si disipare progresiva.
-4. Efectul se reface la iesirea cursorului, este limitat la arhiva homepage si nu blocheaza linkurile.
-5. Pe touch si `prefers-reduced-motion`, canvas-ul si masca sunt dezactivate complet.
-6. Captura finala confirma fragmentarea titlului si roiul de particule; consola browserului are zero erori.
-
-final result: passed
-
-## Actualizare QA - arhiva homepage si pagini de proiect sticky
-
-- source visual truth: `C:\Users\aural\Downloads\pagini proiect inspiratie.mp4`
-- source contact sheet: `design-source-project-pages-contact-sheet.jpg`
-- implementation screenshots: `design-qa-home-project-index.png`, `design-qa-project-sticky-story.png`
-- viewports: 1142 x 784 CSS px desktop; 430 x 900 responsive override
-- states: indexul proiectelor la mijlocul arhivei; capitolul 03 Design-ul pe proiectul Verde Bean
-
-### Full-view si focused evidence
-
-Cadrele sursa au fost analizate ca index editorial: randuri orizontale dense, titlu si etichete in stanga, benzi de imagini in dreapta si fundal inchis. Implementarea pastreaza aceasta mecanica, dar foloseste serif-ul, auriul, textura si materialele reale Aura's Digital Dream. Pagina individuala a fost verificata separat pentru fundalul fix, cardul glass, schimbarea imaginii si progresul capitolelor.
-
-### Findings si corectii
-
-1. P1 initial: cardurile sticky se suprapuneau in timpul tranzitiei. Fix: cardurile sunt acum intr-un stack fix in stage, iar track-ul contine doar sentinelele de scroll; un singur card este vizibil si interactiv.
-2. P1 initial: capitolele lungi puteau iesi din viewport in starea intermediara. Fix: pozitionarea cardului este independenta de sentinela si ramane centrata pe desktop, respectiv ancorata jos pe mobil.
-3. P2: textura arhivei indica un asset inexistent. Fix: foloseste textura reala `public/textures/paper.webp`.
-4. P2: fundalurile proiectelor riscau sa para generice. Fix: fiecare proiect foloseste trei imagini existente, iar fiecare capitol individual foloseste materialele reale ale proiectului curent.
-5. Post-fix: zero erori in consola pe homepage si proiect; build client, SSR si 18 rute prerandate trecute.
-
-- Typography: serif editorial pentru numele proiectelor si titlurile capitolelor; sans condensat pentru index si metadata.
-- Layout: arhiva trece la doua randuri pe tableta si o coloana compacta pe mobil; cardul sticky ramane complet incadrat.
-- Motion: ScrollTrigger controleaza cele patru capitole, zoom-ul lent si scanarea aurie; cursorul misca sticla opus directiei sale.
-- Accessibility: linkurile raman semantice, focusul activeaza preview-ul, reduced motion transforma povestea intr-o lista statica.
-- Asset fidelity: nu au fost generate imagini noi si nu au fost preluate imagini din videoclipul de inspiratie.
-
-final result: passed
-
-## Actualizare QA - fundatie GSAP pentru Scene 01-04
-
-- source visual truth: scrollytelling-ul Scene 01-04 deja aprobat si materialele video furnizate de utilizatoare
-- implementation screenshot: `design-qa-gsap-scene-02.png`
-- viewport: 1142 x 784 CSS px, Edge
-- state: tranzitie prin scroll de la Scena 01 la Scena 02
-
-### Verificari
-
-1. Controlul scenei active foloseste acum GSAP ScrollTrigger cu `scrub`, refresh responsive si cleanup React automat prin `useGSAP`.
-2. Structura vizuala, textele, materialele video si lungimea sectiunii au fost pastrate.
-3. `prefers-reduced-motion` continua sa afiseze toate scenele static, fara continut ascuns.
-4. Scena 01 si Scena 02 au fost verificate in browser; schimbarea se produce corect la scroll si consola are zero erori.
-
-final result: passed
-
-## Actualizare QA - textul legat de portret si pilulele drop
-
-- source visual truth: capturile utilizatoarei pentru sectiunea Despre mine si `C:\Users\aural\Downloads\inspiratie carti.mp4` pentru mecanica pilulelor
-- implementation screenshots: `design-qa-home-about-neck-text.png`, `design-qa-books-drop-pills.png`
-- viewport: 1142 x 784 CSS px, Edge
-- state: portretul dupa reveal; pilulele dupa intrarea completa in viewport
-
-### Findings si corectii
-
-1. P1: eticheta "Eu sunt" era ascunsa de semnatura mare. A fost mutata intr-o eticheta translucida, distincta si lizibila, pastrand legatura vizuala cu numele Aura.
-2. P1: cuvintele animate erau separate de fotografie. Au fost mutate peste portret, incepand din zona gatului si continuand pe jacheta, fara sa acopere fata sau ochelarii.
-3. P1: pilulele aveau doar un reveal vertical si pareau ordonate in rand. Acum folosesc o animatie spring decalata, cad de la inaltimi diferite si se suprapun prin margini negative si z-index variabil.
-4. P2: pilulele apareau dupa formularul de subscribe. Au fost mutate imediat dupa descrierea cititoarei, iar formularul este separat printr-o linie luminoasa discreta.
-5. Post-fix: zero erori in consola pe homepage si pagina cartilor; continutul, scena 01-04 si sectiunile literare existente au fost pastrate.
-
-final result: passed
-
-## Actualizare QA — footer cu arcadă antică
-
-- source visual truth path: `public/assets/footer-bg.jpg` și cerința utilizatoarei privind vizibilitatea imaginii, soclul pentru informații și conturul de arcadă
-- implementation screenshot path: `design-qa-footer-arch.png`
-- viewport: 1142 x 784 CSS px; verificare dimensională mobilă la 478 x 1000 CSS px
-- state: intrarea în footer, urmată de vizualizarea completă a imaginii și a soclului inferior
-
-### Findings și comparison history
-
-1. P1 inițial: overlay-ul charcoal acoperea aproape întreaga fotografie. Fix: imaginea este acum un strat real, luminos, cu umbrire graduală doar spre baza secțiunii.
-2. P1 inițial: textul și iconițele concurau direct cu personajele. Fix: informațiile au fost mutate într-un soclu inferior cu blur, care acoperă zona mesei și păstrează chipurile vizibile.
-3. P2 inițial: footerul avea o muchie superioară dreaptă, fără continuitate cu direcția antică. Fix: conturul secțiunii formează o arcadă eliptică amplă, cu o linie luminoasă discretă.
-4. Post-fix: imaginea rămâne clară, toate cele cinci linkuri sociale sunt lizibile și interactive, iar layoutul nu produce overflow pe desktop sau mobil.
-
-- Typography: brandul și microcopy-ul rămân lizibile pe soclul întunecat.
-- Spacing/layout: arcada are amplitudine responsive; soclul trece pe rânduri separate pe mobil.
-- Colors/tokens: nuanțele fotografiei sunt păstrate, cu contrast adăugat doar în zona informațională.
-- Image quality: este folosit asset-ul original la rezoluție completă, cu crop controlat și fără întunecare globală.
-- Copy/content: textele și destinațiile sociale existente sunt păstrate.
-- Accessibility/motion: linkurile își păstrează etichetele accesibile și stările hover; nu a fost adăugată mișcare obligatorie.
-
-final result: passed
-
-## Actualizare QA — corecție portret și scrollytelling homepage
-
-- source visual truth paths: capturile furnizate de utilizatoare, `C:\Users\aural\Downloads\Recording 2026-08-24 215949.mp4`, `C:\Users\aural\Downloads\inspiratie animatii site.mp4`
-- implementation screenshot path: `design-qa-home-scrollytelling.png`
-- viewport: 1142 x 784 CSS px; verificare responsive suplimentară la 478 x 1000 CSS px
-- state: secțiunea `#despre-mine` după reveal și scenele 01–02 ale scrollytelling-ului activ la scroll
-
-### Evidence și comparison history
-
-1. P1 inițial: „Eu sunt Aura” era separat de fotografie, parțial ascuns și nu se citea ca parte din portret. Fix: titlul a fost ancorat în interiorul figurii, cu „Eu sunt” mic și „Aura” vizibil, scalat pentru a nu domina chipul.
-2. P1 inițial: cele patru cuvinte animate traversau fața și ochelarii. Fix: motion-textul a fost coborât sub zona feței, în două coloane pe desktop și într-o bandă verticală pe mobil.
-3. P2 inițial: motion-textul și descrierea se intersectau în viewporturi joase. Fix: secțiunea a primit un ritm vertical mai amplu, cu zone distincte pentru portret, cuvinte și descriere.
-4. Scrollytelling: referința arată un cadru cinematic fix, scene numerotate, imagine full-screen și copy care se schimbă la scroll. Implementarea reproduce mecanica în patru acte cu materialele video reale ale site-ului, fără a copia textul sau structura de rutare din codul atașat.
-5. Post-fix: zero overflow orizontal pe desktop și mobil, zero erori în consolă; titlurile, descrierile și indexul scenelor rămân lizibile pe ambele viewporturi.
-
-- Typography: ierarhia script/serif/sans păstrează caracterul editorial și contrastul față de video.
-- Spacing/layout: portretul, motion-textul și copy-ul au benzi verticale separate; scena full-screen își păstrează compoziția pe mobil.
-- Colors/tokens: secțiunea portret folosește paleta furnizată, iar scenele folosesc scrim-ul charcoal existent pentru contrast.
-- Image/video quality: toate materialele sunt asset-uri reale deja prezente în proiect; nu au fost introduse placeholder-e sau capturi degradate din TikTok.
-- Copy/content: toate cele patru acte descriu serviciile și procesul Aura's Digital Dream.
-- Accessibility/motion: reduced motion păstrează conținutul static și complet; indexul scenelor este decorativ, iar textele sunt conținut semantic.
+- Typography: original display/UI families retained; vertical editorial typesetting preserved; overlapping secondary labels corrected.
+- Spacing/layout: hero, rail and Manifest geometry corrected at desktop and mobile breakpoints.
+- Colors/tokens: paper, burgundy, royal blue and dark ink palette retained.
+- Image quality: original ZIP imagery retained without replacement or additional compression.
+- Copy/content: original Romanian archive copy retained.
+
+## Interaction and technical checks
+
+- Section navigation and scroll-progress behavior retained.
+- Hero reveal, image drift, stagger, mask, rise and section motion states restored.
+- Browser console: no errors.
+- Production build: 19 routes prerender successfully.
+
+## Iteration — Atlas holograms and complete brand lockup
+
+- Source visual truth: the two user-provided screenshots in the current conversation and `AURA DIGITAL DREAM LOGO SVG.svg`.
+- Implementation evidence: browser captures of Hero and Atlas plus measured layouts at laptop, compact-tablet and mobile widths.
+- P1 — Hero showed only “Aura” and the subtitle intersected the display word.
+  - Fix: complete `Aura's Digital Dream` lockup with separate display and UI-text axes.
+  - Post-fix evidence: display word, `Digital Dream`, kicker, rule and seal occupy sequential non-overlapping positions on laptop and mobile.
+- P1 — Brand logo was missing.
+  - Fix: supplied SVG copied into `public/editorial-media/` and used in Hero, desktop rail and mobile header with transparent rendering.
+  - Post-fix evidence: SVG reports intrinsic 500 × 500 dimensions, transparent CSS background and renders without a rectangular backdrop.
+- P2 — Atlas text blocks appeared as opaque paper notes.
+  - Fix: transparent teal/royal holographic glass panels with burgundy emitter line, luminous edge, controlled blur and dark text.
+  - Post-fix evidence: laptop capture shows the Renaissance hall visible through the Web panel while its title and paragraph remain legible.
+- P2 — Atlas notes needed resilient responsive placement.
+  - Fix: preserved spatial markers on laptop, three-column device layout on tablet and one-column stacked layout on mobile.
+  - Post-fix evidence: no pairwise card intersections and no horizontal overflow at tested breakpoints; descriptions remain visible on mobile.
+- Browser console after this iteration: no errors.
+
+## Follow-up polish
+
+- P3: the rail may be made slightly wider if a more generous editorial rhythm is preferred on very short laptop screens.
+
+## Iteration — long text, pricing ledger and mobile gutters
+
+- Source visual truth: the six user-provided issue screenshots in the current conversation.
+- Implementation evidence: browser captures and element-bound measurements at laptop and phone widths.
+- P1 — long notes in “Sistem” overflowed while using vertical writing.
+  - Fix: notes now use horizontal glass-paper cards with responsive one/two-column layouts.
+  - Post-fix evidence: both mobile notes report zero horizontal and vertical content overflow and `horizontal-tb` writing mode.
+- P1 — six price entries were forced into four narrow columns.
+  - Fix: six minimum-width ledger cells, full-width desktop strip and horizontal mobile navigation.
+  - Post-fix evidence: all six cells report zero internal overflow on laptop and phone; the mobile strip scrolls only on the horizontal axis.
+- P2 — media frames touched mobile viewport edges.
+  - Fix: explicit gutters and subtle borders for Manifest, Atlas, Sistem and service imagery.
+  - Post-fix evidence: the tested Sistem image retains approximately 24–44 CSS px side spacing and the document has no horizontal overflow.
+- P2 — Colophon headline was cropped at narrow widths.
+  - Fix: bounded responsive type scale, reduced tracking and explicit section gutters.
+  - Post-fix evidence: the full title has matching `scrollWidth` and `clientWidth`, with approximately 35 CSS px side spacing.
+- Copy correction: “Nu livrez doar servicii. Creez transformări.”
+
+## Iteration — Studio shared navigation and refined moving frieze
+
+- Source visual truth: user-provided Studio screenshot in the current conversation, showing the oversized angled 3D marquee and legacy header.
+- Implementation evidence: `http://127.0.0.1:5174/studio`, browser-rendered desktop and mobile captures from the current QA session.
+- Viewports: 1440 × 900 desktop and 390 × 844 mobile; device density handled by the browser surface.
+- State: Studio hero, open mobile navigation, and the transition from `#despre-mine` into the moving frieze.
+
+### Full-view comparison evidence
+
+- The former full-width masthead and logo lockup are replaced by the same compact glass route switcher used on Acasă.
+- The marquee no longer dominates an entire viewport or crops large extruded letters; it is a 192px editorial frieze on desktop and 148px on mobile.
+- No horizontal document overflow occurs at either tested viewport.
+
+### Focused-region evidence
+
+- Navigation: four routes remain visible on desktop; Studio is the active route; the mobile menu opens, exposes the same four destinations and remains inside the viewport.
+- Frieze: Cormorant/EB Garamond serif stack, 500 weight, 60px desktop and approximately 39px mobile, burgundy ink, restrained tracking and no 3D extrusion.
+- Motion: scroll-linked horizontal travel remains active at a reduced speed; `prefers-reduced-motion` continues to disable it.
+
+### Findings and comparison history
+
+- P1 — Legacy Studio masthead did not match the new homepage navigation.
+  - Fix: reused the shared GlobalNavigation component and removed the duplicate Studio logo/header/menu sheet.
+  - Post-fix evidence: desktop and mobile captures show the same glass capsule and route order as Acasă.
+- P1 — Moving text was oversized, heavy, steeply angled and visually crude.
+  - Fix: removed rotation and multi-step 3D shadow, reduced size and speed, introduced a low marble-glass frieze with restrained burgundy serif type and fine gold rules.
+  - Post-fix evidence: the full line sits vertically centered, remains legible and does not collide with adjacent sections.
+- P2 — A slight rail rotation enlarged the transformed bounds and pushed type toward the lower crop.
+  - Fix: removed the remaining 1.25-degree rotation while preserving horizontal motion.
+  - Post-fix evidence: desktop item bounds sit entirely inside the 192px band.
+
+### Required fidelity surfaces
+
+- Typography: lighter Renaissance serif, smaller optical size and wider but controlled tracking.
+- Spacing/layout: compact band height, centered line box and responsive mobile proportions.
+- Colors/tokens: porcelain/mist ground, burgundy text, petrol microcopy and antique-gold hairlines.
+- Image quality: no image assets were replaced or degraded in this iteration.
+- Copy/content: the original three concepts were retained and “Experiențe digitale” was added to match the Studio's four-pillar language.
+
+- Primary interactions tested: desktop navigation visibility, mobile menu open state, route labels, active route and scroll-linked frieze movement.
+- Browser console: no errors or warnings.
+- Build and SEO audit: passed for all 19 current routes.
+
+## Iteration — Studio „Despre mine” compact glass composition
+
+- Source visual truth: user-provided Studio screenshots and the spacing correction described in the current conversation.
+- Implementation evidence: browser-rendered captures of `/studio#despre-mine` from the current QA session.
+- Viewport: 1142 × 784 CSS px at browser density.
+- State: upper portrait composition and lower portrait-to-biography transition after scroll.
+
+### Full-view comparison evidence
+
+- The portrait grows from the former 76vw/890px frame to an 88vw/1080px frame and now occupies the section as the dominant visual.
+- Section height is reduced from 1180px minimum to 1010px at the tested viewport, removing the large inactive band below the image.
+- The biography is no longer pinned to a distant bottom edge; it overlaps the portrait base by 22 CSS px and reads as part of the same composition.
+
+### Focused-region evidence
+
+- Portrait crop: face, sunglasses, Renaissance setting and lower jacket remain visible; the image is loaded at natural resolution and no replacement asset is used.
+- Biography card: 520px glass panel, dark charcoal copy on a translucent porcelain/mist surface, with readable line length and no clipping.
+- Background: petrol, mineral green and antique neutral layers remain within the Studio palette; the inset glass field has a fine light border and controlled blur.
+
+### Findings and comparison history
+
+- P1 — biography and portrait were visually disconnected by a wide empty strip.
+  - Fix: shortened the section and moved the copy panel to overlap the portrait base.
+  - Post-fix evidence: measured 22px overlap instead of the former approximately 250px gap.
+- P2 — portrait lacked the visual scale requested for the section.
+  - Fix: increased maximum width to 1080px and expanded the mask/frame bounds.
+  - Post-fix evidence: the portrait fills nearly the full useful width while the document reports zero horizontal overflow.
+- P2 — flat pale background weakened depth and separation.
+  - Fix: added a darker mineral gradient and a translucent inset glass layer with blur, restrained highlight and shadow.
+  - Post-fix evidence: the bright portrait and biography card retain clear contrast against the deeper ground.
+
+### Required fidelity surfaces
+
+- Typography: existing Renaissance display and editorial serif families retained; biography line length is capped at 40 characters.
+- Spacing/layout: portrait, copy and frame now form one compact vertical composition; the mobile breakpoint uses a full-width inset card at 18px gutters.
+- Colors/tokens: Studio petrol, porcelain, mist, antique and charcoal tokens retained with stronger foreground/background separation.
+- Image quality: original `eu-in-renascentism.jpeg` retained, uncropped at source and rendered without blend-mode darkening.
+- Copy/content: biography and founder attribution are unchanged.
+
+- Primary checks: image load, portrait/copy overlap, sticky navigation visibility, document overflow and route links.
+- Browser console: no runtime errors; only Vite and development analytics messages.
+- Production build and SEO audit: passed for all 19 routes.
+
+## Iteration — simplified glass background
+
+- Source visual truth: the user's review of the previous browser-rendered About composition.
+- Implementation evidence: browser-rendered `/studio#despre-mine` capture in the current QA session at 1142 × 784 CSS px.
+- P2 — layered radial colors competed with the portrait and glass panel.
+  - Fix: replaced the multi-color field with one desaturated mineral tone (`#718381`) and removed the decorative atmosphere circles.
+  - Post-fix evidence: the background reads as one continuous plane; depth is carried by the inset glass and biography card, with zero document overflow.
+- Typography, copy, portrait crop and layout geometry remain unchanged.
+- Browser check: image loaded, glass/text contrast retained, no horizontal overflow.
+- Production build and SEO audit: passed for all 19 routes.
+
+## Iteration — Scene 01 video replacement and directional reveal
+
+- Source visual truth: `C:\Users\aural\Downloads\grok-video-bd9e186a-d815-4594-beeb-f1285f5a6d72.mp4` and the user's requested left-edge-to-opposite-direction scroll motion.
+- Implementation evidence: browser-rendered `/studio#proces` captures from the current QA session at 1142 × 784 CSS px.
+- State: Scene 01 active and subsequent scene active after a physical scroll gesture.
+
+### Full-view and focused-region evidence
+
+- Scene 01 renders the supplied 736 × 400 video full-bleed; the former geometric square/gold-line footage and its mismatched poster are no longer referenced by this scene.
+- Runtime media state: loaded (`readyState: 4`), playing, looping, inline and muted; measured duration 6.041667 seconds.
+- Inactive scene media begins 6vw to the left with `clip-path: inset(0 100% 0 0)`; active media resolves to zero translation and a full clip, producing a left-to-right reveal.
+- Typography, scrim, scene copy and index remain unchanged and legible over the new footage.
+
+### Findings and comparison history
+
+- P1 — Scene 01 still displayed the unwanted gold-lined geometric footage.
+  - Fix: replaced only its media source with `public/video/story-aparitia-grok.mp4` and removed the former poster from that scene.
+  - Post-fix evidence: browser `currentSrc` points to the new asset and the supplied knight/Renaissance footage is visible.
+- P2 — scene changes used only opacity and scale, without the requested directional travel.
+  - Fix: added a restrained negative-x start position and left-to-right clip reveal for all four scene visuals.
+  - Post-fix evidence: inactive transform measures approximately -68.5px at the tested viewport; active transform is zero with a fully open clip.
+
+### Required fidelity surfaces
+
+- Typography and copy: unchanged.
+- Spacing/layout: full-viewport scene framing retained; zero horizontal document overflow.
+- Colors/tokens: existing dark cinematic scrim and white text retained.
+- Image quality: supplied MP4 used directly at its native 736 × 400 frame without recompression.
+- Motion/accessibility: muted autoplay with `playsInline`; reduced-motion mode removes translation and clipping.
+
+- Primary interaction tested: physical scroll gesture changed the active scene and retained the directional media state.
+- Browser console: no runtime errors.
+- Production build and SEO audit: passed for all 19 routes.
 
 final result: passed

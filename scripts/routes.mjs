@@ -78,11 +78,12 @@ export function routes() {
   const home = {
     url: "/",
     priority: "1.0",
-    title: `${SITE} — Marketing, Design & Web`,
-    description: "Marketing, branding, design și experiențe web create cu strategie și suflet.",
+    title: `${SITE} | Marketing · Design · Web`,
+    description: "Designer, marketer și sculptor digital. Identități care unesc Renașterea, efemerul și viitorul — strategie, design și experiențe digitale.",
     image: DEFAULT_IMAGE,
     ogImage: DEFAULT_IMAGE,
-    ogImageAlt: "Sculptură de marmură cu vine de aur, ținută în palmă.",
+    ogImageAlt: "Aura's Digital Dream — studio de strategie, identitate, design și experiențe digitale.",
+    ogType: "website",
   };
   const books = {
     url: "/cartile-mele",
@@ -92,9 +93,21 @@ export function routes() {
     image: DEFAULT_IMAGE,
     ogImage: DEFAULT_IMAGE,
     ogImageAlt: "Sculptură de marmură cu vine de aur, ținută în palmă.",
+    ogType: "website",
+  };
+  const studio = {
+    url: "/studio",
+    priority: "0.9",
+    title: `Studio — Portofoliu și servicii | ${SITE}`,
+    description: "Descoperă portofoliul, serviciile, procesul și proiectele de branding, design, marketing și web realizate de Aura's Digital Dream.",
+    image: DEFAULT_IMAGE,
+    ogImage: DEFAULT_IMAGE,
+    ogImageAlt: "Aura's Digital Dream — studio complet de strategie, design și web.",
+    ogType: "website",
   };
   return [
     home,
+    studio,
     books,
     ...projects().map((p) => ({
       url: `/portofoliu/${p.slug}`,
@@ -104,6 +117,7 @@ export function routes() {
       image: p.image,
       ogImage: `/og/${p.slug}.jpg`,
       ogImageAlt: `${p.title.split(" — ")[0]} — proiect din portofoliul Aura's Digital Dream.`,
+      ogType: "article",
     })),
   ];
 }

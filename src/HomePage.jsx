@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, List, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
+import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo } from "@phosphor-icons/react";
 import { Chapters, Depth, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { GoldLine } from "./goldline.jsx";
-import { useNavTone } from "./navtone.js";
+import { GlobalNavigation } from "./editorial/components/GlobalNavigation.tsx";
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -38,7 +38,7 @@ function ProjectIndex({ items, onNavigate }) {
   const archiveRef = useRef(null);
 
   return (
-    <section ref={archiveRef} className="project-index" aria-label="Toate proiectele">
+    <section ref={archiveRef} className="project-index" id="portofoliu" aria-label="Toate proiectele">
       <ProjectDisintegrationField rootRef={archiveRef} />
       <div className="project-index-head">
         <p className="kicker"><span className="eyebrow-text">Arhiva vie</span></p>
@@ -83,7 +83,7 @@ function ProjectDisintegrationField({ rootRef }) {
 
     const context = canvas.getContext("2d", { alpha: true });
     const particles = [];
-    const palette = ["#f3ead2", "#d9c58f", "#8aa0a0", "#f8f5ee"];
+    const palette = ["#F0ECE9", "#C4BEA8", "#A7A086", "#C5D5D2"];
     let frame = 0;
     let activeRow = null;
 
@@ -109,22 +109,22 @@ function ProjectDisintegrationField({ rootRef }) {
         row.style.setProperty("--dissolve-x", `${event.clientX - rowRect.left}px`);
         row.style.setProperty("--dissolve-y", `${event.clientY - rowRect.top}px`);
       }
-      for (let index = 0; index < 20; index += 1) {
+      for (let index = 0; index < 13; index += 1) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = .35 + Math.random() * 1.65;
+        const speed = .08 + Math.random() * .58;
         particles.push({
-          x: x + (Math.random() - .5) * 42,
-          y: y + (Math.random() - .5) * 42,
-          vx: Math.cos(angle) * speed - .3,
-          vy: Math.sin(angle) * speed - .35,
+          x: x + (Math.random() - .5) * 22,
+          y: y + (Math.random() - .5) * 22,
+          vx: Math.cos(angle) * speed - .16,
+          vy: Math.sin(angle) * speed - .12,
           life: 1,
-          decay: .012 + Math.random() * .016,
-          size: .55 + Math.random() * 2.15,
-          sparkle: Math.random() > .72,
+          decay: .014 + Math.random() * .012,
+          size: .28 + Math.random() * .68,
+          sparkle: Math.random() > .9,
           color: palette[Math.floor(Math.random() * palette.length)],
         });
       }
-      if (particles.length > 620) particles.splice(0, particles.length - 620);
+      if (particles.length > 480) particles.splice(0, particles.length - 480);
     }
 
     function clearRow() {
@@ -143,14 +143,14 @@ function ProjectDisintegrationField({ rootRef }) {
         if (particle.life <= 0) { particles.splice(index, 1); continue; }
         context.globalAlpha = particle.life;
         context.fillStyle = particle.color;
-        const size = particle.size * (.45 + particle.life);
+        const size = Math.max(.3, particle.size * (.55 + particle.life * .65));
         if (particle.sparkle) {
           context.save();
           context.translate(particle.x, particle.y);
           context.rotate(Math.PI / 4);
           context.fillRect(-size * .45, -size * .45, size * .9, size * .9);
-          context.fillRect(-size * 1.5, -size * .16, size * 3, size * .32);
-          context.fillRect(-size * .16, -size * 1.5, size * .32, size * 3);
+          context.fillRect(-size * 1.2, -size * .12, size * 2.4, size * .24);
+          context.fillRect(-size * .12, -size * 1.2, size * .24, size * 2.4);
           context.restore();
         } else {
           context.fillRect(particle.x, particle.y, size, size);
@@ -196,11 +196,6 @@ const projects = [
   { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", description: "Ilustrații, postere, compoziții abstracte și materiale grafice create într-o direcție contemporană." },
   { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
 ];
-const portfolioGroups = [
-  { title: "Branding", copy: "Identități vizuale, logo-uri, direcții cromatice și materiale de brand care fac o afacere recognoscibilă.", slugs: ["verde-bean", "painea-de-acasa", "lumina-botanica", "luxury-hair-by-aura", "logo-design", "carti-de-vizita", "selectii-cromatice"] },
-  { title: "Web", copy: "Platforme, website-uri și experiențe digitale create pentru prezentare, conversie și încredere.", slugs: ["auras-trend-vault", "real-estate-co", "lupul-and-brici", "magazine-online-e-commerce"] },
-  { title: "Marketing", copy: "Campanii, conținut vizual, documente și materiale promoționale construite pentru vizibilitate.", slugs: ["adi-ecoo-2009-sa", "campanie-social-media-luxe", "invitatii-nunti-botezuri-evenimente", "documente-corporatiste-licenta", "arta-digitala-materiale-grafice"] },
-];
 const services = [
   { icon: Palette, title: "Pachet Start-up", subtitle: "Identitate completă pentru afaceri noi", copy: "Pentru branduri la început care au nevoie de o imagine clară și credibilă din prima zi.", list: ["Logo profesional + 2 variante cromatice", "Paletă cromatică + fonturi", "Carte de vizită / semnătură digitală", "Mini kit social media (3 postări + 3 stories)", "Ghid de identitate PDF"], benefits: ["Arăți profesionist din prima zi", "Ai o imagine coerentă pe toate platformele", "Ai materiale gata de folosit"], price: "900 – 1.200 RON" },
   { icon: Megaphone, title: "Pachet Rebranding", subtitle: "Upgrade complet de imagine", copy: "Pentru afaceri care există deja, dar au nevoie de o identitate matură și premium.", list: ["Audit vizual complet", "Refresh logo + direcție vizuală", "Materiale grafice actualizate", "Direcție de comunicare", "6 vizualuri social media", "Ghid de brand PDF"], benefits: ["Imagine modernă și coerentă", "Creștere încredere + profesionalism", "Materiale actualizate pentru toate platformele"], price: "1.500 – 2.200 RON" },
@@ -242,7 +237,7 @@ const packageComparison = [
   { feature: "SEO & claritate", start: "de bază", web: "structurat", premium: "extins + conținut" },
 ];
 const chapters = [
-  { key: "aparitia", number: "01", title: "Apariția", video: "/video/story-ascult-workshop.mp4", poster: "/video/poster/story-ascult-workshop.jpg", headline: "Te ajut să apari.", copy: "Strategia și identitatea vizuală scot brandul din anonimat și îl așază exact în lumina potrivită.", meta: "Claritate · poziționare · identitate" },
+  { key: "aparitia", number: "01", title: "Apariția", video: "/video/story-aparitia-grok.mp4", headline: "Te ajut să apari.", copy: "Strategia și identitatea vizuală scot brandul din anonimat și îl așază exact în lumina potrivită.", meta: "Claritate · poziționare · identitate" },
   { key: "povestea", number: "02", title: "Povestea", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Îi dau o poveste care rămâne.", copy: "Transform informația în concept, ritm și limbaj vizual — o prezență care se simte înainte să fie explicată.", meta: "Storytelling · direcție de artă · conținut" },
   { key: "constructia", number: "03", title: "Construcția", video: "/video/story-construiesc-modern-office.mp4", poster: "/video/poster/story-construiesc-modern-office.jpg", headline: "Construiesc ce poate dura.", copy: "Website-uri, campanii și sisteme vizuale șlefuite ca un întreg: clare, responsive și pregătite să crească.", meta: "Design · web · experiență digitală" },
   { key: "atelierul", number: "04", title: "Atelierul", video: "/video/about-renaissance-studio.mp4", poster: "/video/poster/about-renaissance-studio.jpg", headline: "Renaștere și tehnologie, la lucru.", copy: "Aici, strategia întâlnește estetica, iar ideea ta devine o experiență vie — creată împreună, nu livrată mecanic.", meta: "Aura's Digital Dream · atelier digital" },
@@ -271,9 +266,9 @@ const skillGroups = [
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "@id": "https://aurastudios.ro/#studio",
+  "@id": "https://aurastudios.ro/studio#studio",
   name: "Aura's Digital Dream",
-  url: "https://aurastudios.ro/",
+  url: "https://aurastudios.ro/studio",
   image: "https://aurastudios.ro/og-cover.jpg",
   logo: "https://aurastudios.ro/assets/logo.jpg",
   description:
@@ -300,7 +295,7 @@ const SERVICE_SCHEMA = {
 const FAQ_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://aurastudios.ro/#faq",
+  "@id": "https://aurastudios.ro/studio#faq",
   mainEntity: clientQuestions.map((item) => ({
     "@type": "Question",
     name: item.q,
@@ -342,19 +337,14 @@ function SkillBar({ name, value }) {
 
 // ── Main component ───────────────────────────────────────────────────────────
 export function HomePage({ onNavigate }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedPrices, setSelectedPrices] = useState([]);
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
-  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
-  const groupedProjects = portfolioGroups.map((g) => ({ ...g, projects: g.slugs.map((s) => projects.find((p) => p.slug === s)).filter(Boolean) }));
   const selectedPriceItems = priceItems.filter((i) => selectedPrices.includes(i.title));
   const total = selectedPriceItems.reduce((s, i) => s + i.price, 0);
   const totalMax = selectedPriceItems.reduce((s, i) => s + (i.maxPrice || i.price), 0);
-
-  useNavTone();
 
   /* The hero is the site's opening move: the footage starts as a held card
      and grows into the whole screen, then the headline settles down into the
@@ -418,11 +408,6 @@ export function HomePage({ onNavigate }) {
     window.open("https://wa.me/40762509423?text=" + encodeURIComponent("Bună, Aura!\n\n" + contactMessage(form)), "_blank", "noopener,noreferrer");
   }
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
-
   return (
     <main className="home">
       <script
@@ -440,35 +425,7 @@ export function HomePage({ onNavigate }) {
       <div className="custom-cursor-ring" aria-hidden="true" />
       <Progress />
 
-      {/* ── Header ───────────────────────────────────────────────────────── */}
-      <header className="masthead">
-        <button className="masthead-brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          <img src="/assets/logo.jpg" alt="" aria-hidden="true" />
-          <span>Aura's Digital Dream</span>
-        </button>
-        <nav className="masthead-nav" aria-label="Navigare principală">
-          {nav.filter(([, target]) => target !== "contact").map(([label, target]) => (
-            target.startsWith("/")
-              ? <a key={label} href={target} onClick={(e) => onNavigate(e, target)}>{label}</a>
-              : <button key={label} onClick={() => scrollToId(target)}>{label}</button>
-          ))}
-          <button className="masthead-cta" onClick={() => scrollToId("contact")}>Contact</button>
-        </nav>
-        <button className="masthead-toggle" onClick={() => setMenuOpen(true)} aria-label="Deschide meniul">
-          <List size={24} />
-        </button>
-      </header>
-
-      {menuOpen && (
-        <div className="menu-sheet" role="dialog" aria-modal="true" aria-label="Meniu">
-          <button className="menu-close" onClick={() => setMenuOpen(false)} aria-label="Închide meniul"><X size={26} /></button>
-          {nav.map(([label, target]) => (
-            target.startsWith("/")
-              ? <a key={label} href={target} onClick={(e) => { setMenuOpen(false); onNavigate(e, target); }}>{label}</a>
-              : <button key={label} onClick={() => { setMenuOpen(false); scrollToId(target); }}>{label}</button>
-          ))}
-        </div>
-      )}
+      <GlobalNavigation currentPath="/studio" />
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       {/* --open moves up from the frame to the section so the copy can read
@@ -548,7 +505,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       <section className="marquee-band" aria-hidden="true">
-        <Marquee text="CREAȚIE · IDENTITATE · STRATEGIE · " angle={-7} speed={0.55} />
+        <Marquee text="CREAȚIE  ·  IDENTITATE  ·  STRATEGIE  ·  EXPERIENȚE DIGITALE  ·  " angle={0} speed={0.22} repeat={3} />
       </section>
 
       {/* ── Chapters: the working method ─────────────────────────────────── */}
@@ -558,7 +515,7 @@ export function HomePage({ onNavigate }) {
         items={chapters}
         renderMedia={(item) => (
           <>
-            <video autoPlay muted loop playsInline preload="metadata" poster={item.poster} aria-hidden="true">
+            <video autoPlay muted loop playsInline preload="metadata" poster={item.poster || undefined} aria-hidden="true">
               <source src={item.video} type="video/mp4" />
             </video>
             <span className="chapter-scrim" aria-hidden="true" />
@@ -582,7 +539,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Featured work, fanned ────────────────────────────────────────── */}
-      <section className="work-intro bg-ink-marble" id="portofoliu">
+      <section className="work-intro bg-ink-marble">
         <div className="shell reveal-on-scroll">
           <p className="kicker reveal-child"><span className="eyebrow-text">Selecție curatorială</span></p>
           <h2 className="section-title reveal-child">Creez proiecte care nu doar arată bine. Spun ceva.</h2>
@@ -708,40 +665,6 @@ export function HomePage({ onNavigate }) {
               )}
             </aside>
           </div>
-        </div>
-      </section>
-
-      {/* ── Portfolio archive ────────────────────────────────────────────── */}
-      <section className="archive bg-marble bloom flip">
-        <div className="shell">
-          <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child"><span className="eyebrow-text">Portofoliu organizat</span></p>
-            <h2 className="section-title reveal-child">Alege direcția care te reprezintă.</h2>
-          </div>
-          {groupedProjects.map((group) => (
-            <div className="archive-group" key={group.title}>
-              <div className="archive-group-head">
-                <h3>{group.title}</h3>
-                <p>{group.copy}</p>
-              </div>
-              <div className="archive-grid">
-                {group.projects.map((project, index) => (
-                  <a
-                    key={project.slug}
-                    className="archive-card is-tilted is-subtle reveal-on-scroll"
-                    href={"/portofoliu/" + project.slug}
-                    onClick={(e) => onNavigate(e, "/portofoliu/" + project.slug)}
-                  >
-                    <span className="archive-card-media">
-                      <img src={project.image} alt={project.title} loading="lazy" />
-                    </span>
-                    <span className="archive-card-tags">{project.category.join(" · ")}</span>
-                    <span className="archive-card-title">{project.title}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 

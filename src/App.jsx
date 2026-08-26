@@ -15,7 +15,6 @@ import {
   FileText,
   InstagramLogo,
   LinkedinLogo,
-  List,
   Megaphone,
   Palette,
   Phone,
@@ -25,6 +24,7 @@ import {
 import { projectDetails } from "./projectDetails";
 import { useScrollExperience } from "./useScrollExperience";
 import { HomePage } from "./HomePage";
+import EditorialArchive from "./editorial/App.tsx";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap.js";
 const portfolioAssets = __PORTFOLIO_ASSETS__;
 const supplementalPortfolioAssets = {
@@ -419,12 +419,12 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
     <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="detail-header">
         <a className="brand" href="/" onClick={(event) => onNavigate(event, "/")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
-        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/#despre" onClick={(event) => onSection(event, "despre")}>Despre</a><a href="/#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a></nav>
+        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/studio#despre-mine" onClick={(event) => onSection(event, "despre-mine")}>Despre</a><a href="/studio#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/studio#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/studio#contact" onClick={(event) => onSection(event, "contact")}>Contact</a></nav>
       </header>
 
       <section className="detail-hero">
         <div className="detail-hero-copy" data-reveal>
-          <a className="detail-back" href="/#portofoliu" onClick={(event) => onSection(event, "portofoliu")}><ArrowLeft size={18} /> Înapoi la portofoliu</a>
+          <a className="detail-back" href="/studio#portofoliu" onClick={(event) => onSection(event, "portofoliu")}><ArrowLeft size={18} /> Înapoi la portofoliu</a>
           <div className="detail-meta"><span>{details.category}</span><span>{details.date}</span></div>
           <h1>{project.title}</h1>
           <p>Client: {details.client}</p>
@@ -541,7 +541,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
     <main className="books-page cinematic-books"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" /><div className="film-grain" aria-hidden="true" />
       <motion.header className="cinematic-nav" initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}>
         <a className="cinematic-author-logo" href="/" onClick={(event) => onNavigate(event, "/")}>Aura Dobre</a>
-        <nav><a className="cinematic-home-link" href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
+        <nav><a className="cinematic-home-link" href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/studio#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
       </motion.header>
 
       <section className="cinematic-hero">
@@ -644,7 +644,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
             <div className="author-signature">Aura Dobre</div>
             <p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p>
             <p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p>
-            <div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/" onClick={(event) => onNavigate(event, "/")}>Studio Digital</a></div>
+            <div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/studio" onClick={(event) => onNavigate(event, "/studio")}>Studio Digital</a></div>
           </motion.div>
           <motion.figure className="author-portrait-stage" style={{ y: reducedMotion ? 0 : authorPortraitY }} initial={reducedMotion ? false : { opacity: 0, scale: 1.08 }} animate={authorInView ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 1.25, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}>
             <motion.img src="/assets/books-cinematic/aura-in-red.jpeg" alt="Aura Dobre, autoare, într-un portret pe fundal roșu" initial={reducedMotion ? false : { clipPath: "inset(18% 0 18% 0)" }} animate={authorInView ? { clipPath: "inset(0% 0 0% 0)" } : {}} whileHover={reducedMotion ? undefined : { scale: 1.035 }} transition={{ duration: 1.2, delay: 0.12, ease: [0.16, 1, 0.3, 1] }} />
@@ -707,13 +707,61 @@ export function App({ path }) {
   const detailProject = projects.find((project) => project.slug === detailSlug);
 
   useEffect(() => {
+    const origin = "https://aurastudios.ro";
+    const staticMeta = {
+      "/": {
+        title: "Aura's Digital Dream | Marketing · Design · Web",
+        description: "Designer, marketer și sculptor digital. Identități care unesc Renașterea, efemerul și viitorul — strategie, design și experiențe digitale.",
+        image: "/og-cover.jpg",
+        type: "website",
+      },
+      "/studio": {
+        title: "Studio — Portofoliu și servicii | Aura's Digital Dream",
+        description: "Descoperă portofoliul, serviciile, procesul și proiectele de branding, design, marketing și web realizate de Aura's Digital Dream.",
+        image: "/og-cover.jpg",
+        type: "website",
+      },
+      "/cartile-mele": {
+        title: "Cărțile mele — Aura Dobre",
+        description: "Dark romance, thrillere psihologice și povești care se citesc ca un film.",
+        image: "/og-cover.jpg",
+        type: "website",
+      },
+    };
+    const meta = detailProject
+      ? {
+          title: `${detailProject.title.split(" — ")[0]} — Aura's Digital Dream`,
+          description: detailProject.description,
+          image: `/og/${detailProject.slug}.jpg`,
+          type: "article",
+        }
+      : staticMeta[currentPath];
+    if (!meta) return;
+
+    const absoluteUrl = origin + currentPath;
+    const absoluteImage = origin + meta.image;
+    const setContent = (selector, value) => document.querySelector(selector)?.setAttribute("content", value);
+    document.title = meta.title;
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", absoluteUrl);
+    setContent('meta[name="description"]', meta.description);
+    setContent('meta[property="og:url"]', absoluteUrl);
+    setContent('meta[property="og:title"]', meta.title);
+    setContent('meta[property="og:description"]', meta.description);
+    setContent('meta[property="og:image"]', absoluteImage);
+    setContent('meta[property="og:type"]', meta.type);
+    setContent('meta[name="twitter:title"]', meta.title);
+    setContent('meta[name="twitter:description"]', meta.description);
+    setContent('meta[name="twitter:image"]', absoluteImage);
+  }, [currentPath, detailProject]);
+
+  useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
   useEffect(() => {
-    if (currentPath !== "/" || !window.location.hash) return;
+    if (currentPath !== "/studio" || !window.location.hash) return;
     const id = decodeURIComponent(window.location.hash.slice(1));
     scheduleScrollToId(id);
   }, [currentPath]);
@@ -733,11 +781,11 @@ export function App({ path }) {
   function goToSection(event, id) {
     event?.preventDefault();
     const revealSection = () => {
-      window.history.pushState({}, "", `/#${id}`);
-      setCurrentPath("/");
+      window.history.pushState({}, "", `/studio#${id}`);
+      setCurrentPath("/studio");
       scheduleScrollToId(id);
     };
-    if (currentPath !== "/" && document.startViewTransition) document.startViewTransition(revealSection);
+    if (currentPath !== "/studio" && document.startViewTransition) document.startViewTransition(revealSection);
     else revealSection();
   }
 
@@ -797,5 +845,7 @@ export function App({ path }) {
     window.open(`https://wa.me/40762509423?text=${encodeURIComponent(`Bună, Aura!\n\n${contactMessage(form)}`)}`, "_blank", "noopener,noreferrer");
   }
 
-  return <HomePage onNavigate={navigateTo} />;
+  if (currentPath === "/studio") return <HomePage onNavigate={navigateTo} />;
+
+  return <EditorialArchive />;
 }

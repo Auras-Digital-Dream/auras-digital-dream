@@ -25,7 +25,7 @@ const ALL_SERVICES = [...new Set(
   Object.values(projectDetails).flatMap((d) => d.services || []),
 )].sort((a, b) => a.localeCompare(b, "ro"));
 
-const STUDIO = `${ORIGIN}/#studio`;
+const STUDIO = `${ORIGIN}/studio#studio`;
 const PERSON = `${ORIGIN}/#aura`;
 const abs = (u) => (u.startsWith("http") ? u : ORIGIN + u);
 
@@ -53,6 +53,27 @@ const website = {
   name: SITE,
   inLanguage: "ro-RO",
   publisher: { "@id": STUDIO },
+};
+
+const studio = {
+  "@type": "ProfessionalService",
+  "@id": STUDIO,
+  name: SITE,
+  url: `${ORIGIN}/studio`,
+  image: `${ORIGIN}/og-cover.jpg`,
+  logo: `${ORIGIN}/assets/logo.jpg`,
+  description: "Studio de strategie, branding, design, marketing și experiențe web fondat de Aura Dobre.",
+  founder: { "@id": PERSON },
+  areaServed: "România",
+  inLanguage: "ro-RO",
+  telephone: "+40762509423",
+  priceRange: "400–6000 RON",
+  knowsAbout: ALL_SERVICES,
+  sameAs: [
+    "https://www.instagram.com/aurasdigitaldream",
+    "https://www.linkedin.com/in/aurelia-dobre-a033b2104",
+    "https://aurasdigitaldream.gumroad.com/",
+  ],
 };
 
 function crumbs(trail) {
@@ -98,15 +119,13 @@ const BOOKS = [
 
 export function graphFor(route) {
   const url = ORIGIN + route.url;
-  const nodes = [website];
+  const nodes = [website, person];
 
   if (route.url === "/") {
     /* Same @id as the node the component renders, so the two merge into one
      * studio rather than describing two. */
     nodes.push({
-      "@type": "ProfessionalService",
-      "@id": STUDIO,
-      knowsAbout: ALL_SERVICES,
+      ...studio,
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Servicii",
@@ -116,7 +135,7 @@ export function graphFor(route) {
         })),
       },
     });
-    nodes.push(person, {
+    nodes.push({
       "@type": "WebPage",
       "@id": url + "#page",
       url,
@@ -131,6 +150,23 @@ export function graphFor(route) {
   }
 
   const trail = [{ name: "Acasă", url: "/" }];
+
+  if (route.url === "/studio") {
+    trail.push({ name: "Studio", url: route.url });
+    nodes.push(studio, crumbs(trail), {
+      "@type": "CollectionPage",
+      "@id": url + "#page",
+      url,
+      name: route.title,
+      description: route.description,
+      isPartOf: { "@id": `${ORIGIN}/#website` },
+      about: { "@id": STUDIO },
+      author: { "@id": PERSON },
+      inLanguage: "ro-RO",
+      primaryImageOfPage: { "@type": "ImageObject", url: abs(route.image) },
+    });
+    return nodes;
+  }
 
   if (route.url === "/cartile-mele") {
     trail.push({ name: "Cărțile mele", url: route.url });
@@ -157,7 +193,7 @@ export function graphFor(route) {
   }
 
   // Everything left is one portfolio case study.
-  trail.push({ name: "Portofoliu", url: "/#portofoliu" }, { name: route.title.split(" — ")[0], url: route.url });
+  trail.push({ name: "Studio", url: "/studio" }, { name: route.title.split(" — ")[0], url: route.url });
   nodes.push(crumbs(trail), {
     "@type": "WebPage",
     "@id": url + "#page",

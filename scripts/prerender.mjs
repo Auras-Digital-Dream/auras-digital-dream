@@ -61,7 +61,7 @@ function pageFor(route, markup) {
     .replace(/(<meta property="og:image:height" content=")[^"]*(")/, `$1${OG_SIZE.height}$2`)
     .replace(/(<meta property="og:image:alt" content=")[^"]*(")/, `$1${m.imageAlt}$2`)
     .replace(/(<meta name="twitter:image:alt" content=")[^"]*(")/, `$1${m.imageAlt}$2`)
-    .replace(/(<meta property="og:type" content=")[^"]*(")/, `$1${route.url === "/" ? "website" : "article"}$2`)
+    .replace(/(<meta property="og:type" content=")[^"]*(")/, `$1${route.ogType || "article"}$2`)
     /* The home page renders its own ProfessionalService and FAQPage from
      * inside the component, because both are built from the arrays the
      * visible sections use. This adds what no component carries: the site
@@ -196,8 +196,10 @@ pagini, iar întrebările frecvente sunt marcate ca FAQPage pe pagina de start.
 
 ## Principal
 
-- [Acasă](${ORIGIN}/): servicii, pachete cu prețuri orientative în RON,
-  estimator de cost, portofoliu, întrebări frecvente și contact.
+- [Acasă](${ORIGIN}/): arhiva editorială Aura's Digital Dream — manifest,
+  strategie, identitate, design, sistem, servicii și direcție artistică.
+- [Studio](${ORIGIN}/studio): portofoliu complet, servicii, pachete cu prețuri
+  orientative în RON, proces, întrebări frecvente și contact.
 - [Cărțile mele](${ORIGIN}/cartile-mele): ficțiune publicată de Aura Dobre,
   dark romance și thriller psihologic.
 

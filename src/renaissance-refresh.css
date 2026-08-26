@@ -21,35 +21,35 @@
    architecture, routes, project archive, books page, or working interactions. */
 
 .home {
-  --paper: #edede9;
-  --surface-2: #e7ece8;
-  --mist: #c3d4d2;
-  --sky: #bcd7d2;
-  --frost: #dce9e6;
-  --line: #c3bea4;
-  --pearl: #f4f2ed;
-  --shell: #dfe8e4;
-  --sand-soft: #d8d4c5;
+  --paper: var(--aura-porcelain);
+  --surface-2: color-mix(in srgb,var(--aura-porcelain),var(--aura-mist) 24%);
+  --mist: var(--aura-mist);
+  --sky: var(--aura-petrol);
+  --frost: var(--aura-glass);
+  --line: var(--aura-sage);
+  --pearl: color-mix(in srgb,var(--aura-porcelain),white 35%);
+  --shell: var(--aura-mist);
+  --sand-soft: var(--aura-sage);
   --petal: #d4a5a5;
-  --bloom: #c3d4d2;
-  --leaf: #a79f83;
-  --stem: #6e4925;
-  --gold: #a79f83;
-  --gold-line: rgba(110, 73, 37, .38);
-  --ink: #34312d;
-  --ink-soft: #62645f;
-  --ink-soft-strong: #50534f;
-  --ink-ground: #1a1815;
-  --glass-edge: rgba(195, 212, 210, .58);
+  --bloom: var(--aura-mist);
+  --leaf: var(--aura-stone);
+  --stem: var(--aura-walnut);
+  --gold: var(--aura-antique);
+  --gold-line: rgba(132,120,94,.42);
+  --ink: var(--aura-charcoal);
+  --ink-soft: #625F59;
+  --ink-soft-strong: #514F4A;
+  --ink-ground: #211F1C;
+  --glass-edge: rgba(86,114,115,.58);
   background:
-    radial-gradient(circle at 12% 8%, rgba(195, 212, 210, .34), transparent 28%),
-    radial-gradient(circle at 86% 24%, rgba(195, 190, 164, .25), transparent 25%),
+    radial-gradient(circle at 12% 8%, rgba(197,213,210,.38), transparent 28%),
+    radial-gradient(circle at 86% 24%, rgba(196,190,168,.28), transparent 25%),
     var(--paper);
 }
 
 .home .masthead {
-  border-color: rgba(167, 159, 131, .32);
-  box-shadow: 0 16px 45px rgba(52, 49, 45, .08);
+  border-color: rgba(132,120,94,.32);
+  box-shadow: 0 16px 45px rgba(52,49,44,.08);
 }
 
 .masthead-brand span,
@@ -77,39 +77,39 @@
 
 .home .masthead-cta,
 .home .button.primary {
-  background: linear-gradient(135deg, #477473, #355c5b);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--aura-petrol),var(--aura-charcoal) 22%),color-mix(in srgb,var(--aura-petrol),var(--aura-charcoal) 48%));
   border-color: rgba(255, 255, 255, .18);
   color: #fff;
-  box-shadow: 0 14px 34px rgba(71, 116, 115, .2);
+  box-shadow: 0 14px 34px rgba(86,114,115,.22);
 }
 
 .home .masthead-cta:hover,
 .home .button.primary:hover {
-  background: linear-gradient(135deg, #6e4925, #56371b);
+  background: linear-gradient(135deg,var(--aura-walnut),color-mix(in srgb,var(--aura-walnut),var(--aura-charcoal) 34%));
 }
 
 .home .service-card,
 .home .price-card,
 .home .voice-card,
 .home .archive-card {
-  border-color: rgba(167, 159, 131, .32);
+  border-color: rgba(132,120,94,.32);
   background: color-mix(in srgb, var(--paper), transparent 15%);
-  box-shadow: 0 22px 70px rgba(52, 49, 45, .08);
+  box-shadow: 0 22px 70px rgba(52,49,44,.08);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
 }
 
 .home .process {
   background:
-    linear-gradient(90deg, rgba(237, 237, 233, .97) 0%, rgba(237, 237, 233, .88) 52%, rgba(237, 237, 233, .4) 100%),
+    linear-gradient(90deg, rgba(240,236,233,.97) 0%, rgba(240,236,233,.88) 52%, rgba(240,236,233,.4) 100%),
     url('/assets/process-bg.jpg') center / cover no-repeat;
 }
 
 .home .process-grid {
   padding: clamp(28px, 4vw, 56px);
-  border: 1px solid rgba(167, 159, 131, .3);
+  border: 1px solid rgba(132,120,94,.3);
   border-radius: var(--radius-lg);
-  background: rgba(237, 237, 233, .72);
+  background: rgba(240,236,233,.72);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
@@ -121,8 +121,8 @@
   overflow: hidden;
   isolation: isolate;
   border-radius: 50% 50% 0 0 / clamp(56px, 9vw, 132px) clamp(56px, 9vw, 132px) 0 0;
-  background: #211e1a;
-  box-shadow: inset 0 2px rgba(237, 237, 233, .42), 0 -28px 80px rgba(45, 53, 60, .12);
+  background: var(--ink-ground);
+  box-shadow: inset 0 2px rgba(240,236,233,.42),0 -28px 80px rgba(52,49,44,.14);
 }
 
 .home .site-footer .footer-image {
@@ -193,7 +193,7 @@
 
   .home .process {
     background:
-      linear-gradient(rgba(237, 237, 233, .9), rgba(237, 237, 233, .96)),
+      linear-gradient(rgba(240,236,233,.9),rgba(240,236,233,.96)),
       url('/assets/process-bg.jpg') 68% center / cover no-repeat;
   }
 
@@ -225,4 +225,35 @@
   .home .button.primary {
     transition: none;
   }
+}
+
+/* Contrast contract for the portfolio route. The books route is not in this
+   scope, so its independent cinematic palette remains untouched. */
+.home :is(.work-intro,.project-index,.difference,.clarity,.contact,.site-footer,.chapters,.fan) {
+  color:var(--aura-porcelain);
+}
+.home :is(.work-intro,.project-index,.difference,.clarity,.contact,.site-footer,.chapters,.fan)
+  :is(.section-title,h2,h3,p,li,label,.eyebrow-text) {
+  color:inherit;
+}
+.home :is(.work-intro,.project-index,.difference,.clarity,.contact,.site-footer,.chapters,.fan) .button {
+  color:var(--aura-charcoal);
+  border-color:rgba(240,236,233,.72);
+  background:rgba(240,236,233,.92);
+  box-shadow:0 12px 32px rgba(33,31,28,.2),inset 0 1px rgba(255,255,255,.64);
+}
+.home :is(.services,.process,.estimator,.skills,.books) {
+  color:var(--aura-charcoal);
+}
+.home :is(.services,.process,.estimator,.skills,.books) .button {
+  color:var(--aura-porcelain);
+  border-color:rgba(52,49,44,.72);
+  background:rgba(52,49,44,.94);
+  box-shadow:0 12px 30px rgba(52,49,44,.16),inset 0 1px rgba(255,255,255,.1);
+}
+.home .price-summary { color:var(--aura-porcelain); }
+.home .price-summary .button {
+  color:var(--aura-charcoal);
+  border-color:rgba(240,236,233,.7);
+  background:var(--aura-porcelain);
 }
