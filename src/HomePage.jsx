@@ -41,7 +41,7 @@ function ProjectIndex({ items, onNavigate }) {
     <section ref={archiveRef} className="project-index" id="portofoliu" aria-label="Toate proiectele">
       <ProjectDisintegrationField rootRef={archiveRef} />
       <div className="project-index-head">
-        <p className="kicker"><span className="eyebrow-text">Arhiva vie</span></p>
+        <p className="kicker"><span className="eyebrow-text">Colecția de proiecte</span></p>
         <p>Identități, spații digitale și obiecte grafice construite ca fragmente din aceeași lume.</p>
       </div>
       <div className="project-index-list">
@@ -237,7 +237,7 @@ const packageComparison = [
   { feature: "SEO & claritate", start: "de bază", web: "structurat", premium: "extins + conținut" },
 ];
 const chapters = [
-  { key: "aparitia", number: "01", title: "Apariția", video: "/video/story-aparitia-grok.mp4", headline: "Te ajut să apari.", copy: "Strategia și identitatea vizuală scot brandul din anonimat și îl așază exact în lumina potrivită.", meta: "Claritate · poziționare · identitate" },
+  { key: "aparitia", number: "01", title: "Apariția", video: "/video/story-aparitia-renaissance-1080p.mp4", headline: "Te ajut să apari.", copy: "Strategia și identitatea vizuală scot brandul din anonimat și îl așază exact în lumina potrivită.", meta: "Claritate · poziționare · identitate" },
   { key: "povestea", number: "02", title: "Povestea", video: "/video/story-imaginez-golden-hand.mp4", poster: "/video/poster/story-imaginez-golden-hand.jpg", headline: "Îi dau o poveste care rămâne.", copy: "Transform informația în concept, ritm și limbaj vizual — o prezență care se simte înainte să fie explicată.", meta: "Storytelling · direcție de artă · conținut" },
   { key: "constructia", number: "03", title: "Construcția", video: "/video/story-construiesc-modern-office.mp4", poster: "/video/poster/story-construiesc-modern-office.jpg", headline: "Construiesc ce poate dura.", copy: "Website-uri, campanii și sisteme vizuale șlefuite ca un întreg: clare, responsive și pregătite să crească.", meta: "Design · web · experiență digitală" },
   { key: "atelierul", number: "04", title: "Atelierul", video: "/video/about-renaissance-studio.mp4", poster: "/video/poster/about-renaissance-studio.jpg", headline: "Renaștere și tehnologie, la lucru.", copy: "Aici, strategia întâlnește estetica, iar ideea ta devine o experiență vie — creată împreună, nu livrată mecanic.", meta: "Aura's Digital Dream · atelier digital" },
@@ -530,21 +530,6 @@ export function HomePage({ onNavigate }) {
           </>
         )}
       />
-
-      {/* ── Full-bleed film: no scrim, no type, pure breath ──────────────── */}
-      <section className="film" aria-label="Mâna care atinge piatra">
-        <video autoPlay muted loop playsInline preload="metadata" poster="/video/poster/kintsugi-hand-touch.jpg">
-          <source src="/video/kintsugi-hand-touch.mp4" type="video/mp4" />
-        </video>
-      </section>
-
-      {/* ── Featured work, fanned ────────────────────────────────────────── */}
-      <section className="work-intro bg-ink-marble">
-        <div className="shell reveal-on-scroll">
-          <p className="kicker reveal-child"><span className="eyebrow-text">Selecție curatorială</span></p>
-          <h2 className="section-title reveal-child">Creez proiecte care nu doar arată bine. Spun ceva.</h2>
-        </div>
-      </section>
 
       <ProjectIndex items={projects} onNavigate={onNavigate} />
 

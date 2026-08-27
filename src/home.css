@@ -128,7 +128,7 @@
 .detail-page .eyebrow-text,
 .hero-headline .eyebrow-text,
 .chapter-copy .eyebrow-text,
-.work-intro .eyebrow-text,
+.project-index .eyebrow-text,
 .editorial .eyebrow-text,
 .contact .eyebrow-text,
 .difference .eyebrow-text,
@@ -169,7 +169,6 @@
 .detail-page .section-kicker,
 .hero-headline .kicker,
 .chapter-copy .kicker,
-.work-intro .kicker,
 .editorial .kicker,
 .contact .kicker,
 .difference .kicker,
@@ -790,7 +789,6 @@
 
 /* ── Work intro ──────────────────────────────────────────────────────── */
 
-.work-intro { padding-block: var(--rhythm) clamp(36px, 5vw, 64px); }
 
 /* ── Services ─────────────────────────────────────────────────────────── */
 
@@ -1118,7 +1116,6 @@
 .hero-frame::after,
 .chapter-media::after,
 .chapter-static-media::after,
-.film::after,
 .editorial-media::after,
 .contact-media::after,
 .difference-figure::after {
@@ -1674,33 +1671,6 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   FULL-BLEED FILM — no scrim, no type, just the footage
-   ══════════════════════════════════════════════════════════════════════════ */
-
-.film {
-  height: 100svh;
-  padding: 0;
-  color: #fff;
-  /* This section is a full screen with nothing in it but a video - no
-     heading, no copy, nothing that survives the video not painting. A
-     <video poster> covers the wait for a decode, but not a phone that
-     refuses to autoplay at all (low power mode does exactly that), and
-     then the screen is a bare gradient. The still goes in as a CSS layer
-     as well, so the section always has its image; the file is the same one
-     the poster attribute already fetches, so it costs a cache hit. */
-  background:
-    url("/video/poster/kintsugi-hand-touch.jpg") center / cover no-repeat,
-    linear-gradient(150deg,var(--aura-petrol),var(--aura-charcoal));
-}
-
-.film video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ══════════════════════════════════════════════════════════════════════════
    DIFFERENCE — deliberately offset pairs
    ══════════════════════════════════════════════════════════════════════════ */
 
@@ -1785,7 +1755,6 @@
    ink value or it renders on itself. */
 .chapters,
 .fan,
-.film,
 .marquee,
 .contact,
 .site-footer {
@@ -1836,23 +1805,15 @@
 .clarity .compare-table td,
 .clarity .compare-note { color: rgba(255,255,255,.7); }
 
-/* The work intro sits directly above the dark fan — carry the ink up so the
-   two read as one movement rather than a light strip stapled on top. */
-.work-intro {
-  background-color: var(--ink);
-  background-image: none;
-  color: #fff;
-  --accent: var(--gold);
-}
-
 /* Project archive: the dense editorial rhythm from the motion reference,
    translated into the site's ink, porcelain and gilded-glass language. */
-.project-index { position:relative; z-index:3; padding:clamp(44px,6vw,82px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(circle at 82% 10%,rgba(167,160,134,.18),transparent 27%),radial-gradient(circle at 12% 86%,rgba(86,114,115,.16),transparent 32%),linear-gradient(180deg,#292722,#211f1c 72%,#34312c); color:var(--aura-porcelain); }
-.project-index::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.18; background-image:url("/textures/paper.webp"); background-size:720px auto; mix-blend-mode:soft-light; }
+.project-index { position:relative; z-index:3; padding:clamp(58px,7vw,96px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(ellipse 78% 48% at 8% 0%,rgba(113,145,138,.32),transparent 68%),radial-gradient(ellipse 58% 44% at 92% 24%,rgba(181,143,78,.2),transparent 72%),linear-gradient(142deg,#152321 0%,#20302d 43%,#352f25 73%,#171e1d 100%); color:var(--aura-porcelain); }
+.project-index::before { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; opacity:.2; background-image:url("/textures/paper.webp"); background-size:720px auto; mix-blend-mode:soft-light; }
+.project-index::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:linear-gradient(112deg,transparent 16%,rgba(207,224,218,.075) 36%,transparent 55%),radial-gradient(ellipse 46% 20% at 50% 0%,rgba(255,239,204,.08),transparent 72%); mix-blend-mode:screen; }
 .project-disintegration { position:absolute; z-index:12; inset:0; pointer-events:none; mix-blend-mode:screen; filter:drop-shadow(0 0 1px rgba(196,190,168,.2)); }
-.project-index-head { position:relative; width:min(100% - 8vw,1500px); margin:0 auto 38px; display:flex; justify-content:space-between; gap:28px; align-items:flex-end; }
+.project-index-head { position:relative; z-index:2; width:min(100% - 8vw,1500px); margin:0 auto 38px; display:flex; justify-content:space-between; gap:28px; align-items:flex-end; }
 .project-index-head > p:last-child { width:min(480px,45vw); margin:0; color:rgba(238,234,226,.58); font:400 clamp(15px,1.3vw,19px)/1.55 var(--font-serif); }
-.project-index-list { position:relative; border-top:1px solid rgba(238,234,226,.14); }
+.project-index-list { position:relative; z-index:2; border-top:1px solid rgba(238,234,226,.14); }
 .project-index-row { position:relative; min-height:clamp(116px,10.5vw,166px); padding:24px max(4vw,28px); display:grid; grid-template-columns:52px minmax(210px,1fr) minmax(210px,.7fr) minmax(330px,1.15fr) 145px; gap:clamp(18px,2.3vw,42px); align-items:center; border-bottom:1px solid rgba(238,234,226,.14); color:inherit; text-decoration:none; isolation:isolate; }
 .project-index-row::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(238,234,226,.06),rgba(188,168,126,.035) 55%,transparent); opacity:0; transform:scaleY(.76); transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1); }
 .project-index-row[data-active="true"]::before,.project-index-row:hover::before,.project-index-row:focus-visible::before { opacity:1; transform:scaleY(1); }

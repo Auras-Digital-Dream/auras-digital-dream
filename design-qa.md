@@ -224,4 +224,65 @@
 - Browser console: no runtime errors.
 - Production build and SEO audit: passed for all 19 routes.
 
+## Iteration — Scene 01 replacement, Full HD delivery
+
+- Source: `grok-video-3f730100-f1b8-4409-945a-8d6e01a0ca3c.mp4` (736 × 400, 24 fps, 6.041667 s).
+- Implementation: `public/video/story-aparitia-renaissance-1080p.mp4` (1920 × 1080, 24 fps, H.264, no audio track).
+- Processing: Lanczos upscale, minimal center crop to 16:9, restrained sharpening, fast-start MP4 optimization.
+- Browser evidence: Scene 01 loads at 1920 × 1080, plays automatically and loops while muted; supplied woman-with-gilded-book footage fills the scene without horizontal overflow.
+- The former Scene 01 MP4 and intermediate exports were removed after the new source was linked and browser-verified.
+- Production build and SEO audit: passed for all 19 routes.
+
+## Iteration — removed post-scenes film section
+
+- Removed the full-viewport `film` section that followed the four Studio scenes.
+- Removed its unused component-specific CSS and grouped vignette/theme selectors.
+- Browser evidence: `.film` is absent; `.chapters` is followed directly by `.work-intro`, headed „Creez proiecte care nu doar arată bine. Spun ceva.”
+- Scene 01 still loads the verified 1920 × 1080 replacement video; no horizontal overflow or browser console errors.
+- Production build and SEO audit: passed for all 19 routes.
+
+## Iteration — direct transition into the project collection
+
+- Removed the former „Selecție curatorială / Creez proiecte…” intro section.
+- Renamed „Arhiva vie” to „Colecția de proiecte”.
+- The four Scene chapters now transition directly into `.project-index`.
+- Reworked the collection background as a layered mineral surface: deep verdigris base, restrained bronze light, diffuse cool reflection and paper grain.
+- Browser evidence at 1142 × 784 CSS px: title, supporting copy, project names, tags and CTAs remain readable; project imagery retains separation; zero horizontal overflow and no console errors.
+- Production build and SEO audit: passed for all 19 routes.
+
+final result: passed
+
+## Iteration — responsive editorial Hero lockup
+
+- Source visual truth: current-turn user screenshot of the clipped Hero at a narrow viewport (460 × 784 px).
+- Implementation screenshot: `qa/hero-responsive-desktop.jpg`.
+- Browser viewport: 1142 × 784 CSS px; captured content: 1125 × 772 px at browser density.
+- State: `/`, initial Hero after reveal animation.
+
+### Full-view comparison evidence
+
+- The source screenshot loses the lower/right portion of the vertical brand lockup. In the revised render, `MARKETING · DESIGN · WEB`, `Aura's`, `DIGITAL DREAM`, the rule and the seal are all visible inside one bounded glass panel.
+- The panel now uses the available top and bottom viewport space instead of expanding from stacked vertical text. The portrait remains full-bleed without creating document overflow.
+
+### Focused-region evidence and comparison history
+
+- P1 — complete brand lockup was clipped by the one-screen Hero.
+  - Fix: changed the lockup to two coordinated vertical columns, bounded it with explicit top/bottom insets and moved the decorative rule and seal into fixed safe positions.
+  - Post-fix evidence: every direct child of `.hero__title-card` measures inside both the card and Hero bounds; the card measures 176 × 634 px and ends 36 px above the Hero edge at the tested desktop viewport.
+- P2 — the portrait crop was overly aggressive at tablet/mobile rules.
+  - Fix: reduced the negative horizontal offset, narrowed the oversize image canvas and added dedicated 1100px, 900px, 520px and low-height safeguards.
+  - Post-fix evidence: desktop image fills the visual field with the subject's face, eyewear, jacket and garden visible; document horizontal overflow is zero.
+
+### Required fidelity surfaces
+
+- Typography: existing Renaissance display serif and futuristic UI microtype retained; vertical labels use reduced tracking so words remain complete.
+- Spacing/layout: all lockup children, statement and scroll cue stay inside the Hero; mobile header/dock space is reserved explicitly.
+- Colors/tokens: porcelain glass, burgundy accent, antique rules and existing contrast are unchanged.
+- Image quality: original 2048 × 1082 Hero artwork remains loaded at natural resolution with a safer responsive focal position.
+- Copy/content: complete brand name and all Hero copy are unchanged.
+
+- Primary interactions tested: reveal animation, sticky navigation visibility and scroll cue visibility.
+- Browser checks: Hero image loaded; no Vite error overlay; zero horizontal overflow.
+- Production build and SEO audit: passed for all 19 routes.
+
 final result: passed
