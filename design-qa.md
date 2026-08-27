@@ -252,6 +252,42 @@
 
 final result: passed
 
+## Iteration — Manifest chapter labels, responsive separation
+
+- Source visual truth: current-turn user screenshot of the overlapping vertical labels in the Manifest chapter tabs (674 × 345 px).
+- Implementation screenshot: `qa/manifest-responsive-text.jpg`.
+- Browser viewport: 1142 × 784 CSS px; captured content: 1125 × 772 px at browser density.
+- State: `/` → `#chapters`, chapter „Design” active after interaction.
+
+### Full-view and focused-region evidence
+
+- The source shows each chapter label and its micro-label sharing nearly the same vertical axis. The revised composition assigns independent left/right text rails to every tab and keeps the active artwork in the middle rail.
+- Desktop measurement reports `0 px²` intersection between every chapter title and micro-label; all eight text elements remain inside their own tab and the document has zero horizontal overflow.
+- Tablet rules use separated 18%/82% text rails and a centered 36%-wide active image. At phone width, the secondary micro-label is intentionally hidden and the primary label is centered, preventing compression or collision.
+
+### Findings and comparison history
+
+- P1 — vertical title and micro-label overlap made „Identitate”, „Design” and „Experiențe digitale” difficult to read.
+  - Fix: separated text into dedicated rails, centered the decorative point and placed the active image on its own lower layer.
+  - Post-fix evidence: label-to-script intersections are zero across all four desktop tabs; tablet and phone breakpoints no longer share a common horizontal coordinate.
+- P2 — the active image competed with text at constrained widths.
+  - Fix: reduced its width and opacity, kept text above it, added a restrained paper-toned text shadow and removed the secondary label on phones.
+  - Post-fix evidence: the active chapter remains identifiable without obscuring either label.
+
+### Required fidelity surfaces
+
+- Typography: existing Renaissance serif, vertical writing direction and restrained tracking retained; sizes now scale by breakpoint.
+- Spacing/layout: desktop, tablet and phone receive distinct rail geometry and minimum tab heights; no horizontal overflow.
+- Colors/tokens: paper, ink, muted ink and burgundy active-state tokens remain unchanged.
+- Image quality: existing chapter artwork is preserved, centered and shown without replacement assets.
+- Copy/content: all four chapter names and micro-labels remain unchanged; only the phone layout omits decorative micro-labels visually.
+
+- Primary interaction tested: selecting the „Design” tab updates the selected tab, chapter artwork and tab panel copy.
+- Browser checks: no Vite error overlay and zero horizontal overflow.
+- Production build and SEO audit: passed for all 19 routes.
+
+final result: passed
+
 ## Iteration — responsive editorial Hero lockup
 
 - Source visual truth: current-turn user screenshot of the clipped Hero at a narrow viewport (460 × 784 px).
