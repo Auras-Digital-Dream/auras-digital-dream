@@ -252,6 +252,44 @@
 
 final result: passed
 
+## Iteration — Chapter 04-05 safe responsive frame
+
+- Source visual truth: current-turn user screenshot showing Chapter 04 clipped at a constrained viewport (686 × 365 px), plus the request for equal side padding in Chapter 05.
+- Implementation screenshots: `qa/editorial-padding-ch4-desktop.jpg` and `qa/editorial-padding-ch5-desktop.jpg`.
+- Browser viewport: 1142 × 784 CSS px at device scale 1.125; screenshots are 1125 × 772 px after browser content cropping.
+- State: `/` at `#specimen` and `#records`, after reveal motion settled.
+
+### Full-view and focused-region evidence
+
+- Chapter 04 now keeps the eyebrow, heading, metadata, notes, summary and scale inside one safe text frame. At the captured desktop viewport the section has 47.97 px side padding; its heading begins at x 226.76 px and remains fully inside the section.
+- Chapter 05 now uses a wider intro track and restrained display tracking. The complete title “Nu livrez doar servicii. Creez transformări.” fits without clipping; the intro starts at x 123.97 px and the service ledger ends at x 1077.36 px, inside the section’s right edge at x 1125.33 px.
+- The document reports no horizontal overflow. Tablet and phone rules bind the gutter token directly to `.editorial-archive`, reserve an extra 22–28 px for Chapter 04’s mineral band and collapse Chapter 05 records to a two-column reading grid on phones.
+
+### Findings and comparison history
+
+- P1 — Chapter 04 text started beneath the mineral strip and was clipped at the left edge on constrained screens.
+  - Fix: moved the responsive spacing variables to the actual archive container, gave the section a dedicated safe left inset and returned the seal to normal flow below the metadata.
+  - Post-fix evidence: desktop capture is fully framed; responsive rules provide 24–42 px page gutters plus the mineral-band clearance, with a separate 20–28 px phone gutter.
+- P1 — Chapter 05 display title overflowed its narrow desktop grid track and the mobile ledger was too dense.
+  - Fix: widened the intro column, reduced display tracking/size, disabled forced word breaking and changed phone records to a clear index + content grid.
+  - Post-fix evidence: the complete heading is visible in the focused Chapter 05 capture and all measured content remains inside section bounds.
+- P2 — full-bleed mobile media rules added margins on top of already padded sections.
+  - Fix: normalized Chapter 04 and Chapter 05 media to `width: 100%` with zero side margins inside the shared safe frame.
+
+### Required fidelity surfaces
+
+- Typography: Renaissance display face and futuristic microtype retained; display tracking and line-height now scale by breakpoint without truncation.
+- Spacing/layout: consistent side gutters are applied to chapter content, landscape intro, Chapters 04–05 and colophon; Chapter 04 preserves additional clearance for its vertical mineral band.
+- Colors/tokens: existing paper, burgundy, mineral and royal tokens remain unchanged.
+- Image quality: existing source artwork and object positions are preserved; no replacement or raster degradation introduced.
+- Copy/content: all Chapter 04 and Chapter 05 copy remains unchanged and complete.
+
+- Primary interactions tested: sticky global navigation, direct section anchors and scroll reveal settling.
+- Browser checks: no horizontal overflow; both section titles and record ledger are within measured section bounds.
+- Production build and SEO audit: passed for all 19 routes.
+
+final result: passed
+
 ## Iteration — Manifest chapter labels, responsive separation
 
 - Source visual truth: current-turn user screenshot of the overlapping vertical labels in the Manifest chapter tabs (674 × 345 px).

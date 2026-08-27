@@ -2628,5 +2628,166 @@ main[hidden] { display: none; }
   }
 }
 
+/* Chapter 04-05: safe editorial frame on every viewport ------------------- */
+.editorial-archive .records {
+  grid-template-columns:minmax(300px,32%) minmax(150px,18%) minmax(0,1fr);
+  gap:clamp(26px,3.2vw,52px);
+}
+.editorial-archive .records__intro h2 {
+  max-width:11ch;
+  font-size:clamp(38px,3.75vw,58px);
+  line-height:1.26;
+  letter-spacing:.065em;
+  overflow-wrap:normal;
+  hyphens:none;
+}
+
+@media (min-width:901px) and (max-width:1180px) {
+  .editorial-archive .records {
+    grid-template-columns:minmax(260px,32%) minmax(140px,18%) minmax(0,1fr);
+    gap:clamp(22px,2.7vw,36px);
+  }
+  .editorial-archive .records__intro h2 {
+    font-size:clamp(36px,3.7vw,46px);
+    letter-spacing:.045em;
+  }
+}
+
+@media (max-width:900px) {
+  .editorial-archive {
+    --mobile-header:64px;
+    --mobile-dock:74px;
+    --page-gutter:clamp(24px,6vw,42px);
+  }
+
+  .editorial-archive .chapters__content,
+  .editorial-archive .landscape__intro,
+  .editorial-archive .records,
+  .editorial-archive .colophon {
+    padding-left:max(var(--page-gutter),env(safe-area-inset-left));
+    padding-right:max(var(--page-gutter),env(safe-area-inset-right));
+  }
+
+  .editorial-archive .specimen {
+    min-height:auto;
+    padding-top:calc(var(--mobile-header) + 38px);
+    padding-right:max(var(--page-gutter),env(safe-area-inset-right));
+    padding-bottom:calc(var(--mobile-dock) + 64px);
+    padding-left:max(calc(var(--page-gutter) + 28px),env(safe-area-inset-left));
+  }
+  .editorial-archive .specimen__mineral-band { width:22px; }
+  .editorial-archive .specimen__heading {
+    width:100%;
+    max-width:100%;
+    margin:0;
+    padding:0;
+  }
+  .editorial-archive .specimen__heading h2 {
+    max-width:13ch;
+    margin-top:10px;
+    font-size:clamp(35px,7.5vw,50px);
+    line-height:1.18;
+    letter-spacing:.045em;
+    overflow-wrap:normal;
+    hyphens:none;
+  }
+  .editorial-archive .specimen__meta {
+    position:static;
+    display:block;
+    max-width:34ch;
+    margin-top:16px;
+    text-align:left;
+    line-height:1.75;
+  }
+  .editorial-archive .specimen__seal {
+    position:relative;
+    inset:auto;
+    width:max-content;
+    margin:24px 0 0 auto;
+    scale:.86;
+    transform-origin:right center;
+  }
+  .editorial-archive .specimen__media {
+    width:100%;
+    height:clamp(360px,54svh,560px);
+    margin:28px 0 24px;
+  }
+  .editorial-archive .specimen__notes,
+  .editorial-archive .specimen__summary,
+  .editorial-archive .specimen__scale {
+    margin-right:0;
+    margin-left:0;
+  }
+
+  .editorial-archive .records {
+    display:block;
+    padding-top:calc(var(--mobile-header) + 40px);
+    padding-bottom:calc(var(--mobile-dock) + 72px);
+  }
+  .editorial-archive .records__intro { width:100%; }
+  .editorial-archive .records__intro h2 {
+    max-width:12ch;
+    font-size:clamp(38px,8.2vw,52px);
+    line-height:1.2;
+    letter-spacing:.045em;
+  }
+  .editorial-archive .records__intro p { max-width:38ch; }
+  .editorial-archive .records__primary-media {
+    width:100%;
+    margin:36px 0 24px;
+  }
+  .editorial-archive .records__list { width:100%; }
+}
+
+@media (max-width:520px) {
+  .editorial-archive {
+    --page-gutter:clamp(20px,5.5vw,28px);
+  }
+  .editorial-archive .specimen {
+    padding-left:max(calc(var(--page-gutter) + 24px),env(safe-area-inset-left));
+  }
+  .editorial-archive .specimen__heading h2 {
+    max-width:12ch;
+    font-size:clamp(32px,9.4vw,42px);
+    line-height:1.16;
+    letter-spacing:.035em;
+  }
+  .editorial-archive .specimen__scale {
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .editorial-archive .specimen__scale-mark { padding-top:10px; }
+  .editorial-archive .specimen__scale-mark i { display:none; }
+
+  .editorial-archive .records__intro h2 {
+    max-width:11ch;
+    font-size:clamp(35px,10vw,44px);
+    line-height:1.18;
+    letter-spacing:.035em;
+  }
+  .editorial-archive .record-entry {
+    grid-template-columns:28px minmax(0,1fr);
+    gap:10px 14px;
+  }
+  .editorial-archive .record-entry__index {
+    grid-column:1;
+    grid-row:1 / span 2;
+  }
+  .editorial-archive .record-entry__season {
+    grid-column:2;
+    grid-row:1;
+    flex-flow:row wrap;
+    align-items:baseline;
+    padding:0 0 12px;
+    border-right:0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .editorial-archive .record-entry__season span { white-space:normal; }
+  .editorial-archive .record-entry__body {
+    grid-column:2;
+    grid-row:2;
+  }
+}
+
 
 
