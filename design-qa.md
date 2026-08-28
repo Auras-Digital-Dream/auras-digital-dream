@@ -384,7 +384,7 @@ final result: passed
   - Fix: isolated structural centering with a route-qualified transform and reset it only in the stacked tablet/mobile layout.
   - Post-fix evidence: the glass panel is fully inside the section and the button-to-footer gap is 89.19 px after reveal.
 - P2 — the supplied video could remain paused after entering the section.
-  - Fix: added viewport-aware playback with `IntersectionObserver`, muted autoplay, inline playback and loop behavior.
+  - Fix: added muted autoplay, inline looping playback and an `IntersectionObserver` retry when the device enters the viewport; playback is not force-paused offscreen so browser autoplay recovery remains reliable.
   - Post-fix evidence: browser reports the 848 × 478 source ready, muted and advancing during the visible colophon state.
 - P2 — a generic site-wide `footer` rule leaked a dark bar into the light editorial ending.
   - Fix: explicitly restored a transparent background and mineral-blue text for the colophon footer.
@@ -398,7 +398,7 @@ final result: passed
 - Image quality: the supplied video is used directly at its native 848 × 478 resolution with no replacement or synthetic asset.
 - Copy/content: original colophon headline, founder note, seal, return label and footer credits are preserved.
 
-- Primary interactions tested: natural scroll reveal, video play/pause by viewport visibility, muted looping playback and return-to-cover navigation.
+- Primary interactions tested: natural scroll reveal, autoplay recovery when the video enters the viewport, muted looping playback and return-to-cover navigation.
 - Browser checks: no Vite error overlay, no broken media and no horizontal overflow.
 - Production build and SEO audit: passed for all 19 routes.
 
