@@ -19,7 +19,6 @@ export function ColophonSection({ config }: { config: SiteConfig }) {
     }
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) play()
-      else video.pause()
     }, { threshold: 0.16 })
 
     observer.observe(video)
