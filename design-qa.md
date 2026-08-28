@@ -360,3 +360,46 @@ final result: passed
 - Production build and SEO audit: passed for all 19 routes.
 
 final result: passed
+
+## Iteration — translucent video colophon and safe return action
+
+- Source visual truth: current-turn user screenshot of the clipped tablet/mobile colophon (719 × 659 px) and the supplied video `C:/Users/aural/OneDrive/Immagini/aura/portofoliu WEBSITE/WhatsApp Video 2026-08-24 at 15.20.21.mp4`.
+- Implementation screenshots: `qa/colophon-video-device-desktop.jpg` and `qa/colophon-return-action-desktop.jpg`.
+- Browser viewport: 1142 × 784 CSS px at device scale 1.125; implementation captures are 1125 × 772 px.
+- Video source: 848 × 478 px, 8 seconds, muted loop.
+- State: `/` at `#colophon`, after natural scroll reveal; second capture is advanced within the section so the return action and footer are visible.
+
+### Full-view and focused-region evidence
+
+- The former flat closing composition is replaced by a real moving video window overlapped by a pale-blue translucent device. The video remains legible instead of being hidden by the text treatment.
+- The complete headline is vertical inside the glass frame; supporting text, seal and return action occupy a separate reading column with consistent contrast.
+- Focused action evidence shows the return button fully visible at 229 × 48 CSS px, followed by an 89 px safe gap before the footer. The global dark footer style is neutralized in this section.
+
+### Findings and comparison history
+
+- P1 — the return action and footer were clipped/overlapped on constrained layouts.
+  - Fix: moved the action into the normal content flow, made the footer a relative final row and added dedicated 900 px and 520 px responsive layouts with safe mobile-dock padding.
+  - Post-fix evidence: the button remains inside the section, has a 48 px touch height, and activates `#cover`, returning scroll position to zero.
+- P1 — the reveal animation overrode the structural centering transform, pushing the glass panel roughly 375 px below its frame.
+  - Fix: isolated structural centering with a route-qualified transform and reset it only in the stacked tablet/mobile layout.
+  - Post-fix evidence: the glass panel is fully inside the section and the button-to-footer gap is 89.19 px after reveal.
+- P2 — the supplied video could remain paused after entering the section.
+  - Fix: added viewport-aware playback with `IntersectionObserver`, muted autoplay, inline playback and loop behavior.
+  - Post-fix evidence: browser reports the 848 × 478 source ready, muted and advancing during the visible colophon state.
+- P2 — a generic site-wide `footer` rule leaked a dark bar into the light editorial ending.
+  - Fix: explicitly restored a transparent background and mineral-blue text for the colophon footer.
+  - Post-fix evidence: focused screenshot shows the footer integrated into the luminous paper/glass field without a dark overlay.
+
+### Required fidelity surfaces
+
+- Typography: the existing Renaissance display serif remains the focus; the headline uses vertical writing while UI labels and the return action retain futuristic microtype.
+- Spacing/layout: desktop uses an overlapped device composition; tablet and phone switch to stacked flow with 24–42 px gutters, safe mobile-header/dock spacing and a full-width phone action.
+- Colors/tokens: pale mineral blue glass, burgundy display type, porcelain paper and teal UI text remain within the established site palette.
+- Image quality: the supplied video is used directly at its native 848 × 478 resolution with no replacement or synthetic asset.
+- Copy/content: original colophon headline, founder note, seal, return label and footer credits are preserved.
+
+- Primary interactions tested: natural scroll reveal, video play/pause by viewport visibility, muted looping playback and return-to-cover navigation.
+- Browser checks: no Vite error overlay, no broken media and no horizontal overflow.
+- Production build and SEO audit: passed for all 19 routes.
+
+final result: passed
