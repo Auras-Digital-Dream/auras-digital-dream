@@ -450,7 +450,7 @@ final result: passed
 ## Iteration — uncropped responsive colophon video
 
 - Source visual truth: the user's colophon screenshot and explicit correction that the complete video must remain visible on desktop, tablet and phone.
-- Implementation screenshot: `qa/colophon-no-crop-desktop.jpg` (1125 × 772 px).
+- Implementation screenshots: `qa/colophon-no-crop-desktop.jpg` (1125 × 772 px) and `qa/colophon-live-tablet-stack.jpg` (1013 × 696 px).
 - Browser viewport: 1142 × 784 CSS px; responsive browser measurement: 853 × 1138 CSS px.
 - State: `/` at the visible colophon during muted playback.
 
@@ -459,6 +459,7 @@ final result: passed
 - The desktop capture shows the complete 848:478 moving frame, including both horizontal edges and the full lower interface strip.
 - The glass and video now occupy separate grid tracks. Their intersection is exactly 36 px on desktop, functioning as an accent seam rather than a mask over the image.
 - At the tablet breakpoint, the video and glass are stacked with a measured 24 px vertical gap and zero vertical overlap.
+- The production tablet/laptop capture at 1028 px shows the full 850 × 479 px video frame before the glass begins, with no masking on any edge.
 - A separate focused crop was unnecessary because both video edges, the glass edge and the entire text composition are readable in the full-view capture.
 
 ### Findings and comparison history
