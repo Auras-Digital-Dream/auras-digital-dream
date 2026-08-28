@@ -2831,16 +2831,19 @@ main[hidden] { display: none; }
 .editorial-archive .colophon__stage {
   position:relative;
   z-index:2;
-  width:min(1180px,100%);
+  width:min(1320px,100%);
   min-height:clamp(760px,82svh,860px);
   margin:auto;
-  display:flex;
+  display:grid;
+  grid-template-columns:clamp(360px,34vw,430px) minmax(0,1fr);
   align-items:center;
-  justify-content:flex-end;
 }
 .editorial-archive .colophon__device {
   position:relative;
-  width:min(80%,940px);
+  z-index:2;
+  grid-column:2;
+  grid-row:1;
+  width:100%;
   aspect-ratio:848 / 478;
   margin:0;
   overflow:hidden;
@@ -2874,8 +2877,11 @@ main[hidden] { display: none; }
   pointer-events:none;
 }
 .editorial-archive .colophon__video {
+  display:block;
   width:100%;
+  max-width:100%;
   height:100%;
+  aspect-ratio:848 / 478;
   object-fit:contain;
   object-position:center;
   filter:saturate(.82) contrast(1.03) brightness(.94);
@@ -2895,13 +2901,16 @@ main[hidden] { display: none; }
   text-shadow:0 1px 12px rgb(16 37 46 / .8);
 }
 .editorial-archive .colophon__glass {
-  position:absolute;
+  position:relative;
   z-index:5;
-  left:0;
-  top:50%;
-  transform:translateY(-50%)!important;
-  width:min(44%,520px);
+  grid-column:1;
+  grid-row:1;
+  left:auto;
+  top:auto;
+  transform:none!important;
+  width:calc(100% + 36px);
   min-height:min(70svh,670px);
+  margin-right:-36px;
   display:grid;
   grid-template-columns:minmax(112px,33%) minmax(0,1fr);
   border:1px solid rgb(167 211 226 / .52);
@@ -3047,7 +3056,7 @@ main[hidden] { display: none; }
     transform:none!important;
     width:calc(100% - clamp(54px,10vw,90px));
     min-height:620px;
-    margin:-58px auto 0;
+    margin:24px auto 0;
     grid-template-columns:minmax(116px,27%) minmax(0,1fr);
   }
   .editorial-archive .colophon__body {
@@ -3085,7 +3094,7 @@ main[hidden] { display: none; }
   .editorial-archive .colophon__glass {
     width:calc(100% - 32px);
     min-height:570px;
-    margin:-36px auto 0;
+    margin:20px auto 0;
     grid-template-columns:82px minmax(0,1fr);
     border-radius:20px 2px 20px 2px;
   }

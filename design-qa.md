@@ -446,3 +446,43 @@ final result: passed
 - P3: the active browser surface enforced a minimum 853 px CSS width, so the 520 px rule was verified from responsive geometry rather than a separate browser capture.
 
 final result: passed
+
+## Iteration — uncropped responsive colophon video
+
+- Source visual truth: the user's colophon screenshot and explicit correction that the complete video must remain visible on desktop, tablet and phone.
+- Implementation screenshot: `qa/colophon-no-crop-desktop.jpg` (1125 × 772 px).
+- Browser viewport: 1142 × 784 CSS px; responsive browser measurement: 853 × 1138 CSS px.
+- State: `/` at the visible colophon during muted playback.
+
+### Full-view and focused-region evidence
+
+- The desktop capture shows the complete 848:478 moving frame, including both horizontal edges and the full lower interface strip.
+- The glass and video now occupy separate grid tracks. Their intersection is exactly 36 px on desktop, functioning as an accent seam rather than a mask over the image.
+- At the tablet breakpoint, the video and glass are stacked with a measured 24 px vertical gap and zero vertical overlap.
+- A separate focused crop was unnecessary because both video edges, the glass edge and the entire text composition are readable in the full-view capture.
+
+### Findings and comparison history
+
+- P1 — the previous `contain` fix preserved the media pixels but still allowed the glass to cover more than 200 px of the video, so the visible result continued to look cropped.
+  - Fix: replaced the absolute-overlay composition with a two-track grid and limited the desktop intersection to 36 px.
+  - Post-fix evidence: browser measurement reports a 36 px intersection, native 848 × 478 playback and `object-fit: contain`; the implementation capture shows the complete frame.
+- P1 — tablet and phone variants still used negative margins, visually masking the upper portion of the glass/video transition.
+  - Fix: removed negative overlap at both responsive breakpoints; tablet uses a 24 px gap and phone uses a 20 px gap.
+  - Post-fix evidence: the 853 px responsive measurement reports a 24 px gap, no horizontal overflow and uninterrupted native-ratio playback. The 520 px rule uses the same independent stacked flow with a 20 px gap.
+- P2 — intrinsic video geometry depended only on CSS.
+  - Fix: added explicit `width="848"` and `height="478"` media attributes plus a matching CSS aspect ratio and `max-width: 100%`.
+  - Post-fix evidence: the browser exposes the declared 848 × 478 attributes and the same 848 × 478 native dimensions.
+
+### Required fidelity surfaces
+
+- Typography: existing vertical headline, body hierarchy and futuristic microtype remain unchanged.
+- Spacing/layout: desktop uses a controlled 36 px seam; tablet and phone use independent stacked rows with positive spacing.
+- Colors/tokens: the lighter pale-blue glass and established burgundy/mineral contrast remain unchanged.
+- Image quality: the supplied source plays without cropping, stretching or replacement at its native ratio on every breakpoint rule.
+- Copy/content: all colophon copy and controls remain complete.
+
+- Primary interactions tested: muted autoplay, responsive reflow and visible return action.
+- Browser checks: no console warnings/errors, zero horizontal overflow, complete native-ratio video and active playback.
+- Production build and SEO audit: passed for all 19 routes.
+
+final result: passed

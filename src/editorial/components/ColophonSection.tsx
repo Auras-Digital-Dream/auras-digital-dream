@@ -38,6 +38,8 @@ export function ColophonSection({ config }: { config: SiteConfig }) {
             ref={videoRef}
             className="colophon__video"
             src="/editorial-media/colophon-dream.mp4"
+            width={848}
+            height={478}
             autoPlay
             muted
             loop
