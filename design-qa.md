@@ -403,3 +403,46 @@ final result: passed
 - Production build and SEO audit: passed for all 19 routes.
 
 final result: passed
+
+## Iteration — complete video frame and lighter colophon glass
+
+- Source visual truth: current-turn user screenshot of the colophon at approximately 1556 × 864 px.
+- Implementation screenshot: `qa/colophon-transparent-device-desktop.jpg` (1125 × 772 px).
+- Browser viewport: 1142 × 784 CSS px at browser density 1.125; additional responsive measurement at 853 × 1138 CSS px.
+- State: `/` at the visible colophon, after scroll reveal and during muted video playback.
+
+### Full-view and focused-region evidence
+
+- The supplied 848 × 478 video now retains its native 848:478 aspect ratio and uses `object-fit: contain`; the desktop capture shows the complete moving frame instead of the former cover crop.
+- The glass device occupies roughly 36% of the tested desktop viewport and stops before the video focal subject. Its fill is visibly translucent, while burgundy display type, mineral body copy and the return action remain readable.
+- A separate focused crop was not needed: the full-view capture keeps the complete headline, founder note, seal, return action, video edge and footer legible at review scale.
+
+### Findings and comparison history
+
+- P1 — video content was cropped by breakpoint-specific 16:10 and 4:3 frames.
+  - Fix: bound every breakpoint to the source video's native 848:478 ratio and changed the media fit from `cover` to `contain` over a dark mineral fallback.
+  - Post-fix evidence: browser reports the native 848 × 478 source, `object-fit: contain`, ready playback and no horizontal overflow.
+- P2 — the translucent panel was too broad and too opaque, obscuring too much of the video.
+  - Fix: reduced desktop width from 54%/620 px to 44%/520 px, lowered fill and border opacity, reduced blur from 22 px to 16 px and softened the internal highlight.
+  - Post-fix evidence: the 1142 px desktop capture shows a materially narrower, lighter panel; the 853 px stacked measurement preserves an inset 667 px glass frame and the return action remains available.
+- P2 — responsive overlap previously consumed excessive media area.
+  - Fix: reduced the tablet overlap to 58 px and the phone overlap to 36 px, with wider side insets at both breakpoints.
+  - Post-fix evidence: the tablet measurement has zero document overflow, native-ratio video playback and a centered inset glass frame.
+
+### Required fidelity surfaces
+
+- Typography: Renaissance vertical display type and futuristic microcopy are preserved; the desktop headline scale is slightly reduced to fit the narrower glass rail.
+- Spacing/layout: video gains visual priority; glass width, overlap and side insets now reduce progressively across desktop, tablet and phone rules.
+- Colors/tokens: pale mineral-blue glass remains in the established palette with substantially lower opacity; text contrast is preserved.
+- Image quality: the original supplied video is rendered in full at its native aspect ratio with no crop, stretching or replacement asset.
+- Copy/content: headline, founder note, seal, return label and footer credits remain unchanged.
+
+- Primary interactions tested: muted autoplay during visible state and return-action availability.
+- Browser checks: no console warnings/errors, no broken media and no horizontal overflow at the measured desktop/tablet layouts.
+- Production build and SEO audit: passed for all 19 routes.
+
+### Follow-up polish
+
+- P3: the active browser surface enforced a minimum 853 px CSS width, so the 520 px rule was verified from responsive geometry rather than a separate browser capture.
+
+final result: passed
