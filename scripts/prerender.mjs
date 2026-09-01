@@ -209,6 +209,8 @@ ${detail.map((r) => `- [${r.title.split(" — ")[0]}](${ORIGIN}${r.url}): ${r.de
 
 ## Contact
 
+- [Contact](${ORIGIN}/contact): pagină de contact — formular pentru nume, email
+  și mesaj.
 - Email: auraleobeatrice@gmail.com
 - Telefon / WhatsApp: +40 762 509 423
 - Instagram: https://www.instagram.com/aurasdigitaldream

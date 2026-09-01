@@ -105,10 +105,21 @@ export function routes() {
     ogImageAlt: "Aura's Digital Dream — studio complet de strategie, design și web.",
     ogType: "website",
   };
+  const contact = {
+    url: "/contact",
+    priority: "0.7",
+    title: `Contact — Atelierul | ${SITE}`,
+    description: "Scrie-mi povestea proiectului tău — o pagină de contact cinematică, cu Medusa.",
+    image: DEFAULT_IMAGE,
+    ogImage: DEFAULT_IMAGE,
+    ogImageAlt: "Statuia Medusei, în Atelierul digital al Aurei.",
+    ogType: "website",
+  };
   return [
     home,
     studio,
     books,
+    contact,
     ...projects().map((p) => ({
       url: `/portofoliu/${p.slug}`,
       priority: "0.6",

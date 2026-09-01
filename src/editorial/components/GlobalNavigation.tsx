@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 interface GlobalNavigationProps {
   progress?: number
-  currentPath?: '/' | '/studio'
+  currentPath?: '/' | '/studio' | '/contact'
 }
 
 const primaryLinks = [
@@ -10,6 +10,7 @@ const primaryLinks = [
   { label: 'Studio', href: '/studio' },
   { label: 'Despre mine', href: '/studio#despre-mine' },
   { label: 'Cărțile mele', href: '/cartile-mele' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 function NavigationLinks({ currentPath, mobile = false }: { currentPath: string; mobile?: boolean }) {

@@ -24,6 +24,7 @@ import {
 import { projectDetails } from "./projectDetails";
 import { useScrollExperience } from "./useScrollExperience";
 import { HomePage } from "./HomePage";
+import { ContactPage } from "./ContactPage";
 import EditorialArchive from "./editorial/App.tsx";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap.js";
 const portfolioAssets = __PORTFOLIO_ASSETS__;
@@ -727,6 +728,12 @@ export function App({ path }) {
         image: "/og-cover.jpg",
         type: "website",
       },
+      "/contact": {
+        title: "Contact — Atelierul | Aura's Digital Dream",
+        description: "Scrie-mi povestea proiectului tău — o pagină de contact cinematică, cu Medusa.",
+        image: "/og-cover.jpg",
+        type: "website",
+      },
     };
     const meta = detailProject
       ? {
@@ -795,6 +802,10 @@ export function App({ path }) {
 
   if (currentPath === "/cartile-mele") {
     return <BooksPageCinematic onNavigate={navigateTo} onSection={goToSection} />;
+  }
+
+  if (currentPath === "/contact") {
+    return <ContactPage />;
   }
 
   function togglePrice(title) {

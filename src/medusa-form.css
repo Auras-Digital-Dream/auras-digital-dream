@@ -1,0 +1,96 @@
+/* ── Secțiunea "Atelier" — poveste cinematică, derulare fixată ────────────
+   Sursă: prototip generat în Figma Make (fișierul "Medusa Contact Section
+   Animation"), portat 1:1 — sprite-sheet-ul cu 5 poze, coregrafia de scroll,
+   spotlight-ul de cursor, inelul de la wink. Adaptat la stack-ul acestui
+   proiect: fără @figma/astraui (câmpuri simple, stilizate mai jos), token-uri
+   de culoare mapate pe cele din :root (nu s-a inventat nicio culoare nouă),
+   fonturi mapate pe familia existentă (Marcellus/EB Garamond/sans), iar
+   bara de progres și marcatorul de pe timeline animă `transform`, nu
+   `width`/`top`, ca să respecte regula transform-opacity-only.
+   Poziționarea și culorile per-cadru sunt inline în MedusaForm.jsx (depind
+   de stare React); aici stau doar keyframe-urile și reduced-motion. */
+
+@keyframes atelier-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes atelier-rotate-in {
+  from { opacity: 0; transform: rotate(-110deg) scale(0.3); }
+  to   { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+
+@keyframes atelier-char-drop {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes atelier-star-breathe {
+  from { opacity: 0.04; }
+  to   { opacity: 0.28; }
+}
+
+@keyframes atelier-glow-pulse {
+  0%   { opacity: 0.55; }
+  50%  { opacity: 0.85; }
+  100% { opacity: 0.55; }
+}
+
+.atelier-field-input {
+  width: 100%;
+  font: 400 16px/1.4 var(--font-body);
+  color: var(--paper);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gold-line);
+  padding: 8px 2px;
+  outline: none;
+  transition: border-color .2s ease;
+}
+
+.atelier-field-input::placeholder { color: color-mix(in srgb, var(--paper), transparent 62%); }
+.atelier-field-input:focus { border-color: var(--gold); }
+
+textarea.atelier-field-input { resize: vertical; min-height: 64px; font-family: var(--font-body); }
+
+.atelier-field-label {
+  display: block;
+  font: 700 9px/1 var(--font-sans);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--gold), var(--paper) 25%);
+  margin-bottom: 6px;
+}
+
+.atelier-submit-btn {
+  width: 100%;
+  padding: 14px 18px;
+  font: 700 12px/1 var(--font-sans);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-ground);
+  background: var(--gold);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter .18s;
+}
+.atelier-submit-btn:hover:not(:disabled) { filter: brightness(1.06); }
+.atelier-submit-btn:disabled { cursor: wait; }
+
+.atelier-honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atelier-stage       { transform: none !important; transition: none !important; }
+  .atelier-frame       { transition: none !important; }
+  .atelier-form-panel  { transform: none !important; transition: none !important; }
+  .atelier-narrative-latin,
+  .atelier-narrative-sub { animation: none !important; }
+  .atelier-star         { animation: none !important; opacity: 0.08 !important; }
+}
