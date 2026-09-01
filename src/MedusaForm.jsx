@@ -372,8 +372,8 @@ export function MedusaForm() {
           pointerEvents: formVisible ? "all" : "none",
         }}>
           <div style={{ width: "100%" }}>
-            <div style={{ color: GOLD, fontFamily: "var(--font-sans)", fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", marginBottom: "1.6rem" }}>MMXXVI · ATELIERUL</div>
-            <h2 style={{ color: IVORY, fontFamily: "var(--font-project)", fontSize: "clamp(1.65rem, 3.2vw, 2.6rem)", fontWeight: 400, letterSpacing: "0.07em", lineHeight: 1.18, textTransform: "uppercase", margin: "0 0 2.2rem 0" }}>
+            <div className="atelier-form-kicker" style={{ color: GOLD, fontFamily: "var(--font-sans)", fontSize: "9px", letterSpacing: "0.5em", textTransform: "uppercase", marginBottom: "1.6rem" }}>MMXXVI · ATELIERUL</div>
+            <h2 className="atelier-form-title" style={{ color: IVORY, fontFamily: "var(--font-project)", fontSize: "clamp(1.65rem, 3.2vw, 2.6rem)", fontWeight: 400, letterSpacing: "0.07em", lineHeight: 1.18, textTransform: "uppercase", margin: "0 0 2.2rem 0" }}>
               Spune-mi<br />povestea ta
             </h2>
 

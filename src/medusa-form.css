@@ -86,6 +86,25 @@ textarea.atelier-field-input { resize: vertical; min-height: 64px; font-family: 
   opacity: 0;
 }
 
+/* Sub 640px, panoul de 46% (gândit pentru compoziția desktop, imagine +
+   formular alăturate) devine prea strâmt — titlul și kicker-ul se rup pe
+   3-4 rânduri. Pe telefon, formularul ia aproape tot ecranul; statuia
+   rămâne doar o fâșie vizibilă în stânga, prin degrade. `!important` e
+   necesar — lățimea vine dintr-un inline style calculat în JS. */
+@media (max-width: 640px) {
+  .atelier-form-panel {
+    width: 94% !important;
+    padding: 0 6% !important;
+  }
+  .atelier-form-kicker {
+    letter-spacing: 0.28em !important;
+    font-size: 8px !important;
+  }
+  .atelier-form-title {
+    font-size: 1.6rem !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .atelier-stage       { transform: none !important; transition: none !important; }
   .atelier-frame       { transition: none !important; }
