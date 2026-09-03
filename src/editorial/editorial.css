@@ -156,6 +156,14 @@ main[hidden] { display: none; }
   scroll-margin-top: 0;
 }
 
+/* SiteFooter e comun tuturor paginilor și nu știe despre rail-ul lateral
+   fix al arhivei editoriale — fără asta, textul din footer stă sub el.
+   Railul nu dispare la niciun breakpoint (la fel ca .section mai sus),
+   deci nici footer-ul nu-și resetează marginea. */
+:scope > .site-footer {
+  margin-left: var(--rail-width);
+}
+
 .eyebrow,
 .micro {
   font-family: var(--font-ui);
@@ -852,7 +860,12 @@ main[hidden] { display: none; }
 .records__list { position: relative; z-index: 2; align-self: start; margin: 0; padding: 0 0 7vh; list-style: none; }
 .record-entry {
   display: grid;
-  grid-template-columns: 50px minmax(88px, 22%) 1fr;
+  /* max-content pentru coloana de mijloc: eticheta ("Marketing" e cea mai
+     lungă) își ia exact lățimea de care are nevoie, în loc să fie forțată
+     la 22% — sub acel procent, textul depășea propriul track și se
+     suprapunea peste titlu. minmax(0,1fr) pe ultima coloană garantează că
+     titlul se micșorează/împachetează, nu că deborda peste coloana de preț. */
+  grid-template-columns: 50px minmax(88px, max-content) minmax(0, 1fr);
   gap: clamp(16px, 2vw, 34px);
   min-height: clamp(220px, 24vh, 264px);
   align-items: start;
@@ -861,6 +874,11 @@ main[hidden] { display: none; }
 }
 .record-entry:first-child { border-top-color: var(--ink); }
 .record-entry__index { color: var(--accent); font-family: var(--font-kai); font-size: 27px; }
+/* Elementele de grid nu se micșorează sub conținutul lor (min-width:auto
+   implicit) — fără asta, "Branding"/etichetele lungi de titlu forțau
+   coloana să depășească track-ul și se suprapuneau peste coloana vecină. */
+.record-entry__season,
+.record-entry__body { min-width: 0; }
 .record-entry__season { display: flex; flex-direction: column; gap: 10px; padding-right: 16px; border-right: 1px solid var(--hairline); }
 .record-entry__season strong { font-family: var(--font-kai); font-size: 24px; font-weight: 400; letter-spacing: .16em; }
 .record-entry__season span { color: var(--muted-ink); font-size: 14px; line-height: 1.85; letter-spacing: .05em; }
@@ -1070,9 +1088,18 @@ main[hidden] { display: none; }
   will-change: transform;
 }
 .landscape-marker { opacity: 0; translate: 0 16px; transition: opacity 620ms var(--motion-delay, 0ms) var(--ease-editorial), translate 760ms var(--motion-delay, 0ms) var(--ease-editorial); }
+/* .landscape-marker and .landscape-marker--end tie on specificity (one
+   class each); source order alone decided the fallback, and it was
+   silently overwriting --end's -100% X shift with a bare "0 16px" —
+   the reveal fade never carried the "flip to the left of its anchor
+   point" that keeps the rightmost (Marketing) card on screen. Redeclaring
+   --end after this rule, at matching specificity, keeps that shift through
+   both the hidden and revealed states below. */
+.landscape-marker--end { translate: -100% 16px; }
 .landscape-marker::before { scale: 1 0; transform-origin: top; transition: scale 680ms calc(var(--motion-delay, 0ms) + 120ms) var(--ease-editorial); }
 .landscape-marker__point { opacity: 0; scale: .3; transition: opacity 360ms var(--motion-delay, 0ms) ease, scale 560ms var(--motion-delay, 0ms) var(--ease-editorial); }
 .landscape__media[data-revealed='true'] .landscape-marker { opacity: 1; translate: 0 0; }
+.landscape__media[data-revealed='true'] .landscape-marker--end { translate: -100% 0; }
 .landscape__media[data-revealed='true'] .landscape-marker::before { scale: 1 1; }
 .landscape__media[data-revealed='true'] .landscape-marker__point { opacity: 1; scale: 1; }
 .landscape__axis { clip-path: inset(0 100% 0 0); transition: clip-path 920ms 460ms var(--ease-editorial); }

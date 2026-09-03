@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, CaretLeft, CaretRight, Check, Code, FacebookLogo, FileText, InstagramLogo, LinkedinLogo, Megaphone, Palette, Phone, TiktokLogo, WhatsappLogo } from "@phosphor-icons/react";
+import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, Megaphone, Palette, Phone, WhatsappLogo } from "@phosphor-icons/react";
 import { Chapters, Depth, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { GoldLine } from "./goldline.jsx";
 import { GlobalNavigation } from "./editorial/components/GlobalNavigation.tsx";
+import { SiteFooter } from "./SiteFooter.jsx";
 
 // Fields arrive one after another as the form comes into view. Same
 // mechanism the rest of the page uses, so there is one reveal system, not two.
@@ -207,11 +208,12 @@ const services = [
 const priceItems = [
   { title: "Pachet Start-up", price: 900, maxPrice: 1200, copy: "Logo, identitate vizuală de bază și mini kit social media." },
   { title: "Pachet Rebranding", price: 1500, maxPrice: 2200, copy: "Refresh vizual, repoziționare, materiale actualizate și direcție de comunicare." },
-  { title: "Pachet Website (5–8 pagini)", price: 2000, maxPrice: 2500, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
+  { title: "Website de prezentare (1–3 pagini)", price: 1000, maxPrice: 1500, copy: "Pagină/site simplu, tip vitrină, cu structură, texte și contact de bază." },
+  { title: "Website multi-pagină (5–8 pagini)", price: 2000, maxPrice: 2500, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
   { title: "Website Premium — animații & storytelling", price: 3500, maxPrice: 4500, copy: "Design avansat, animații, storytelling vizual și experiență personalizată." },
   { title: "Magazin online", price: 4500, maxPrice: 6000, copy: "Catalog, coș, plăți, curier, configurare inițială și instruire." },
   { title: "Logo design", price: 400, maxPrice: 600, copy: "Concept de logo, variante cromatice și fișiere pregătite pentru web." },
-  { title: "Identitate vizuală completă", price: 800, maxPrice: 1200, copy: "Logo, paletă cromatică, fonturi, direcție vizuală și aplicații de bază." },
+  { title: "Branding", price: 800, maxPrice: 1200, copy: "Logo, paletă cromatică, fonturi, direcție vizuală și aplicații de bază." },
   { title: "Pachet social media — 6 vizualuri", price: 450, maxPrice: 600, copy: "Șase postări sau story-uri coerente vizual, adaptate brandului." },
   { title: "Documente profesionale", price: 40, maxPrice: 60, unit: "/ pagină", copy: "Formatare, structurare și aranjare vizuală; tariful final depinde de complexitate." },
   { title: "Prezentare profesională — 10 slide-uri", price: 450, maxPrice: 700, copy: "Structură clară, design coerent și pregătire pentru prezentare sau PDF." },
@@ -940,30 +942,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="site-footer bg-ink-marble" id="footer">
-        <div className="footer-image" aria-hidden="true">
-          <img src="/assets/footer-bg.jpg" alt="" />
-        </div>
-        <div className="footer-plinth">
-          <div className="shell footer-grid">
-            <div className="footer-brand">
-              <img src="/assets/logo.jpg" alt="" aria-hidden="true" />
-              <div>
-                <strong>Aura's Digital Dream</strong>
-                <p>Marketing, design și soluții digitale, cu suflet.</p>
-              </div>
-            </div>
-            <nav className="footer-social" aria-label="Rețele sociale">
-              <a href="https://www.instagram.com/aurasdigitaldream" aria-label="Instagram"><InstagramLogo size={20} /></a>
-              <a href="https://www.facebook.com/auratrendvault" aria-label="Facebook"><FacebookLogo size={20} /></a>
-              <a href="https://www.tiktok.com/@aurasdigitaldream" aria-label="TikTok"><TiktokLogo size={20} /></a>
-              <a href="https://www.linkedin.com/in/aurelia-dobre-a033b2104" aria-label="LinkedIn"><LinkedinLogo size={20} /></a>
-              <a href="https://wa.me/40762509423" aria-label="WhatsApp"><WhatsappLogo size={20} /></a>
-            </nav>
-            <p className="footer-legal">© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
       <a className="whatsapp-fab" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp">
         <WhatsappLogo size={26} weight="fill" />

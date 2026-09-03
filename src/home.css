@@ -1683,8 +1683,20 @@
   align-items: start;
 }
 
-/* The offset is the point: the two columns must not line up. */
-.difference-col:last-child { margin-top: clamp(48px, 12vw, 168px); }
+.difference-col {
+  padding: clamp(14px, 1.8vw, 24px);
+  margin: clamp(-14px, -1.8vw, -24px);
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: background .35s var(--ease), border-color .35s var(--ease), backdrop-filter .35s var(--ease);
+}
+
+.difference-col:hover {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  backdrop-filter: blur(10px) saturate(1.15);
+}
 
 .difference-col h3 {
   margin: 0 0 6px;
@@ -1740,7 +1752,6 @@
 
 @media (max-width: 860px) {
   .difference-grid { grid-template-columns: minmax(0, 1fr); }
-  .difference-col:last-child { margin-top: 0; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

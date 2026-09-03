@@ -9,6 +9,7 @@ import { GlobalNavigation } from './components/GlobalNavigation'
 import { LandscapeAtlasSection } from './components/LandscapeAtlasSection'
 import { RecordsSection } from './components/RecordsSection'
 import { SpecimenSection } from './components/SpecimenSection'
+import { SiteFooter } from '../SiteFooter.jsx'
 import { siteConfig } from './config'
 import { useDetailRoute } from './hooks/useDetailRoute'
 import { useReveal } from './hooks/useReveal'
@@ -76,6 +77,7 @@ function App() {
         />
         <ColophonSection config={siteConfig} />
       </main>
+      {!route && <SiteFooter />}
       {route && (
         <DetailPage
           key={`${route.kind}-${route.id}`}

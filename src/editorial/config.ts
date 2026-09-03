@@ -55,7 +55,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Nimic nu se întâmplă la întâmplare: direcția vizuală, structura și mesajele-cheie se decid înainte ca primul pixel să existe.',
       coordinates: 'Scena 01 · Apariția',
-      image: { src: '/editorial-media/hero-aura.png', alt: 'Siluetă editorială în lumină aurie, printre statui și petale', position: '18% 50%' },
+      image: { src: '/editorial-media/chapter-strategie-soldiers.png', alt: 'Gardă de războinici în armură aurie, mozaic în stil Klimt, printre flori aurii', position: '50% 35%' },
       detail: {
         kicker: 'Capitolul I · Strategie',
         title: 'Te ajut să apari.',
@@ -79,7 +79,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Logo, paletă, fonturi și reguli scrise — un sistem vizual pe care îl poți aplica singură, oricând, pe orice platformă.',
       coordinates: 'Scena 02 · Recognoscibilitate',
-      image: { src: '/editorial-media/specimen-bust.png', alt: 'Bust de marmură renascentist cu vizor holografic și vene de aur kintsugi', position: '50% 40%' },
+      image: { src: '/editorial-media/chapter-identitate-tablet.png', alt: 'Femeie în veșmânt auriu citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '72% 35%' },
       detail: {
         kicker: 'Capitolul II · Identitate',
         title: 'Chipul care rămâne în memorie.',
@@ -103,7 +103,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Proiecte care nu doar arată bine — spun ceva. Storytelling vizual construit pe ce te diferențiază, nu pe ce e la modă.',
       coordinates: 'Scena 03 · Atelierul',
-      image: { src: '/editorial-media/chapter-atelier.png', alt: 'Atelier de sculptor renascentist cu schițe, dălți și holograme de busturi clasice', position: '50% 50%' },
+      image: { src: '/editorial-media/chapter-design-tablet.png', alt: 'Femeie în veșmânt roșu-închis citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '72% 35%' },
       detail: {
         kicker: 'Capitolul III · Design',
         title: 'Atelierul unde ideile iau formă.',
@@ -127,7 +127,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Platforme rapide, elegante și construite pentru conversie — de la structură UX la animații cinematice și elemente 3D.',
       coordinates: 'Scena 04 · Arhitectura',
-      image: { src: '/editorial-media/atlas-columns.png', alt: 'Coloane renascentiste contopite cu o rețea holografică futuristă de linii și repere', position: '50% 55%' },
+      image: { src: '/editorial-media/chapter-experiente-inventor.png', alt: 'Tânăr întins pe nori, lucrând pe un laptop futurist, cu ruine grecești clasice în fundal', position: '65% 40%' },
       detail: {
         kicker: 'Capitolul IV · Experiențe digitale',
         title: 'Arhitectura unei prezențe online.',

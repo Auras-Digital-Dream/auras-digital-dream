@@ -25,6 +25,7 @@ import { projectDetails } from "./projectDetails";
 import { useScrollExperience } from "./useScrollExperience";
 import { HomePage } from "./HomePage";
 import { ContactPage } from "./ContactPage";
+import { SiteFooter } from "./SiteFooter.jsx";
 import EditorialArchive from "./editorial/App.tsx";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap.js";
 const portfolioAssets = __PORTFOLIO_ASSETS__;
@@ -463,7 +464,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
       <section className="detail-related"><p className="section-kicker"><span className="eyebrow-text">Continuă</span></p><h2>Alte proiecte <em>din aceeași lume.</em></h2><div className="related-grid">{related.map((other) => <a key={other.slug} href={`/portofoliu/${other.slug}`} onClick={(event) => onNavigate(event, `/portofoliu/${other.slug}`)} data-reveal><img src={detailHeroAssets[other.slug] || other.image} alt="" loading="lazy" /><div><small>{other.category.join(" · ")}</small><strong>{other.title.split(" — ")[0]}</strong></div></a>)}</div></section>
 
       <section className="detail-cta"><p>Îți place direcția?</p><h2>Putem crea o poveste la fel de <em>memorabilă pentru brandul tău.</em></h2><a className="button primary" href={`https://wa.me/40762509423?text=${whatsappMessage}`}>Vreau un proiect asemănător <WhatsappLogo size={19} /></a></section>
-      <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura's Digital Dream</strong><p>Marketing, design și soluții digitale, cu suflet.</p></div></div><p>© 2026 Aura's Digital Dream. Toate drepturile rezervate.</p></footer>
+      <SiteFooter />
       <a className="floating-whatsapp" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"><WhatsappLogo size={28} weight="fill" /></a>
       {zoomed && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Imagine mărită" onClick={() => setZoomed(null)}><button aria-label="Închide imaginea" onClick={() => setZoomed(null)}><X size={26} /></button><img src={zoomed} alt="Imagine mărită din proiect" /></div>}
     </main>
@@ -678,7 +679,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
       </section>
 
       <motion.section className="cinematic-final" ref={finalRef} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}><motion.div className="cinematic-final-orb" style={{ scale: finalScale }} /><p className="section-kicker"><span className="eyebrow-text">07 — Finale</span></p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Intră în lumea ei și vei vrea să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></motion.section>
-      <footer><div className="footer-brand"><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><div><strong>Aura Dobre</strong><p>Cărți, lumi vizuale și povești cinematice.</p></div></div><p>© 2026 Aura Dobre. Toate drepturile rezervate.</p></footer>
+      <SiteFooter />
     </main>
   );
 }
