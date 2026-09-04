@@ -41,6 +41,10 @@
   --ink-soft-strong: #514F4A;
   --ink-ground: #211F1C;
   --glass-edge: rgba(86,114,115,.58);
+  /* Her pick, for the second dark ground: Servicii, Claritate, Colecția de
+     proiecte, Ce spun clienții, Cărțile mele. */
+  --mahogany: #4b1702;
+  --mahogany-deep: color-mix(in srgb, var(--mahogany), black 30%);
   background:
     radial-gradient(circle at 12% 8%, rgba(197,213,210,.38), transparent 28%),
     radial-gradient(circle at 86% 24%, rgba(196,190,168,.28), transparent 25%),
@@ -243,23 +247,23 @@
 
 /* Contrast contract for the portfolio route. The books route is not in this
    scope, so its independent cinematic palette remains untouched. */
-.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan) {
+.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan,.services,.voices,.books) {
   color:var(--aura-porcelain);
 }
-.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan)
+.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan,.services,.voices,.books)
   :is(.section-title,h2,h3,p,li,label,.eyebrow-text) {
   color:inherit;
 }
-.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan) .button {
+.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan,.services,.voices,.books) .button {
   color:var(--aura-charcoal);
   border-color:rgba(240,236,233,.72);
   background:rgba(240,236,233,.92);
   box-shadow:0 12px 32px rgba(33,31,28,.2),inset 0 1px rgba(255,255,255,.64);
 }
-.home :is(.services,.process,.estimator,.books) {
+.home :is(.process,.estimator) {
   color:var(--aura-charcoal);
 }
-.home :is(.services,.process,.estimator,.books) .button {
+.home :is(.process,.estimator) .button {
   color:var(--aura-porcelain);
   border-color:rgba(52,49,44,.72);
   background:rgba(52,49,44,.94);

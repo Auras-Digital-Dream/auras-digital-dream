@@ -134,6 +134,9 @@
 .project-index .eyebrow-text,
 .editorial .eyebrow-text,
 .clarity .eyebrow-text,
+.services .eyebrow-text,
+.voices .eyebrow-text,
+.books .eyebrow-text,
 .price-summary .eyebrow-text {
   background: linear-gradient(100deg,
     var(--sky) 0%, #FFFFFF 17%, var(--sand-soft) 34%,
@@ -172,6 +175,9 @@
 .chapter-copy .kicker,
 .editorial .kicker,
 .clarity .kicker,
+.services .kicker,
+.voices .kicker,
+.books .kicker,
 .price-summary .kicker {
   background: color-mix(in srgb, var(--frost), transparent 90%);
 }
@@ -1711,7 +1717,7 @@
 
 /* Project archive: the dense editorial rhythm from the motion reference,
    translated into the site's ink, porcelain and gilded-glass language. */
-.project-index { position:relative; z-index:3; padding:clamp(58px,7vw,96px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(ellipse 78% 48% at 8% 0%,rgba(113,145,138,.32),transparent 68%),radial-gradient(ellipse 58% 44% at 92% 24%,rgba(181,143,78,.2),transparent 72%),linear-gradient(142deg,#152321 0%,#20302d 43%,#352f25 73%,#171e1d 100%); color:var(--aura-porcelain); }
+.project-index { position:relative; z-index:3; padding:clamp(58px,7vw,96px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(ellipse 78% 48% at 8% 0%,rgba(201,168,106,.22),transparent 68%),radial-gradient(ellipse 58% 44% at 92% 24%,rgba(181,143,78,.2),transparent 72%),linear-gradient(142deg,#2b0d01 0%,#3c1201 43%,#4b1702 73%,#200900 100%); color:var(--aura-porcelain); }
 .project-index::before { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; opacity:.2; background-image:url("/textures/paper.webp"); background-size:720px auto; mix-blend-mode:soft-light; }
 .project-index::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:linear-gradient(112deg,transparent 16%,rgba(207,224,218,.075) 36%,transparent 55%),radial-gradient(ellipse 46% 20% at 50% 0%,rgba(255,239,204,.08),transparent 72%); mix-blend-mode:screen; }
 .project-disintegration { position:absolute; z-index:12; inset:0; pointer-events:none; mix-blend-mode:screen; filter:drop-shadow(0 0 1px rgba(196,190,168,.2)); }
@@ -1859,6 +1865,28 @@ body.cursor-interactive .home .custom-cursor-ring {
       var(--ink-ground), color-mix(in srgb, var(--ink), var(--ink-ground) 42%) 30%,
       var(--ink-ground) 56%, color-mix(in srgb, var(--ink), var(--ink-ground) 52%) 78%,
       var(--ink-ground));
+}
+
+/* Her colour, on its own ground — deliberately without the marble veins or
+   the botanical: just the grain (so it never reads as a flat digital fill)
+   and two soft passes of light instead of drawn lines. A wide, low glow
+   catches a corner like candlelight on wood; the conic pass beneath it is
+   a slow tonal turn, not an edge, so nothing here draws as a "line". */
+.bg-mahogany {
+  background-color: var(--mahogany);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23m)' opacity='.05'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 70% 60% at 16% 12%,
+      color-mix(in srgb, var(--gold), transparent 80%), transparent 64%),
+    radial-gradient(ellipse 60% 50% at 88% 92%,
+      color-mix(in srgb, var(--mahogany-deep), transparent 30%), transparent 68%),
+    conic-gradient(from 205deg at 68% 30%,
+      var(--mahogany), color-mix(in srgb, var(--mahogany-deep), var(--mahogany) 40%) 32%,
+      var(--mahogany) 58%, color-mix(in srgb, var(--mahogany-deep), var(--mahogany) 55%) 80%,
+      var(--mahogany));
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 180px 180px, auto, auto, auto;
+  background-position: 0 0, center, center, center;
 }
 
 /* .services and .estimator are the two sections that sell, so they keep a
@@ -2751,8 +2779,6 @@ footer .button,
   background-size: contain;
 }
 
-.bloom.flip::after { transform: scaleX(-1); }
-
 /* White ground: the forget-me-not, the flower from the portrait. */
 .bg-marble.bloom::after {
   background-image: url("/assets/nu-ma-uita.webp");
@@ -2760,19 +2786,10 @@ footer .button,
   opacity: .82;
 }
 
-/* Dark ground: the rose, which the black lifts rather than swallows. */
-.bg-ink-marble.bloom::after {
-  background-image: url("/assets/roza.webp");
-  aspect-ratio: 460 / 474;
-  opacity: .74;
-}
-
-/* Measured empty quadrants, section by section. */
-.services.bloom   { --bloom-x: 49%; --bloom-y: 60%; --bloom-w: clamp(150px, 14vw, 210px); }
+/* Measured empty quadrant. Servicii, Claritate, Ce spun clienții and
+   Cărțile mele used to bloom too, but they're on --mahogany now, at her
+   request: no marble veins, no flowers, just the colour and its own light. */
 .estimator.bloom  { --bloom-x: 66%; --bloom-y: 34%; --bloom-w: clamp(160px, 15vw, 225px); }
-.archive.bloom    { --bloom-x: 73%; --bloom-y: 33%; --bloom-w: clamp(130px, 12vw, 180px); }
-.voices.bloom     { --bloom-x: 66%; --bloom-y: 40%; --bloom-w: clamp(170px, 16vw, 245px); }
-.books.bloom      { --bloom-x: 44%; --bloom-y: 24%; --bloom-w: clamp(125px, 11vw, 170px); }
 
 /* Everything a section holds sits above the drawing. */
 .bloom > * { position: relative; z-index: 1; }

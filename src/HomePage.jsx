@@ -462,7 +462,7 @@ export function HomePage({ onNavigate }) {
       <ProjectIndex items={projects} onNavigate={onNavigate} />
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
-      <section className="services gilt bg-marble is-deep bloom flip" id="servicii">
+      <section className="services gilt bg-mahogany" id="servicii">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Servicii</span></p>
@@ -616,7 +616,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Clarity: FAQ + comparison ────────────────────────────────────── */}
-      <section className="clarity bg-ink-marble" id="claritate">
+      <section className="clarity bg-mahogany" id="claritate">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Claritate înainte de ofertă</span></p>
@@ -666,7 +666,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────────────────── */}
-      <section className="voices bg-marble bloom flip">
+      <section className="voices bg-mahogany">
         <div className="shell">
           <div className="section-head reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Testimoniale</span></p>
@@ -698,7 +698,7 @@ export function HomePage({ onNavigate }) {
       </section>
 
       {/* ── Books teaser ─────────────────────────────────────────────────── */}
-      <section className="books gilt bg-marble bloom" id="amazon-picks">
+      <section className="books gilt bg-mahogany" id="amazon-picks">
         <div className="shell books-grid">
           <div className="reveal-on-scroll">
             <p className="kicker reveal-child"><span className="eyebrow-text">Aura Dobre · Author Universe</span></p>
