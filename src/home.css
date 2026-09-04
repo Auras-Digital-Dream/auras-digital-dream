@@ -1671,7 +1671,7 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   DIFFERENCE — deliberately offset pairs
+   DIFFERENCE — aligned pairs, glass hover
    ══════════════════════════════════════════════════════════════════════════ */
 
 .difference { padding-block: var(--rhythm); }

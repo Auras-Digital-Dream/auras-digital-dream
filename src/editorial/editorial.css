@@ -1445,7 +1445,7 @@ main[hidden] { display: none; }
   grid-template-columns: repeat(4, 1fr);
   border-block: 1px solid var(--hairline);
 }
-.record-detail__season-index > span {
+.record-detail__season-index > button {
   position: relative;
   display: grid;
   min-width: 0;
@@ -1453,14 +1453,57 @@ main[hidden] { display: none; }
   align-items: center;
   gap: 11px;
   padding: 16px 14px;
+  border: 0;
   border-right: 1px solid var(--hairline);
+  overflow: hidden;
+  background: none;
+  font: inherit;
+  text-align: left;
   color: var(--muted-ink);
+  cursor: pointer;
+  transition: color .35s ease, background-color .4s ease, box-shadow .4s ease;
 }
-.record-detail__season-index > span:last-child { border-right: 0; }
-.record-detail__season-index strong { font-family: var(--font-kai); font-size: 20px; font-weight: 400; }
+.record-detail__season-index > button:last-child { border-right: 0; }
+.record-detail__season-index strong { font-family: var(--font-kai); font-size: 20px; font-weight: 400; transition: translate .15s ease; }
 .record-detail__season-index small { font-size: 11.5px; line-height: 1.5; }
-.record-detail__season-index .is-active { color: var(--accent); }
+.record-detail__season-index .is-active { color: var(--accent); cursor: default; }
 .record-detail__season-index .is-active::after { content: ''; position: absolute; bottom: -1px; left: 14px; width: 24px; border-bottom: 3px solid var(--accent); }
+
+/* Holographic affordance: same cyan-glass sheen language as the Atlas field
+   notes, so the season index reads as a row of buttons, not static labels. */
+.record-detail__season-index > button::before {
+  content: '';
+  position: absolute;
+  inset: -60% -20%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / .5) 49%, rgb(126 216 236 / .38) 53%, transparent 64%);
+  translate: -55% 0;
+  opacity: 0;
+  transition: translate .8s var(--ease-editorial), opacity .3s ease;
+}
+.record-detail__season-index > button:not(.is-active):hover {
+  color: var(--ink);
+  background-color: rgb(126 216 236 / .1);
+  box-shadow: inset 0 -2px 0 rgb(131 211 226 / .7), inset 0 0 24px rgb(131 211 226 / .16);
+}
+.record-detail__season-index > button:not(.is-active):hover::before { translate: 55% 0; opacity: 1; }
+.record-detail__season-index > button:not(.is-active):focus-visible {
+  outline: 2px solid rgb(131 211 226 / .85);
+  outline-offset: -2px;
+}
+.record-detail__season-index > button:not(.is-active):active {
+  background-color: rgb(126 216 236 / .22);
+  box-shadow: inset 0 0 0 1px rgb(131 211 226 / .8), inset 0 0 30px rgb(131 211 226 / .32);
+  transition-duration: .08s;
+}
+.record-detail__season-index > button:not(.is-active):active strong { translate: 0 1px; }
+@media (prefers-reduced-motion: reduce) {
+  .record-detail__season-index > button,
+  .record-detail__season-index > button::before,
+  .record-detail__season-index > button:not(.is-active):active strong {
+    transition: none;
+  }
+}
 
 .record-detail__landscape {
   position: relative;
@@ -1586,7 +1629,7 @@ main[hidden] { display: none; }
   .record-detail__header h1 { padding-right: 0; font-size: clamp(34px, 10.5vw, 52px); }
   .record-detail__folio { flex-direction: row; align-items: center; justify-content: space-between; margin-top: 26px; }
   .record-detail__season-index { margin: 34px calc(var(--page-gutter) * -1) 0; overflow-x: auto; }
-  .record-detail__season-index > span { min-width: 118px; }
+  .record-detail__season-index > button { min-width: 118px; }
   .record-detail__season-index small { white-space: nowrap; }
   .record-detail__landscape { height: 46svh; min-height: 360px; margin: 0 calc(var(--page-gutter) * -1) 34px; }
   .record-detail__ledger { padding-top: 0; }
@@ -2504,7 +2547,7 @@ main[hidden] { display: none; }
   overflow-y:hidden;
   scrollbar-width:thin;
 }
-.editorial-archive .record-detail__season-index > span {
+.editorial-archive .record-detail__season-index > button {
   grid-template-columns:1fr;
   align-content:center;
   gap:4px;
@@ -2615,7 +2658,7 @@ main[hidden] { display: none; }
     margin-inline:0;
     border-inline:1px solid var(--hairline);
   }
-  .editorial-archive .record-detail__season-index > span { min-width:156px; }
+  .editorial-archive .record-detail__season-index > button { min-width:156px; }
   .editorial-archive .record-detail__landscape { margin-inline:0; }
   .editorial-archive .colophon {
     padding-inline:clamp(30px,8vw,58px);
@@ -2649,7 +2692,7 @@ main[hidden] { display: none; }
   .editorial-archive .record-detail__season-index {
     grid-template-columns:repeat(6,minmax(168px,1fr));
   }
-  .editorial-archive .record-detail__season-index > span { min-width:168px; }
+  .editorial-archive .record-detail__season-index > button { min-width:168px; }
   .editorial-archive .colophon__body h2 {
     font-size:clamp(32px,11vw,48px);
     letter-spacing:.025em;

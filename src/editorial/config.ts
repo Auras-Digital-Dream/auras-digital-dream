@@ -79,7 +79,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Logo, paletă, fonturi și reguli scrise — un sistem vizual pe care îl poți aplica singură, oricând, pe orice platformă.',
       coordinates: 'Scena 02 · Recognoscibilitate',
-      image: { src: '/editorial-media/chapter-identitate-tablet.png', alt: 'Femeie în veșmânt auriu citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '72% 35%' },
+      image: { src: '/editorial-media/chapter-identitate-tablet.png', alt: 'Femeie în veșmânt auriu citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '30% 35%' },
       detail: {
         kicker: 'Capitolul II · Identitate',
         title: 'Chipul care rămâne în memorie.',

@@ -112,12 +112,21 @@ function RecordDetail({ config, route, onClose, onNavigate }: Omit<DetailPagePro
         </header>
 
         <div className="record-detail__season-index" aria-label="Season index" data-detail-motion="draw">
-          {config.records.entries.map((entry) => (
-            <span key={entry.id} className={entry.id === record.id ? 'is-active' : ''}>
-              <strong>{entry.season}</strong>
-              <small>{entry.date}</small>
-            </span>
-          ))}
+          {config.records.entries.map((entry) => {
+            const isActive = entry.id === record.id
+            return (
+              <button
+                key={entry.id}
+                type="button"
+                aria-current={isActive ? 'true' : undefined}
+                className={isActive ? 'is-active' : ''}
+                onClick={(event) => { if (!isActive) onNavigate({ kind: 'record', id: entry.id }, event.currentTarget) }}
+              >
+                <strong>{entry.season}</strong>
+                <small>{entry.date}</small>
+              </button>
+            )
+          })}
         </div>
 
         <div className="record-detail__landscape" data-detail-motion="image">
