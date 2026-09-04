@@ -102,7 +102,7 @@
 .home .process {
   background:
     linear-gradient(90deg, rgba(240,236,233,.97) 0%, rgba(240,236,233,.88) 52%, rgba(240,236,233,.4) 100%),
-    url('/assets/process-bg.jpg') center / cover no-repeat;
+    url('/assets/process-bg.webp') center / cover no-repeat;
 }
 
 .home .process-grid {
@@ -205,7 +205,7 @@
   .home .process {
     background:
       linear-gradient(rgba(240,236,233,.9),rgba(240,236,233,.96)),
-      url('/assets/process-bg.jpg') 68% center / cover no-repeat;
+      url('/assets/process-bg.webp') 68% center / cover no-repeat;
   }
 
   .site-footer {

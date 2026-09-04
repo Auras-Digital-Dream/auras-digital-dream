@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap.js";
 
 /* Sursă: prototip generat în Figma Make ("Medusa Contact Section Animation"),
-   portat 1:1 — sprite-sheet cu 5 poze (public/assets/medusa/medusa-storyboard.png,
+   portat 1:1 — sprite-sheet cu 5 poze (public/assets/medusa/medusa-storyboard.webp,
    grilă 2×3, background-size 200% 300%), coregrafia de scroll, spotlight-ul de
    cursor pe cadrul I, inelul de la wink. Am înlocuit @figma/astraui (nu există
    în acest proiect) cu câmpuri simple + trimiterea reală prin formsubmit.co;
@@ -213,7 +213,7 @@ export function MedusaForm() {
             <div key={i} className="atelier-frame" ref={(el) => { frameRefs.current[i] = el; }}
               style={{
                 position: "absolute", inset: 0,
-                backgroundImage: "url(/assets/medusa/medusa-storyboard.png)",
+                backgroundImage: "url(/assets/medusa/medusa-storyboard.webp)",
                 backgroundSize: "200% 300%", backgroundPosition: frame.bgPos, backgroundRepeat: "no-repeat",
                 opacity: i === 0 ? 1 : 0, willChange: "opacity",
               }} />

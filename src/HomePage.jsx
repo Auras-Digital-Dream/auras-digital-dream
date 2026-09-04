@@ -9,22 +9,22 @@ import { SiteFooter } from "./SiteFooter.jsx";
 const ABOUT_MOTION_WORDS = ["STRATEGIE", "IDENTITATE", "DESIGN", "EXPERIENȚE DIGITALE"];
 
 const PROJECT_PREVIEWS = {
-  "selectii-cromatice": ["/portfolio/selectii-cromatice/olive-blush.jpeg", "/portfolio/selectii-cromatice/smokey-blue-merlot-red.jpeg", "/portfolio/selectii-cromatice/warm-orange-dusty-yellow.jpeg"],
-  "verde-bean": ["/portfolio/verde-bean/verde-bean-hero-branding.jpeg", "/portfolio/verde-bean/verde-bean-coffee-flatlay.jpeg", "/portfolio/verde-bean/verde-bean-brand-system.jpeg"],
-  "painea-de-acasa": ["/portfolio/painea-de-acasa/painea-de-acasa-hero.jpeg", "/portfolio/painea-de-acasa/painea-de-acasa-packaging.jpeg", "/portfolio/painea-de-acasa/painea-de-acasa-brand-board.jpeg"],
-  "lumina-botanica": ["/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg", "/portfolio/lumina-botanica/2f1230ad6_WhatsAppImage2026-07-02at090309.jpg", "/portfolio/lumina-botanica/69944db3b_WhatsAppImage2026-07-02at090156.jpg"],
-  "lupul-and-brici": ["/portfolio/lupul-and-brici/852b052a0_generated_image.png", "/portfolio/lupul-and-brici/19cd4610c_generated_image.png", "/portfolio/lupul-and-brici/2f028c963_generated_image.png"],
-  "luxury-hair-by-aura": ["/portfolio/luxury-hair-by-aura/0429b7c7f_WhatsAppImage2026-07-02at1127334.jpg", "/portfolio/luxury-hair-by-aura/31d17cea7_generated_image.png", "/portfolio/luxury-hair-by-aura/2e4e765e2_WhatsAppImage2026-07-02at1127333.jpg"],
-  "real-estate-co": ["/portfolio/real-estate-co/d7b6e03d9_Capturdeecran2025-10-27234018.png", "/portfolio/real-estate-co/257a93cd6_wwwrealestatecom.png", "/portfolio/real-estate-co/420192b72_Capturdeecran2025-10-27231821.png"],
-  "carti-de-vizita": ["/portfolio/carti-de-vizita/12a649300_generated_image.png", "/portfolio/carti-de-vizita/12003543f_generated_image.png", "/portfolio/carti-de-vizita/31e5aed9a_generated_image.png"],
-  "adi-ecoo-2009-sa": ["/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.jpeg", "/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.png", "/portfolio/adi-ecoo-2009-sa/1f620d631_greenfact-octombrie.png"],
-  "campanie-social-media-luxe": ["/portfolio/campanie-social-media-luxe/65714e254_generated_image.png", "/portfolio/campanie-social-media-luxe/150a726d7_generated_image.png", "/portfolio/campanie-social-media-luxe/64686f8af_generated_image.png"],
-  "auras-trend-vault": ["/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg", "/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.jpeg", "/portfolio/auras-trend-vault/editorial-2026/editorial-black-white.jpeg"],
-  "magazine-online-e-commerce": ["/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.jpg", "/portfolio/magazine-online-e-commerce/66ff9fedd_WhatsAppImage2026-07-02at114431.jpeg", "/portfolio/magazine-online-e-commerce/85dbe451e_WhatsAppImage2026-07-02at114542.jpeg"],
-  "invitatii-nunti-botezuri-evenimente": ["/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.png", "/portfolio/invitatii-nunti-botezuri-evenimente/174ce0fdf_WhatsAppImage2026-07-02at152155.jpeg", "/portfolio/invitatii-nunti-botezuri-evenimente/293e33e9b_generated_image.png"],
-  "documente-corporatiste-licenta": ["/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.png", "/portfolio/documente-corporatiste-licenta/0aede3d97_Capturdeecran2026-07-02143741.png", "/portfolio/documente-corporatiste-licenta/2346f68b2_generated_image.png"],
-  "arta-digitala-materiale-grafice": ["/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", "/portfolio/arta-digitala-materiale-grafice/059a89151_WhatsAppImage2026-07-02at1140101.jpg", "/portfolio/arta-digitala-materiale-grafice/28cc11e17_WhatsAppImage2026-07-02at114012.jpeg"],
-  "logo-design": ["/portfolio/logo-design/3caeb0cc1_Untitled-design.png", "/portfolio/logo-design/00539c763_realestatelogo.png", "/portfolio/logo-design/3e75777fb_generated_image.png"],
+  "selectii-cromatice": ["/portfolio/selectii-cromatice/olive-blush.webp", "/portfolio/selectii-cromatice/smokey-blue-merlot-red.webp", "/portfolio/selectii-cromatice/warm-orange-dusty-yellow.webp"],
+  "verde-bean": ["/portfolio/verde-bean/verde-bean-hero-branding.webp", "/portfolio/verde-bean/verde-bean-coffee-flatlay.webp", "/portfolio/verde-bean/verde-bean-brand-system.webp"],
+  "painea-de-acasa": ["/portfolio/painea-de-acasa/painea-de-acasa-hero.webp", "/portfolio/painea-de-acasa/painea-de-acasa-packaging.webp", "/portfolio/painea-de-acasa/painea-de-acasa-brand-board.webp"],
+  "lumina-botanica": ["/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.webp", "/portfolio/lumina-botanica/2f1230ad6_WhatsAppImage2026-07-02at090309.webp", "/portfolio/lumina-botanica/69944db3b_WhatsAppImage2026-07-02at090156.webp"],
+  "lupul-and-brici": ["/portfolio/lupul-and-brici/852b052a0_generated_image.webp", "/portfolio/lupul-and-brici/19cd4610c_generated_image.webp", "/portfolio/lupul-and-brici/2f028c963_generated_image.webp"],
+  "luxury-hair-by-aura": ["/portfolio/luxury-hair-by-aura/0429b7c7f_WhatsAppImage2026-07-02at1127334.webp", "/portfolio/luxury-hair-by-aura/31d17cea7_generated_image.webp", "/portfolio/luxury-hair-by-aura/2e4e765e2_WhatsAppImage2026-07-02at1127333.webp"],
+  "real-estate-co": ["/portfolio/real-estate-co/d7b6e03d9_Capturdeecran2025-10-27234018.webp", "/portfolio/real-estate-co/257a93cd6_wwwrealestatecom.webp", "/portfolio/real-estate-co/420192b72_Capturdeecran2025-10-27231821.webp"],
+  "carti-de-vizita": ["/portfolio/carti-de-vizita/12a649300_generated_image.webp", "/portfolio/carti-de-vizita/12003543f_generated_image.webp", "/portfolio/carti-de-vizita/31e5aed9a_generated_image.webp"],
+  "adi-ecoo-2009-sa": ["/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.webp", "/portfolio/adi-ecoo-2009-sa/1269c6c20_bannerorizontalv2.webp", "/portfolio/adi-ecoo-2009-sa/1f620d631_greenfact-octombrie.webp"],
+  "campanie-social-media-luxe": ["/portfolio/campanie-social-media-luxe/65714e254_generated_image.webp", "/portfolio/campanie-social-media-luxe/150a726d7_generated_image.webp", "/portfolio/campanie-social-media-luxe/64686f8af_generated_image.webp"],
+  "auras-trend-vault": ["/portfolio/auras-trend-vault/editorial-2026/vogue-cover.webp", "/portfolio/auras-trend-vault/editorial-2026/editorial-golden-light.webp", "/portfolio/auras-trend-vault/editorial-2026/editorial-black-white.webp"],
+  "magazine-online-e-commerce": ["/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.webp", "/portfolio/magazine-online-e-commerce/66ff9fedd_WhatsAppImage2026-07-02at114431.webp", "/portfolio/magazine-online-e-commerce/85dbe451e_WhatsAppImage2026-07-02at114542.webp"],
+  "invitatii-nunti-botezuri-evenimente": ["/portfolio/invitatii-nunti-botezuri-evenimente/766c6c8d9_generated_image.webp", "/portfolio/invitatii-nunti-botezuri-evenimente/174ce0fdf_WhatsAppImage2026-07-02at152155.webp", "/portfolio/invitatii-nunti-botezuri-evenimente/293e33e9b_generated_image.webp"],
+  "documente-corporatiste-licenta": ["/portfolio/documente-corporatiste-licenta/2e1da68ae_generated_image.webp", "/portfolio/documente-corporatiste-licenta/0aede3d97_Capturdeecran2026-07-02143741.webp", "/portfolio/documente-corporatiste-licenta/2346f68b2_generated_image.webp"],
+  "arta-digitala-materiale-grafice": ["/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.webp", "/portfolio/arta-digitala-materiale-grafice/059a89151_WhatsAppImage2026-07-02at1140101.webp", "/portfolio/arta-digitala-materiale-grafice/28cc11e17_WhatsAppImage2026-07-02at114012.webp"],
+  "logo-design": ["/portfolio/logo-design/3caeb0cc1_Untitled-design.webp", "/portfolio/logo-design/00539c763_realestatelogo.webp", "/portfolio/logo-design/3e75777fb_generated_image.webp"],
 };
 
 function ProjectIndex({ items, onNavigate }) {
@@ -173,22 +173,22 @@ function ProjectDisintegrationField({ rootRef }) {
 
 // ── Static data ──────────────────────────────────────────────────────────────
 const projects = [
-  { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.jpeg", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
-  { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/portfolio/verde-bean/verde-bean-hero-branding.jpeg", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
-  { slug: "painea-de-acasa", title: "Pâinea de Acasă — Identitate de Brand Artizanală", category: ["Branding", "Grafică"], image: "/portfolio/painea-de-acasa/painea-de-acasa-packaging.jpeg", description: "Identitate caldă și autentică pentru o brutărie artizanală locală, cu logo, paletă, tipografie și aplicații de brand." },
-  { slug: "lumina-botanica", title: "Lumina Botanica — Identitate de Brand", category: ["Branding"], image: "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.jpg", description: "Branding premium pentru o linie de produse cosmetice organice și botanice." },
-  { slug: "lupul-and-brici", title: "Lupul & Brici — Identitate de Brand", category: ["Branding", "Web"], image: "/portfolio/lupul-and-brici/852b052a0_generated_image.png", description: "Identitate vizuală pentru un brand de îngrijire masculină, cu website de prezentare inclus." },
-  { slug: "luxury-hair-by-aura", title: "Luxury Hair by Aura — Identitate de Brand", category: ["Branding"], image: "/portfolio/luxury-hair-by-aura/0429b7c7f_WhatsAppImage2026-07-02at1127334.jpg", description: "Identitate vizuală premium pentru un salon de extensii de păr din Slobozia." },
-  { slug: "real-estate-co", title: "Real Estate Co. — Identitate de Brand & Website", category: ["Branding", "Web"], image: "/portfolio/real-estate-co/7254652e3_Capturdeecran2025-10-27232250.png", description: "Identitate vizuală completă, materiale print și website pentru o agenție imobiliară din Anglia." },
-  { slug: "carti-de-vizita", title: "Cărți de Vizită — Design Corporate & Personal", category: ["Branding"], image: "/portfolio/carti-de-vizita/3cd5b72d3_adiecoo1.png", description: "Cărți de vizită digitale cu cod QR și print, create într-un stil modern și memorabil." },
-  { slug: "adi-ecoo-2009-sa", title: "ADI ECOO 2009 S.A. — Identitate, campanii & www.adiecoo2009sa.ro", category: ["Branding", "Marketing", "Grafică", "Web", "Documente"], image: "/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.jpeg", description: "Identitate completă și ecosistem de comunicare: logo, campanii, materiale editoriale, conținut digital și website www.adiecoo2009sa.ro." },
-  { slug: "campanie-social-media-luxe", title: "Campanie Social Media — Bijuterii de Lux", category: ["Marketing"], image: "/assets/bijuterii.png", description: "Campanie editorială pentru o maison de bijuterii fine, cu fotografie și storytelling premium." },
-  { slug: "auras-trend-vault", title: "Aura's Trend Vault — Platformă Web, Blog, AI & Fotografie Editorială", category: ["Web"], image: "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.jpeg", description: "Platformă web completă, blog editorial și experiențe AI create de la zero." },
-  { slug: "magazine-online-e-commerce", title: "Magazine Online E-Commerce — Web Design, Dezvoltare & Fotografie", category: ["Web"], image: "/assets/ecommerce.jpg", description: "Magazine online complete, cu design, plăți, curieri, fotografie de produs și optimizare SEO." },
-  { slug: "invitatii-nunti-botezuri-evenimente", title: "Invitații Nunți, Botezuri & Evenimente", category: ["Grafică"], image: "/assets/invitatii.png", description: "Invitații premium personalizate, cu accente botanice, caligrafie și finisaje rafinate." },
-  { slug: "documente-corporatiste-licenta", title: "Documente Corporatiste & Lucrare de Licență", category: ["Documente"], image: "/assets/documente.png", description: "Rapoarte, broșuri, prezentări și documente academice cu structură clară și design profesionist." },
-  { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.jpg", description: "Ilustrații, postere, compoziții abstracte și materiale grafice create într-o direcție contemporană." },
-  { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.png", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
+  { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.webp", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
+  { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/portfolio/verde-bean/verde-bean-hero-branding.webp", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
+  { slug: "painea-de-acasa", title: "Pâinea de Acasă — Identitate de Brand Artizanală", category: ["Branding", "Grafică"], image: "/portfolio/painea-de-acasa/painea-de-acasa-packaging.webp", description: "Identitate caldă și autentică pentru o brutărie artizanală locală, cu logo, paletă, tipografie și aplicații de brand." },
+  { slug: "lumina-botanica", title: "Lumina Botanica — Identitate de Brand", category: ["Branding"], image: "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.webp", description: "Branding premium pentru o linie de produse cosmetice organice și botanice." },
+  { slug: "lupul-and-brici", title: "Lupul & Brici — Identitate de Brand", category: ["Branding", "Web"], image: "/portfolio/lupul-and-brici/852b052a0_generated_image.webp", description: "Identitate vizuală pentru un brand de îngrijire masculină, cu website de prezentare inclus." },
+  { slug: "luxury-hair-by-aura", title: "Luxury Hair by Aura — Identitate de Brand", category: ["Branding"], image: "/portfolio/luxury-hair-by-aura/0429b7c7f_WhatsAppImage2026-07-02at1127334.webp", description: "Identitate vizuală premium pentru un salon de extensii de păr din Slobozia." },
+  { slug: "real-estate-co", title: "Real Estate Co. — Identitate de Brand & Website", category: ["Branding", "Web"], image: "/portfolio/real-estate-co/7254652e3_Capturdeecran2025-10-27232250.webp", description: "Identitate vizuală completă, materiale print și website pentru o agenție imobiliară din Anglia." },
+  { slug: "carti-de-vizita", title: "Cărți de Vizită — Design Corporate & Personal", category: ["Branding"], image: "/portfolio/carti-de-vizita/3cd5b72d3_adiecoo1.webp", description: "Cărți de vizită digitale cu cod QR și print, create într-un stil modern și memorabil." },
+  { slug: "adi-ecoo-2009-sa", title: "ADI ECOO 2009 S.A. — Identitate, campanii & www.adiecoo2009sa.ro", category: ["Branding", "Marketing", "Grafică", "Web", "Documente"], image: "/portfolio/adi-ecoo-2009-sa/adi-ecoo-rollup-real.webp", description: "Identitate completă și ecosistem de comunicare: logo, campanii, materiale editoriale, conținut digital și website www.adiecoo2009sa.ro." },
+  { slug: "campanie-social-media-luxe", title: "Campanie Social Media — Bijuterii de Lux", category: ["Marketing"], image: "/assets/bijuterii.webp", description: "Campanie editorială pentru o maison de bijuterii fine, cu fotografie și storytelling premium." },
+  { slug: "auras-trend-vault", title: "Aura's Trend Vault — Platformă Web, Blog, AI & Fotografie Editorială", category: ["Web"], image: "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.webp", description: "Platformă web completă, blog editorial și experiențe AI create de la zero." },
+  { slug: "magazine-online-e-commerce", title: "Magazine Online E-Commerce — Web Design, Dezvoltare & Fotografie", category: ["Web"], image: "/assets/ecommerce.webp", description: "Magazine online complete, cu design, plăți, curieri, fotografie de produs și optimizare SEO." },
+  { slug: "invitatii-nunti-botezuri-evenimente", title: "Invitații Nunți, Botezuri & Evenimente", category: ["Grafică"], image: "/assets/invitatii.webp", description: "Invitații premium personalizate, cu accente botanice, caligrafie și finisaje rafinate." },
+  { slug: "documente-corporatiste-licenta", title: "Documente Corporatiste & Lucrare de Licență", category: ["Documente"], image: "/assets/documente.webp", description: "Rapoarte, broșuri, prezentări și documente academice cu structură clară și design profesionist." },
+  { slug: "arta-digitala-materiale-grafice", title: "Artă Digitală & Materiale Grafice", category: ["Grafică"], image: "/portfolio/arta-digitala-materiale-grafice/a847754e3_WhatsAppImage2026-07-02at1140104.webp", description: "Ilustrații, postere, compoziții abstracte și materiale grafice create într-o direcție contemporană." },
+  { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.webp", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
 ];
 const services = [
   { icon: Palette, title: "Pachet Start-up", subtitle: "Identitate completă pentru afaceri noi", copy: "Pentru branduri la început care au nevoie de o imagine clară și credibilă din prima zi.", list: ["Logo profesional + 2 variante cromatice", "Paletă cromatică + fonturi", "Carte de vizită / semnătură digitală", "Mini kit social media (3 postări + 3 stories)", "Ghid de identitate PDF"], benefits: ["Arăți profesionist din prima zi", "Ai o imagine coerentă pe toate platformele", "Ai materiale gata de folosit"], price: "900 – 1.200 RON" },
@@ -259,7 +259,7 @@ const SERVICE_SCHEMA = {
   name: "Aura's Digital Dream",
   url: "https://aurastudios.ro/studio",
   image: "https://aurastudios.ro/og-cover.jpg",
-  logo: "https://aurastudios.ro/assets/logo.jpg",
+  logo: "https://aurastudios.ro/assets/logo.webp",
   description:
     "Marketing, branding, design și experiențe web create cu strategie și suflet.",
   founder: { "@type": "Person", name: "Aura Dobre" },
@@ -408,7 +408,7 @@ export function HomePage({ onNavigate }) {
       <section className="home-about" id="despre-mine" aria-label="Despre Aura Dobre">
         <div className="home-about-atmosphere" aria-hidden="true" />
         <motion.figure className="home-about-portrait" initial={reduced ? false : { opacity: 0, y: 80, scale: 1.08 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: .28 }} transition={{ duration: 1.35, ease: [0.16, 1, 0.3, 1] }}>
-          <motion.img src="/assets/eu-in-renascentism.jpeg" alt="Aura Dobre într-un portret renascentist contemporan" whileHover={reduced ? undefined : { scale: 1.025, y: -8 }} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} />
+          <motion.img src="/assets/eu-in-renascentism.webp" alt="Aura Dobre într-un portret renascentist contemporan" whileHover={reduced ? undefined : { scale: 1.025, y: -8 }} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} />
           <figcaption className="home-about-signature">
             <motion.span initial={reduced ? false : { opacity: 0, x: -22 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: .8 }}>Eu sunt</motion.span>
             <motion.strong initial={reduced ? false : { opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.05, delay: .08, ease: [0.16, 1, 0.3, 1] }}>Aura</motion.strong>
@@ -719,9 +719,9 @@ export function HomePage({ onNavigate }) {
           </div>
           <Rise delay={0.2} className="books-stack">
             {[
-              ["/assets/amazon/clockmakers-curse.jpg", "Coperta The Clockmaker's Curse"],
-              ["/assets/amazon/unreachable.jpg", "Coperta Unreachable de Aura Dobre"],
-              ["/assets/amazon/lunaria-secret-treasure.jpg", "Coperta Lunaria's Secret Treasure"],
+              ["/assets/amazon/clockmakers-curse.webp", "Coperta The Clockmaker's Curse"],
+              ["/assets/amazon/unreachable.webp", "Coperta Unreachable de Aura Dobre"],
+              ["/assets/amazon/lunaria-secret-treasure.webp", "Coperta Lunaria's Secret Treasure"],
             ].map(([src, alt]) => <img key={src} src={src} alt={alt} loading="lazy" />)}
           </Rise>
         </div>

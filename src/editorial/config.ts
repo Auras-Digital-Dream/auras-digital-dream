@@ -40,7 +40,7 @@ export const siteConfig: SiteConfig = {
       'Așa cum sculptorul vede forma în piatră înainte ca lumea s-o vadă — modelez identități care unesc strategia, estetica și tehnologia. Unde Renașterea întâlnește viitorul, brandul tău devine memorabil.',
     scrollLabel: 'Derulează spre vis',
     image: {
-      src: '/editorial-media/hero-aura.png',
+      src: '/editorial-media/hero-aura.webp',
       alt: 'Portret editorial de profil al unei femei cu ochelari futuriști chihlimbar, într-o grădină renascentistă cu statui de marmură, trandafiri și bule plutitoare',
       position: '42% 46%',
     },
@@ -55,7 +55,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Nimic nu se întâmplă la întâmplare: direcția vizuală, structura și mesajele-cheie se decid înainte ca primul pixel să existe.',
       coordinates: 'Scena 01 · Apariția',
-      image: { src: '/editorial-media/chapter-strategie-soldiers.png', alt: 'Gardă de războinici în armură aurie, mozaic în stil Klimt, printre flori aurii', position: '50% 35%' },
+      image: { src: '/editorial-media/chapter-strategie-soldiers.webp', alt: 'Gardă de războinici în armură aurie, mozaic în stil Klimt, printre flori aurii', position: '50% 35%' },
       detail: {
         kicker: 'Capitolul I · Strategie',
         title: 'Te ajut să apari.',
@@ -79,7 +79,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Logo, paletă, fonturi și reguli scrise — un sistem vizual pe care îl poți aplica singură, oricând, pe orice platformă.',
       coordinates: 'Scena 02 · Recognoscibilitate',
-      image: { src: '/editorial-media/chapter-identitate-tablet.png', alt: 'Femeie în veșmânt auriu citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '30% 35%' },
+      image: { src: '/editorial-media/chapter-identitate-tablet.webp', alt: 'Femeie în veșmânt auriu citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '30% 35%' },
       detail: {
         kicker: 'Capitolul II · Identitate',
         title: 'Chipul care rămâne în memorie.',
@@ -103,7 +103,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Proiecte care nu doar arată bine — spun ceva. Storytelling vizual construit pe ce te diferențiază, nu pe ce e la modă.',
       coordinates: 'Scena 03 · Atelierul',
-      image: { src: '/editorial-media/chapter-design-tablet.png', alt: 'Femeie în veșmânt roșu-închis citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '72% 35%' },
+      image: { src: '/editorial-media/chapter-design-tablet.webp', alt: 'Femeie în veșmânt roșu-închis citind pe o tabletă luminoasă lângă o fereastră, cu flori de magnolie pe pervaz', position: '72% 35%' },
       detail: {
         kicker: 'Capitolul III · Design',
         title: 'Atelierul unde ideile iau formă.',
@@ -127,7 +127,7 @@ export const siteConfig: SiteConfig = {
       summary:
         'Platforme rapide, elegante și construite pentru conversie — de la structură UX la animații cinematice și elemente 3D.',
       coordinates: 'Scena 04 · Arhitectura',
-      image: { src: '/editorial-media/chapter-experiente-inventor.png', alt: 'Tânăr întins pe nori, lucrând pe un laptop futurist, cu ruine grecești clasice în fundal', position: '65% 40%' },
+      image: { src: '/editorial-media/chapter-experiente-inventor.webp', alt: 'Tânăr întins pe nori, lucrând pe un laptop futurist, cu ruine grecești clasice în fundal', position: '65% 40%' },
       detail: {
         kicker: 'Capitolul IV · Experiențe digitale',
         title: 'Arhitectura unei prezențe online.',
@@ -150,7 +150,7 @@ export const siteConfig: SiteConfig = {
       'Un brand nu e un punct pe hartă, ci un teritoriu. Trei direcții îl alcătuiesc — identitatea care te face recognoscibil, web-ul care te face credibil și marketingul care te face vizibil. Alege direcția care te reprezintă.',
     folio: 'ATLAS · 003',
     image: {
-      src: '/editorial-media/atlas-columns.png',
+      src: '/editorial-media/atlas-columns.webp',
       alt: 'Hartă-arhitectură de coloane renascentiste scanate de o rețea holografică aurie și cyan',
       position: '50% 50%',
     },
@@ -169,7 +169,7 @@ export const siteConfig: SiteConfig = {
     summary:
       'Cei mai mulți îți trimit fișierele și dispar. Eu îți las în urmă o structură pe care o poți folosi și fără mine — și peste șase luni, când apare materialul la care nimeni nu se gândise.',
     image: {
-      src: '/editorial-media/specimen-bust.png',
+      src: '/editorial-media/specimen-bust.webp',
       alt: 'Bust renascentist de marmură cu fisuri aurii kintsugi și vizor futurist holografic, petale plutind în jur',
       position: '50% 42%',
     },
@@ -193,17 +193,17 @@ export const siteConfig: SiteConfig = {
     intro:
       'Sub un singur acoperiș stă tot ce dă viață unei prezențe: identitate, strategie, design, experiență. Șase dosare, fiecare cu conținut clar, beneficii concrete și buget transparent — prețul final se stabilește după o discuție personalizată.',
     primaryImage: {
-      src: '/editorial-media/chapter-atelier.png',
+      src: '/editorial-media/chapter-atelier.webp',
       alt: 'Atelier renascentist cu holograme de proiectare, fundal pentru dosarele de servicii',
       position: '50% 50%',
     },
     detailImage: {
-      src: '/editorial-media/atlas-columns.png',
+      src: '/editorial-media/atlas-columns.webp',
       alt: 'Coloane clasice și rețea holografică, imagine de detaliu pentru dosare',
       position: '50% 45%',
     },
     specimenImage: {
-      src: '/editorial-media/specimen-bust.png',
+      src: '/editorial-media/specimen-bust.webp',
       alt: 'Bust de marmură cu vizor futurist, imagine de studiu pentru dosare',
       position: '50% 38%',
     },
