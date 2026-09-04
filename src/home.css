@@ -133,7 +133,6 @@
 .chapter-copy .eyebrow-text,
 .project-index .eyebrow-text,
 .editorial .eyebrow-text,
-.contact .eyebrow-text,
 .clarity .eyebrow-text,
 .price-summary .eyebrow-text {
   background: linear-gradient(100deg,
@@ -172,7 +171,6 @@
 .hero-headline .kicker,
 .chapter-copy .kicker,
 .editorial .kicker,
-.contact .kicker,
 .clarity .kicker,
 .price-summary .kicker {
   background: color-mix(in srgb, var(--frost), transparent 90%);
@@ -299,7 +297,6 @@
 /* The edge is the same sky blue everywhere; over dark media it simply runs
    at full strength instead of held back. */
 .hero .button.ghost,
-.contact .button.ghost,
 .editorial .button.ghost { border-color: var(--glass-edge); }
 
 /* ── Progress rail ────────────────────────────────────────────────────── */
@@ -1084,24 +1081,13 @@
 .books-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .books-stack img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 10px; display: block; box-shadow: 0 24px 50px -30px var(--shadow); }
 
-/* ── Contact ──────────────────────────────────────────────────────────── */
-
-.contact { padding-block: var(--rhythm); color: #fff; }
-.contact-media {
-  position: absolute; inset: 0; z-index: -1;
-  background:
-    url("/video/poster/atelier-statue-seams.jpg") center / cover no-repeat,
-    linear-gradient(150deg,var(--aura-petrol),var(--aura-charcoal));
-}
-
 /* Vignette on every video container, homepage included — an inset shadow so
    it darkens the corners without touching the footage's own brightness.
    Dimming the video itself is what buried it three times before. */
 .hero-frame::after,
 .chapter-media::after,
 .chapter-static-media::after,
-.editorial-media::after,
-.contact-media::after {
+.editorial-media::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1109,98 +1095,6 @@
   pointer-events: none;
   box-shadow: inset 0 0 clamp(60px, 9vw, 150px) clamp(14px, 2.2vw, 40px) rgba(20,26,31,.42);
 }
-.contact-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.contact-scrim {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(45,53,60,.9) 0 28%, rgba(45,53,60,.55) 58%, rgba(45,53,60,.32)),
-    linear-gradient(180deg, rgba(45,53,60,.5), transparent 34%, transparent 66%, rgba(45,53,60,.6));
-}
-/* ── The portrait in the contact band ─────────────────────────────────── */
-
-.contact-portrait {
-  margin: 0 0 30px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.contact-portrait img {
-  flex: none;
-  width: clamp(132px, 12vw, 168px);
-  height: auto;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 20px;
-  /* A hairline of the page's gold, and enough shadow to sit off the footage
-     behind rather than in it. */
-  box-shadow:
-    0 0 0 1px var(--gold-line),
-    0 22px 48px -28px rgba(12, 16, 20, .9);
-}
-
-.contact-portrait figcaption {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-.contact-portrait strong { font-weight: 500; color: #fff; }
-.contact-portrait span { color: rgba(255, 255, 255, .68); }
-
-.contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
-.contact-copy p { max-width: 50ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.8); }
-.contact-links { display: grid; gap: 12px; margin-top: 32px; }
-
-.contact-links a {
-  display: grid;
-  grid-template-columns: 20px minmax(0, 1fr);
-  gap: 14px;
-  align-items: center;
-  padding: 16px 20px;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: var(--radius);
-  color: #fff;
-  transition: border-color .3s var(--ease), background .3s var(--ease);
-}
-
-.contact-links a:hover { border-color: rgba(255,255,255,.55); background: rgba(255,255,255,.07); }
-.contact-links b { display: block; font-size: 14px; font-weight: 500; }
-.contact-links small { display: block; font-size: 12px; color: rgba(255,255,255,.62); }
-
-.contact form { display: grid; gap: 12px; padding: clamp(24px, 2.6vw, 38px); border-radius: var(--radius-lg); background: rgba(45,53,60,.74); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
-.form-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
-
-.contact input,
-.contact select,
-.contact textarea {
-  width: 100%;
-  min-height: 50px;
-  padding: 14px 16px;
-  border: 1px solid rgba(255,255,255,.24);
-  border-radius: 12px;
-  background: rgba(45,53,60,.55);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 14px;
-}
-
-.contact textarea { min-height: 130px; resize: vertical; }
-.contact ::placeholder { color: rgba(255,255,255,.5); }
-.contact input:focus-visible,
-.contact select:focus-visible,
-.contact textarea:focus-visible { outline: 2px solid var(--frost); outline-offset: 1px; border-color: transparent; }
-.contact select option { color: var(--ink); }
-.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-.form-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
-.form-notice { margin: 0; padding: 12px 16px; border-radius: 12px; font-size: 13px; }
-.form-notice.is-success { background: rgba(217,234,238,.16); color: var(--frost); }
-.form-notice.is-error { background: rgba(255,255,255,.12); color: #fff; }
-.form-privacy { font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.55); }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
 
@@ -1236,8 +1130,7 @@
 @media (max-width: 1040px) {
   .estimator-grid,
   .clarity-grid,
-  .books-grid,
-  .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .books-grid { grid-template-columns: minmax(0, 1fr); }
   .price-summary { position: static; }
   .archive-group-head { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .chapters-stage { grid-template-columns: minmax(0, 1fr); }
@@ -1252,7 +1145,6 @@
   .hero { padding-block: 120px 88px; }
   /* No room for it under a stacked pair of full-width buttons. */
   .scroll-cue { display: none; }
-  .form-row { grid-template-columns: minmax(0, 1fr); }
   .footer-grid { grid-template-columns: minmax(0, 1fr); }
   .books-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .faq-item summary { grid-template-columns: 32px minmax(0, 1fr); font-size: 15px; }
@@ -1666,7 +1558,6 @@
 .chapters,
 .fan,
 .marquee,
-.contact,
 .site-footer {
   --accent: var(--gold);
   --muted: rgba(255,255,255,.7);
@@ -2305,7 +2196,6 @@ body.cursor-interactive .home .custom-cursor-ring {
    action on sixteen pages white on white, at 1.00:1. Removed rather than
    patched with another exception, because there is no dark button on a
    project page to keep it for. */
-.contact .button,
 .clarity .button,
 .price-summary .button,
 .books-page .button,
@@ -2350,8 +2240,7 @@ footer .button,
 .section-title,
 .statue-text,
 .chapter-headline,
-.voice blockquote,
-.contact-cinematic-title {
+.voice blockquote {
   font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0;

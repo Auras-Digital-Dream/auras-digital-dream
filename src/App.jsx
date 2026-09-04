@@ -17,7 +17,6 @@ import {
   LinkedinLogo,
   Megaphone,
   Palette,
-  Phone,
   WhatsappLogo,
   X,
 } from "@phosphor-icons/react";
@@ -193,28 +192,6 @@ const documentTemplates = [
   { title: "Memorandum juridic / administrativ", label: "Legal memo", copy: "Document structurat pentru situații oficiale: context, întrebare, răspuns scurt, fapte relevante, analiză și concluzie." },
   { title: "Documentație tehnică / system design", label: "System design", copy: "Pentru aplicații, website-uri sau procese digitale: obiective, arhitectură, componente, fluxuri, API-uri, riscuri și pași de implementare." },
   { title: "Dosare, rapoarte și lucrări", label: "Business & academic", copy: "Structurare, tehnoredactare și design pentru materiale lungi: lucrări de licență, rapoarte, proceduri, ghiduri și prezentări PDF." },
-];
-
-const priceItems = [
-  { title: "Pachet Start-up", price: 900, maxPrice: 1200, copy: "Logo, identitate vizuală de bază și mini kit social media." },
-  { title: "Pachet Rebranding", price: 1500, maxPrice: 2200, copy: "Refresh vizual, repoziționare, materiale actualizate și direcție de comunicare." },
-  { title: "Pachet Website (5–8 pagini)", price: 2000, maxPrice: 2500, copy: "Structură completă, design responsive, contact, SEO de bază și instruire." },
-  { title: "Website Premium — animații & storytelling", price: 3500, maxPrice: 4500, copy: "Design avansat, animații, storytelling vizual și experiență personalizată." },
-  { title: "Magazin online", price: 4500, maxPrice: 6000, copy: "Catalog, coș, plăți, curier, configurare inițială și instruire." },
-  { title: "Logo design", price: 400, maxPrice: 600, copy: "Concept de logo, variante cromatice și fișiere pregătite pentru web." },
-  { title: "Identitate vizuală completă", price: 800, maxPrice: 1200, copy: "Logo, paletă cromatică, fonturi, direcție vizuală și aplicații de bază." },
-  { title: "Pachet social media — 6 vizualuri", price: 450, maxPrice: 600, copy: "Șase postări sau story-uri coerente vizual, adaptate brandului." },
-  { title: "Documente profesionale", price: 40, maxPrice: 60, unit: "/ pagină", copy: "Formatare, structurare și aranjare vizuală; tariful final depinde de complexitate." },
-  { title: "Prezentare profesională — 10 slide-uri", price: 450, maxPrice: 700, copy: "Structură clară, design coerent și pregătire pentru prezentare sau PDF." },
-  { title: "Poster / flyer", price: 150, maxPrice: 250, copy: "O direcție vizuală personalizată și fișiere pentru digital sau tipar." },
-  { title: "Carte de vizită", price: 180, maxPrice: 250, copy: "Design față-verso, variantă digitală și fișier pregătit pentru tipar." },
-];
-
-const testimonials = [
-  { type: "Branding", initials: "MB", quote: "Aura ne-a ajutat să transformăm o idee destul de împrăștiată într-o identitate clară: logo, culori, materiale și o direcție vizuală pe care o putem folosi consecvent.", name: "Mihaela B.", role: "Fondator brand local" },
-  { type: "Web", initials: "AC", quote: "Site-ul a devenit mult mai ușor de înțeles pentru clienți. Structura, butoanele și prezentarea serviciilor ne-au ajutat să primim cereri mai clare.", name: "Andrei C.", role: "Antreprenor servicii premium" },
-  { type: "Documente", initials: "EP", quote: "Aveam nevoie ca documentele să arate profesionist, nu doar corect scrise. Aura a organizat informația, a curățat vizual paginile și a dat materialului un aspect serios.", name: "Elena P.", role: "Client documente & prezentări" },
-  { type: "Social Media", initials: "IR", quote: "Vizualurile pentru social media au început să pară parte din același brand. Nu mai postăm la întâmplare, ci cu o linie estetică ușor de recunoscut.", name: "Ioana R.", role: "Beauty & lifestyle business" },
 ];
 
 function scrollToId(id) {
@@ -421,7 +398,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
     <main className="detail-page"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" />
       <header className="detail-header">
         <a className="brand" href="/" onClick={(event) => onNavigate(event, "/")}><img src="/assets/logo.jpg" alt="Aura's Digital Dream" /><span>Aura's <em>Digital</em> Dream</span></a>
-        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/studio#despre-mine" onClick={(event) => onSection(event, "despre-mine")}>Despre</a><a href="/studio#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/studio#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/studio#contact" onClick={(event) => onSection(event, "contact")}>Contact</a></nav>
+        <nav><a href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="/studio#despre-mine" onClick={(event) => onSection(event, "despre-mine")}>Despre</a><a href="/studio#servicii" onClick={(event) => onSection(event, "servicii")}>Servicii</a><a href="/studio#portofoliu" onClick={(event) => onSection(event, "portofoliu")}>Portofoliu</a><a href="/contact" onClick={(event) => onNavigate(event, "/contact")}>Contact</a></nav>
       </header>
 
       <section className="detail-hero">
@@ -471,7 +448,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
   );
 }
 
-function BooksPageCinematic({ onNavigate, onSection }) {
+function BooksPageCinematic({ onNavigate }) {
   const reducedMotion = useReducedMotion();
   const [newsletterStatus, setNewsletterStatus] = useState("idle");
   const authorAmazon = "https://www.amazon.co.uk/stores/author/B0DSJP6MX8/allbooks?ingress=0";
@@ -543,7 +520,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
     <main className="books-page cinematic-books"><div className="scroll-progress" aria-hidden="true" /><div className="custom-cursor" aria-hidden="true" /><div className="custom-cursor-ring" aria-hidden="true" /><div className="film-grain" aria-hidden="true" />
       <motion.header className="cinematic-nav" initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}>
         <a className="cinematic-author-logo" href="/" onClick={(event) => onNavigate(event, "/")}>Aura Dobre</a>
-        <nav><a className="cinematic-home-link" href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/studio#contact" onClick={(event) => onSection(event, "contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
+        <nav><a className="cinematic-home-link" href="/" onClick={(event) => onNavigate(event, "/")}>Acasă</a><a href="#carti">Cărți</a><a href="#despre">Despre</a><a href="/contact" onClick={(event) => onNavigate(event, "/contact")}>Contact</a><a className="cinematic-amazon-link" href={authorAmazon} target="_blank" rel="noopener noreferrer">Amazon <ArrowRight size={14} /></a></nav>
       </motion.header>
 
       <section className="cinematic-hero">
@@ -646,7 +623,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
             <div className="author-signature">Aura Dobre</div>
             <p>Aura Dobre scrie ficțiune care se citește ca un film — cu personaje care te urmăresc mult timp după ce ai închis cartea. Îmi construiesc lumile din psihologie, tensiune, atmosferă și detalii vizuale care rămân în memorie.</p>
             <p>În paralel cu scrisul, creez identități vizuale și experiențe digitale; de aceea pagina aceasta nu este doar o listă de linkuri, ci o vitrină cinematică pentru universurile mele.</p>
-            <div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/studio" onClick={(event) => onNavigate(event, "/studio")}>Studio Digital</a></div>
+            <div className="books-actions"><a className="button primary" href="mailto:auraleodobre@gmail.com?subject=Newsletter%20Aura%20Dobre">Newsletter</a><a className="button ghost" href="/studio" onClick={(event) => onNavigate(event, "/studio")}>Studio Digital</a><a className="button ghost" href="/contact" onClick={(event) => onNavigate(event, "/contact")}>Contact</a></div>
           </motion.div>
           <motion.figure className="author-portrait-stage" style={{ y: reducedMotion ? 0 : authorPortraitY }} initial={reducedMotion ? false : { opacity: 0, scale: 1.08 }} animate={authorInView ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 1.25, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}>
             <motion.img src="/assets/books-cinematic/aura-in-red.jpeg" alt="Aura Dobre, autoare, într-un portret pe fundal roșu" initial={reducedMotion ? false : { clipPath: "inset(18% 0 18% 0)" }} animate={authorInView ? { clipPath: "inset(0% 0 0% 0)" } : {}} whileHover={reducedMotion ? undefined : { scale: 1.035 }} transition={{ duration: 1.2, delay: 0.12, ease: [0.16, 1, 0.3, 1] }} />
@@ -680,6 +657,7 @@ function BooksPageCinematic({ onNavigate, onSection }) {
 
       <motion.section className="cinematic-final" ref={finalRef} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}><motion.div className="cinematic-final-orb" style={{ scale: finalScale }} /><p className="section-kicker"><span className="eyebrow-text">07 — Finale</span></p><h2>Hai să intri <em>în poveste.</em></h2><p>O carte de Aura Dobre nu se uită ușor. Intră în lumea ei și vei vrea să rămâi.</p><div className="books-actions"><a className="button primary" href={authorAmazon} target="_blank" rel="noopener noreferrer">Cărți pe Amazon <ArrowRight size={18} /></a><a className="button ghost" href="https://aurasdigitaldream.gumroad.com/" target="_blank" rel="noopener noreferrer">Cărțile mele pe Gumroad</a></div></motion.section>
       <SiteFooter />
+      <a className="floating-whatsapp" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"><WhatsappLogo size={28} weight="fill" /></a>
     </main>
   );
 }
@@ -692,18 +670,10 @@ export function App({ path }) {
     path ?? (typeof window === "undefined" ? "/" : window.location.pathname),
   );
   useScrollExperience(currentPath);
-  const [selectedPrices, setSelectedPrices] = useState([]);
-  const [testimonial, setTestimonial] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [formStatus, setFormStatus] = useState("idle");
   const groupedProjects = useMemo(() => portfolioGroups.map((group) => ({
     ...group,
     projects: group.slugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   })), []);
-  const selectedPriceItems = priceItems.filter((item) => selectedPrices.includes(item.title));
-  const total = selectedPriceItems.reduce((sum, item) => sum + item.price, 0);
-  const totalMax = selectedPriceItems.reduce((sum, item) => sum + (item.maxPrice || item.price), 0);
-  const nav = [["Servicii", "servicii"], ["Portofoliu", "portofoliu"], ["Cărțile mele", "/cartile-mele"], ["Prețuri", "estimator"], ["Contact", "contact"]];
   const featured = projects.filter((project) => featuredSlugs.includes(project.slug));
   const detailSlug = currentPath.match(/^\/portofoliu\/([^/]+)\/?$/)?.[1];
   const detailProject = projects.find((project) => project.slug === detailSlug);
@@ -802,59 +772,11 @@ export function App({ path }) {
   }
 
   if (currentPath === "/cartile-mele") {
-    return <BooksPageCinematic onNavigate={navigateTo} onSection={goToSection} />;
+    return <BooksPageCinematic onNavigate={navigateTo} />;
   }
 
   if (currentPath === "/contact") {
     return <ContactPage />;
-  }
-
-  function togglePrice(title) {
-    setSelectedPrices((current) => current.includes(title) ? current.filter((itemTitle) => itemTitle !== title) : [...current, title]);
-  }
-
-  function contactMessage(form) {
-    const data = new FormData(form);
-    return `Nume: ${data.get("name")}\nEmail: ${data.get("email")}\nTelefon: ${data.get("phone") || "nespecificat"}\nServiciu: ${data.get("service") || "nespecificat"}\n\n${data.get("message")}`;
-  }
-
-  async function submitContact(event) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    if (data.get("website")) return;
-    setFormStatus("sending");
-    const payload = Object.fromEntries(data.entries());
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/aurastrendvault@gmail.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: payload.name,
-          email: payload.email,
-          phone: payload.phone,
-          service: payload.service,
-          message: payload.message,
-          _subject: `Cerere nouă Aura's Digital Dream — ${payload.service || "proiect digital"}`,
-          _template: "table",
-          _replyto: payload.email,
-          _honey: payload.website,
-        }),
-      });
-      if (!response.ok) throw new Error("Delivery failed");
-      setFormStatus("success");
-      form.reset();
-    } catch {
-      setFormStatus("error");
-    }
-  }
-
-  function submitWhatsapp() {
-    const form = document.getElementById("contact-form");
-    if (!form?.reportValidity()) return;
-    const data = new FormData(form);
-    if (data.get("website")) return;
-    window.open(`https://wa.me/40762509423?text=${encodeURIComponent(`Bună, Aura!\n\n${contactMessage(form)}`)}`, "_blank", "noopener,noreferrer");
   }
 
   if (currentPath === "/studio") return <HomePage onNavigate={navigateTo} />;

@@ -1,18 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, Megaphone, Palette, Phone, WhatsappLogo } from "@phosphor-icons/react";
+import { ArrowRight, CaretLeft, CaretRight, Check, Code, FileText, Megaphone, Palette, WhatsappLogo } from "@phosphor-icons/react";
 import { Chapters, Depth, Lines, Marquee, Progress, Reveal, Rise, ScrollCue } from "./scroll.jsx";
 import { GoldLine } from "./goldline.jsx";
 import { GlobalNavigation } from "./editorial/components/GlobalNavigation.tsx";
 import { SiteFooter } from "./SiteFooter.jsx";
 
-// Fields arrive one after another as the form comes into view. Same
-// mechanism the rest of the page uses, so there is one reveal system, not two.
-const FIELD = {
-  hidden: { opacity: 0, y: 14 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
-};
-const FORM_STAGGER = { visible: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } } };
 const ABOUT_MOTION_WORDS = ["STRATEGIE", "IDENTITATE", "DESIGN", "EXPERIENȚE DIGITALE"];
 
 const PROJECT_PREVIEWS = {
@@ -306,7 +299,6 @@ function scrollToId(id) {
 // ── Main component ───────────────────────────────────────────────────────────
 export function HomePage({ onNavigate }) {
   const [testimonialIdx, setTestimonialIdx] = useState(0);
-  const [formStatus, setFormStatus] = useState("idle");
   const [selectedPrices, setSelectedPrices] = useState([]);
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
@@ -342,38 +334,6 @@ export function HomePage({ onNavigate }) {
 
   function togglePrice(title) {
     setSelectedPrices((c) => (c.includes(title) ? c.filter((t) => t !== title) : [...c, title]));
-  }
-
-  function contactMessage(form) {
-    const d = new FormData(form);
-    return "Nume: " + d.get("name") + "\nEmail: " + d.get("email") + "\nTelefon: " + (d.get("phone") || "nespecificat") + "\nServiciu: " + (d.get("service") || "nespecificat") + "\n\n" + d.get("message");
-  }
-
-  async function submitContact(e) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    if (data.get("website")) return;
-    setFormStatus("sending");
-    const payload = Object.fromEntries(data.entries());
-    try {
-      const res = await fetch("https://formsubmit.co/ajax/aurastrendvault@gmail.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ name: payload.name, email: payload.email, phone: payload.phone, service: payload.service, message: payload.message, _subject: "Cerere nouă Aura's Digital Dream — " + (payload.service || "proiect digital"), _template: "table", _replyto: payload.email, _honey: payload.website }),
-      });
-      if (!res.ok) throw new Error();
-      setFormStatus("success");
-      form.reset();
-    } catch { setFormStatus("error"); }
-  }
-
-  function submitWhatsapp() {
-    const form = document.getElementById("contact-form");
-    if (!form?.reportValidity()) return;
-    const data = new FormData(form);
-    if (data.get("website")) return;
-    window.open("https://wa.me/40762509423?text=" + encodeURIComponent("Bună, Aura!\n\n" + contactMessage(form)), "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -435,7 +395,7 @@ export function HomePage({ onNavigate }) {
               Așa cum sculptorul vede forma în piatră înainte ca lumea s-o vadă.
             </p>
             <div className="hero-actions">
-              <button className="button primary" onClick={() => scrollToId("contact")}>Începe un proiect <ArrowRight size={16} /></button>
+              <button className="button primary" onClick={(event) => onNavigate(event, "/contact")}>Începe un proiect <ArrowRight size={16} /></button>
               <button className="button ghost" onClick={() => scrollToId("portofoliu")}>Vezi portofoliul</button>
             </div>
           </motion.div>
@@ -526,7 +486,7 @@ export function HomePage({ onNavigate }) {
                   {benefits.map((b) => <li key={b}>{b}</li>)}
                 </ul>
                 <p className="service-price">{price}</p>
-                <button className="button ghost small" onClick={() => scrollToId("contact")}>
+                <button className="button ghost small" onClick={(event) => onNavigate(event, "/contact")}>
                   Solicită ofertă <ArrowRight size={13} />
                 </button>
               </div>
@@ -611,7 +571,7 @@ export function HomePage({ onNavigate }) {
                     <strong>{total.toLocaleString("ro")} – {totalMax.toLocaleString("ro")} RON</strong>
                   </p>
                   <p className="price-note">Preț orientativ. Oferta finală se trimite după o discuție despre proiect.</p>
-                  <button className="button primary" onClick={() => scrollToId("contact")}>
+                  <button className="button primary" onClick={(event) => onNavigate(event, "/contact")}>
                     Solicită ofertă personalizată <ArrowRight size={15} />
                   </button>
                 </>
@@ -750,94 +710,6 @@ export function HomePage({ onNavigate }) {
               ["/assets/amazon/unreachable.jpg", "Coperta Unreachable de Aura Dobre"],
               ["/assets/amazon/lunaria-secret-treasure.jpg", "Coperta Lunaria's Secret Treasure"],
             ].map(([src, alt]) => <img key={src} src={src} alt={alt} loading="lazy" />)}
-          </Rise>
-        </div>
-      </section>
-
-      {/* ── Contact ──────────────────────────────────────────────────────── */}
-      <section className="contact" id="contact">
-        <div className="contact-media" aria-hidden="true">
-          <video autoPlay muted loop playsInline preload="metadata" poster="/video/poster/atelier-statue-seams.jpg">
-            <source src="/video/atelier-statue-seams.mp4" type="video/mp4" />
-          </video>
-          <span className="contact-scrim" />
-        </div>
-        <div className="shell contact-grid">
-          <div className="contact-copy reveal-on-scroll">
-            {/* A face before the promise of an answer: whoever writes here
-                should be able to see who reads it. */}
-            <figure className="contact-portrait reveal-child">
-              <img
-                src="/assets/aura-dobre.webp"
-                srcSet="/assets/aura-dobre-mic.webp 360w, /assets/aura-dobre.webp 720w"
-                sizes="(max-width: 720px) 132px, 168px"
-                width="720" height="720" loading="lazy" decoding="async"
-                alt="Aura Dobre"
-              />
-              <figcaption>
-                <strong>Aura Dobre</strong>
-                <span>Îți răspund personal</span>
-              </figcaption>
-            </figure>
-            <p className="kicker reveal-child"><span className="eyebrow-text">Contact</span></p>
-            <h2 className="section-title reveal-child">Hai să sculptăm împreună ideea ta.</h2>
-            <Rise delay={0.15}>
-              <p>
-                Spune-mi ce vrei să construim, iar eu transform brief-ul într-o direcție clară:
-                strategie, estetică și pașii potriviți pentru lansare. Răspund în maximum 24 de ore.
-              </p>
-              <div className="contact-links">
-                <a href="https://wa.me/40762509423">
-                  <WhatsappLogo size={20} />
-                  <span><b>Scrie-mi pe WhatsApp</b><small>Răspuns rapid, oricând</small></span>
-                </a>
-                <a href="tel:+40762509423">
-                  <Phone size={20} />
-                  <span><b>Sună-mă direct</b><small>+40 762 509 423</small></span>
-                </a>
-              </div>
-            </Rise>
-          </div>
-          <Rise delay={0.2} className="contact-form-wrap">
-            <motion.form
-              id="contact-form"
-              onSubmit={submitContact}
-              initial={reduced ? false : "hidden"}
-              whileInView={reduced ? undefined : "visible"}
-              viewport={{ once: true, amount: 0.2 }}
-              variants={FORM_STAGGER}
-            >
-              <input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" />
-              <motion.div className="form-row" variants={FIELD}>
-                <input required name="name" maxLength="80" autoComplete="name" placeholder="Numele tău" />
-                <input required name="email" maxLength="120" type="email" autoComplete="email" placeholder="Email" />
-              </motion.div>
-              <motion.input variants={FIELD} name="phone" maxLength="30" inputMode="tel" autoComplete="tel" placeholder="Telefon" />
-              <motion.select variants={FIELD} name="service" defaultValue="" aria-label="Pachetul care te interesează">
-                <option value="" disabled>Alege pachetul potrivit</option>
-                <option>Pachet Start-up</option>
-                <option>Pachet Rebranding</option>
-                <option>Pachet Website</option>
-                <option>Pachet Social Media</option>
-                <option>Pachet Documente Profesionale</option>
-                <option>Nu sunt sigură încă</option>
-              </motion.select>
-              <motion.textarea variants={FIELD} required name="message" minLength="15" maxLength="2000" placeholder="Descrie pe scurt proiectul tău..." />
-              <motion.div className="form-actions" variants={FIELD}>
-                <button className="button primary" type="submit" disabled={formStatus === "sending"}>
-                  {formStatus === "sending" ? "Se trimite..." : "Trimite pe email"} <ArrowRight size={16} />
-                </button>
-                <button className="button ghost" type="button" onClick={submitWhatsapp}>
-                  <WhatsappLogo size={18} /> Trimite pe WhatsApp
-                </button>
-              </motion.div>
-              {formStatus === "success" && <p className="form-notice is-success" role="status">Mesajul a fost trimis. Îți voi răspunde în maximum 24 de ore.</p>}
-              {formStatus === "error" && <p className="form-notice is-error" role="alert">Trimiterea nu a reușit. Te rog folosește butonul WhatsApp.</p>}
-              <small className="form-privacy">
-                Prin trimitere ești de acord ca datele să fie procesate de FormSubmit exclusiv
-                pentru livrarea mesajului către mine.
-              </small>
-            </motion.form>
           </Rise>
         </div>
       </section>

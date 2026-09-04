@@ -243,14 +243,14 @@
 
 /* Contrast contract for the portfolio route. The books route is not in this
    scope, so its independent cinematic palette remains untouched. */
-.home :is(.work-intro,.project-index,.clarity,.contact,.site-footer,.chapters,.fan) {
+.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan) {
   color:var(--aura-porcelain);
 }
-.home :is(.work-intro,.project-index,.clarity,.contact,.site-footer,.chapters,.fan)
+.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan)
   :is(.section-title,h2,h3,p,li,label,.eyebrow-text) {
   color:inherit;
 }
-.home :is(.work-intro,.project-index,.clarity,.contact,.site-footer,.chapters,.fan) .button {
+.home :is(.work-intro,.project-index,.clarity,.site-footer,.chapters,.fan) .button {
   color:var(--aura-charcoal);
   border-color:rgba(240,236,233,.72);
   background:rgba(240,236,233,.92);
