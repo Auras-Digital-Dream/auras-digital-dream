@@ -581,24 +581,37 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
-      {/* ── Editorial break ──────────────────────────────────────────────── */}
-      <section className="editorial" aria-label="Direcție de artă">
-        <Depth speed={0.18} className="editorial-media">
-          <video
-            autoPlay muted loop playsInline preload="metadata"
-            poster="/video/poster/aura-creative-showreel.jpg"
-            aria-hidden="true"
-          >
+      {/* ── Editorial break: portrait frame + oversized type, deliberately
+          asymmetric rather than the usual text-over-video treatment ──── */}
+      <section className="editorial editorial--portrait" aria-label="Direcție de artă">
+        <Depth speed={0.14} className="editorial-media" aria-hidden="true">
+          <video autoPlay muted loop playsInline preload="metadata" poster="/video/poster/aura-creative-showreel.jpg">
             <source src="/video/aura-creative-showreel.mp4" type="video/mp4" />
           </video>
         </Depth>
         <span className="editorial-scrim" aria-hidden="true" />
-        <div className="shell editorial-body reveal-on-scroll">
-          <p className="kicker reveal-child"><span className="eyebrow-text">Behind the Dream</span></p>
-          <h2 className="section-title reveal-child">Imaginile vorbesc înaintea cuvintelor.</h2>
-          <Rise delay={0.2}>
-            <p>Am pornit dintr-o dorință simplă: să transform ideile în experiențe care se simt, nu doar se văd.</p>
-          </Rise>
+
+        <div className="shell editorial-split">
+          <Reveal as="figure" className="editorial-frame" delay={0.05}>
+            <Depth speed={-0.07} className="editorial-frame-media">
+              <video autoPlay muted loop playsInline preload="metadata" poster="/video/poster/aura-dobre-portrait.jpg">
+                <source src="/video/aura-dobre-portrait.mp4" type="video/mp4" />
+              </video>
+            </Depth>
+            <span className="editorial-frame-edge" aria-hidden="true" />
+            <figcaption className="editorial-frame-caption">
+              <span>Aura Dobre</span>
+              <small>Fondatoare · Aura's Digital Dream</small>
+            </figcaption>
+          </Reveal>
+
+          <div className="editorial-copy">
+            <p className="editorial-kicker">Behind the Dream</p>
+            <Lines as="h2" text="Imaginile vorbesc înaintea cuvintelor." className="editorial-headline" />
+            <Rise delay={0.3} className="editorial-lead">
+              <p>Am pornit dintr-o dorință simplă: să transform ideile în experiențe care se simt, nu doar se văd.</p>
+            </Rise>
+          </div>
         </div>
       </section>
 
