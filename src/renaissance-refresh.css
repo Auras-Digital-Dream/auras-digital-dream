@@ -243,23 +243,23 @@
 
 /* Contrast contract for the portfolio route. The books route is not in this
    scope, so its independent cinematic palette remains untouched. */
-.home :is(.work-intro,.project-index,.difference,.clarity,.contact,.site-footer,.chapters,.fan) {
+.home :is(.work-intro,.project-index,.clarity,.contact,.site-footer,.chapters,.fan) {
   color:var(--aura-porcelain);
 }
-.home :is(.work-intro,.project-index,.difference,.clarity,.contact,.site-footer,.chapters,.fan)
+.home :is(.work-intro,.project-index,.clarity,.contact,.site-footer,.chapters,.fan)
   :is(.section-title,h2,h3,p,li,label,.eyebrow-text) {
   color:inherit;
 }
-.home :is(.work-intro,.project-index,.difference,.clarity,.contact,.site-footer,.chapters,.fan) .button {
+.home :is(.work-intro,.project-index,.clarity,.contact,.site-footer,.chapters,.fan) .button {
   color:var(--aura-charcoal);
   border-color:rgba(240,236,233,.72);
   background:rgba(240,236,233,.92);
   box-shadow:0 12px 32px rgba(33,31,28,.2),inset 0 1px rgba(255,255,255,.64);
 }
-.home :is(.services,.process,.estimator,.skills,.books) {
+.home :is(.services,.process,.estimator,.books) {
   color:var(--aura-charcoal);
 }
-.home :is(.services,.process,.estimator,.skills,.books) .button {
+.home :is(.services,.process,.estimator,.books) .button {
   color:var(--aura-porcelain);
   border-color:rgba(52,49,44,.72);
   background:rgba(52,49,44,.94);

@@ -1677,6 +1677,7 @@ main[hidden] { display: none; }
 
   .archive-rail { display: none; }
   .section { margin-left: 0; scroll-margin-top: var(--mobile-header); }
+  :scope > .site-footer { margin-left: 0; }
 
   .mobile-header {
     position: fixed;

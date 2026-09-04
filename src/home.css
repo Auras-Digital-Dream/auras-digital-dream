@@ -134,7 +134,6 @@
 .project-index .eyebrow-text,
 .editorial .eyebrow-text,
 .contact .eyebrow-text,
-.difference .eyebrow-text,
 .clarity .eyebrow-text,
 .price-summary .eyebrow-text {
   background: linear-gradient(100deg,
@@ -174,7 +173,6 @@
 .chapter-copy .kicker,
 .editorial .kicker,
 .contact .kicker,
-.difference .kicker,
 .clarity .kicker,
 .price-summary .kicker {
   background: color-mix(in srgb, var(--frost), transparent 90%);
@@ -1020,23 +1018,6 @@
 .editorial-body { max-width: 720px; }
 .editorial-body p { max-width: 52ch; margin: 22px 0 0; line-height: 1.6; color: rgba(255,255,255,.82); }
 
-/* ── Skills ───────────────────────────────────────────────────────────── */
-
-.skills { padding-block: var(--rhythm); }
-
-.skill-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: clamp(16px, 2vw, 28px);
-}
-
-.skill-card { padding: clamp(24px, 2.2vw, 34px); height: 100%; }
-.skill-card h3 { margin: 0 0 22px; font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: 1px; }
-.skill-row + .skill-row { margin-top: 16px; }
-.skill-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; font-size: 13.5px; color: var(--ink-soft-strong); }
-.skill-bar { height: 3px; border-radius: 999px; overflow: hidden; }
-.skill-fill { height: 100%; border-radius: inherit; background: var(--ink); will-change: transform; }
-
 /* ── Clarity ──────────────────────────────────────────────────────────── */
 
 .clarity { padding-block: var(--rhythm); }
@@ -1120,8 +1101,7 @@
 .chapter-media::after,
 .chapter-static-media::after,
 .editorial-media::after,
-.contact-media::after,
-.difference-figure::after {
+.contact-media::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1674,90 +1654,6 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   DIFFERENCE — aligned pairs, glass hover
-   ══════════════════════════════════════════════════════════════════════════ */
-
-.difference { padding-block: var(--rhythm); }
-
-.difference-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(20px, 4vw, 64px);
-  align-items: start;
-}
-
-.difference-col {
-  padding: clamp(14px, 1.8vw, 24px);
-  margin: clamp(-14px, -1.8vw, -24px);
-  border-radius: 12px;
-  border: 1px solid transparent;
-  transition: background .35s var(--ease), border-color .35s var(--ease), backdrop-filter .35s var(--ease);
-}
-
-.difference-col:hover {
-  background: rgba(255,255,255,.06);
-  border-color: rgba(255,255,255,.14);
-  -webkit-backdrop-filter: blur(10px) saturate(1.15);
-  backdrop-filter: blur(10px) saturate(1.15);
-}
-
-.difference-col h3 {
-  margin: 0 0 6px;
-  font-family: var(--font-body);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.difference-col > p {
-  margin: 0 0 26px;
-  font-family: var(--font-display);
-  font-size: clamp(23px, 2.6vw, 36px);
-  font-weight: 500;
-  line-height: 1.12;
-  letter-spacing: 1px;
-}
-
-.difference-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
-
-.difference-list li {
-  padding: 15px 0;
-  border-top: 1px solid var(--line);
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--muted);
-}
-
-.difference-col.is-mine > p { color: var(--ink); }
-.difference-col.is-mine .difference-list li { color: var(--ink); }
-.difference-col.is-mine .difference-list li::before {
-  content: "";
-  display: inline-block;
-  width: 14px;
-  height: 1px;
-  margin-right: 12px;
-  vertical-align: middle;
-  background: var(--ink);
-}
-
-.difference-figure { margin: 30px 0 0; }
-.difference-figure { background:linear-gradient(150deg,var(--aura-petrol),var(--aura-charcoal)); border-radius:6px; overflow:hidden; }
-.difference-figure img,
-.difference-figure video {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 6px;
-  display: block;
-}
-
-@media (max-width: 860px) {
-  .difference-grid { grid-template-columns: minmax(0, 1fr); }
-}
-
-/* ══════════════════════════════════════════════════════════════════════════
    CONTRAST RHYTHM
 
    The middle of the page ran as one long beige stretch. These two sections
@@ -1776,7 +1672,6 @@
   --muted: rgba(255,255,255,.7);
 }
 
-.difference,
 .clarity {
   --accent: var(--gold);
   --muted: rgba(255,255,255,.7);
@@ -1785,17 +1680,9 @@
   color: #fff;
 }
 
-.difference :is(h2, h3, p, li, summary, strong, th, td),
 .clarity :is(h2, h3, p, li, summary, strong, th, td) { color: inherit; }
 
-.difference .section-lead,
 .clarity .section-lead { color: rgba(255,255,255,.72); }
-
-.difference-list li { border-top-color: rgba(255,255,255,.16); color: rgba(255,255,255,.62); }
-.difference-col.is-mine > p,
-.difference-col.is-mine .difference-list li { color: #fff; }
-.difference-col.is-mine .difference-list li::before { background: var(--frost); }
-.difference-col > p { color: rgba(255,255,255,.72); }
 
 /* On the ink section the panels invert: white at 7% instead of frost, and
    a ring drawn in white, because gold there would be the only warm thing
@@ -2008,7 +1895,6 @@ body.cursor-interactive .home .custom-cursor-ring {
    ══════════════════════════════════════════════════════════════════════════ */
 
 .glass-panel,
-.skill-card,
 .faq-item,
 .compare {
   position: relative;
@@ -2035,7 +1921,6 @@ body.cursor-interactive .home .custom-cursor-ring {
    shadow, not a running animation — it repaints a card for a third of a
    second and never while the page is moving. */
 .glass-panel:hover, .glass-panel:focus-within,
-.skill-card:hover,  .skill-card:focus-within,
 .faq-item:hover,    .faq-item:focus-within,
 .compare:hover,     .compare:focus-within {
   box-shadow:
@@ -2047,7 +1932,6 @@ body.cursor-interactive .home .custom-cursor-ring {
 
 /* The 1px ring. Two masks composited so only the padding box survives. */
 .glass-panel::before,
-.skill-card::before,
 .faq-item::before,
 .compare::before {
   content: "";
@@ -2071,7 +1955,6 @@ body.cursor-interactive .home .custom-cursor-ring {
 }
 
 .glass-panel:hover::before, .glass-panel:focus-visible::before,
-.skill-card:hover::before,  .skill-card:focus-within::before,
 .faq-item:hover::before,    .faq-item[open]::before,
 .compare:hover::before,     .compare:focus-within::before { opacity: 1; }
 
@@ -2085,7 +1968,6 @@ body.cursor-interactive .home .custom-cursor-ring {
 /* The sweep. Parked off the left edge at zero opacity and only ever moved,
    so it costs nothing until someone hovers. */
 .glass-panel::after,
-.skill-card::after,
 .faq-item::after,
 .compare::after {
   content: "";
@@ -2101,7 +1983,6 @@ body.cursor-interactive .home .custom-cursor-ring {
 }
 
 .glass-panel:hover::after, .glass-panel:focus-visible::after,
-.skill-card:hover::after,  .skill-card:focus-within::after,
 .faq-item:hover::after,    .faq-item:focus-within::after,
 .compare:hover::after,     .compare:focus-within::after {
   animation: glassSweep .85s var(--ease) 1;
@@ -2135,10 +2016,6 @@ body.cursor-interactive .home .custom-cursor-ring {
 }
 
 .voice-controls button:hover { border-color: var(--glass-edge); background: color-mix(in srgb, var(--frost), transparent 40%); }
-
-/* The bar behind a skill fill is 3px tall, so a border would be the whole
-   thing. It gets the fill alone. */
-.skill-bar { background: color-mix(in srgb, var(--glass-edge), transparent 74%); }
 
 /* On ink the chip keeps its shape and swaps its fill, exactly as the panels
    do above. */
@@ -2334,8 +2211,8 @@ body.cursor-interactive .home .custom-cursor-ring {
 
    Blue is the second voice, not a replacement: gold still carries the
    kickers, the frieze, the thread down the page, the corner ornaments and
-   the calls to action. What blue does is mark the three places a visitor
-   is weighing something up — the packages, the estimate and the skills.
+   the calls to action. What blue does is mark the places a visitor is
+   weighing something up — the packages and the estimate.
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* The glass ring turns cool on the cards that sell. */
@@ -2379,49 +2256,6 @@ body.cursor-interactive .home .custom-cursor-ring {
   background:
     linear-gradient(152deg, var(--ink-frost), var(--ink) 58%, var(--ink-frost));
   border: 1px solid color-mix(in srgb, var(--sky), transparent 62%);
-}
-
-/* Skill cards take the same cool ring, drawn the same way as the glass —
-   a border property cannot hold a gradient. */
-.skill-card {
-  position: relative;
-  isolation: isolate;
-  border: 0;
-}
-
-.skill-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--frost), var(--sky) 52%, var(--frost));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Each category name sits on a rule that runs cool into warm — the two
-   accents meeting, rather than one replacing the other. */
-.skill-card h3 {
-  position: relative;
-  padding-bottom: 12px;
-  margin-bottom: 16px;
-}
-
-.skill-card h3::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 1px;
-  background: linear-gradient(90deg, var(--frost), var(--gold-line) 72%, transparent);
-}
-
-/* And the bars run the same way: cool at the start, gold at the value. */
-.skill-fill {
-  background: linear-gradient(90deg, var(--sky), var(--gold));
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -2472,7 +2306,6 @@ body.cursor-interactive .home .custom-cursor-ring {
    patched with another exception, because there is no dark button on a
    project page to keep it for. */
 .contact .button,
-.difference .button,
 .clarity .button,
 .price-summary .button,
 .books-page .button,
@@ -2517,7 +2350,6 @@ footer .button,
 .section-title,
 .statue-text,
 .chapter-headline,
-.difference-col > p,
 .voice blockquote,
 .contact-cinematic-title {
   font-family: var(--font-display);
@@ -2536,7 +2368,6 @@ footer .button,
 /* Structural type: legibility over flourish. */
 .service-card h3,
 .process-step h3,
-.skill-card h3,
 .archive-group-head h3,
 .compare h3,
 .archive-card-title,
@@ -2939,7 +2770,6 @@ footer .button,
 .services.bloom   { --bloom-x: 49%; --bloom-y: 60%; --bloom-w: clamp(150px, 14vw, 210px); }
 .estimator.bloom  { --bloom-x: 66%; --bloom-y: 34%; --bloom-w: clamp(160px, 15vw, 225px); }
 .archive.bloom    { --bloom-x: 73%; --bloom-y: 33%; --bloom-w: clamp(130px, 12vw, 180px); }
-.difference.bloom { --bloom-x: 51%; --bloom-y: 19%; --bloom-w: clamp(140px, 13vw, 195px); }
 .voices.bloom     { --bloom-x: 66%; --bloom-y: 40%; --bloom-w: clamp(170px, 16vw, 245px); }
 .books.bloom      { --bloom-x: 44%; --bloom-y: 24%; --bloom-w: clamp(125px, 11vw, 170px); }
 

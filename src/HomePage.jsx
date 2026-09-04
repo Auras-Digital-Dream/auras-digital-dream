@@ -250,12 +250,6 @@ const processSteps = [
   ["03", "Execuție", "Construiesc fiecare element cu atenție la detalii: design, texte, funcționalitate."],
   ["04", "Livrare & Ajustare", "Prezint rezultatul, colectez feedback și îl ajustăm pentru rezultate maxime."],
 ];
-const skillGroups = [
-  ["Design & Creație", [["Canva (avansat)", 98], ["Editare foto", 80], ["Design Thinking", 88]]],
-  ["Web & Tehnic", [["Wix", 95], ["WebWave", 90], ["Dezvoltare aplicații web", 78], ["SEO de bază", 82]]],
-  ["Marketing & AI", [["Meta Business Suite", 92], ["Copywriting", 95], ["AI avansat (prompting)", 96]]],
-];
-
 /* Two blocks rather than one: a ProfessionalService describing the studio,
  * and a separate FAQPage. The questions used to hang off the service as
  * mainEntity, which is not what either type means — a FAQPage is the shape
@@ -307,34 +301,6 @@ const FAQ_SCHEMA = {
 
 function scrollToId(id) {
   document.getElementById(id === "estimare" ? "estimator" : id)?.scrollIntoView({ behavior: "smooth" });
-}
-
-function SkillBar({ name, value }) {
-  const reduced = useReducedMotion();
-  /* The trigger cannot live on the fill. It starts at scaleX(0), which makes
-     its box zero pixels wide, and IntersectionObserver reports a ratio of 0
-     for a zero-area target — so `amount: 0.6` was a threshold the element
-     could never reach, whatever the scroll position. The row is watched
-     instead, and the fill follows it through a variant. Same trap that had
-     the headings stuck behind their masks. */
-  return (
-    <motion.div
-      className="skill-row"
-      initial={reduced ? false : "empty"}
-      whileInView="filled"
-      viewport={{ once: true, amount: 0.6 }}
-    >
-      <div className="skill-label"><span>{name}</span><span>{value}%</span></div>
-      <div className="skill-bar">
-        <motion.div
-          className="skill-fill"
-          variants={{ empty: { scaleX: 0 }, filled: { scaleX: value / 100 } }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-          style={{ transformOrigin: "left", scaleX: reduced ? value / 100 : undefined }}
-        />
-      </div>
-    </motion.div>
-  );
 }
 
 // ── Main component ───────────────────────────────────────────────────────────
@@ -673,71 +639,6 @@ export function HomePage({ onNavigate }) {
           <Rise delay={0.2}>
             <p>Am pornit dintr-o dorință simplă: să transform ideile în experiențe care se simt, nu doar se văd.</p>
           </Rise>
-        </div>
-      </section>
-
-      {/* ── Skills ───────────────────────────────────────────────────────── */}
-      <section className="skills bg-marble" id="skills">
-        <div className="shell">
-          <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child"><span className="eyebrow-text">Skills & competențe</span></p>
-            <h2 className="section-title reveal-child">Instrumente stăpânite.</h2>
-          </div>
-          <div className="skill-grid">
-            {skillGroups.map(([title, rows], index) => (
-              <Rise key={title} delay={index * 0.1} className="skill-card">
-                <h3>{title}</h3>
-                {rows.map(([name, value]) => <SkillBar key={name} name={name} value={value} />)}
-              </Rise>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Difference: what you get elsewhere vs here ───────────────────── */}
-      <section className="difference bg-ink-marble bloom" id="de-ce-eu">
-        <div className="shell">
-          <div className="section-head reveal-on-scroll">
-            <p className="kicker reveal-child"><span className="eyebrow-text">Diferența</span></p>
-            <h2 className="section-title reveal-child">Un livrabil se termină. Un sistem rămâne.</h2>
-            <p className="section-lead reveal-child">
-                Cei mai mulți îți trimit fișierele și dispar. Eu îți las în urmă o structură
-                pe care o poți folosi și fără mine, peste șase luni, când apare materialul
-                la care nimeni nu se gândise.
-              </p>
-          </div>
-          <div className="difference-grid">
-            <Rise className="difference-col">
-              <h3>De obicei primești</h3>
-              <p>Un livrabil. Atât.</p>
-              <ul className="difference-list">
-                <li>Un logo trimis pe email, fără nicio explicație despre cum se folosește.</li>
-                <li>Culori alese pentru că arătau bine în ziua aceea, nu pentru că spun ceva.</li>
-                <li>Un site care seamănă cu alte zece mii de site-uri.</li>
-                <li>Materiale care nu se leagă între ele când le pui unul lângă altul.</li>
-              </ul>
-              <figure className="difference-figure">
-                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/stone-hand-dust.jpg">
-                  <source src="/video/stone-hand-dust.mp4" type="video/mp4" />
-                </video>
-              </figure>
-            </Rise>
-            <Rise className="difference-col is-mine" delay={0.12}>
-              <h3>De la mine primești</h3>
-              <p>Un sistem care ține.</p>
-              <ul className="difference-list">
-                <li>O direcție argumentată: de ce culoarea asta, de ce fontul ăsta, de ce ritmul ăsta.</li>
-                <li>Reguli scrise, pe care le poți aplica singură oricând.</li>
-                <li>Storytelling construit pe ce te diferențiază pe tine, nu pe ce e la modă.</li>
-                <li>Fiecare material se recunoaște ca parte din același brand.</li>
-              </ul>
-              <figure className="difference-figure">
-                <video autoPlay muted loop playsInline preload="metadata" aria-hidden="true" poster="/video/poster/about-renaissance-studio.jpg">
-                  <source src="/video/about-renaissance-studio.mp4" type="video/mp4" />
-                </video>
-              </figure>
-            </Rise>
-          </div>
         </div>
       </section>
 
