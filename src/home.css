@@ -821,6 +821,29 @@
 .service-subtitle { margin: -6px 0 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
 .service-copy { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-soft-strong); }
 
+/* The card itself is always the pale frost surface (.glass-panel.is-frost),
+   never the section's own ground, so its title, price, copy and list stay
+   dark ink even though .services around it is on --mahogany and everything
+   else there turns porcelain-white. The contrast contract in
+   renaissance-refresh.css forces p/li to inherit that white at three
+   classes' specificity, which outranks .service-copy's own colour
+   declaration — these need a fourth class to win back. Same reasoning for
+   the eyebrow sweep: the dark-ground gradient two rules up is for text
+   sitting directly on ink, not for this card's own light ground. */
+.home .services .service-card h3,
+.home .services .service-card .service-price,
+.home .services .service-card .service-list li { color: var(--ink); }
+.home .services .service-card .service-copy,
+.home .services .service-card .service-benefits li { color: var(--ink-soft-strong); }
+.home .services .service-card .eyebrow-text {
+  background: linear-gradient(100deg,
+    var(--ink-frost) 0%, var(--aura-walnut) 18%, var(--ink-frost) 36%,
+    var(--aura-walnut) 54%, var(--ink-frost) 72%, var(--aura-walnut) 88%, var(--ink-frost) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 .service-list,
 .service-benefits { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
 
