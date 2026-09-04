@@ -330,7 +330,11 @@ export function HomePage({ onNavigate }) {
      behind the copy and both halos on the title - so they can never drift
      out of step with the colour. */
   const heroLit = useTransform(heroProgress, [0.39, 0.49], [0, 1]);
-  const heroInk = useTransform(heroProgress, [0.39, 0.49], ["#2D353C", "#FFFFFF"]);
+  /* The ground used to be white paper, so the type opened on --ink and only
+     turned white once the (dark) footage took over. The ground is
+     --mahogany now — dark from the first frame — so the type has to start
+     light too; porcelain warming to a flatter white as the film arrives. */
+  const heroInk = useTransform(heroProgress, [0.39, 0.49], ["#F0ECE9", "#FFFFFF"]);
 
   function togglePrice(title) {
     setSelectedPrices((c) => (c.includes(title) ? c.filter((t) => t !== title) : [...c, title]));
@@ -362,7 +366,7 @@ export function HomePage({ onNavigate }) {
           the type crosses from white paper onto full-bleed film mid-scroll,
           and a hard switch would flash. */}
       <motion.section
-        className="hero bg-marble"
+        className="hero bg-mahogany"
         ref={heroRef}
         id="acasa"
         style={reduced ? undefined : { "--open": frameOpen, "--lit": heroLit, color: heroInk }}

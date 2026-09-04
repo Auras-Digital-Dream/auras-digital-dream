@@ -485,22 +485,18 @@
 .menu-close { position: absolute; top: 24px; right: 24px; }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────
-   The ground is ink, not the footage. That is what makes the white type
-   safe: contrast comes from the section's own background, so the video
+   The ground is .bg-mahogany, her colour, not the footage. It only shows
+   while the frame is still a card - once the footage reaches the edges it
+   covers everything - so the hero reads as mahogany first and film second.
+   Contrast comes from the section's own dark background, so the video
    never has to be dimmed into a grey slab to keep the headline readable.
-   The previous scrim composited to ~87% and buried the film entirely. */
-
-/* The ground is .bg-marble now, the same white and the same gold veins as
-   the rest of the page. It only shows while the frame is still a card -
-   once the footage reaches the edges it covers everything - so the hero
-   reads as white paper first and as film second.
-   These two declarations are the state with no JavaScript: --open stays 0,
-   the frame stays a card, the ground stays white and the type stays ink.
+   This declaration is the state with no JavaScript: --open stays 0, the
+   frame stays a card, the ground stays mahogany and the type stays light.
    That is also what the prerendered HTML and reduced motion get. */
 .hero {
   height: 260vh;
   padding: 0;
-  color: var(--ink);
+  color: var(--aura-porcelain);
   /* Only the focus ring reads this inside the hero, and it has to survive
      the same journey the type does. */
   --accent: currentColor;
@@ -607,28 +603,25 @@
   font-size: clamp(36px, 6.2vw, 100px);
   line-height: 1.04;
   letter-spacing: .5px;
-  /* Two halos, one for each ground, crossing over together.
+  /* Used to be two halos that crossed over as --lit went 0 to 1: a white
+     one to carry dark ink across the (then darker) footage, a dark one for
+     when the type itself turned white. Both ground and type are dark-ground
+     colours now — mahogany paper, light type, throughout — and the footage
+     the title still crosses over is pastel both as a small card and full
+     bleed, so the dark shadow is the only one that ever does anything.
+     Made unconditional instead of fading in with --lit.
 
-     The title is wider than the frame is at first, so it lies half on white
-     paper and half on the footage - and the half on the footage is the
-     problem: ink on a lit marble hand is fine, ink on the shadow beside it
-     is not. A tight white halo carries the ink across that card without
-     washing the image the way a plate would; the dark one then takes over
-     for the white type, which is the job it always had.
-
-     The dark side is two shadows, not one: a tight near-0-blur pass that
-     hugs each letterform (what actually reads as contrast on thin strokes)
-     under the original soft, wide glow (what reads as a lifted plate on
-     bright footage). One or the other alone was not enough once the footage
-     itself got lighter — the soft glow spreads the ink too thin at the
-     edges, the tight pass alone looks like a stroke outline. */
+     Two dark passes, not one: a tight near-0-blur pass that hugs each
+     letterform (what actually reads as contrast on thin strokes) under a
+     soft, wide glow (what reads as a lifted plate on bright footage). One
+     alone was not enough once the footage got lighter — the soft glow
+     spreads the ink too thin at the edges, the tight pass alone looks like
+     a stroke outline. */
   text-shadow:
-    0 0 22px rgba(255,255,255,calc(1 - var(--lit, 0))),
-    0 0 7px rgba(255,255,255,calc(.92 * (1 - var(--lit, 0)))),
-    0 1px 3px rgba(45,53,60,calc(.95 * var(--lit, 0))),
-    0 0 1px rgba(45,53,60,calc(.95 * var(--lit, 0))),
-    0 2px 26px rgba(45,53,60,calc(.9 * var(--lit, 0))),
-    0 1px 2px rgba(45,53,60,calc(.7 * var(--lit, 0)));
+    0 1px 3px rgba(45,53,60,.95),
+    0 0 1px rgba(45,53,60,.95),
+    0 2px 26px rgba(45,53,60,.9),
+    0 1px 2px rgba(45,53,60,.7);
 }
 
 .hero-body {
