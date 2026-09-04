@@ -97,5 +97,31 @@ export function useDetailRoute() {
     closeTimerRef.current = window.setTimeout(closeNow, 440)
   }, [closeNow, isClosing, route])
 
-  return { route, isClosing, open, close }
+  // Unlike close(), this always lands on the homepage top — closeNow() only
+  // undoes one history step, which after browsing several chapters/records
+  // (each its own pushState) leaves you on the previous one, not home.
+  const goHomeNow = useCallback(() => {
+    window.history.pushState({}, '', '/')
+    setRoute(null)
+    setIsClosing(false)
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior
+      document.documentElement.style.scrollBehavior = 'auto'
+      window.scrollTo(0, 0)
+      document.documentElement.style.scrollBehavior = previousScrollBehavior
+    }))
+  }, [])
+
+  const closeToHome = useCallback(() => {
+    if (!route || isClosing) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      goHomeNow()
+      return
+    }
+    setIsClosing(true)
+    closeTimerRef.current = window.setTimeout(goHomeNow, 440)
+  }, [goHomeNow, isClosing, route])
+
+  return { route, isClosing, open, close, closeToHome }
 }

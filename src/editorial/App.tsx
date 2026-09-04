@@ -25,7 +25,7 @@ const sectionIds = siteConfig.navigation.map((item) => item.id)
 
 function App() {
   const { activeSection, progress } = useSectionProgress(sectionIds)
-  const { route, isClosing, open, close } = useDetailRoute()
+  const { route, isClosing, open, close, closeToHome } = useDetailRoute()
   useReveal(siteConfig.motion.reveals)
   useScrollMotion(siteConfig.motion.reveals || siteConfig.motion.imageDrift)
 
@@ -85,6 +85,7 @@ function App() {
           route={route}
           isClosing={isClosing}
           onClose={close}
+          onGoHome={closeToHome}
           onNavigate={open}
         />
       )}

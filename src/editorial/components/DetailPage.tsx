@@ -9,13 +9,14 @@ interface DetailPageProps {
   route: DetailRoute
   isClosing: boolean
   onClose: () => void
+  onGoHome: () => void
   onNavigate: (route: DetailRoute, trigger?: HTMLElement | null) => void
 }
 
-function DetailRail({ config, kind, onClose }: {
+function DetailRail({ config, kind, onGoHome }: {
   config: SiteConfig
   kind: DetailRoute['kind']
-  onClose: () => void
+  onGoHome: () => void
 }) {
   const backLabel = kind === 'chapter' ? config.copy.chapterDetailBack : config.copy.recordDetailBack
   return (
@@ -23,7 +24,7 @@ function DetailRail({ config, kind, onClose }: {
       <span className="detail-rail__brand">{config.brand.name}</span>
       <span className="detail-rail__rule" aria-hidden="true" />
       <span className="detail-rail__kind">{kind === 'chapter' ? 'Foi de capitol' : 'Dosare de servicii'}</span>
-      <button type="button" className="detail-rail__back" onClick={onClose} aria-label={`${backLabel}, ${config.copy.closeDetail}`}>
+      <button type="button" className="detail-rail__back" onClick={onGoHome} aria-label={`${backLabel}, ${config.copy.closeDetail}`}>
         <span aria-hidden="true">←</span>
         <span>{backLabel}</span>
       </button>
@@ -201,7 +202,7 @@ function MissingDetail({ config, kind, onClose }: {
 }
 
 export function DetailPage(props: DetailPageProps) {
-  const { config, route, isClosing, onClose } = props
+  const { config, route, isClosing, onClose, onGoHome } = props
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose()
@@ -216,7 +217,7 @@ export function DetailPage(props: DetailPageProps) {
 
   return (
     <div className="detail-page" data-kind={route.kind} data-closing={isClosing ? 'true' : 'false'}>
-      <DetailRail config={config} kind={route.kind} onClose={onClose} />
+      <DetailRail config={config} kind={route.kind} onGoHome={onGoHome} />
       {!resolved && <MissingDetail config={config} kind={route.kind} onClose={onClose} />}
       {resolved && (route.kind === 'chapter'
         ? <ChapterDetail {...props} />

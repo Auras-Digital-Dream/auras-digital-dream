@@ -26,7 +26,10 @@
 }
 
 .shell {
-  width: min(100% - var(--gutter) * 2, var(--measure));
+  /* Fallbacks matter: SiteFooter reuses .shell inside .editorial-archive,
+     which never defines --gutter/--measure (those live on .home only) —
+     without them the calc goes invalid and the footer loses its gutter. */
+  width: min(100% - var(--gutter, clamp(20px, 5vw, 72px)) * 2, var(--measure, 1280px));
   margin-inline: auto;
 }
 
