@@ -528,20 +528,6 @@
 
 @media (max-width: 860px) {
   .hero-frame { --fw-start: 74vw; --fh-start: 42vh; }
-
-  /* On a phone the card starts at three quarters of the width and the
-     headline is narrower than it, so unlike the desktop the type lies
-     entirely on the marble rather than half on white paper. One halo is
-     not enough over the lit part of the hand; three stacked ones are, and
-     they cost nothing once --lit has turned the type white. */
-  .hero-title {
-    text-shadow:
-      0 0 30px rgba(255,255,255,calc(1 - var(--lit, 0))),
-      0 0 13px rgba(255,255,255,calc(1 - var(--lit, 0))),
-      0 0 4px rgba(255,255,255,calc(.94 * (1 - var(--lit, 0)))),
-      0 2px 26px rgba(45,53,60,calc(.9 * var(--lit, 0))),
-      0 1px 2px rgba(45,53,60,calc(.7 * var(--lit, 0)));
-  }
 }
 
 .hero-frame video {
@@ -605,11 +591,16 @@
 
 .hero-title {
   margin: 0;
-  font-family: var(--font-display);
+  /* Amoresa's connecting strokes are too thin to hold contrast over a soft,
+     pastel garden clip — a font this fine reads fine on white paper but
+     thins out to nothing over the footage. Renaissance in the same family
+     as the homepage's headlines instead: EB Garamond, a real serif with
+     enough stroke weight for the halo below to actually carry it. */
+  font-family: var(--font-body);
   font-weight: 600;
-  font-size: clamp(38px, 6.6vw, 108px);
-  line-height: .96;
-  letter-spacing: 1px;
+  font-size: clamp(36px, 6.2vw, 100px);
+  line-height: 1.04;
+  letter-spacing: .5px;
   /* Two halos, one for each ground, crossing over together.
 
      The title is wider than the frame is at first, so it lies half on white
@@ -617,10 +608,19 @@
      problem: ink on a lit marble hand is fine, ink on the shadow beside it
      is not. A tight white halo carries the ink across that card without
      washing the image the way a plate would; the dark one then takes over
-     for the white type, which is the job it always had. */
+     for the white type, which is the job it always had.
+
+     The dark side is two shadows, not one: a tight near-0-blur pass that
+     hugs each letterform (what actually reads as contrast on thin strokes)
+     under the original soft, wide glow (what reads as a lifted plate on
+     bright footage). One or the other alone was not enough once the footage
+     itself got lighter — the soft glow spreads the ink too thin at the
+     edges, the tight pass alone looks like a stroke outline. */
   text-shadow:
     0 0 22px rgba(255,255,255,calc(1 - var(--lit, 0))),
     0 0 7px rgba(255,255,255,calc(.92 * (1 - var(--lit, 0)))),
+    0 1px 3px rgba(45,53,60,calc(.95 * var(--lit, 0))),
+    0 0 1px rgba(45,53,60,calc(.95 * var(--lit, 0))),
     0 2px 26px rgba(45,53,60,calc(.9 * var(--lit, 0))),
     0 1px 2px rgba(45,53,60,calc(.7 * var(--lit, 0)));
 }
@@ -2348,7 +2348,6 @@ footer .button,
    labels use the neutral serif or the sans instead.
    ══════════════════════════════════════════════════════════════════════════ */
 
-.hero-title,
 .section-title,
 .statue-text,
 .chapter-headline,
@@ -2360,8 +2359,8 @@ footer .button,
 }
 
 /* Amoresa's ascenders and descenders interlock; it needs more room than a
-   text face at the same size. */
-.hero-title { line-height: 1.06; }
+   text face at the same size. .hero-title is EB Garamond now, not Amoresa
+   — see its own rule above for why — so it sits out of this list. */
 .section-title { line-height: 1.12; }
 .statue-text { line-height: 1.2; }
 .chapter-headline { line-height: 1.14; font-weight: 400; letter-spacing: 0; }

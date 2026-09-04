@@ -783,7 +783,14 @@ main[hidden] { display: none; }
 .specimen__mineral-band span { writing-mode: vertical-rl; letter-spacing: .38em; font-size: 12px; }
 .specimen__heading { position: relative; z-index: 3; margin-left: clamp(80px, 9vw, 140px); }
 .specimen__heading h2 { margin: 8px 0 0; font-weight: 400; font-size: clamp(31px, 4.2vw, 64px); letter-spacing: .12em; }
-.specimen__meta { position: absolute; top: 4px; right: 0; text-align: right; line-height: 2.2; }
+/* top:74px, not 4px: the fixed nav sits at the very top of the viewport,
+   and this label is absolutely positioned against a heading whose own top
+   edge slides anywhere from 0 to the section's full top padding as the
+   page scrolls past it — there is no scroll-snap here to pin it at a safe
+   offset. 4px cleared the nav only at the exact resting position; anywhere
+   the reader stopped scrolling 30–130px short of that, the label sat half
+   under the nav pill. 74px clears it through that whole range. */
+.specimen__meta { position: absolute; top: 74px; right: 0; text-align: right; line-height: 2.2; }
 .specimen__seal { position: absolute; z-index: 4; right: 7%; bottom: 12%; }
 .specimen__media {
   position: absolute;
