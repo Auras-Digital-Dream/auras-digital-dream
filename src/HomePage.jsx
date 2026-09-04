@@ -32,7 +32,7 @@ function ProjectIndex({ items, onNavigate }) {
   const archiveRef = useRef(null);
 
   return (
-    <section ref={archiveRef} className="project-index" id="portofoliu" aria-label="Toate proiectele">
+    <section ref={archiveRef} className="project-index bg-mahogany" id="portofoliu" aria-label="Toate proiectele">
       <ProjectDisintegrationField rootRef={archiveRef} />
       <div className="project-index-head">
         <p className="kicker"><span className="eyebrow-text">Colecția de proiecte</span></p>
