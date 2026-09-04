@@ -1710,7 +1710,7 @@
 
 /* Project archive: the dense editorial rhythm from the motion reference,
    translated into the site's ink, porcelain and gilded-glass language. */
-.project-index { position:relative; z-index:3; padding:clamp(58px,7vw,96px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(ellipse 78% 48% at 8% 0%,rgba(201,168,106,.22),transparent 68%),radial-gradient(ellipse 58% 44% at 92% 24%,rgba(181,143,78,.2),transparent 72%),linear-gradient(142deg,#2b0d01 0%,#3c1201 43%,#4b1702 73%,#200900 100%); color:var(--aura-porcelain); }
+.project-index { position:relative; z-index:3; padding:clamp(58px,7vw,96px) 0 clamp(90px,10vw,150px); overflow:hidden; background:radial-gradient(ellipse 78% 48% at 8% 0%,rgba(201,168,106,.22),transparent 68%),radial-gradient(ellipse 58% 44% at 92% 24%,rgba(181,143,78,.2),transparent 72%),linear-gradient(142deg,#141b2e 0%,#1b2438 43%,#202940 73%,#0f1420 100%); color:var(--aura-porcelain); }
 .project-index::before { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; opacity:.2; background-image:url("/textures/paper.webp"); background-size:720px auto; mix-blend-mode:soft-light; }
 .project-index::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:linear-gradient(112deg,transparent 16%,rgba(207,224,218,.075) 36%,transparent 55%),radial-gradient(ellipse 46% 20% at 50% 0%,rgba(255,239,204,.08),transparent 72%); mix-blend-mode:screen; }
 .project-disintegration { position:absolute; z-index:12; inset:0; pointer-events:none; mix-blend-mode:screen; filter:drop-shadow(0 0 1px rgba(196,190,168,.2)); }

@@ -42,9 +42,11 @@
   --ink-ground: #211F1C;
   --glass-edge: rgba(86,114,115,.58);
   /* Her pick, for the second dark ground: Hero, Servicii, Claritate,
-     Colecția de proiecte, Ce spun clienții, Cărțile mele. Replaced once
-     already — #4b1702 became this deeper wine red. */
-  --mahogany: #541A1A;
+     Colecția de proiecte, Ce spun clienții, Cărțile mele. Third try —
+     #4b1702 (brown-red) then #541A1A (wine red), now this navy. The
+     variable keeps its name from the first version; renaming it each
+     time she tries a new hue would just be churn. */
+  --mahogany: #202940;
   --mahogany-deep: color-mix(in srgb, var(--mahogany), black 30%);
   background:
     radial-gradient(circle at 12% 8%, rgba(197,213,210,.38), transparent 28%),
