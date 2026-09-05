@@ -2502,13 +2502,28 @@ main[hidden] { display: none; }
   max-width:18ch;
   line-height:1.25;
 }
+/* .specimen__notes, __summary and __scale used to each be pinned by their
+   own percentage of the section's height (34% from top, 17% and 6% from
+   bottom) — three independent guesses with no idea where one another
+   actually ended. Any window short enough relative to its width broke one
+   of the three guesses, and fixing that guess only moved the collision to
+   the next pair down, because the percentages still knew nothing about
+   each other's real height. Flow fixes that for good: each block sits
+   after the one before it with a margin, so its position is always
+   "wherever the last thing actually ended", not a fraction of the section
+   that assumes how tall everything above it happened to be. Only the
+   picture, the seal and the mineral band stay absolute — they're the
+   backdrop this text sits in front of, not part of the stack. */
 .editorial-archive .specimen__notes {
-  inset:34% clamp(42px,5vw,82px) auto clamp(118px,12vw,190px);
+  position:relative;
+  inset:auto;
+  margin:64px clamp(42px,5vw,82px) 0 clamp(118px,12vw,190px);
   display:grid;
   grid-template-columns:minmax(250px,31ch) minmax(250px,31ch);
   align-items:start;
   justify-content:space-between;
   gap:clamp(36px,7vw,120px);
+  pointer-events:auto;
 }
 .editorial-archive .specimen-note,
 .editorial-archive .specimen-note + .specimen-note {
@@ -2539,12 +2554,23 @@ main[hidden] { display: none; }
   letter-spacing:.025em;
 }
 .editorial-archive .specimen__summary {
-  left:clamp(118px,12vw,190px);
-  bottom:17%;
+  position:relative;
+  inset:auto;
+  left:auto;
+  margin:40px 0 0 clamp(118px,12vw,190px);
   width:min(46ch,42vw);
   padding:14px 16px;
   background:color-mix(in srgb,var(--paper) 76%,transparent);
+  -webkit-backdrop-filter:blur(7px);
   backdrop-filter:blur(7px);
+}
+.editorial-archive .specimen__scale {
+  position:relative;
+  inset:auto;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  margin:100px clamp(42px,5vw,82px) 0 clamp(112px,13vw,200px);
 }
 
 .editorial-archive .record-detail__season-index {
