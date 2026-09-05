@@ -328,7 +328,7 @@ function getPortfolioImageAlt(project, image, index) {
 }
 
 const projects = [
-  { slug: "site-invitatie-digitala-nunta-radu-paula", title: "Radu & Paula — Website de Nuntă & Invitație Digitală", category: ["Web", "Grafică"], image: "/portfolio/site-invitatie-digitala-nunta-radu-paula/01-radu-paula-website-hero-devices.webp", description: "Experiență digitală de nuntă responsive, cu povestea cuplului, program, galerie și confirmare RSVP, construită ca o invitație vie." },
+  { slug: "site-invitatie-digitala-nunta-radu-paula", title: "Website de Nuntă & Invitație Digitală", category: ["Web", "Grafică"], image: "/portfolio/site-invitatie-digitala-nunta-radu-paula/01-radu-paula-website-hero-devices.webp", description: "Experiență digitală de nuntă responsive, cu povestea cuplului, program, galerie și confirmare RSVP, construită ca o invitație vie." },
   { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.webp", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
   { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/portfolio/verde-bean/verde-bean-hero-branding.webp", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
   { slug: "painea-de-acasa", title: "Pâinea de Acasă — Identitate de Brand Artizanală", category: ["Branding", "Grafică"], image: "/portfolio/painea-de-acasa/painea-de-acasa-packaging.webp", description: "Identitate caldă și autentică pentru o brutărie artizanală locală, cu logo, paletă, tipografie și aplicații de brand." },
