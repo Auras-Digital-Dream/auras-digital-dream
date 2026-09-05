@@ -37,6 +37,11 @@ const supplementalPortfolioAssets = {
     "/portfolio/verde-bean/verde-bean-brand-system.webp",
     "/portfolio/verde-bean/verde-bean-hero-branding.webp",
     "/portfolio/verde-bean/verde-bean-menu-system.webp",
+    "/portfolio/verde-bean/verde-bean-business-card.webp",
+    "/portfolio/verde-bean/verde-bean-tote-bag.webp",
+    "/portfolio/verde-bean/verde-bean-logo-mark.webp",
+    "/portfolio/verde-bean/verde-bean-storefront-sign.webp",
+    "/portfolio/verde-bean/verde-bean-package-detail.mp4",
   ],
   "selectii-cromatice": [
     "/portfolio/selectii-cromatice/olive-blush.webp",
@@ -112,11 +117,6 @@ const showcasedSources = new Set([
 
 const excludedPortfolioAssets = new Set([
   "/portfolio/arta-digitala-materiale-grafice/76bc483af_freepik__genereazaa-o-imagine-realistica-a-unor-deseuri-din__37852.webp",
-  "/portfolio/verde-bean/43d21e774_WhatsAppImage2026-07-02at090629.webp",
-  "/portfolio/verde-bean/85c614852_generated_image.webp",
-  "/portfolio/verde-bean/a2f94eaa5_generated_image.webp",
-  "/portfolio/verde-bean/dab706afd_generated_image.webp",
-  "/portfolio/verde-bean/e0a278da9_generated_image.webp",
 ]);
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/verde-bean-hero-branding.webp",
