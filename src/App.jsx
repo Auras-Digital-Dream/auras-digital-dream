@@ -117,9 +117,7 @@ const showcasedSources = new Set([
   "/portfolio/lumina-botanica/45639281f_WhatsAppVideo2026-07-02at090147.mp4",
 ]);
 
-const excludedPortfolioAssets = new Set([
-  "/portfolio/arta-digitala-materiale-grafice/76bc483af_freepik__genereazaa-o-imagine-realistica-a-unor-deseuri-din__37852.webp",
-]);
+const excludedPortfolioAssets = new Set();
 const detailHeroAssets = {
   "verde-bean": "/portfolio/verde-bean/verde-bean-hero-branding.webp",
   "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.webp",
@@ -162,6 +160,34 @@ const ecommerceStorySlides = [
   },
 ];
 
+const digitalArtStorySlides = [
+  {
+    src: "/portfolio/arta-digitala-materiale-grafice/freepik-creeaza-un-sablon-alb-negru-de-tip-pictograma-ingr-24082-92055829.webp",
+    body: "Provocarea a fost să transform idei, personaje și lumi vizuale foarte diferite într-o colecție care păstrează aceeași voce: expresivă, memorabilă și atent construită până la ultimul detaliu.",
+    alt: "Portret editorial de artă digitală al unui personaj cu pălărie roșie, pe fundal petrol și textură picturală.",
+  },
+  {
+    src: "/portfolio/arta-digitala-materiale-grafice/imagine-whatsapp-2024-11-15-la-09-35-08-becbdb46-3fc9fb59.webp",
+    body: "Soluția tratează fiecare lucrare ca pe un laborator vizual. Portretul, culoarea, lumina și textura sunt combinate în compoziții care pot susține atât o poveste editorială, cât și identitatea unei campanii.",
+    alt: "Două portrete suprapuse, pictate digital în tușe intense de albastru, roșu, portocaliu și turcoaz.",
+  },
+  {
+    src: "/portfolio/arta-digitala-materiale-grafice/imagine-whatsapp-2025-05-20-la-18-33-30-7d0b2c32-e3c4736e.webp",
+    body: "Design-ul alternează realismul cu suprarealismul, detaliul renascentist cu gestul contemporan și suprafețele picturale cu intervenții grafice. Contrastul devine instrumentul care leagă întreaga arhivă.",
+    alt: "Personaj suprarealist așezat, cu mască geometrică roșie, albă și neagră, într-un decor pictural auster.",
+  },
+  {
+    src: "/portfolio/arta-digitala-materiale-grafice/whatsapp-image-2026-07-02-at-11-40-11-7-d10975d9.webp",
+    body: "Rezultatul este o bibliotecă vizuală extensibilă: imagini care funcționează autonom ca artă, dar care pot deveni firesc afișe, printuri, materiale de campanie sau accente editoriale pentru spații digitale și fizice.",
+    alt: "Portret editorial auriu expus ca tablou într-un living contemporan cu accente verde petrol.",
+  },
+];
+
+const projectStorySlides = {
+  "magazine-online-e-commerce": ecommerceStorySlides,
+  "arta-digitala-materiale-grafice": digitalArtStorySlides,
+};
+
 const portfolioImageAlt = {
   "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.webp": "Două produse Solait pentru îngrijire după expunerea la soare, într-o compoziție editorială cu aloe, nisip și accente aurii.",
   "/portfolio/magazine-online-e-commerce/66ff9fedd_WhatsAppImage2026-07-02at114431.webp": "Mască facială verde Sukin fotografiată lângă fereastră, cu frunze și spatulă din lemn.",
@@ -171,6 +197,7 @@ const portfolioImageAlt = {
   "/portfolio/magazine-online-e-commerce/ecommerce-smashbox-glow-primer.webp": "Primer Smashbox Photo Finish Illuminate alături de felie de portocală și textură luminoasă de produs.",
   "/portfolio/magazine-online-e-commerce/ecommerce-burei-watch.webp": "Ceas Burei cu cadran turcoaz și brățară metalică, fotografiat integral pe fundal alb.",
   ...Object.fromEntries(ecommerceStorySlides.map(({ src, alt }) => [src, alt])),
+  ...Object.fromEntries(digitalArtStorySlides.map(({ src, alt }) => [src, alt])),
 };
 
 function getPortfolioImageAlt(project, image, index) {
@@ -352,7 +379,7 @@ function ProjectStory({ project, details, images, heroImage }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const [active, setActive] = useState(0);
-  const storySlides = project.slug === "magazine-online-e-commerce" ? ecommerceStorySlides : null;
+  const storySlides = projectStorySlides[project.slug] || null;
   const backgrounds = storySlides
     ? storySlides.map(({ src }) => src)
     : [heroImage, images[1] || heroImage, images[2] || images[0] || heroImage, images[3] || images[1] || heroImage];
