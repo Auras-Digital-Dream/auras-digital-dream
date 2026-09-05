@@ -50,6 +50,7 @@ CLIPS = [
     ("auras-trend-vault", "b2db01172_*.mp4", "site-mobil", 30, 42, 22),
     ("magazine-online-e-commerce", "2df41b79e_*.mp4", "site-mobil", 35, 42, 25),
     ("real-estate-co", "610ce2e53_*.mp4", "site-mobil", 0, 48, 10),
+    ("real-estate-co", "real-estate-co-site-desktop-source.mp4", "site-desktop", 0, 0, 3),
     ("verde-bean", "96848f026_*.mp4", "social-mobil", 0, 0, 8),
     ("lumina-botanica", "45639281f_*.mp4", "social-mobil", 0, 0, 7),
 ]

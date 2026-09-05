@@ -92,6 +92,7 @@ const deviceShowcase = {
     { device: "phone", kind: "site", name: "site-mobil", ratio: 0.4922, caption: "Magazinul, derulat pe telefon" },
   ],
   "real-estate-co": [
+    { device: "laptop", kind: "site", name: "site-desktop", ratio: 2.2939, caption: "Site-ul agenției, derulat pe desktop" },
     { device: "phone", kind: "site", name: "site-mobil", ratio: 0.5835, caption: "Site-ul agenției, derulat pe telefon" },
   ],
   "verde-bean": [
@@ -111,6 +112,7 @@ const showcasedSources = new Set([
   "/portfolio/auras-trend-vault/b2db01172_aurastrendvault.mp4",
   "/portfolio/magazine-online-e-commerce/2df41b79e_ClipvideoWhatsApp2025-01-13la153142_c682764f.mp4",
   "/portfolio/real-estate-co/610ce2e53_ClipvideoWhatsApp2025-10-27la231539_71ff5ca2.mp4",
+  "/portfolio/real-estate-co/real-estate-co-site-desktop-source.mp4",
   "/portfolio/verde-bean/96848f026_WhatsAppVideo2026-07-02at090552.mp4",
   "/portfolio/lumina-botanica/45639281f_WhatsAppVideo2026-07-02at090147.mp4",
 ]);
