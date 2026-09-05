@@ -189,6 +189,21 @@ const projectStorySlides = {
 };
 
 const portfolioImageAlt = {
+  "/portfolio/logo-design/00539c763_realestatelogo.webp": "Logo Real Estate Co. cu simbol botanic fin și wordmark serif pe fundal burgundy.",
+  "/portfolio/logo-design/3caeb0cc1_Untitled-design.webp": "Identitatea Aura’s Trend Vault, cu simbol feminin geometric și wordmark auriu pe fundal negru.",
+  "/portfolio/logo-design/3e75777fb_generated_image.webp": "Logo NEXA Digital Solutions prezentat într-o compoziție curată de identitate vizuală.",
+  "/portfolio/logo-design/4403fa619_generated_image.webp": "Selecție de patru concepte de logo pentru branduri din domeniile cafea, tehnologie și beauty.",
+  "/portfolio/logo-design/logo-adi-ecoo-2009-sa.webp": "Logo ADI ECOO 2009 S.A. într-o compoziție de comunicare pentru servicii de mediu.",
+  "/portfolio/logo-design/logo-auras-digital-dream.webp": "Logo Aura’s Digital Dream aplicat pe materialul de identitate al studioului creativ.",
+  "/portfolio/logo-design/logo-lumina-botanica.webp": "Logo Lumina Botanica, construit dintr-un simbol botanic liniar și wordmark elegant.",
+  "/portfolio/logo-design/logo-lupul-and-brici.webp": "Logo Lupul & Brici aplicat pe cărți de vizită premium, cu emblemă aurie pe verde închis.",
+  "/portfolio/logo-design/logo-luxury-hair-by-aura.webp": "Logo Luxury Hair by Aura prezentat pe un sistem de cărți de vizită verde smarald.",
+  "/portfolio/logo-design/logo-painea-de-acasa.webp": "Variantele logo-ului Pâinea de Acasă și construcția identității artizanale.",
+  "/portfolio/logo-design/logo-verde-bean.webp": "Logo Verde Bean, cu wordmark organic și frunze desenate în nuanțe naturale de verde.",
+  "/portfolio/logo-design/logo-concept-velora-atelier.webp": "Concept original Velora Atelier, cu monogramă burgundy inspirată de arcade renascentiste și accente aurii.",
+  "/portfolio/logo-design/logo-concept-nodus-studio.webp": "Concept original Nodus Studio, cu simbol geometric continuu în albastru royal și charcoal.",
+  "/portfolio/logo-design/logo-concept-selene-botanica.webp": "Concept original Selene Botanica, cu semilună aurie și ramură botanică verde petrol.",
+  "/portfolio/logo-design/logo-concept-arcora.webp": "Concept original Arcora, cu arcadă clasică, orbită mineral-teal și accent burgundy.",
   "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.webp": "Două produse Solait pentru îngrijire după expunerea la soare, într-o compoziție editorială cu aloe, nisip și accente aurii.",
   "/portfolio/magazine-online-e-commerce/66ff9fedd_WhatsAppImage2026-07-02at114431.webp": "Mască facială verde Sukin fotografiată lângă fereastră, cu frunze și spatulă din lemn.",
   "/portfolio/magazine-online-e-commerce/85dbe451e_WhatsAppImage2026-07-02at114542.webp": "Recipient Pixi Glow Tonic To-Go fotografiat de aproape, într-un decor luminos cu plante.",
