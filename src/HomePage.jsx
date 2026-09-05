@@ -271,7 +271,7 @@ const SERVICE_SCHEMA = {
   serviceType: ["Branding", "Web design", "Marketing digital", "Documente profesionale"],
   sameAs: [
     "https://www.instagram.com/aurasdigitaldream",
-    "https://www.facebook.com/auratrendvault",
+    "https://www.facebook.com/profile.php?id=100089973225714",
     "https://www.tiktok.com/@aurasdigitaldream",
     "https://www.linkedin.com/in/aurelia-dobre-a033b2104",
     "https://aurasdigitaldream.gumroad.com/",

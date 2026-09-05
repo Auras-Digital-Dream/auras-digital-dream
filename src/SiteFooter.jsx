@@ -20,7 +20,7 @@ export function SiteFooter() {
           </div>
           <nav className="footer-social" aria-label="Rețele sociale">
             <a href="https://www.instagram.com/aurasdigitaldream" aria-label="Instagram"><InstagramLogo size={20} /></a>
-            <a href="https://www.facebook.com/auratrendvault" aria-label="Facebook"><FacebookLogo size={20} /></a>
+            <a href="https://www.facebook.com/profile.php?id=100089973225714" aria-label="Facebook"><FacebookLogo size={20} /></a>
             <a href="https://www.tiktok.com/@aurasdigitaldream" aria-label="TikTok"><TiktokLogo size={20} /></a>
             <a href="https://www.linkedin.com/in/aurelia-dobre-a033b2104" aria-label="LinkedIn"><LinkedinLogo size={20} /></a>
             <a href="https://wa.me/40762509423" aria-label="WhatsApp"><WhatsappLogo size={20} /></a>
