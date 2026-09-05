@@ -245,26 +245,6 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
 .detail-hero-backdrop { object-fit:cover; transform:scale(1.1); filter:blur(30px) brightness(.42) saturate(.9); opacity:.7; }
 .detail-hero-main { z-index:1; object-fit:contain; padding:clamp(12px,2vw,28px); filter:drop-shadow(0 24px 38px rgba(45,53,60,.32)); }
 
-/* The ecommerce case study uses its new editorial work as a real carousel,
-   while every other project keeps the established single-image hero. */
-.detail-hero-carousel { isolation:isolate; border:1px solid rgba(197,213,210,.2); background:#171918; }
-.detail-carousel-backdrop { z-index:0; animation:detailCarouselBackdrop 1.1s cubic-bezier(.16,1,.3,1) both; }
-.detail-hero-carousel .detail-carousel-main { z-index:2; left:auto; width:68%; padding:clamp(22px,3vw,44px); animation:detailCarouselImage .85s cubic-bezier(.16,1,.3,1) both; }
-.detail-carousel-copy { position:absolute; z-index:4; left:clamp(22px,3.2vw,54px); bottom:clamp(76px,7vw,108px); width:min(360px,30%); padding:clamp(22px,2.5vw,38px); border:1px solid rgba(214,225,223,.3); border-radius:2px 30px 2px 30px; color:var(--aura-porcelain); background:linear-gradient(145deg,rgba(30,31,29,.82),rgba(55,73,73,.6)); box-shadow:0 24px 70px rgba(10,12,12,.38),inset 0 1px rgba(255,255,255,.12); -webkit-backdrop-filter:blur(22px) saturate(1.15); backdrop-filter:blur(22px) saturate(1.15); animation:detailCarouselCopy .72s .08s cubic-bezier(.16,1,.3,1) both; }
-.detail-carousel-copy p { margin:0 0 17px; color:var(--aura-mist); font:700 9px/1.3 var(--font-sans); letter-spacing:.18em; text-transform:uppercase; }
-.detail-carousel-copy h2 { margin:0 0 15px; font:500 clamp(31px,3.2vw,48px)/.94 var(--font-project); letter-spacing:-.035em; text-wrap:balance; }
-.detail-carousel-copy span { display:block; color:rgba(244,240,232,.78); font-size:14px; line-height:1.65; }
-.detail-carousel-controls { position:absolute; z-index:6; right:clamp(20px,3vw,46px); bottom:clamp(20px,2.7vw,42px); display:flex; align-items:center; gap:13px; }
-.detail-carousel-controls > button { display:grid; place-items:center; width:42px; height:42px; border:1px solid rgba(244,240,232,.46); border-radius:50%; color:var(--aura-porcelain); background:rgba(24,27,26,.48); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); transition:background .25s ease,border-color .25s ease,transform .25s ease; }
-.detail-carousel-controls > button:hover { border-color:var(--aura-porcelain); background:rgba(244,240,232,.14); transform:translateY(-2px); }
-.detail-carousel-dots { display:flex; align-items:center; gap:7px; padding:0 3px; }
-.detail-carousel-dots button { width:22px; height:2px; border:0; padding:0; background:rgba(244,240,232,.34); transition:width .3s ease,background .3s ease; }
-.detail-carousel-dots button[data-active="true"] { width:38px; background:var(--aura-porcelain); }
-.detail-carousel-count { position:absolute; z-index:6; top:clamp(18px,2.4vw,34px); right:clamp(20px,3vw,46px); color:rgba(244,240,232,.78); font:700 9px/1 var(--font-sans); letter-spacing:.2em; }
-@keyframes detailCarouselImage { from{opacity:0;transform:scale(1.045) translateX(18px)} to{opacity:1;transform:scale(1) translateX(0)} }
-@keyframes detailCarouselBackdrop { from{opacity:0;transform:scale(1.15)} to{opacity:.7;transform:scale(1.1)} }
-@keyframes detailCarouselCopy { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
 /* Sticky project narrative. The image remains architectural and still while
    each glass chapter travels over it; the gold scan marks every transition. */
 .project-story { position:relative; height:400vh; background:#211F1C; color:var(--aura-porcelain); }
@@ -784,31 +764,6 @@ em{ color:var(--accent); }
   
   footer{grid-template-columns:1fr}.floating-whatsapp{right:16px;bottom:16px}
   .detail-header { height:76px; padding:0 20px; }.detail-header nav{display:none}.detail-hero{padding:112px 20px 70px;min-height:auto}.detail-hero h1{font-size:50px}.detail-hero-visual{height:390px;margin-top:42px;border-radius:10px}.detail-meta{margin-top:34px}.detail-content{padding:76px 20px}.detail-intro,.detail-columns{grid-template-columns:1fr}.detail-intro{gap:15px}.detail-intro h2{font-size:29px}.detail-columns{gap:45px;margin-top:65px}.detail-results{margin-top:65px}.detail-results > div{grid-template-columns:1fr}.detail-services > div{grid-template-columns:1fr 1fr}.detail-related{padding:0 20px 72px}.detail-devices{padding:0 20px 12px}.device-row{gap:34px}.device-laptop .device-shell{padding:8px}.device-phone{flex-basis:230px}.detail-gallery{padding:76px 20px}.gallery-grid{grid-template-columns:1fr}.gallery-grid button{grid-column:auto;min-height:360px}.video-section > div{grid-template-columns:1fr}.lightbox{padding:16px}.detail-cta{padding:85px 20px}.book-feature {grid-template-columns:1fr}.cinematic-hero{min-height:760px}.cinematic-label{letter-spacing:.25em}.cinematic-label i{width:28px}.cinematic-hero h1{font-size:64px}.cinematic-hero-copy > p:not(.cinematic-subtitle){font-size:17px}.cinematic-universe-inner,.cinematic-feature-inner{grid-template-columns:1fr}.cinematic-universe,.cinematic-library,.cinematic-reader,.cinematic-final{padding:82px 20px}.cinematic-feature{min-height:auto;padding:90px 20px}.cinematic-trailer-card{transform:none}.cinematic-published-grid,.cinematic-coming-grid{grid-template-columns:1fr}.cinematic-published-card,.cinematic-upcoming-card{min-height:auto}.cinematic-published-card img,.cinematic-upcoming-card img{max-height:420px}.cinematic-quote{min-height:520px}.cinematic-quote blockquote{font-size:42px}.cinematic-author{min-height:620px;padding:90px 20px}.film-grain{display:none}
-}
-
-@media (max-width:1050px) {
-  .detail-hero-carousel .detail-carousel-main { width:64%; }
-  .detail-carousel-copy { width:35%; }
-}
-
-@media (max-width:760px) {
-  .detail-hero-visual.detail-hero-carousel { height:650px; }
-  .detail-hero-carousel .detail-carousel-main { top:0; left:0; width:100%; height:58%; padding:18px; }
-  .detail-carousel-copy { top:58%; right:12px; bottom:62px; left:12px; width:auto; padding:20px 22px; border-radius:2px 22px 2px 22px; }
-  .detail-carousel-copy p { margin-bottom:11px; }
-  .detail-carousel-copy h2 { margin-bottom:10px; font-size:clamp(29px,8vw,38px); }
-  .detail-carousel-copy span { font-size:13px; line-height:1.5; }
-  .detail-carousel-controls { right:14px; bottom:12px; left:14px; justify-content:center; }
-  .detail-carousel-controls > button { width:38px; height:38px; }
-  .detail-carousel-count { top:16px; right:17px; }
-}
-
-@media (max-width:430px) {
-  .detail-hero-visual.detail-hero-carousel { height:680px; }
-  .detail-hero-carousel .detail-carousel-main { height:55%; padding:12px; }
-  .detail-carousel-copy { top:55%; }
-  .detail-carousel-dots button { width:15px; }
-  .detail-carousel-dots button[data-active="true"] { width:26px; }
 }
 
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}[data-reveal]{opacity:1!important;transform:none!important}[data-parallax]{transform:none!important}.custom-cursor,.custom-cursor-ring{display:none}::view-transition-old(root),::view-transition-new(root){animation:none!important}}

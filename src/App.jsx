@@ -139,33 +139,25 @@ const detailHeroAssets = {
   "selectii-cromatice": "/portfolio/selectii-cromatice/olive-blush.webp",
 };
 
-const ecommerceHeroSlides = [
+const ecommerceStorySlides = [
   {
     src: "/portfolio/magazine-online-e-commerce/editorial-concept-chanel-no5.webp",
-    eyebrow: "Beauty · imagine de campanie",
-    title: "Obiectul devine dorință.",
-    copy: "Lumină sculptată, reflexii controlate și o compoziție care transformă parfumul într-un moment editorial.",
+    body: "Într-un magazin online, parfumul nu poate fi testat. Provocarea este să traduci dorința prin lumină, reflexii și o imagine suficient de precisă încât obiectul să transmită lux înainte ca vizitatorul să citească descrierea.",
     alt: "Flacon Chanel N°5 fotografiat editorial pe marmură burgundy, încadrat de un halo transparent și o arcadă luminoasă.",
   },
   {
     src: "/portfolio/magazine-online-e-commerce/editorial-concept-aesop-hand-balm.webp",
-    eyebrow: "Skincare · natură și textură",
-    title: "Ingredientele capătă atmosferă.",
-    copy: "Travertinul, sticla rece și lumina naturală comunică formula, tactilitatea și calmul unui ritual de îngrijire.",
+    body: "Soluția combină fotografie editorială, ierarhie vizuală și un parcurs de cumpărare simplu. Travertinul, sticla și lumina naturală comunică formula și tactilitatea, iar interfața păstrează produsul în centrul deciziei.",
     alt: "Flacon Aesop din sticlă brună pe un soclu din travertin, lângă frunze și un panou translucid albastru.",
   },
   {
     src: "/portfolio/magazine-online-e-commerce/editorial-concept-nike-air-max.webp",
-    eyebrow: "Fashion · produs în mișcare",
-    title: "Forma conduce povestea.",
-    copy: "Un cadru curat pune silueta produsului în centru, iar contrastul burgundy transformă detaliul tehnic în identitate.",
+    body: "Design-ul se adaptează fiecărei categorii fără să piardă coerența magazinului: cadre largi pentru siluetă, detalii clare pentru materiale și contraste cromatice care transformă caracteristicile tehnice în identitate vizuală.",
     alt: "Pantof sport Nike Air Max ivory și burgundy expus integral pe un soclu din marmură cu lumină teal discretă.",
   },
   {
     src: "/portfolio/magazine-online-e-commerce/editorial-concept-bang-olufsen-h95.webp",
-    eyebrow: "Tech · lux tactil",
-    title: "Tehnologia poate fi senzorială.",
-    copy: "Metalul satinat și pielea sunt prezentate ca obiecte de design, într-un decor unde patrimoniul întâlnește viitorul.",
+    body: "Rezultatul este un sistem e-commerce în care beauty, fashion și tehnologia pot avea lumi vizuale distincte, dar aceeași experiență fluidă: produsul se înțelege rapid, se simte premium și rămâne memorabil.",
     alt: "Căști Bang & Olufsen Beoplay H95 aurii și crem pe suport transparent, cu tapiserie renascentistă și halo luminos.",
   },
 ];
@@ -178,7 +170,7 @@ const portfolioImageAlt = {
   "/portfolio/magazine-online-e-commerce/ecommerce-florena-cleansing-tonic.webp": "Tonic de curățare Florena și pipetă cu ulei, aranjate pe marmură albă cu flori delicate.",
   "/portfolio/magazine-online-e-commerce/ecommerce-smashbox-glow-primer.webp": "Primer Smashbox Photo Finish Illuminate alături de felie de portocală și textură luminoasă de produs.",
   "/portfolio/magazine-online-e-commerce/ecommerce-burei-watch.webp": "Ceas Burei cu cadran turcoaz și brățară metalică, fotografiat integral pe fundal alb.",
-  ...Object.fromEntries(ecommerceHeroSlides.map(({ src, alt }) => [src, alt])),
+  ...Object.fromEntries(ecommerceStorySlides.map(({ src, alt }) => [src, alt])),
 };
 
 function getPortfolioImageAlt(project, image, index) {
@@ -360,12 +352,15 @@ function ProjectStory({ project, details, images, heroImage }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const [active, setActive] = useState(0);
-  const backgrounds = [heroImage, images[1] || heroImage, images[2] || images[0] || heroImage, images[3] || images[1] || heroImage];
+  const storySlides = project.slug === "magazine-online-e-commerce" ? ecommerceStorySlides : null;
+  const backgrounds = storySlides
+    ? storySlides.map(({ src }) => src)
+    : [heroImage, images[1] || heroImage, images[2] || images[0] || heroImage, images[3] || images[1] || heroImage];
   const chapters = [
-    { eyebrow: "Context", title: "Provocarea", body: details.challenge },
-    { eyebrow: "Direcție", title: "Soluția", body: details.solution },
-    { eyebrow: "Limbaj vizual", title: "Design-ul", body: details.approach || `Am construit un sistem coerent de ${project.category.join(", ").toLowerCase()}, în care fiecare material susține aceeași poveste.` },
-    { eyebrow: "Impact", title: "Rezultatul", body: details.results.join(" · ") },
+    { eyebrow: "Context", title: "Provocarea", body: storySlides?.[0].body || details.challenge },
+    { eyebrow: "Direcție", title: "Soluția", body: storySlides?.[1].body || details.solution },
+    { eyebrow: "Limbaj vizual", title: "Design-ul", body: storySlides?.[2].body || details.approach || `Am construit un sistem coerent de ${project.category.join(", ").toLowerCase()}, în care fiecare material susține aceeași poveste.` },
+    { eyebrow: "Impact", title: "Rezultatul", body: storySlides?.[3].body || details.results.join(" · ") },
   ];
 
   useGSAP(() => {
@@ -418,71 +413,6 @@ function ProjectStory({ project, details, images, heroImage }) {
   );
 }
 
-function ProjectHeroVisual({ project, heroImage }) {
-  const reducedMotion = useReducedMotion();
-  const slides = project.slug === "magazine-online-e-commerce" ? ecommerceHeroSlides : [];
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    setActive(0);
-  }, [project.slug]);
-
-  useEffect(() => {
-    if (reducedMotion || slides.length < 2) return undefined;
-    const timer = window.setInterval(() => {
-      setActive((current) => (current + 1) % slides.length);
-    }, 6200);
-    return () => window.clearInterval(timer);
-  }, [reducedMotion, slides.length]);
-
-  if (slides.length === 0) {
-    return (
-      <div className="detail-hero-visual" data-parallax="0.08">
-        <img className="detail-hero-backdrop" src={heroImage} alt="" aria-hidden="true" />
-        <img className="detail-hero-main" src={heroImage} alt={project.title} />
-      </div>
-    );
-  }
-
-  const slide = slides[active];
-  const selectSlide = (index) => setActive((index + slides.length) % slides.length);
-
-  return (
-    <div
-      className="detail-hero-visual detail-hero-carousel"
-      data-parallax="0.08"
-      role="region"
-      aria-roledescription="carousel"
-      aria-label="Selecție editorială de fotografie de produs"
-    >
-      <img key={`backdrop-${slide.src}`} className="detail-hero-backdrop detail-carousel-backdrop" src={slide.src} alt="" aria-hidden="true" />
-      <img key={slide.src} className="detail-hero-main detail-carousel-main" src={slide.src} alt={slide.alt} />
-      <div className="detail-carousel-copy" aria-live="polite">
-        <p>{slide.eyebrow}</p>
-        <h2>{slide.title}</h2>
-        <span>{slide.copy}</span>
-      </div>
-      <div className="detail-carousel-controls">
-        <button type="button" onClick={() => selectSlide(active - 1)} aria-label="Imaginea editorială anterioară"><CaretLeft size={19} weight="bold" /></button>
-        <div className="detail-carousel-dots" role="group" aria-label="Alege imaginea editorială">
-          {slides.map((item, index) => (
-            <button
-              type="button"
-              key={item.src}
-              data-active={index === active}
-              onClick={() => selectSlide(index)}
-              aria-label={`Imaginea ${index + 1}: ${item.title}`}
-              aria-current={index === active ? "true" : undefined}
-            />
-          ))}
-        </div>
-        <button type="button" onClick={() => selectSlide(active + 1)} aria-label="Imaginea editorială următoare"><CaretRight size={19} weight="bold" /></button>
-      </div>
-      <span className="detail-carousel-count" aria-hidden="true">{String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
-    </div>
-  );
-}
-
 function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = [...new Set([
@@ -521,7 +451,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
           <h1>{project.title}</h1>
           <p>Client: {details.client}</p>
         </div>
-        <ProjectHeroVisual project={project} heroImage={heroImage} />
+        <div className="detail-hero-visual" data-parallax="0.08"><img className="detail-hero-backdrop" src={heroImage} alt="" aria-hidden="true" /><img className="detail-hero-main" src={heroImage} alt={project.title} /></div>
       </section>
 
       <ProjectStory project={project} details={details} images={images} heroImage={heroImage} />
