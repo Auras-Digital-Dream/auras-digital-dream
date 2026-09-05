@@ -139,6 +139,52 @@ const detailHeroAssets = {
   "selectii-cromatice": "/portfolio/selectii-cromatice/olive-blush.webp",
 };
 
+const ecommerceHeroSlides = [
+  {
+    src: "/portfolio/magazine-online-e-commerce/editorial-concept-chanel-no5.webp",
+    eyebrow: "Beauty · imagine de campanie",
+    title: "Obiectul devine dorință.",
+    copy: "Lumină sculptată, reflexii controlate și o compoziție care transformă parfumul într-un moment editorial.",
+    alt: "Flacon Chanel N°5 fotografiat editorial pe marmură burgundy, încadrat de un halo transparent și o arcadă luminoasă.",
+  },
+  {
+    src: "/portfolio/magazine-online-e-commerce/editorial-concept-aesop-hand-balm.webp",
+    eyebrow: "Skincare · natură și textură",
+    title: "Ingredientele capătă atmosferă.",
+    copy: "Travertinul, sticla rece și lumina naturală comunică formula, tactilitatea și calmul unui ritual de îngrijire.",
+    alt: "Flacon Aesop din sticlă brună pe un soclu din travertin, lângă frunze și un panou translucid albastru.",
+  },
+  {
+    src: "/portfolio/magazine-online-e-commerce/editorial-concept-nike-air-max.webp",
+    eyebrow: "Fashion · produs în mișcare",
+    title: "Forma conduce povestea.",
+    copy: "Un cadru curat pune silueta produsului în centru, iar contrastul burgundy transformă detaliul tehnic în identitate.",
+    alt: "Pantof sport Nike Air Max ivory și burgundy expus integral pe un soclu din marmură cu lumină teal discretă.",
+  },
+  {
+    src: "/portfolio/magazine-online-e-commerce/editorial-concept-bang-olufsen-h95.webp",
+    eyebrow: "Tech · lux tactil",
+    title: "Tehnologia poate fi senzorială.",
+    copy: "Metalul satinat și pielea sunt prezentate ca obiecte de design, într-un decor unde patrimoniul întâlnește viitorul.",
+    alt: "Căști Bang & Olufsen Beoplay H95 aurii și crem pe suport transparent, cu tapiserie renascentistă și halo luminos.",
+  },
+];
+
+const portfolioImageAlt = {
+  "/portfolio/magazine-online-e-commerce/21dc16065_WhatsAppImage2026-07-02at090809.webp": "Două produse Solait pentru îngrijire după expunerea la soare, într-o compoziție editorială cu aloe, nisip și accente aurii.",
+  "/portfolio/magazine-online-e-commerce/66ff9fedd_WhatsAppImage2026-07-02at114431.webp": "Mască facială verde Sukin fotografiată lângă fereastră, cu frunze și spatulă din lemn.",
+  "/portfolio/magazine-online-e-commerce/85dbe451e_WhatsAppImage2026-07-02at114542.webp": "Recipient Pixi Glow Tonic To-Go fotografiat de aproape, într-un decor luminos cu plante.",
+  "/portfolio/magazine-online-e-commerce/ecommerce-stila-one-step-primer.webp": "Primer Stila One Step Correct fotografiat vertical, cu flori de mușețel și ingrediente naturale.",
+  "/portfolio/magazine-online-e-commerce/ecommerce-florena-cleansing-tonic.webp": "Tonic de curățare Florena și pipetă cu ulei, aranjate pe marmură albă cu flori delicate.",
+  "/portfolio/magazine-online-e-commerce/ecommerce-smashbox-glow-primer.webp": "Primer Smashbox Photo Finish Illuminate alături de felie de portocală și textură luminoasă de produs.",
+  "/portfolio/magazine-online-e-commerce/ecommerce-burei-watch.webp": "Ceas Burei cu cadran turcoaz și brățară metalică, fotografiat integral pe fundal alb.",
+  ...Object.fromEntries(ecommerceHeroSlides.map(({ src, alt }) => [src, alt])),
+};
+
+function getPortfolioImageAlt(project, image, index) {
+  return portfolioImageAlt[image] || `${project.title} — imagine ${index + 1}`;
+}
+
 const projects = [
   { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.webp", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
   { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/portfolio/verde-bean/verde-bean-hero-branding.webp", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
@@ -372,6 +418,71 @@ function ProjectStory({ project, details, images, heroImage }) {
   );
 }
 
+function ProjectHeroVisual({ project, heroImage }) {
+  const reducedMotion = useReducedMotion();
+  const slides = project.slug === "magazine-online-e-commerce" ? ecommerceHeroSlides : [];
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    setActive(0);
+  }, [project.slug]);
+
+  useEffect(() => {
+    if (reducedMotion || slides.length < 2) return undefined;
+    const timer = window.setInterval(() => {
+      setActive((current) => (current + 1) % slides.length);
+    }, 6200);
+    return () => window.clearInterval(timer);
+  }, [reducedMotion, slides.length]);
+
+  if (slides.length === 0) {
+    return (
+      <div className="detail-hero-visual" data-parallax="0.08">
+        <img className="detail-hero-backdrop" src={heroImage} alt="" aria-hidden="true" />
+        <img className="detail-hero-main" src={heroImage} alt={project.title} />
+      </div>
+    );
+  }
+
+  const slide = slides[active];
+  const selectSlide = (index) => setActive((index + slides.length) % slides.length);
+
+  return (
+    <div
+      className="detail-hero-visual detail-hero-carousel"
+      data-parallax="0.08"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Selecție editorială de fotografie de produs"
+    >
+      <img key={`backdrop-${slide.src}`} className="detail-hero-backdrop detail-carousel-backdrop" src={slide.src} alt="" aria-hidden="true" />
+      <img key={slide.src} className="detail-hero-main detail-carousel-main" src={slide.src} alt={slide.alt} />
+      <div className="detail-carousel-copy" aria-live="polite">
+        <p>{slide.eyebrow}</p>
+        <h2>{slide.title}</h2>
+        <span>{slide.copy}</span>
+      </div>
+      <div className="detail-carousel-controls">
+        <button type="button" onClick={() => selectSlide(active - 1)} aria-label="Imaginea editorială anterioară"><CaretLeft size={19} weight="bold" /></button>
+        <div className="detail-carousel-dots" role="group" aria-label="Alege imaginea editorială">
+          {slides.map((item, index) => (
+            <button
+              type="button"
+              key={item.src}
+              data-active={index === active}
+              onClick={() => selectSlide(index)}
+              aria-label={`Imaginea ${index + 1}: ${item.title}`}
+              aria-current={index === active ? "true" : undefined}
+            />
+          ))}
+        </div>
+        <button type="button" onClick={() => selectSlide(active + 1)} aria-label="Imaginea editorială următoare"><CaretRight size={19} weight="bold" /></button>
+      </div>
+      <span className="detail-carousel-count" aria-hidden="true">{String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
+    </div>
+  );
+}
+
 function ProjectDetail({ project, details, onNavigate, onSection }) {
   const [zoomed, setZoomed] = useState(null);
   const assets = [...new Set([
@@ -410,7 +521,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
           <h1>{project.title}</h1>
           <p>Client: {details.client}</p>
         </div>
-        <div className="detail-hero-visual" data-parallax="0.08"><img className="detail-hero-backdrop" src={heroImage} alt="" aria-hidden="true" /><img className="detail-hero-main" src={heroImage} alt={project.title} /></div>
+        <ProjectHeroVisual project={project} heroImage={heroImage} />
       </section>
 
       <ProjectStory project={project} details={details} images={images} heroImage={heroImage} />
@@ -436,7 +547,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
 
       <section className="detail-gallery">
         <p className="section-kicker"><span className="eyebrow-text">Galerie</span></p><h2>Proiectul <em>în imagini.</em></h2>
-        <div className="gallery-grid">{images.map((image, index) => <button data-reveal key={image} className={index % 7 === 0 ? "gallery-wide" : ""} onClick={() => setZoomed(image)}><img src={image} alt={`${project.title} — imagine ${index + 1}`} loading="lazy" /><span><ArrowsOutSimple size={24} /> Click pentru zoom</span></button>)}</div>
+        <div className="gallery-grid">{images.map((image, index) => <button data-reveal key={image} className={index % 7 === 0 ? "gallery-wide" : ""} onClick={() => setZoomed(image)}><img src={image} alt={getPortfolioImageAlt(project, image, index)} loading="lazy" /><span><ArrowsOutSimple size={24} /> Click pentru zoom</span></button>)}</div>
         {videos.length > 0 && <div className="video-section"><h3>Video</h3><div>{videos.map((video) => <video controls preload="metadata" key={video}><source src={video} type="video/mp4" /></video>)}</div></div>}
       </section>
 
@@ -445,7 +556,7 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
       <section className="detail-cta"><p>Îți place direcția?</p><h2>Putem crea o poveste la fel de <em>memorabilă pentru brandul tău.</em></h2><a className="button primary" href={`https://wa.me/40762509423?text=${whatsappMessage}`}>Vreau un proiect asemănător <WhatsappLogo size={19} /></a></section>
       <SiteFooter />
       <a className="floating-whatsapp" href="https://wa.me/40762509423" aria-label="Scrie-mi pe WhatsApp"><WhatsappLogo size={28} weight="fill" /></a>
-      {zoomed && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Imagine mărită" onClick={() => setZoomed(null)}><button aria-label="Închide imaginea" onClick={() => setZoomed(null)}><X size={26} /></button><img src={zoomed} alt="Imagine mărită din proiect" /></div>}
+      {zoomed && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Imagine mărită" onClick={() => setZoomed(null)}><button aria-label="Închide imaginea" onClick={() => setZoomed(null)}><X size={26} /></button><img src={zoomed} alt={getPortfolioImageAlt(project, zoomed, images.indexOf(zoomed))} /></div>}
     </main>
   );
 }
