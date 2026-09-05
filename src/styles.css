@@ -444,6 +444,53 @@ footer > p { grid-column:1/-1; border-top:1px solid rgba(255,255,255,.1); paddin
   .device-play { opacity:1; }
 }
 
+/* Live project portal — a responsive glass frame that lets the real Framer
+   experience remain the focal point instead of reducing it to a screenshot. */
+.detail-live {
+  position:relative; isolation:isolate; overflow:hidden;
+  display:grid; grid-template-columns:minmax(260px,.72fr) minmax(0,1.7fr);
+  align-items:center; gap:clamp(34px,5vw,86px);
+  padding:clamp(84px,9vw,150px) max(7vw,24px);
+  color:#f8f4eb;
+  background:
+    radial-gradient(circle at 16% 18%,rgba(80,146,153,.3),transparent 34%),
+    radial-gradient(circle at 88% 82%,rgba(145,33,67,.2),transparent 35%),
+    linear-gradient(135deg,#0a1728 0%,#101f32 48%,#07151d 100%);
+}
+.detail-live::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:repeating-linear-gradient(112deg,transparent 0 38px,rgba(255,255,255,.024) 39px,transparent 40px 78px);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);
+}
+.detail-live-copy { min-width:0; max-width:560px; }
+.detail-live-copy .section-kicker { color:#b9e2e7; }
+.detail-live-copy h2 { margin:16px 0 24px; font-family:var(--font-project); font-size:clamp(44px,5.8vw,88px); font-weight:400; line-height:.92; }
+.detail-live-copy h2 em { color:#d7b574; font-weight:400; }
+.detail-live-copy > p:not(.section-kicker) { max-width:43ch; margin:0 0 34px; color:rgba(248,244,235,.8); font-size:clamp(16px,1.35vw,19px); line-height:1.75; }
+.detail-live-copy .button { width:max-content; max-width:100%; }
+.detail-live-portal { min-width:0; overflow:hidden; border:1px solid rgba(199,231,235,.35); border-radius:clamp(18px,2.2vw,32px); background:rgba(211,235,239,.1); box-shadow:0 36px 90px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.24); -webkit-backdrop-filter:blur(18px) saturate(135%); backdrop-filter:blur(18px) saturate(135%); }
+.detail-live-toolbar { height:44px; display:flex; align-items:center; gap:7px; padding:0 16px; border-bottom:1px solid rgba(199,231,235,.2); background:rgba(232,246,248,.08); }
+.detail-live-toolbar span { flex:0 0 8px; height:8px; border-radius:50%; background:#d7b574; }
+.detail-live-toolbar span:nth-child(2) { background:#8ca9a8; }
+.detail-live-toolbar span:nth-child(3) { background:#8d2748; }
+.detail-live-toolbar strong { min-width:0; margin-left:8px; overflow:hidden; color:rgba(248,244,235,.64); font-family:var(--font-sans); font-size:10px; font-weight:500; letter-spacing:.12em; text-overflow:ellipsis; text-transform:uppercase; white-space:nowrap; }
+.detail-live-portal iframe { display:block; width:100%; height:clamp(560px,75vh,860px); border:0; background:#f5f0e8; }
+
+@media (max-width:980px) {
+  .detail-live { grid-template-columns:1fr; align-items:start; }
+  .detail-live-copy { max-width:680px; }
+  .detail-live-portal iframe { height:720px; }
+}
+@media (max-width:640px) {
+  .detail-live { gap:32px; padding:72px 18px; }
+  .detail-live-copy h2 { font-size:clamp(42px,16vw,66px); }
+  .detail-live-copy .button { width:100%; justify-content:center; text-align:center; }
+  .detail-live-portal { border-radius:16px; }
+  .detail-live-toolbar { height:40px; padding-inline:12px; }
+  .detail-live-portal iframe { height:680px; }
+}
+
 /* Related work. Every case study used to end in a call to action and nothing
    else, so all sixteen were leaves - no way across the portfolio for a
    reader, and no path between them for a crawler. */

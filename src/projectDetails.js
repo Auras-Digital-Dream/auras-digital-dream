@@ -1,4 +1,15 @@
 export const projectDetails = {
+  "site-invitatie-digitala-nunta-radu-paula": {
+    category: "Web & experiență digitală", date: "2026", client: "Radu & Paula",
+    services: ["Direcție de artă", "Web design responsive", "Storytelling editorial", "Arhitectură informațională", "Experiență RSVP", "Implementare Framer", "QA desktop, tabletă și mobil"],
+    approach: "Am tratat site-ul ca pe o invitație care se deschide treptat. Fiecare secțiune păstrează ceremonialul hârtiei — ritm, detaliu, anticipare — dar folosește avantajele mediului digital: navigare clară, actualizări rapide, RSVP și acces imediat de pe orice ecran.",
+    about: "O invitație digitală de nuntă construită ca o experiență editorială completă: povestea cuplului, programul, locația, galeria, dress code-ul și confirmarea participării într-un singur spațiu memorabil.",
+    challenge: "Informațiile practice trebuiau să fie ușor de găsit fără ca experiența să devină rece sau administrativă. În același timp, identitatea vizuală trebuia să rămână coerentă de la telefon la ecranul mare.",
+    solution: "Am creat o structură pe capitole, o paletă bleumarin–auriu–ivoire și componente responsive care combină atmosfera festivă cu lizibilitatea, apoi am legat totul printr-un traseu RSVP simplu și intuitiv.",
+    results: ["Website responsive pe desktop, tabletă și mobil", "Poveste, program, locație și galerie într-un singur parcurs", "Formular RSVP integrat", "Identitate vizuală coerentă cu papetăria", "Link ușor de distribuit invitaților"],
+    liveUrl: "https://aurasdigitaldream.framer.website/",
+    liveLabel: "Deschide invitația digitală"
+  },
   "selectii-cromatice": {
     category: "Moodboard · Direcție vizuală", date: "August 2026", client: "Selecție personală — Aura's Digital Dream",
     services: ["Cercetare vizuală", "Direcție cromatică", "Moodboard-uri", "Paletă și coduri de culoare", "Direcție de artă", "Documentație de utilizare"],

@@ -145,6 +145,7 @@ const showcasedSources = new Set([
 
 const excludedPortfolioAssets = new Set();
 const detailHeroAssets = {
+  "site-invitatie-digitala-nunta-radu-paula": "/portfolio/site-invitatie-digitala-nunta-radu-paula/01-radu-paula-website-hero-devices.webp",
   "verde-bean": "/portfolio/verde-bean/verde-bean-hero-branding.webp",
   "lumina-botanica": "/portfolio/lumina-botanica/20c5ceaff_WhatsAppImage2026-07-02at090233.webp",
   "lupul-and-brici": "/portfolio/lupul-and-brici/852b052a0_generated_image.webp",
@@ -210,11 +211,39 @@ const digitalArtStorySlides = [
 ];
 
 const projectStorySlides = {
+  "site-invitatie-digitala-nunta-radu-paula": [
+    {
+      src: "/portfolio/site-invitatie-digitala-nunta-radu-paula/01-radu-paula-website-hero-devices.webp",
+      body: "Provocarea a fost să transformăm invitația clasică într-o experiență digitală care păstrează emoția hârtiei, dar ajunge instantaneu la fiecare invitat și rămâne impecabilă pe laptop, tabletă și telefon.",
+      alt: "Website-ul de nuntă Radu și Paula prezentat pe laptop și telefon, într-un decor elegant cu catifea bleumarin, flori albe și detalii aurii.",
+    },
+    {
+      src: "/portfolio/site-invitatie-digitala-nunta-radu-paula/03-radu-paula-storytelling-section.webp",
+      body: "Soluția construiește o călătorie fluidă prin povestea cuplului, detaliile evenimentului, locație, program și galerie. Fiecare secțiune are ritmul unui capitol editorial, nu al unui formular rece.",
+      alt: "Secțiunea Povestea noastră din website-ul de nuntă, afișată pe laptop între flori burgundy, sigilii de ceară și panglici de satin.",
+    },
+    {
+      src: "/portfolio/site-invitatie-digitala-nunta-radu-paula/05-radu-paula-rsvp-dress-code.webp",
+      body: "Design-ul unește albastrul de miez de noapte, auriul cald și ivoire-ul într-un sistem coerent. Dress code-ul, întrebările frecvente și RSVP-ul devin parte din aceeași lume vizuală, cu ierarhie clară și interacțiuni ușor de folosit.",
+      alt: "Dress code-ul, întrebările frecvente și formularul RSVP ale invitației digitale, prezentate simultan pe laptop, telefon și tabletă.",
+    },
+    {
+      src: "/portfolio/site-invitatie-digitala-nunta-radu-paula/06-radu-paula-digital-keepsake.webp",
+      body: "Rezultatul este mai mult decât un site informativ: este o invitație vie, ușor de distribuit, actualizat și păstrat. Invitații găsesc totul într-un singur loc, iar cuplul primește o amintire digitală construită pentru ziua lor.",
+      alt: "Website-ul Radu și Paula prezentat pe laptop alături de invitația tipărită, verighete și un decor de nuntă bleumarin cu auriu.",
+    },
+  ],
   "magazine-online-e-commerce": ecommerceStorySlides,
   "arta-digitala-materiale-grafice": digitalArtStorySlides,
 };
 
 const portfolioImageAlt = {
+  "/portfolio/site-invitatie-digitala-nunta-radu-paula/01-radu-paula-website-hero-devices.webp": "Website-ul de nuntă Radu și Paula prezentat pe laptop și telefon, într-un decor elegant cu catifea bleumarin, flori albe și detalii aurii.",
+  "/portfolio/site-invitatie-digitala-nunta-radu-paula/02-radu-paula-responsive-brand-system.webp": "Invitația digitală Radu și Paula prezentată responsive pe desktop, tabletă și telefon, alături de papetărie personalizată.",
+  "/portfolio/site-invitatie-digitala-nunta-radu-paula/03-radu-paula-storytelling-section.webp": "Secțiunea Povestea noastră din website-ul de nuntă, afișată pe laptop între flori burgundy, sigilii de ceară și panglici de satin.",
+  "/portfolio/site-invitatie-digitala-nunta-radu-paula/04-radu-paula-responsive-story-gallery.webp": "Povestea cuplului, programul evenimentului și pagina principală prezentate pe tabletă și două telefoane.",
+  "/portfolio/site-invitatie-digitala-nunta-radu-paula/05-radu-paula-rsvp-dress-code.webp": "Dress code-ul, întrebările frecvente și formularul RSVP ale invitației digitale, prezentate simultan pe laptop, telefon și tabletă.",
+  "/portfolio/site-invitatie-digitala-nunta-radu-paula/06-radu-paula-digital-keepsake.webp": "Website-ul Radu și Paula prezentat pe laptop alături de invitația tipărită, verighete și un decor de nuntă bleumarin cu auriu.",
   "/portfolio/logo-design/00539c763_realestatelogo.webp": "Logo Real Estate Co. cu simbol botanic fin și wordmark serif pe fundal burgundy.",
   "/portfolio/logo-design/3caeb0cc1_Untitled-design.webp": "Identitatea Aura’s Trend Vault, cu simbol feminin geometric și wordmark auriu pe fundal negru.",
   "/portfolio/logo-design/3e75777fb_generated_image.webp": "Logo NEXA Digital Solutions prezentat într-o compoziție curată de identitate vizuală.",
@@ -299,6 +328,7 @@ function getPortfolioImageAlt(project, image, index) {
 }
 
 const projects = [
+  { slug: "site-invitatie-digitala-nunta-radu-paula", title: "Radu & Paula — Website de Nuntă & Invitație Digitală", category: ["Web", "Grafică"], image: "/portfolio/site-invitatie-digitala-nunta-radu-paula/01-radu-paula-website-hero-devices.webp", description: "Experiență digitală de nuntă responsive, cu povestea cuplului, program, galerie și confirmare RSVP, construită ca o invitație vie." },
   { slug: "selectii-cromatice", title: "Selecții Cromatice — Moodboard-uri & Direcție Vizuală", category: ["Moodboard", "Grafică"], image: "/portfolio/selectii-cromatice/olive-blush.webp", description: "Palete atent curatoriate, transformate în atmosfere vizuale pentru identități de brand, campanii și spații digitale." },
   { slug: "verde-bean", title: "Verde Bean — Identitate de Brand", category: ["Branding"], image: "/portfolio/verde-bean/verde-bean-hero-branding.webp", description: "Identitate vizuală completă pentru un brand de cafea specialty sustenabil." },
   { slug: "painea-de-acasa", title: "Pâinea de Acasă — Identitate de Brand Artizanală", category: ["Branding", "Grafică"], image: "/portfolio/painea-de-acasa/painea-de-acasa-packaging.webp", description: "Identitate caldă și autentică pentru o brutărie artizanală locală, cu logo, paletă, tipografie și aplicații de brand." },
@@ -317,7 +347,7 @@ const projects = [
   { slug: "logo-design", title: "Logo Design — Identități Vizuale de Brand", category: ["Logo Design"], image: "/portfolio/logo-design/3caeb0cc1_Untitled-design.webp", description: "Colecție de logo-uri profesionale — de la monograme elegante la embleme corporate și sigle de lux." },
 ];
 
-const featuredSlugs = ["auras-trend-vault", "verde-bean", "real-estate-co", "campanie-social-media-luxe"];
+const featuredSlugs = ["site-invitatie-digitala-nunta-radu-paula", "auras-trend-vault", "verde-bean", "real-estate-co"];
 const featuredCardAssets = {
   "auras-trend-vault": "/portfolio/auras-trend-vault/editorial-2026/vogue-cover.webp",
 };
@@ -331,7 +361,7 @@ const portfolioGroups = [
   {
     title: "Web",
     copy: "Platforme, website-uri și experiențe digitale create pentru prezentare, conversie și încredere.",
-    slugs: ["auras-trend-vault", "real-estate-co", "lupul-and-brici", "magazine-online-e-commerce"],
+    slugs: ["site-invitatie-digitala-nunta-radu-paula", "auras-trend-vault", "real-estate-co", "lupul-and-brici", "magazine-online-e-commerce"],
   },
   {
     title: "Marketing",
@@ -592,6 +622,21 @@ function ProjectDetail({ project, details, onNavigate, onSection }) {
             {deviceShowcase[project.slug].map((clip) => (
               <DeviceFrame key={clip.name} slug={project.slug} clip={clip} />
             ))}
+          </div>
+        </section>
+      )}
+
+      {details.liveUrl && (
+        <section className="detail-live" aria-labelledby="detail-live-title">
+          <div className="detail-live-copy" data-reveal>
+            <p className="section-kicker"><span className="eyebrow-text">Experiența live</span></p>
+            <h2 id="detail-live-title">Intră în <em>invitație.</em></h2>
+            <p>Explorează proiectul real direct în pagină sau deschide-l separat pentru experiența completă. Portalul este interactiv și poate fi derulat pe orice dispozitiv.</p>
+            <a className="button primary" href={details.liveUrl} target="_blank" rel="noreferrer">{details.liveLabel || "Deschide site-ul"} <ArrowRight size={18} /></a>
+          </div>
+          <div className="detail-live-portal" data-reveal>
+            <div className="detail-live-toolbar" aria-hidden="true"><span /><span /><span /><strong>{details.liveUrl.replace(/^https?:\/\//, "")}</strong></div>
+            <iframe src={details.liveUrl} title={`Preview live — ${project.title}`} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
           </div>
         </section>
       )}
