@@ -5,7 +5,7 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo, TiktokLogo, WhatsappLogo } f
    arcada și decuparea imaginii. */
 export function SiteFooter() {
   return (
-    <footer className="site-footer bg-ink-marble" id="footer">
+    <footer className="site-footer" id="footer">
       <div className="footer-image" aria-hidden="true">
         <img src="/assets/footer-bg.webp" alt="" />
       </div>

@@ -135,6 +135,21 @@
   background: var(--ink-ground);
 }
 
+/* Every other page ends light before the footer — the usual light-to-dark
+   beat, not a mismatch. /studio is the one place that's still dark right up
+   to the footer, on --mahogany, and .footer-image's arch leaves this
+   ink-ground rectangle exposed at its two top corners: a warm near-black
+   against a cool navy reads as a seam. Only this adjacency gets a blend. */
+.books + .site-footer::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto 0;
+  height: clamp(90px, 11vw, 170px);
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--mahogany), transparent);
+}
+
 .site-footer .footer-image {
   position: absolute;
   inset: 0;
