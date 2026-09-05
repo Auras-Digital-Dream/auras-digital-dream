@@ -206,7 +206,7 @@ em { font-family:var(--font-display); color:var(--accent); font-style:italic; fo
 
 .section-kicker{ text-transform:uppercase; letter-spacing:.28em; font-size:12px; font-weight:600; }
 
-.section-kicker { margin-bottom:20px; }
+.section-kicker { margin-bottom:28px; }
 /* The gold accent on a light heading has to be drawn, not written: a
    hairline in front of the kicker, and a rule under the section title. */
 
